@@ -17,26 +17,6 @@ const moods = {
     intensity: "★☆☆☆☆",
     color: "#f7d7e2",
     questions: [
-      ["QUESTION","What is one tiny thing I do that always makes you smile?"],
-      ["COMPLIMENT","Give me a compliment you have never said out loud."],
-      ["MEMORY","What was your favorite little moment from our first few dates?"],
-      ["QUESTION","What nickname would you give our relationship?"],
-      ["CHALLENGE","Hold hands for 20 seconds without saying anything."],
-      ["QUESTION","What song instantly makes you think of me?"],
-      ["COMPLIMENT","Tell me one thing you think I am really good at."],
-      ["MEMORY","What is a silly memory of us that you secretly love?"],
-      ["QUESTION","What is your ideal lazy Sunday with me?"],
-      ["CHALLENGE","Look at each other and try not to smile for 15 seconds."],
-      ["FLIRTY","What is the most attractive thing I do without realizing it?"],
-      ["CHALLENGE","Give me your best flirtatious look for 10 seconds."],
-      ["QUESTION","What outfit of mine do you secretly love?"],
-      ["COMPLIMENT","Describe my smile in the most dramatic way possible."],
-      ["CHALLENGE","Whisper one sweet thing in your partner's ear."],
-      ["FLIRTY","What was your first 'okay, they're really attractive' moment?"],
-      ["CHALLENGE","Slow dance together for one song — no talking."],
-      ["QUESTION","What kind of date makes you feel most attracted to me?"],
-      ["FLIRTY","What is one innocent thing I do that you find irresistible?"],
-      ["CHALLENGE","Give your partner three compliments without using the words 'cute' or 'beautiful'."]
     ]
   },
   romantic: {
