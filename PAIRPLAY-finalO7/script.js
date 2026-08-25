@@ -24,6 +24,17 @@ const moods = {
       ["MEMORY","What is a silly memory of us that you secretly love?"],
       ["QUESTION","What is your ideal lazy Sunday with me?"],
       ["CHALLENGE","Look at each other and try not to smile for 15 seconds."]
+      // after 10 card texxt
+       ["FLIRTY","What is the most attractive thing I do without realizing it?"],
+      ["CHALLENGE","Give me your best flirtatious look for 10 seconds."],
+      ["QUESTION","What outfit of mine do you secretly love?"],
+      ["COMPLIMENT","Describe my smile in the most dramatic way possible."],
+      ["CHALLENGE","Whisper one sweet thing in your partner's ear."],
+      ["FLIRTY","What was your first 'okay, they're really attractive' moment?"],
+      ["CHALLENGE","Slow dance together for one song — no talking."],
+      ["QUESTION","What kind of date makes you feel most attracted to me?"],
+      ["FLIRTY","What is one innocent thing I do that you find irresistible?"],
+      ["CHALLENGE","Give your partner three compliments without using the words 'cute' or 'beautiful'."]
     ]
   },
   romantic: {
@@ -288,11 +299,11 @@ const cardLengthOptions = [
 const coursesData = {
   'confident-connection': {
     id: 'confident-connection',
-    title: 'Confident Connection',
-    category: 'For Him',
+    title: '1.  Confident Connection click ▼ ' ,
+   // category: 'For Him',
     subtitle: 'Build confidence & presence',
     chapters: 8,
-    time: '~25 min',
+   // time: '~25 min',
     summary: 'Courses focused on confidence, communication, intimacy, and being a better partner.',
     sections: [
       {
@@ -317,11 +328,11 @@ const coursesData = {
   },
   'better-communication': {
     id: 'better-communication',
-    title: 'Better Communication',
+    title: '2.  Better Communication ▼',
     category: 'For Him',
     subtitle: 'Listen & express clearly',
     chapters: 7,
-    time: '~22 min',
+// time: '~22 min',
     summary: 'Learn how to listen, express yourself, and handle difficult conversations.',
     sections: [
       { title: 'Lessons', lessons: ['Intro', 'Listening', 'Non-defensive speech', 'Asking vs accusing', 'Practical exercises', 'Practice', 'Final challenge'] }
@@ -329,11 +340,11 @@ const coursesData = {
   },
   'art-of-romance': {
     id: 'art-of-romance',
-    title: 'The Art of Romance',
+    title: '3.  The Art of Romance ▼',
     category: 'For Him',
     subtitle: 'Create small romantic moments',
     chapters: 8,
-    time: '~25 min',
+   // time: '~25 min',
     summary: 'Turn everyday moments into meaningful romantic experiences.',
     sections: [
       { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
@@ -497,6 +508,31 @@ function showAuthModal(mode = "login") {
     ? "Guest mode works instantly and keeps your session local to this device."
     : "Use your Supabase email and password to sign in or create an account.";
 
+  // If a reset flow was open previously, restore the standard login form
+  if (mode !== 'reset' && document.getElementById('auth-reset-marker')) {
+    // rebuild default form (simpler than tracking partial edits)
+    const form = $("auth-form");
+    if (form) {
+      form.innerHTML = `
+        <label class="auth-field">
+          <span>Email</span>
+          <input id="auth-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </label>
+        <label class="auth-field">
+          <span>Password</span>
+          <input id="auth-password" name="password" type="password" placeholder="Enter a secure password" autocomplete="current-password" required />
+        </label>
+        <div style="display:flex; justify-content:flex-end; margin-top:6px;">
+          <button id="auth-forgot" class="text-btn" type="button">Forgot password?</button>
+        </div>
+        <button class="pill-btn wide auth-submit" id="auth-submit" type="submit">Continue</button>
+      `;
+      // rebind forgot button handler after rebuilding
+      const fbtn = document.getElementById('auth-forgot');
+      if (fbtn) fbtn.addEventListener('click', (e) => { e.preventDefault(); showResetPassword(); });
+    }
+  }
+
   modal.classList.remove("hidden");
   modal.setAttribute("aria-hidden", "false");
 
@@ -509,6 +545,60 @@ function showAuthModal(mode = "login") {
     const firstField = mode === "guest" ? $("auth-submit") : $("auth-email");
     if (firstField) firstField.focus();
   }, 40);
+}
+
+// Show the password reset UI inside the auth modal
+function showResetPassword() {
+  const modal = $('auth-modal');
+  if (!modal) return;
+  authMode = 'reset';
+  const title = $('auth-title');
+  const status = $('auth-status');
+  const form = $('auth-form');
+  if (title) title.textContent = 'Reset password';
+  if (status) status.textContent = 'Enter your email and we will send a password reset link.';
+  if (form) {
+    form.innerHTML = `
+      <div id="auth-reset-marker"></div>
+      <label class="auth-field">
+        <span>Email</span>
+        <input id="auth-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+      </label>
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button class="pill-btn wide" id="auth-reset-submit" type="button">Send reset link</button>
+        <button class="ghost-btn" id="auth-reset-back" type="button">Back</button>
+      </div>
+    `;
+
+    const submit = document.getElementById('auth-reset-submit');
+    const back = document.getElementById('auth-reset-back');
+    if (submit) submit.addEventListener('click', sendPasswordReset);
+    if (back) back.addEventListener('click', () => showAuthModal('login'));
+  }
+
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden','false');
+  setTimeout(() => { const e = $('auth-email'); if (e) e.focus(); }, 40);
+}
+
+async function sendPasswordReset() {
+  const emailEl = $('auth-email');
+  if (!emailEl) return;
+  const email = emailEl.value.trim();
+  if (!email) { setAuthStatus('Please enter your email address.', true); return; }
+
+  setAuthStatus('Sending reset link...');
+  const client = await ensureSupabaseClient(3000);
+  if (!client) { setAuthStatus('Password reset is not available: Supabase not configured or failed to load.', true); return; }
+
+  try {
+    const { data, error } = await client.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+    if (error) throw error;
+    setAuthStatus('If an account exists for that email, a reset link has been sent. Check your inbox.');
+  } catch (e) {
+    console.error('Password reset error', e);
+    setAuthStatus((e && e.message) ? `Error: ${e.message}` : 'Failed to send reset link. Please try again later.', true);
+  }
 }
 
 function closeAuthModal() {
@@ -1069,11 +1159,12 @@ function bindAuthEvents() {
   const authForm = $("auth-form");
   const authTabs = document.querySelectorAll(".auth-tab");
   const navFav = $("nav-favorites");
-
+  const authForgotBtn = $("auth-forgot");
+  
   if (navLabel) {
     navLabel.addEventListener("click", () => showAuthModal("login"));
   }
-
+  
   if (navCta) {
     navCta.addEventListener("click", () => {
       if (signedInUser && signedInUser.email) {
@@ -1086,6 +1177,10 @@ function bindAuthEvents() {
       }
       showAuthModal("guest");
     });
+  }
+
+  if (authForgotBtn) {
+    authForgotBtn.addEventListener('click', (e) => { e.preventDefault(); showResetPassword(); });
   }
 
   if (navFav) {

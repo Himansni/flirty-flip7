@@ -160,7 +160,7 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .hero-buttons { display:flex; gap:15px; align-items:center; }
 .trust-row { display:flex; gap:18px; flex-wrap:wrap; margin-top:25px; color:#8a8085; font-size:12px; }
 
-.hero-card-stage { height:540px; position:relative; display:grid; place-items:center; perspective:1200px; }
+.hero-card-stage { height:290px; position:relative; display:grid; place-items:center; perspective:1200px; }
 .hero-card {
   width:min(330px, 72%); aspect-ratio: .69; border-radius:30px; position:absolute; padding:27px;
   box-shadow:var(--shadow); overflow:hidden;
@@ -185,7 +185,7 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
    FOOTER
    ======================================== */
 footer { position:absolute; left:28px; right:28px; bottom:27px; font-size:10px; letter-spacing:.14em; color:#8d6877; }
-.floating-note { position:absolute; z-index:2; background:#fff; border:1px solid var(--line); box-shadow:0 12px 35px rgba(0,0,0,.08); padding:10px 14px; border-radius:999px; font-size:12px; }
+.floating-note { position:absolute; z-index:4; background:#ff2449; border:1px solid var(--line); box-shadow:0 12px 35px rgba(0,0,0,.08); padding:10px 14px; border-radius:999px; font-size:12px; }
 .note-one { top:12%; right:8%; transform:rotate(4deg); }
 .note-two { bottom:14%; left:4%; transform:rotate(-5deg); }
 
