@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://flirtyflip.com/sitemap.xml
