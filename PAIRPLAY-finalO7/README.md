@@ -1,57 +1,49 @@
-# PAIRPLAY — Couple Card Game MVP
+# FLIRTYFLIP
 
-A no-backend MVP for an online couple card game.
+FLIRTYFLIP is a responsive date-night card game with local play, shareable online-room setup, a browsable game catalog, guided courses, favorites, and optional Supabase authentication.
 
 ## Run locally
 
-Open `index.html` in a browser.
+Routes use the browser History API, so serve this directory through a web server instead of opening `index.html` directly.
 
-For the best local development experience, use VS Code + Live Server.
+```bash
+cd PAIRPLAY-finalO7
+python3 -m http.server 4173
+```
 
-## Deploy to Netlify
+Then open `http://localhost:4173`. A production-like local server should fall back unknown paths such as `/games` and `/course/confident-connection` to `index.html`.
 
-1. Create a Netlify account.
-2. Drag the `couple-card-game` folder into Netlify Drop, or connect a Git repository.
-3. No build command is required.
-4. Publish directory: `/`
+No build command or package installation is required.
 
-## Current MVP
+## Application routes
 
-- Premium responsive landing page
-- Mood selection
-- Sweet / Romantic / Deep / Flirty / Spicy 18+ modes
-- 10 / 25 / 50 card lengths
-- 3D card flip
-- Randomized prompts
-- Progress tracking
-- Skip card
-- Favorite interaction
-- Completion screen
-- No login
-- No database
-- No payment
-- Mobile-first UI
+- `/` — home
+- `/play` — mood selection
+- `/play/setup` — deck-size selection
+- `/game` — active local game
+- `/results` — completed-game summary
+- `/games` — filterable game catalog
+- `/courses` — filterable course catalog
+- `/course/:slug` — course detail and lesson reader
+- `/online` — online-room setup
+- `/how` — how it works
+- `/support` — support pages
 
-## Final visual/gameplay changes
+The central client-side router lives in `script.js`. It uses `history.pushState`, `history.replaceState`, and `popstate`, and safely redirects routes that require missing game or course state.
 
-- Black + red cinematic theme with stronger typography and neon-red glow.
-- Mood-specific typography/pattern treatment on mood cards and game cards.
-- Card-sweep transition: tapping the current card immediately advances to the next prompt, already revealed.
-- `NEXT CARD →` remains available as a second way to advance.
-- Added a front-end Play Online room flow: choose mood -> choose card count -> create/share room -> waiting/connection state -> start game.
-- Added clear comments above major HTML, CSS and JavaScript sections so future changes are easier to locate.
+## Local state
 
-> Note: the project is still a no-backend MVP. The Play Online lobby and shareable room URL are implemented as the front-end flow, while real cross-device partner presence/synchronization still requires a realtime backend such as the Supabase upgrade listed below.
+- The current game is stored in `sessionStorage` under `flirtyflip-game-session-v1` so refresh and browser Back/Forward preserve the round.
+- Favorites and course progress use versioned `localStorage` keys.
+- Guest identity is stored locally and remains separate from game progress.
 
-## Supabase auth setup
+## Deploy to Vercel
 
-This app now supports a simple Supabase auth flow with three modes:
+Set the Vercel project Root Directory to `PAIRPLAY-finalO7`. No build command is required. The included `vercel.json` rewrites application paths to `index.html` so direct route visits and refreshes work.
 
-- Log in
-- Sign up
-- Guest mode
+## Supabase authentication
 
-To enable real accounts, open `index.html` and replace the placeholder values in the Supabase config block with your own project URL and anon key:
+The app supports log in, sign up, password reset, and guest mode. Guest mode works without external configuration. To enable real accounts, replace the placeholder values in the Supabase configuration block in `index.html`:
 
 ```html
 <script>
@@ -62,14 +54,8 @@ To enable real accounts, open `index.html` and replace the placeholder values in
 </script>
 ```
 
-Guest mode works instantly without configuration and stores the local session in the browser. If Supabase is configured, email/password auth will use the configured project automatically.
+If configured, the Supabase client is loaded on demand and email/password actions use that project.
 
-## Next upgrades
+## Current limitation
 
-1. Add 300+ original cards.
-2. Add localStorage for favorites/history.
-3. Add online room codes with Supabase Realtime.
-4. Add profile metadata and saved game history.
-5. Add premium card packs and payments.
-6. Add admin panel.
-7. Add analytics.
+The online-room interface and shareable room URL are implemented, but real cross-device presence and synchronized cards still require a realtime backend such as Supabase Realtime.

@@ -3,12 +3,6 @@
 // Add, remove or edit game moods here.
 // Each mood contains its own cards and theme color.
 // ========================================
-
-
-
-if (typeof window !== 'undefined') {
-  try { console.log('PAIRPLAY script loaded'); window.__pairplay_loaded = true; } catch(e){}
-}
 const moods = {
   sweet: {
     title: "Sweet",
@@ -71,7 +65,7 @@ const moods = {
     ]
   },
   cozy: {
-    title: "Fantsy",
+    title: "Fantasy",
     icon: "🕯️",
     desc: "Slow, warm prompts for comfortable closeness and easy intimacy.",
     intensity: "★★☆☆☆",
@@ -93,7 +87,7 @@ const moods = {
    DarkDesire : {
     title: "Dark Desire ",
     icon: "🌙",
-    desc: "Upgrde the level, private prompts to deepen emotional closeness (18+ optional).",
+    desc: "Turn up the intensity with private prompts for deeper emotional closeness (18+ optional).",
     intensity: "★★★☆☆",
     color: "#f5d7e0",
     questions: [
@@ -101,7 +95,7 @@ const moods = {
     ]
   },
    DreamsFuture :{
-     title: "Dreams&Future ",
+     title: "Dreams & Future",
     icon: "🌙",
     desc: "The life you're building together, before it's built.",
     intensity: "★★★☆☆",
@@ -1344,16 +1338,12 @@ const moodQuestionSets = {
 function getQuestionPool(moodKey, length) {
   return moodQuestionSets[moodKey]?.[length] || [];
 }
-// function getQuestionPool(moodKey, length = 10) {
-//   const mood = moods[moodKey];
-//   const lengthSet = moodQuestionSets[moodKey];
 
-//   if (length >= 50 && Array.isArray(lengthSet?.[50])) return lengthSet[50];
-//   if (length >= 25 && Array.isArray(lengthSet?.[25])) return lengthSet[25];
-//   if (Array.isArray(mood?.questions)) return mood.questions;
-//   return [];
-//}
-
+// ========================================
+// GAMEPLAY STATE
+// Runtime-only values for the selected deck and current round; edit card content in moodQuestionSets above.
+// Persisted equivalents are managed in the GAME SESSION STORAGE block below.
+// ========================================
 let selectedMood = "romantic";
 let selectedLength = 10;
 let currentCards = [];
@@ -1377,6 +1367,37 @@ let onlineRole = "host";
 // Safe DOM helper — returns null when run outside the browser (Node tooling)
 const $ = (id) => (typeof document !== 'undefined' ? document.getElementById(id) : null);
 
+// ========================================
+// ROUTE AND SESSION CONFIGURATION
+// Keep public URL changes and session schema changes centralized here.
+// The version suffix lets future migrations ignore incompatible saved rounds.
+// ========================================
+const ROUTE_PATHS = Object.freeze({
+  home: "/",
+  play: "/play",
+  setup: "/play/setup",
+  game: "/game",
+  results: "/results",
+  games: "/games",
+  courses: "/courses",
+  course: "/course",
+  online: "/online",
+  how: "/how",
+  support: "/support"
+});
+const GAME_SESSION_KEY = "flirtyflip-game-session-v1";
+const GAME_SESSION_STATUSES = new Set(["setup", "active", "complete"]);
+const SUPPORT_SECTIONS = new Set(["index", "contact", "refund", "terms", "privacy", "faq"]);
+let gameSessionStatus = "idle";
+let routerInitialized = false;
+let lastTrackedLocation = "";
+let catalogBackRoute = ROUTE_PATHS.home;
+
+// ========================================
+// SUPABASE AND AUTHENTICATION INTEGRATION
+// Edit provider configuration in index.html; client readiness and account/guest behavior live in this area.
+// Keep publishable browser configuration separate from privileged server credentials.
+// ========================================
 // Safe access to `window` so running this file in Node (syntax checks, tooling) won't throw.
 const SUPABASE_CONFIG = (typeof window !== 'undefined' && window.PAIRPLAY_SUPABASE_CONFIG)
   ? window.PAIRPLAY_SUPABASE_CONFIG
@@ -1410,21 +1431,24 @@ function hasSupabaseConfigured() {
 function ensureSupabaseClient(timeout = 4000) {
   return new Promise((resolve) => {
     if (typeof window === 'undefined') return resolve(null);
+    let waited = 0;
+    let watcher = null;
+    let finished = false;
+
+    const finish = (client) => {
+      if (finished) return;
+      finished = true;
+      if (watcher !== null) clearInterval(watcher);
+      resolve(client || null);
+    };
+
     console.debug('ensureSupabaseClient: start', { timeout, SUPABASE_CONFIG });
     const existing = getSupabaseClient();
     if (existing) {
       console.debug('ensureSupabaseClient: existing client found');
-      return resolve(existing);
+      return finish(existing);
     }
-    // If supabase object already exists later, wait for it    let waited = 0;
     const interval = 100;
-
-    const tryCreate = () => {
-      const client = getSupabaseClient();
-      if (client) return resolve(client);
-      waited += interval;
-      if (waited >= timeout) return resolve(null);
-    };
 
     // If no supabase script tag, inject one
     const hasScript = !!document.querySelector('script[src*="supabase-js"]');
@@ -1436,27 +1460,26 @@ function ensureSupabaseClient(timeout = 4000) {
       s.onload = () => {
         console.debug('ensureSupabaseClient: supabase script loaded');
         const client = getSupabaseClient();
-        if (client) return resolve(client);
+        if (client) finish(client);
       };
       s.onerror = (e) => {
         console.error('ensureSupabaseClient: failed to load supabase script', e);
-        return resolve(null);
+        finish(null);
       };
       document.head.appendChild(s);
     }
 
-    const watcher = setInterval(() => {
+    watcher = setInterval(() => {
       const client = getSupabaseClient();
       if (client) {
-        clearInterval(watcher);
         console.debug('ensureSupabaseClient: client ready');
-        return resolve(client);
+        finish(client);
+        return;
       }
       waited += interval;
       if (waited >= timeout) {
-        clearInterval(watcher);
         console.warn('ensureSupabaseClient: timeout waiting for client');
-        return resolve(null);
+        finish(null);
       }
     }, interval);
   });
@@ -1477,6 +1500,92 @@ const cardLengthOptions = [
 ];
 
 // ========================================
+// GAME DISCOVERY DATA
+// Catalog metadata points to existing playable mood decks; it never duplicates question content.
+// Update categories or merchandising copy here while keeping mood keys aligned with moods above.
+// ========================================
+const gameCatalogData = [
+  { id: "romantic", categories: ["romantic", "conversation"], duration: "15–20 min", deckSize: 10, featured: true },
+  { id: "sweet", categories: ["quick", "conversation"], duration: "10–15 min", deckSize: 10 },
+  { id: "TruthandDare", categories: ["truth-dare", "challenges"], duration: "15–20 min", deckSize: 10 },
+  { id: "flirtyii", categories: ["flirty", "challenges"], duration: "15–20 min", deckSize: 10 },
+  { id: "spicy", categories: ["flirty", "18-plus"], duration: "15–25 min", deckSize: 10 },
+  { id: "playful", categories: ["quick", "conversation"], duration: "15–20 min", deckSize: 10 },
+  { id: "cozy", categories: ["romantic", "conversation"], duration: "15–20 min", deckSize: 10 },
+  { id: "intimate", categories: ["deep", "conversation"], duration: "20–30 min", deckSize: 10 },
+  { id: "DarkDesire", categories: ["deep", "18-plus"], duration: "20–30 min", deckSize: 10 },
+  { id: "DreamsFuture", categories: ["deep", "conversation"], duration: "20–30 min", deckSize: 10 },
+  { id: "online", title: "Play Online", icon: "↗", description: "Create a room link and invite your partner into a shared lobby.", categories: ["online"], duration: "You decide", deckSize: "10 / 25 / 50", online: true }
+];
+
+const gameFilterOptions = [
+  { id: "all", label: "All" },
+  { id: "quick", label: "Quick" },
+  { id: "romantic", label: "Romantic" },
+  { id: "conversation", label: "Conversation" },
+  { id: "truth-dare", label: "Truth & Dare" },
+  { id: "challenges", label: "Challenges" },
+  { id: "deep", label: "Deep" },
+  { id: "flirty", label: "Flirty" },
+  { id: "18-plus", label: "18+" },
+  { id: "online", label: "Online" }
+];
+
+function getGameCatalogItem(gameId) {
+  const config = gameCatalogData.find(({ id }) => id === gameId);
+  if (!config) return null;
+  const mood = moods[gameId];
+  return {
+    ...config,
+    title: config.title || mood?.title || "Game",
+    icon: config.icon || mood?.icon || "♡",
+    description: config.description || mood?.desc || "A FlirtyFlip game for two.",
+    intensity: mood?.intensity || "",
+    moodKey: mood ? gameId : null
+  };
+}
+
+function isValidCard(card) {
+  return Array.isArray(card)
+    && card.length >= 2
+    && typeof card[0] === "string"
+    && typeof card[1] === "string";
+}
+
+function validateMoodDecks() {
+  const issues = [];
+
+  Object.keys(moods).forEach((moodKey) => {
+    cardLengthOptions.forEach(({ count }) => {
+      const deck = getQuestionPool(moodKey, count);
+
+      if (!Array.isArray(deck)) {
+        issues.push(`${moodKey}/${count}: deck is missing`);
+        return;
+      }
+
+      if (deck.length !== count) {
+        issues.push(`${moodKey}/${count}: expected ${count} cards, found ${deck.length}`);
+      }
+
+      deck.forEach((card, index) => {
+        if (!isValidCard(card)) {
+          issues.push(`${moodKey}/${count}: invalid card at position ${index + 1}`);
+        }
+      });
+    });
+  });
+
+  if (issues.length > 0) {
+    console.warn("Deck validation warnings:\n" + issues.join("\n"));
+  }
+
+  return issues;
+}
+
+validateMoodDecks();
+
+// ========================================
 // COURSES DATA
 // Structured course data for the catalog and course detail views.
 // Edit course title → subtitle → category → chapters → lessons.
@@ -1485,12 +1594,19 @@ const cardLengthOptions = [
 const coursesData = {
   'confident-connection': {
     id: 'confident-connection',
-    title: '1.  Confident Connection click ▼ ' ,
-   // category: 'For Him',
+    title: 'Confident Connection',
+    category: 'For Him',
     subtitle: 'Build confidence & presence',
     chapters: 8,
-   // time: '~25 min',
+    time: '~25 min',
+    tags: ['for-him', 'connection'],
     summary: 'Courses focused on confidence, communication, intimacy, and being a better partner.',
+    outcomes: [
+      'Practice grounded presence instead of performing confidence.',
+      'Notice emotional signals through words, tone and body language.',
+      'Ask clearer questions and respond with more attention.',
+      'Build comfort through steady, low-pressure connection.'
+    ],
     sections: [
       {
         title: 'Overview',
@@ -1514,29 +1630,114 @@ const coursesData = {
   },
   'better-communication': {
     id: 'better-communication',
-    title: '2.  Better Communication ▼',
+    title: 'Better Communication',
     category: 'For Him',
     subtitle: 'Listen & express clearly',
     chapters: 7,
-// time: '~22 min',
+    time: '~22 min',
+    tags: ['for-him', 'communication'],
     summary: 'Learn how to listen, express yourself, and handle difficult conversations.',
+    outcomes: [
+      'Listen without preparing a defensive response.',
+      'Express needs clearly and without accusation.',
+      'Handle difficult conversations with more steadiness.'
+    ],
     sections: [
       { title: 'Lessons', lessons: ['Intro', 'Listening', 'Non-defensive speech', 'Asking vs accusing', 'Practical exercises', 'Practice', 'Final challenge'] }
     ]
   },
   'art-of-romance': {
     id: 'art-of-romance',
-    title: '3.  The Art of Romance ▼',
+    title: 'The Art of Romance',
     category: 'For Him',
     subtitle: 'Create small romantic moments',
     chapters: 8,
-   // time: '~25 min',
+    time: '~25 min',
+    tags: ['for-him', 'romance'],
     summary: 'Turn everyday moments into meaningful romantic experiences.',
+    outcomes: [
+      'Create small rituals that make everyday connection feel intentional.',
+      'Choose thoughtful gestures that carry personal meaning.',
+      'Design date nights around attention and connection.'
+    ],
     sections: [
       { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
     ]
   }
 };
+
+// ========================================
+// COURSE DISCOVERY AND PROGRESS CONFIGURATION
+// Filters reflect categories actually present in coursesData; progress stays local to this device.
+// Supabase integration can replace these storage helpers later without changing course renderers.
+// ========================================
+const courseFilterOptions = [
+  { id: 'all', label: 'All' },
+  { id: 'for-him', label: 'For Him' },
+  { id: 'communication', label: 'Communication' },
+  { id: 'romance', label: 'Romance' },
+  { id: 'connection', label: 'Connection' }
+];
+const COURSE_PROGRESS_KEY = 'flirtyflip-course-progress-v1';
+
+function getFlatCourseLessons(course) {
+  if (!course || !Array.isArray(course.sections)) return [];
+  return course.sections.flatMap((section, sectionIndex) => section.lessons.map((content, lessonIndex) => ({
+    content,
+    sectionTitle: section.title,
+    sectionIndex,
+    lessonIndex
+  })));
+}
+
+function readCourseProgress() {
+  try {
+    const raw = localStorage.getItem(COURSE_PROGRESS_KEY);
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch (error) {
+    return {};
+  }
+}
+
+function writeCourseProgress(progress) {
+  try {
+    localStorage.setItem(COURSE_PROGRESS_KEY, JSON.stringify(progress));
+  } catch (error) {
+    console.warn('Unable to save course progress.', error);
+  }
+}
+
+function getCourseProgress(courseId) {
+  const progress = readCourseProgress()[courseId];
+  if (!progress || !Array.isArray(progress.completed)) return null;
+  return {
+    lastLesson: Math.max(0, Number(progress.lastLesson) || 0),
+    completed: [...new Set(progress.completed.map(Number).filter(Number.isInteger))]
+  };
+}
+
+function saveCourseProgress(courseId, lessonIndex, { complete = false } = {}) {
+  const course = coursesData[courseId];
+  const lessons = getFlatCourseLessons(course);
+  if (!course || !lessons[lessonIndex]) return;
+
+  const allProgress = readCourseProgress();
+  const current = getCourseProgress(courseId) || { lastLesson: 0, completed: [] };
+  current.lastLesson = lessonIndex;
+  if (complete && !current.completed.includes(lessonIndex)) current.completed.push(lessonIndex);
+  current.completed = current.completed.filter((index) => index >= 0 && index < lessons.length);
+  allProgress[courseId] = current;
+  writeCourseProgress(allProgress);
+}
+
+function getCourseProgressPercent(courseId) {
+  const course = coursesData[courseId];
+  const total = getFlatCourseLessons(course).length;
+  const progress = getCourseProgress(courseId);
+  if (!progress || total === 0) return null;
+  return Math.round((progress.completed.length / total) * 100);
+}
 
 function getGuestKey() {
   return "flirtyflip-guest";
@@ -1596,6 +1797,11 @@ function updateFavoritesBadge() {
   el.classList.toggle('hidden', favs.length === 0);
 }
 
+// ========================================
+// AUTHENTICATION WORKFLOW
+// Initializes Supabase or guest sessions and owns login, signup, reset and logout behavior.
+// Edit account-provider behavior here; edit modal fields and provider configuration in index.html.
+// ========================================
 async function initializeAuth() {
   const guestProfile = readStoredGuest();
   if (guestProfile) signedInUser = guestProfile;
@@ -1778,7 +1984,9 @@ async function sendPasswordReset() {
   if (!client) { setAuthStatus('Password reset is not available: Supabase not configured or failed to load.', true); return; }
 
   try {
-    const { data, error } = await client.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+    // Always return recovery links to the SPA root so a deep current route cannot become a broken callback URL.
+    const passwordResetUrl = new URL(ROUTE_PATHS.home, window.location.origin).href;
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: passwordResetUrl });
     if (error) throw error;
     setAuthStatus('If an account exists for that email, a reset link has been sent. Check your inbox.');
   } catch (e) {
@@ -1938,29 +2146,293 @@ function applyHeroMood(key) {
   } catch (e) { /* ignore errors in non-ideal DOM states */ }
 }
 
-function hidePages() {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  window.scrollTo({top:0, behavior:"smooth"});
+// ========================================
+// GAME SESSION STORAGE
+// Persists only navigation-critical round state for refreshes in this tab.
+// Card content remains sourced from moodQuestionSets and is never duplicated in storage.
+// ========================================
+function persistGameSession(status = gameSessionStatus) {
+  if (typeof sessionStorage === "undefined" || !GAME_SESSION_STATUSES.has(status)) return;
+
+  gameSessionStatus = status;
+  const snapshot = {
+    mood: selectedMood,
+    length: selectedLength,
+    index: currentIndex,
+    skipped,
+    playConfirmed,
+    status
+  };
+
+  try {
+    sessionStorage.setItem(GAME_SESSION_KEY, JSON.stringify(snapshot));
+  } catch (error) {
+    console.warn("Unable to persist the active game session.", error);
+  }
 }
-function showPage(id) {
-  hidePages();
-  $(id).classList.add("active");
+
+// Restore a saved setup/round only when every required value is valid.
+// Invalid or outdated data is removed so route guards can recover safely.
+function restoreGameSession() {
+  if (typeof sessionStorage === "undefined") return false;
+
+  try {
+    const raw = sessionStorage.getItem(GAME_SESSION_KEY);
+    if (!raw) return false;
+
+    const saved = JSON.parse(raw);
+    const hasMood = Boolean(saved && moods[saved.mood]);
+    const hasLength = cardLengthOptions.some(({ count }) => count === Number(saved?.length));
+    const hasStatus = GAME_SESSION_STATUSES.has(saved?.status);
+    if (!hasMood || !hasLength || !hasStatus) throw new Error("Invalid saved game state");
+
+    const pool = getQuestionPool(saved.mood, Number(saved.length));
+    const restoredCards = Array.isArray(pool)
+      ? pool.slice(0, Number(saved.length)).filter(isValidCard)
+      : [];
+    if (restoredCards.length === 0) throw new Error("Saved deck is unavailable");
+
+    selectedMood = saved.mood;
+    selectedLength = Number(saved.length);
+    currentCards = restoredCards;
+    currentIndex = Math.max(0, Math.min(Number(saved.index) || 0, restoredCards.length - 1));
+    skipped = Math.max(0, Math.min(Number(saved.skipped) || 0, restoredCards.length));
+    playConfirmed = Boolean(saved.playConfirmed);
+    gameSessionStatus = saved.status;
+    return true;
+  } catch (error) {
+    sessionStorage.removeItem(GAME_SESSION_KEY);
+    gameSessionStatus = "idle";
+    console.warn("Discarded an invalid saved game session.", error);
+    return false;
+  }
 }
-function showHome(){ showPage("home"); }
-function showMoods(){ renderMoodCards("mood-list"); showPage("moods"); }
-function showHow(){ showPage("how"); }
+
+// Clear only the current round. Guest identity and favorites use separate storage keys.
+function clearGameSession() {
+  if (typeof sessionStorage !== "undefined") sessionStorage.removeItem(GAME_SESSION_KEY);
+  currentCards = [];
+  currentIndex = 0;
+  skipped = 0;
+  flipped = false;
+  favorite = false;
+  playConfirmed = false;
+  gameSessionStatus = "idle";
+}
+
+// ========================================
+// ROUTE RESOLUTION
+// Maps browser paths to existing SPA screens without changing the page markup.
+// Add future public routes here before adding navigation calls elsewhere.
+// ========================================
+function normalizePathname(pathname) {
+  if (!pathname || pathname === "/") return ROUTE_PATHS.home;
+  const normalized = pathname.replace(/\/{2,}/g, "/").replace(/\/$/, "");
+  return normalized || ROUTE_PATHS.home;
+}
+
+function resolveRoute(pathname) {
+  const path = normalizePathname(pathname);
+  if (path.startsWith(`${ROUTE_PATHS.course}/`)) {
+    return { name: "course", slug: decodeURIComponent(path.slice(ROUTE_PATHS.course.length + 1)) };
+  }
+
+  const routeNames = {
+    [ROUTE_PATHS.home]: "home",
+    [ROUTE_PATHS.play]: "play",
+    [ROUTE_PATHS.setup]: "setup",
+    [ROUTE_PATHS.game]: "game",
+    [ROUTE_PATHS.results]: "results",
+    [ROUTE_PATHS.games]: "games",
+    [ROUTE_PATHS.courses]: "courses",
+    [ROUTE_PATHS.online]: "online",
+    [ROUTE_PATHS.how]: "how",
+    [ROUTE_PATHS.support]: "support"
+  };
+
+  return routeNames[path] ? { name: routeNames[path] } : { name: "not-found" };
+}
+
+// ========================================
+// SCREEN ACTIVATION
+// This is the only low-level function that changes which existing section is visible.
+// Public show* functions below update browser history before reaching this boundary.
+// ========================================
+function activatePage(id, navigationType = "navigate") {
+  document.querySelectorAll(".page").forEach((page) => page.classList.remove("active"));
+  const target = $(id);
+  if (!target) return false;
+  target.classList.add("active");
+  window.scrollTo({ top: 0, behavior: navigationType === "navigate" ? "smooth" : "auto" });
+  return true;
+}
+
+// Update browser metadata after a route succeeds so deep pages and analytics stay accurate.
+function updateRouteMetadata(route, url) {
+  const titles = {
+    home: "FLIRTYFLIP — Couple Games Online | Questions & Date Night Games.",
+    play: "Choose a Mood — FLIRTYFLIP",
+    setup: "Choose Your Deck — FLIRTYFLIP",
+    game: "Playing — FLIRTYFLIP",
+    results: "Date Night Complete — FLIRTYFLIP",
+    games: "Games — FLIRTYFLIP",
+    courses: "Courses — FLIRTYFLIP",
+    course: "Course — FLIRTYFLIP",
+    online: "Play Online — FLIRTYFLIP",
+    how: "How It Works — FLIRTYFLIP",
+    support: "Support — FLIRTYFLIP"
+  };
+  document.title = titles[route.name] || titles.home;
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = `${window.location.origin}${url.pathname}`;
+
+  // Mark the owning primary navigation item for assistive technology and visual state.
+  const activeGroup = route.name === 'course' ? 'courses'
+    : ['setup', 'game', 'results'].includes(route.name) ? 'play'
+      : route.name;
+  document.querySelectorAll('[data-nav-route]').forEach((item) => {
+    if (item.dataset.navRoute === activeGroup) item.setAttribute('aria-current', 'page');
+    else item.removeAttribute('aria-current');
+  });
+}
+
+// Send one Google Analytics page view for each distinct rendered SPA location.
+// The initial gtag config disables its automatic page view to prevent double counting.
+function trackRoutePageView(url) {
+  const locationKey = `${url.pathname}${url.search}`;
+  if (lastTrackedLocation === locationKey) return;
+  lastTrackedLocation = locationKey;
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "page_view", {
+      page_path: locationKey,
+      page_location: url.href,
+      page_title: document.title
+    });
+  }
+}
+
+// Replace a blocked or unknown URL and immediately render its safe destination.
+function redirectRoute(path) {
+  window.history.replaceState({ flirtyFlipRoute: true }, "", path);
+  renderCurrentRoute("replace");
+}
+
+// ========================================
+// ROUTE RENDERER AND GUARDS
+// Renders existing screens for the current URL. /game and /results require valid session state.
+// Back, Forward, direct links and refreshes all pass through this function.
+// ========================================
+function renderCurrentRoute(navigationType = "navigate") {
+  const url = new URL(window.location.href);
+  const route = resolveRoute(url.pathname);
+
+  if (route.name === "not-found") return redirectRoute(ROUTE_PATHS.home);
+  if (route.name === "setup" && gameSessionStatus === "idle") return redirectRoute(ROUTE_PATHS.play);
+  if (route.name === "game" && !["active", "complete"].includes(gameSessionStatus)) return redirectRoute(ROUTE_PATHS.play);
+  if (route.name === "results" && gameSessionStatus !== "complete") return redirectRoute(ROUTE_PATHS.play);
+  if (route.name === "course" && !coursesData[route.slug]) return redirectRoute(ROUTE_PATHS.courses);
+  if (route.name === "games" && url.searchParams.get("game") && !getGameCatalogItem(url.searchParams.get("game"))) return redirectRoute(ROUTE_PATHS.games);
+  if (route.name === "course" && url.searchParams.has("lesson")) {
+    const requestedLesson = Number(url.searchParams.get("lesson")) - 1;
+    if (!Number.isInteger(requestedLesson) || !getFlatCourseLessons(coursesData[route.slug])[requestedLesson]) {
+      return redirectRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(route.slug)}`);
+    }
+  }
+
+  if (route.name === "home") activatePage("home", navigationType);
+  if (route.name === "play") {
+    renderMoodCards("mood-list");
+    activatePage("moods", navigationType);
+  }
+  if (route.name === "setup") {
+    renderSetupScreen();
+    activatePage("setup", navigationType);
+  }
+  if (route.name === "game") {
+    $("game-mood-label").textContent = moods[selectedMood].title.toUpperCase();
+    updateGame(true);
+    activatePage("game", navigationType);
+  }
+  if (route.name === "results") {
+    renderResultsScreen();
+    activatePage("complete", navigationType);
+  }
+  if (route.name === "games") {
+    if (url.searchParams.get("view") === "favorites") renderFavoritesCatalog();
+    else if (url.searchParams.get("game")) renderGameDetail(url.searchParams.get("game"));
+    else renderGamesCatalog(url.searchParams.get("filter") || "all");
+    activatePage("catalog", navigationType);
+  }
+  if (route.name === "courses") {
+    renderCoursesCatalog(url.searchParams.get("filter") || "all");
+    activatePage("catalog", navigationType);
+  }
+  if (route.name === "course") {
+    const requestedLesson = url.searchParams.has("lesson") ? Number(url.searchParams.get("lesson")) - 1 : null;
+    if (requestedLesson === null) renderCourseDetail(route.slug);
+    else renderCourseLesson(route.slug, requestedLesson);
+    activatePage("catalog", navigationType);
+  }
+  if (route.name === "online") {
+    renderOnlineRoute(url);
+    activatePage("online", navigationType);
+  }
+  if (route.name === "how") activatePage("how", navigationType);
+  if (route.name === "support") {
+    renderSupportContent(url.searchParams.get("section") || "index");
+    activatePage("support", navigationType);
+  }
+
+  updateRouteMetadata(route, url);
+  trackRoutePageView(url);
+}
+
+// Push or replace a same-origin SPA location, then render it through the shared router.
+function navigateToRoute(path, { replace = false } = {}) {
+  const target = new URL(path, window.location.origin);
+  if (target.origin !== window.location.origin) return;
+  const destination = `${target.pathname}${target.search}${target.hash}`;
+  const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const method = replace || destination === current ? "replaceState" : "pushState";
+  window.history[method]({ flirtyFlipRoute: true }, "", destination);
+  renderCurrentRoute(method === "pushState" ? "navigate" : "replace");
+}
+
+// Initialize route state once after all screen data and handlers are available.
+function initializeRouter() {
+  if (routerInitialized) return;
+  routerInitialized = true;
+  restoreGameSession();
+  window.addEventListener("popstate", () => renderCurrentRoute("popstate"));
+  window.history.replaceState({ flirtyFlipRoute: true }, "", `${window.location.pathname}${window.location.search}${window.location.hash}`);
+  renderCurrentRoute("initial");
+}
+
+// ========================================
+// PUBLIC NAVIGATION API
+// Existing inline controls call these helpers; each now keeps History API state in sync.
+// ========================================
+function showHome() { navigateToRoute(ROUTE_PATHS.home); }
+function showMoods() { navigateToRoute(ROUTE_PATHS.play); }
+function showHow() { navigateToRoute(ROUTE_PATHS.how); }
 
 // ========================================
 // ONLINE LOBBY ENTRY
 // If a room code exists in the URL, the visitor is treated as the partner.
 // ========================================
-function showOnline() {
-  const params = new URLSearchParams(window.location.search);
-  const room = params.get("room");
+function renderOnlineRoute(url) {
+  const room = url.searchParams.get("room");
   onlineRole = room ? "guest" : "host";
   onlineRoomCode = room || "";
   renderOnlineMoodStep();
-  showPage("online");
+}
+
+function showOnline() {
+  const currentUrl = new URL(window.location.href);
+  const room = currentUrl.pathname === ROUTE_PATHS.online ? currentUrl.searchParams.get("room") : "";
+  navigateToRoute(room ? `${ROUTE_PATHS.online}?room=${encodeURIComponent(room)}` : ROUTE_PATHS.online);
 }
 
 
@@ -2026,9 +2498,12 @@ function chooseOnlineLength(btn, length) {
 // ========================================
 function createOnlineRoom() {
   if (!onlineRoomCode) onlineRoomCode = Math.random().toString(36).slice(2, 8).toUpperCase();
-  const url = `${window.location.origin}${window.location.pathname}?room=${onlineRoomCode}`;
-  history.replaceState({}, "", url);
-  renderOnlineWaiting(url);
+  const roomUrl = new URL(ROUTE_PATHS.online, window.location.origin);
+  roomUrl.searchParams.set("room", onlineRoomCode);
+  window.history.replaceState({ flirtyFlipRoute: true }, "", `${roomUrl.pathname}${roomUrl.search}`);
+  updateRouteMetadata({ name: "online" }, roomUrl);
+  trackRoutePageView(roomUrl);
+  renderOnlineWaiting(roomUrl.href);
 }
 
 function renderOnlineWaiting(url) {
@@ -2086,16 +2561,36 @@ function updateOnlineSteps(activeStep) {
 function startOnlineGame() {
   selectedMood = onlineMood;
   selectedLength = onlineLength;
+  gameSessionStatus = "setup";
+  persistGameSession("setup");
   startGame();
 }
 
 function selectMood(key) {
+  if (!moods[key]) return;
   selectedMood = key;
+  selectedLength = cardLengthOptions[0].count;
+  currentCards = [];
+  currentIndex = 0;
+  skipped = 0;
+  gameSessionStatus = "setup";
   applyHeroMood(key);
-  const m = moods[key];
+  persistGameSession("setup");
+  navigateToRoute(ROUTE_PATHS.setup);
+}
+
+// ========================================
+// LOCAL GAME SETUP RENDERER
+// Rebuilds the selected mood and card length after navigation or a page refresh.
+// Edit deck option copy in cardLengthOptions rather than inside this template.
+// ========================================
+function renderSetupScreen() {
+  const m = moods[selectedMood];
+  if (!m) return;
+
   // Render setup screen using cardLengthOptions so each option's text is easy to edit.
-  const lengthButtons = cardLengthOptions.map((opt, i) => `
-    <button class="length-btn ${i === 0 ? 'selected' : ''}" onclick="chooseLength(this,${opt.count})">${opt.title}<br><small>${opt.subtitle}</small></button>
+  const lengthButtons = cardLengthOptions.map((opt) => `
+    <button class="length-btn ${selectedLength === opt.count ? 'selected' : ''}" onclick="chooseLength(this,${opt.count})">${opt.title}<br><small>${opt.subtitle}</small></button>
   `).join('');
 
   $("setup-content").innerHTML = `
@@ -2103,39 +2598,33 @@ function selectMood(key) {
     <div class="eyebrow">${m.title.toUpperCase()} MODE</div>
     <h2 class="setup-title">${m.title}</h2>
     <p class="setup-desc">${m.desc}</p>
-    ${key === "spicy" ? `<p class="setup-desc"><strong>18+ only.</strong> Every card is optional. Consent first, always.</p>` : ""}
+    ${selectedMood === "spicy" ? `<p class="setup-desc"><strong>18+ only.</strong> Every card is optional. Consent first, always.</p>` : ""}
     <div class="length-options">
       ${lengthButtons}
     </div>
     <button class="pill-btn start-btn" onclick="startGame()">Start ${m.title} →</button>
   `;
-  selectedLength = cardLengthOptions[0].count;
-  showPage("setup");
 }
 
 function chooseLength(btn, length) {
-  document.querySelectorAll(".length-btn").forEach(b => b.classList.remove("selected"));
+  if (!cardLengthOptions.some(({ count }) => count === Number(length))) return;
+  document.querySelectorAll("#setup .length-btn").forEach(b => b.classList.remove("selected"));
   btn.classList.add("selected");
-  selectedLength = length;
+  selectedLength = Number(length);
+  persistGameSession("setup");
 }
 
-function shuffle(array) {
-  return [...array].sort(() => Math.random() - .5);
-}
-
+// ========================================
+// GAME STARTUP
+// Validates confirmation and deck availability, initializes round state, then enters /game.
+// Edit startup rules here; edit selectable deck labels in cardLengthOptions above.
+// ========================================
 function startGame() {
   // Require explicit confirmation before starting a play session
   if (!playConfirmed) {
     showPlayConfirmation();
     return;
   }
-
-  // const pool = getQuestionPool(selectedMood, selectedLength);
-  // currentCards = [];
-  // while (currentCards.length < selectedLength) {
-  //   currentCards = [...currentCards, ...shuffle(pool)];
-  // }
-  // currentCards = currentCards.slice(0, selectedLength);
 
 // ========================================
 // LOAD CARDS IN EXACT ARRAY ORDER
@@ -2148,15 +2637,29 @@ function startGame() {
 
 const pool = getQuestionPool(selectedMood, selectedLength);
 
-currentCards = [...pool].slice(0, selectedLength);
+  if (!Array.isArray(pool) || pool.length === 0) {
+    console.error(`Cannot start game: ${selectedMood}/${selectedLength} has no cards.`);
+    toast("This deck is not available yet.");
+    return;
+  }
+
+  currentCards = pool.slice(0, selectedLength).filter(isValidCard);
+  if (currentCards.length === 0) {
+    console.error(`Cannot start game: ${selectedMood}/${selectedLength} has no valid cards.`);
+    toast("This deck is not available yet.");
+    return;
+  }
+
   currentIndex = 0;
   skipped = 0;
   flipped = false;
   favorite = false;
   $("favorite-btn").textContent = "♡";
+  $("favorite-btn").setAttribute("aria-label", "Save this card to favorites");
   $("game-mood-label").textContent = moods[selectedMood].title.toUpperCase();
   updateGame(true);
-  showPage("game");
+  persistGameSession("active");
+  navigateToRoute(ROUTE_PATHS.game);
 }
 
 // Show the play confirmation modal (age + consent checks)
@@ -2201,26 +2704,53 @@ function confirmAndStart() {
 // Every new card starts revealed so there is never a second click just to open it.
 // ========================================
 function updateGame(reveal = true) {
+  const totalCards = currentCards.length;
+  if (totalCards === 0) {
+    console.error("Cannot update game without an active deck.");
+    return;
+  }
+
+  currentIndex = Math.max(0, Math.min(currentIndex, totalCards - 1));
   const card = currentCards[currentIndex];
+  if (!isValidCard(card)) {
+    console.error(`Invalid card at position ${currentIndex + 1}.`);
+    return;
+  }
+
   const scene = $("card-scene");
-  $("game-count").textContent = `${currentIndex + 1} / ${selectedLength}`;
-  $("progress-fill").style.width = `${((currentIndex + 1) / selectedLength) * 100}%`;
+  $("game-count").textContent = `${currentIndex + 1} / ${totalCards}`;
+  $("progress-fill").style.width = `${((currentIndex + 1) / totalCards) * 100}%`;
+  const progress = $("game-progress");
+  if (progress) {
+    progress.setAttribute("aria-valuemax", String(totalCards));
+    progress.setAttribute("aria-valuenow", String(currentIndex + 1));
+  }
   $("front-category").textContent = moods[selectedMood].title.toUpperCase();
   $("front-number").textContent = String(currentIndex + 1).padStart(2,"0");
   $("prompt-type").textContent = card[0];
   $("question-text").textContent = card[1];
-  $("game-hint").textContent = reveal ? "Tap the card or NEXT CARD for another prompt" : "Tap the card to reveal the next prompt";
+  $("game-hint").textContent = reveal ? "Tap for the next card" : "Tap to reveal";
 
   // Update favorite button state based on persisted favorites for this card
   const currentText = card ? card[1] : null;
   const isFav = isFavoriteCard(currentText);
   favorite = isFav;
   const favBtn = $("favorite-btn");
-  if (favBtn) favBtn.textContent = isFav ? "♥" : "♡";
+  if (favBtn) {
+    favBtn.textContent = isFav ? "♥" : "♡";
+    favBtn.setAttribute("aria-label", isFav ? "Remove this card from favorites" : "Save this card to favorites");
+  }
 
   // Apply the selected mood to the card so its pattern and glow change with the deck.
   scene.className = `card-scene mood-${selectedMood}${reveal ? " revealed" : ""}`;
   flipped = reveal;
+
+  const previousButton = $("previous-card-btn");
+  const nextButton = $("next-card-btn");
+  if (previousButton) previousButton.disabled = currentIndex === 0;
+  if (nextButton) nextButton.innerHTML = currentIndex === totalCards - 1 ? 'FINISH <span>→</span>' : 'NEXT CARD <span>→</span>';
+
+  if (gameSessionStatus === "active") persistGameSession("active");
 }
 
 // ========================================
@@ -2236,54 +2766,61 @@ let cardTransitioning = false;
 
 // ========================================
 // CARD SWEEP TRANSITION
-// The current card lifts/slides away, then the next prompt enters revealed.
+// Uses animationend instead of chained timers so state changes match the actual rendered motion.
+// Both directions share this controller; CSS owns timing and reduced-motion behavior.
 // ========================================
-function advanceCardWithSweep() {
-  if (cardTransitioning) return;
-  if (currentIndex >= selectedLength - 1) {
-    finishGame();
-    return;
-  }
-
-  cardTransitioning = true;
-  const scene = $("card-scene");
-  scene.classList.add("sweeping");
-  $("game-hint").textContent = "Next card…";
-
-  setTimeout(() => {
-    currentIndex++;
-    updateGame(true);
-    scene.classList.remove("sweeping");
-    scene.classList.add("card-enter");
-
-    setTimeout(() => {
-      scene.classList.remove("card-enter");
-      cardTransitioning = false;
-    }, 420);
-  }, 360);
+function setGameControlsDisabled(disabled) {
+  [$("previous-card-btn"), $("skip-card-btn"), $("next-card-btn")].filter(Boolean).forEach((button) => {
+    button.disabled = disabled;
+  });
 }
 
-// Go to previous card with a mirrored sweep animation. Keeps the same UX but moves backward.
-function retreatCardWithSweep() {
-  if (cardTransitioning) return;
-  if (currentIndex <= 0) return; // nothing to go back to
+function transitionCard(direction) {
+  if (cardTransitioning || ![-1, 1].includes(direction)) return;
+  if (direction > 0 && currentIndex >= currentCards.length - 1) return finishGame();
+  if (direction < 0 && currentIndex <= 0) return;
+
+  const scene = $("card-scene");
+  if (!scene) return;
+  const exitClass = direction > 0 ? "sweeping" : "sweeping-back";
+  const enterClass = direction > 0 ? "card-enter" : "card-enter-back";
+  let phase = "exit";
 
   cardTransitioning = true;
-  const scene = $("card-scene");
-  scene.classList.add("sweeping-back");
-  $("game-hint").textContent = "Previous card…";
+  setGameControlsDisabled(true);
+  scene.setAttribute("aria-busy", "true");
+  $("game-hint").textContent = direction > 0 ? "Next card…" : "Previous card…";
 
-  setTimeout(() => {
-    currentIndex--;
-    updateGame(true);
-    scene.classList.remove("sweeping-back");
-    scene.classList.add("card-enter-back");
+  const handleAnimationEnd = (event) => {
+    if (event.target !== scene) return;
 
-    setTimeout(() => {
-      scene.classList.remove("card-enter-back");
-      cardTransitioning = false;
-    }, 420);
-  }, 360);
+    if (phase === "exit") {
+      phase = "enter";
+      currentIndex += direction;
+      updateGame(true);
+      scene.classList.add(enterClass);
+      return;
+    }
+
+    scene.classList.remove(enterClass);
+    scene.removeEventListener("animationend", handleAnimationEnd);
+    scene.removeAttribute("aria-busy");
+    cardTransitioning = false;
+    setGameControlsDisabled(false);
+    const previousButton = $("previous-card-btn");
+    if (previousButton) previousButton.disabled = currentIndex === 0;
+  };
+
+  scene.addEventListener("animationend", handleAnimationEnd);
+  scene.classList.add(exitClass);
+}
+
+function advanceCardWithSweep() {
+  transitionCard(1);
+}
+
+function retreatCardWithSweep() {
+  transitionCard(-1);
 }
 
 function prevCard() {
@@ -2299,7 +2836,9 @@ function nextCard() {
 }
 
 function skipCard() {
+  if (cardTransitioning) return;
   skipped++;
+  persistGameSession("active");
   toast("Card skipped — no pressure ♡");
   nextCard();
 }
@@ -2312,7 +2851,11 @@ function toggleFavorite() {
   const card = currentCards[currentIndex];
   const text = card ? card[1] : null;
   const added = toggleFavoriteForCard(text);
-  $("favorite-btn").textContent = added ? "♥" : "♡";
+  const favBtn = $("favorite-btn");
+  if (favBtn) {
+    favBtn.textContent = added ? "♥" : "♡";
+    favBtn.setAttribute("aria-label", added ? "Remove this card from favorites" : "Save this card to favorites");
+  }
   toast(added ? "Saved to favorites ♡" : "Removed from favorites");
 }
 
@@ -2320,18 +2863,31 @@ function toggleFavorite() {
 // GAME COMPLETION
 // Show the final stats after the last card.
 // ========================================
-function finishGame() {
-  $("stat-played").textContent = selectedLength - skipped;
+function renderResultsScreen() {
+  const played = Math.max(0, currentCards.length - skipped);
+  $("stat-played").textContent = played;
   $("stat-skipped").textContent = skipped;
   $("stat-mood").textContent = moods[selectedMood].icon;
-  $("complete-copy").textContent = `You played ${selectedLength - skipped} cards together. The best part was probably the conversation after them.`;
-  showPage("complete");
+  $("complete-copy").textContent = `You played ${played} cards together. The best part was probably the conversation after them.`;
 }
 
-function restartGame(){ startGame(); }
+function finishGame() {
+  renderResultsScreen();
+  persistGameSession("complete");
+  navigateToRoute(ROUTE_PATHS.results);
+}
+
+function restartGame() { startGame(); }
 
 function confirmExit(){ $("modal").classList.remove("hidden"); }
 function closeModal(){ $("modal").classList.add("hidden"); }
+
+// Confirmed exits remove the resumable round before returning to mood selection.
+function exitGameToMoods() {
+  closeModal();
+  clearGameSession();
+  showMoods();
+}
 
 let toastTimer;
 function toast(message){
@@ -2383,27 +2939,7 @@ function bindAuthEvents() {
   }
 
   if (navFav) {
-    navFav.addEventListener('click', () => {
-      const favs = readFavorites();
-      const target = $('catalog-content');
-      if (!target) {
-        toast(`You have ${favs.length} favorites`);
-        return;
-      }
-      if (!favs || favs.length === 0) {
-        toast('No favorites saved yet ♡');
-        return;
-      }
-      const items = favs.map((t, i) => `<div class="catalog-item"><h3>Favorite ${i+1}</h3><p>${t}</p></div>`);
-      document.getElementById('catalog-heading').textContent = 'Favorites';
-      target.innerHTML = `
-        <div class="catalog-grid">
-          ${items.join('')}
-        </div>
-        <div class="catalog-actions"><button class="pill-btn" onclick="showMoods()">Play a mood →</button></div>
-      `;
-      showPage('catalog');
-    });
+    navFav.addEventListener('click', showFavorites);
   }
 
   if (authClose) {
@@ -2426,143 +2962,364 @@ if (typeof document !== 'undefined') {
   updateFavoritesBadge();
   initializeAuth();
   bindNavEvents();
+  bindCatalogEvents();
+  initializeRouter();
 }
 
-// Flush queued actions from early wrapper (if any)
-if (typeof window !== 'undefined' && Array.isArray(window.__pairplay_pendingActions)) {
-  setTimeout(() => {
-    window.__pairplay_pendingActions.forEach(call => {
-      try {
-        if (typeof window[call.fn] === 'function') window[call.fn].apply(null, call.args);
-      } catch (e) { console.warn('Flushing queued action failed', call.fn, e); }
-    });
-    window.__pairplay_pendingActions = [];
-  }, 60);
+// ========================================
+// HEADER AND MOBILE NAVIGATION
+// Desktop dropdowns, the focus-trapped mobile drawer and shared route links are bound here once.
+// Edit navigation destinations in index.html; edit interaction behavior in bindNavEvents().
+// ========================================
+
+// ========================================
+// SHARED CATALOG SHELL
+// Configures the reusable header and Back action for games, courses and detail views.
+// Renderers should call this once before writing catalog-content.
+// ========================================
+function configureCatalogShell({ eyebrow, title, subtitle, backRoute = ROUTE_PATHS.home, hideHeader = false, view = "catalog" }) {
+  const page = $("catalog");
+  const heading = page?.querySelector(".page-heading");
+  if (!page || !heading) return;
+
+  page.dataset.catalogView = view;
+  heading.hidden = hideHeader;
+  $("catalog-eyebrow").textContent = eyebrow;
+  $("catalog-heading").textContent = title;
+  $("catalog-sub").textContent = subtitle;
+  catalogBackRoute = backRoute;
 }
 
-// -----------------------------
-// Navigation behaviors (mega menus + mobile drawer)
-// -----------------------------
+// ========================================
+// GAMES CATALOG COMPONENTS
+// Visual discovery cards are generated from gameCatalogData and existing mood metadata.
+// Filters and detail links stay in the URL so reload and browser history remain deterministic.
+// ========================================
+function renderIntensity(intensity) {
+  if (!intensity) return "";
+  const level = (intensity.match(/★/g) || []).length;
+  return `<span class="intensity-meter" aria-label="Intensity ${level} out of 5">${escapeHtml(intensity)}</span>`;
+}
 
-// Render a simple catalog page for games or courses based on the clicked heading
-function showCatalog(type = 'games', heading = '') {
-  const target = $('catalog-content');
-  if (!target) return;
-  const title = heading || (type === 'courses' ? 'Courses' : 'Games');
-  document.getElementById('catalog-heading').textContent = title;
-  const items = [];
-
-  if (type === 'courses') {
-    // Use the structured coursesData to render course cards
-    const courseSamples = Object.values(coursesData).map(c => ({ id: c.id, title: c.title, subtitle: c.subtitle, chapters: c.chapters || (c.sections ? c.sections.length : 0), time: c.time || '' }));
-    courseSamples.forEach(c => items.push(`<div class="catalog-item" onclick="showCourseDetail('${c.id}')"><h3>${c.title}</h3><p>${c.subtitle}</p><small>${c.chapters} chapters · ${c.time}</small></div>`));
-
-    target.innerHTML = `
-      <div class="catalog-grid">
-        ${items.join('')}
+function renderGameCard(game) {
+  const route = `${ROUTE_PATHS.games}?game=${encodeURIComponent(game.id)}`;
+  return `
+    <article class="discovery-card" style="--game-accent:${escapeHtml(moods[game.moodKey]?.color || '#ff2449')}">
+      <div class="discovery-card__art" aria-hidden="true"><span>${escapeHtml(game.icon)}</span></div>
+      <div class="discovery-card__body">
+        <div class="card-kicker">${escapeHtml(game.categories[0].replace(/-/g, ' '))}</div>
+        <h3>${escapeHtml(game.title)}</h3>
+        <p>${escapeHtml(game.description)}</p>
+        <div class="metadata-row" aria-label="Game details">
+          <span>2 players</span><span>${escapeHtml(game.duration)}</span><span>${escapeHtml(String(game.deckSize))} cards</span>
+        </div>
       </div>
-      <div class="catalog-actions"><button class="pill-btn" onclick="showMoods()">Play related mood</button></div>
-    `;
-  } else {
-    // Games: synthesize a few related lists using the link text as a hint
-    items.push(`<div class="catalog-item"><h3>${title}</h3><p>Collection of ${title.toLowerCase()} — tap to start a sample night.</p></div>`);
-    items.push(`<div class="catalog-item"><h3>Quick ${title}</h3><p>Short 10-card rounds for a playful evening.</p></div>`);
-    items.push(`<div class="catalog-item"><h3>Deep ${title}</h3><p>Longer 50-card sessions for meaningful conversations.</p></div>`);
-
-    target.innerHTML = `
-      <div class="catalog-grid">
-        ${items.join('')}
+      <div class="discovery-card__footer">
+        ${renderIntensity(game.intensity)}
+        <a class="card-cta" href="${route}" data-route="${route}">View game <span aria-hidden="true">→</span></a>
       </div>
-      <div class="catalog-actions"><button class="pill-btn" onclick="showMoods()">Play related mood</button></div>
-    `;
-  }
-
-  showPage('catalog');
+    </article>
+  `;
 }
 
-// Show an expanded course detail view (local sample)
-function showCourseDetail(courseId) {
-  const content = $('catalog-content');
-  if (!content) return;
-  // Simple local course data store
-  const courses = {
-    'confident-connection': {
-      title: 'Confident Connection',
-      category: 'For Him',
-      subtitle: 'Build confidence & presence',
-      chapters: 8,
-      time: '~25 min',
-      summary: 'Courses focused on confidence, communication, intimacy, and being a better partner.',
-      lessons: [
-        'Introduction - You ve likely consumed advice before Youve likely consumed advice before — tips, tricks, techniques promising to make you better in bed. Most of it treats sex like a mechanical problem to be solved. This course starts from a different premise: what happens between you and a partner is a direct reflection of whats happening inside you  Your nervous system, your attention, your self-trust — these shape the room before a single touch occurs What This Course Actually TeachesYou will not find checklists of moves here. You will find a way of being — grounded, attentive, unhurried — that makes technique almost irrelevant. A man who is genuinely present will outperform a man executing a flawless routine while mentally absent, every time. Women feel the difference immediately, even if they cant name it.',
-        
-        '1.  Presence & Confidence- Confidence, as most men understand it, is an act — a mask worn to hide uncertainty. Real presence is the opposite: its what remains when you stop performing and simply occupy the moment you re in. This lesson introduces the state youll return to throughout the course Core Teaching The Anchor State Think of your nervous system as either anchored or adrift." Adrift means your attention is scattered — replaying past encounters, predicting outcomes, monitoring your own performance. Anchored means your attention is fully in your body, in the room, with the person in front of you. Anchored men are rarely described as "confident" by their partners — theyre described as calm, solid, there. That s the actual currency Confidence Is Downstream of Attention, Not the Other Way Around You dont need to manufacture confidence before intimacy. You need to redirect attention — away from self-monitoring, toward sensation, breath, and your partners responses. Confidence follows naturally once your mind stops auditing you.'
-        
-        , '2. Reading emotions- Most men either overthink a partner emotional state or ignore it entirely and rely on assumption. Neither works. Reading emotions accurately is a trainable skill, not an innate gift some men have and others do not Core TeachingThe Signal Layers Emotional signals arrive on three layers at once: words, tone, and body. Most men only track words. Tone tells you the emotional charge behind the words. Body — breathing, muscle tension, stillness versus movement — tells you what is happening underneath, often before she has language for it herself.Reading without narrating The goal is not to build a private theory about what she is feeling and silently act on it. It is to notice a signal, and let that noticing shape your pace and attention in the moment, without needing to be right about the exact emotion. You do not need a diagnosis. You need responsiveness.', 
-        
-        '3. Asking better questions -  Most advice tells men to talk more in bed. That is incomplete. What actually builds trust is asking questions that open a partner up rather than putting her on the spot — and knowing when silence is the better question.Core Teaching The Curiosity Frame A question asked from genuine curiosity feels completely different from one asked from anxiety, even if the words are identical. Asking what feels good right now to reassure yourself lands as pressure. The same question asked because you are genuinely interested in her experience lands as attention. The tone underneath the question matters more than the question itself.Questions that build, questions that break Closed, performance-anchored questions — asking whether you are doing well — pull a partner into evaluating you, which breaks her own immersion. Open, experience-anchored questions — asking what she is noticing, or what she would like more of — keep her inside her own body instead of pulling her into managing yours.When not to ask Not every moment calls for a question. Sometimes the better move is a small physical check — slowing down, maintaining eye contact, adjusting pressure — and reading the response, rather than interrupting a moment with words. Timing matters as much as wording.Practice / Reflection Recall one question you have asked a partner before, out of your own anxiety rather than curiosity about her experience. Reframe it from a place of genuine interest in her, rather than reassurance for yourself. Notice how different the tone feels, even though the topic stays the same.',
-        
-        '4. Practical techniques - Technique matters, but only once it sits on top of presence and reading. Without those two, technique becomes mechanical. With them, even simple technique feels attentive and deliberate.Core Teaching Pace, Pressure, Pause These three variables account for most of what makes physical touch feel attentive rather than routine. Pace is how quickly you move. Pressure is how firmly you touch. Pause is your willingness to stop, hold, and let a moment build instead of rushing past it. Most men default to one setting for all three and never adjust. Small, deliberate changes in these three variables communicate attentiveness more than any specific move. Reading response, not seeking approval After any adjustment in pace, pressure, or pause, give it a few seconds and watch for a response — breathing, movement, sound, stillness — before deciding whether to continue that adjustment or shift again. This turns technique into a two-way conversation rather than something done to a partner. The role of your own breath Your breathing rate sets a tempo that a partner will often unconsciously match. If your breathing is shallow and rushed, the whole encounter tends to speed up and flatten. Deliberately slowing your own breath is one of the simplest ways to slow and deepen a moment without saying a word.', 
-        '5. Building comfort - Comfort is not a mood you create in a single evening. It is built across many small moments, and it is what allows a partner to be physically and emotionally open rather than guarded.Core Teaching The Comfort Corridor Think of comfort as a corridor that widens or narrows based on how safe a partner feels being seen — physically, emotionally, and in terms of judgment. Rushing, joking at the wrong moment, or reacting visibly to something unexpected all narrow the corridor. Steady, unhurried attention widens it.', 
-        '6. Practice Core Teaching - Why low-stakes repetition matters Skills built only under high-stakes conditions tend to collapse under pressure. Practicing presence, reading, and pacing in ordinary, non-intimate moments builds a foundation that holds up when it actually matters. The Field Practice method Choose one lesson from this course each day and apply it in a completely non-intimate setting — a conversation with a colleague, a phone call, a meal with your partner. The context does not need to match. What you are training is the underlying capacity: staying present, reading signals, adjusting pace.',
-         '7. Final challenge - This is where the course closes and your own practice begins. There is no new theory here — only an application of everything you have already learned.Core Teaching The challenge Over your next intimate encounter with a partner, choose one focus only: staying anchored in your own body instead of monitoring your performance, as covered in Lesson 2. Do not try to apply all eight lessons at once. Depth comes from doing one thing fully, not many things partially. what to watch for Notice the moments where your attention pulls toward self-monitoring, and notice what it takes to bring it back to your partner and the present moment. You are not aiming for perfection. You are building the habit of returning.'
-      ]
-    },
-    'better-communication': {
-      title: 'Better Communication',
-      category: 'For Him',
-      subtitle: 'Listen & express clearly',
-      chapters: 7,
-      time: '~22 min',
-      summary: 'Learn how to listen, express yourself, and handle difficult conversations.',
-      lessons: ['Intro', 'Listening', 'Non-defensive speech', 'Asking vs accusing', 'Practical exercises', 'Practice', 'Final challenge']
-    },
-    'art-of-romance': {
-      title: 'The Art of Romance',
-      category: 'For Him',
-      subtitle: 'Create small romantic moments',
-      chapters: 8,
-      time: '~25 min',
-      summary: 'Turn everyday moments into meaningful romantic experiences.',
-      lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up']
-    }
-  };
+function renderFeaturedGame(game) {
+  const route = `${ROUTE_PATHS.games}?game=${encodeURIComponent(game.id)}`;
+  return `
+    <article class="featured-game" style="--game-accent:${escapeHtml(moods[game.moodKey]?.color || '#ff2449')}">
+      <div class="featured-game__art" aria-hidden="true"><span>${escapeHtml(game.icon)}</span><small>FEATURED</small></div>
+      <div class="featured-game__content">
+        <div class="card-kicker">Date-night favorite</div>
+        <h2>${escapeHtml(game.title)}</h2>
+        <p>${escapeHtml(game.description)}</p>
+        <div class="metadata-row" aria-label="Featured game details">
+          <span>2 players</span><span>${escapeHtml(game.duration)}</span><span>${escapeHtml(String(game.deckSize))} cards</span>
+        </div>
+        <div class="featured-game__actions">
+          ${renderIntensity(game.intensity)}
+          <a class="pill-btn" href="${route}" data-route="${route}">Explore game →</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
 
-  const c = courses[courseId];
-  if (!c) return showCatalog('courses');
+function renderGamesCatalog(filterId = "all") {
+  const selectedFilter = gameFilterOptions.some(({ id }) => id === filterId) ? filterId : "all";
+  const games = gameCatalogData.map(({ id }) => getGameCatalogItem(id)).filter(Boolean);
+  const filteredGames = selectedFilter === "all"
+    ? games
+    : games.filter(({ categories }) => categories.includes(selectedFilter));
+  const featured = filteredGames.find(({ featured }) => featured);
+  const gridGames = featured ? filteredGames.filter(({ id }) => id !== featured.id) : filteredGames;
 
-  content.innerHTML = `
-    <div class="course-hero">
-      <div class="eyebrow">${c.category}</div>
-      <h2>${c.title}</h2>
-      <p class="course-sub">${c.subtitle} · ${c.chapters} chapters · ${c.time}</p>
-      <p>${c.summary}</p>
+  configureCatalogShell({
+    eyebrow: "GAMES",
+    title: "Find your next date-night game.",
+    subtitle: "Choose a quick laugh, a deeper conversation or something with more spark.",
+    view: "games"
+  });
+
+  $("catalog-content").innerHTML = `
+    <div class="filter-strip" role="toolbar" aria-label="Filter games">
+      ${gameFilterOptions.map(({ id, label }) => `
+        <button class="filter-chip" type="button" data-action="filter-games" data-filter="${id}" aria-pressed="${selectedFilter === id}">${escapeHtml(label)}</button>
+      `).join("")}
     </div>
-    <div class="course-lessons">
-      <h3>Chapters</h3>
-      <ol>
-        ${c.lessons.map(l => `<li>${l}</li>`).join('')}
-      </ol>
+    ${featured ? renderFeaturedGame(featured) : ""}
+    <div class="catalog-section-heading">
+      <div><div class="eyebrow">${selectedFilter === "all" ? "ALL GAMES" : escapeHtml(gameFilterOptions.find(({ id }) => id === selectedFilter)?.label || "GAMES")}</div><h2>Pick what feels right tonight.</h2></div>
+      <p>${filteredGames.length} playable ${filteredGames.length === 1 ? "experience" : "experiences"}</p>
     </div>
-    <div class="catalog-actions">
-      <button class="pill-btn" onclick="showMoods()">Start a related game</button>
-      <button class="ghost-btn" onclick="showCatalog('courses')">Back to courses</button>
+    <div class="discovery-grid">
+      ${gridGames.length ? gridGames.map(renderGameCard).join("") : '<div class="empty-state"><h3>No games in this filter yet.</h3><p>Try another category to keep exploring.</p></div>'}
     </div>
   `;
-  showPage('catalog');
 }
 
-// Support pages rendering. Accepts: index, contact, refund, terms, privacy, faq
+// ========================================
+// GAME DETAIL EXPERIENCE
+// Uses existing mood descriptions and real deck previews; Start Game enters the current engine.
+// Online is routed to the lobby because it does not use a local question deck.
+// ========================================
+function renderGameDetail(gameId) {
+  const game = getGameCatalogItem(gameId);
+  if (!game) return;
+  const previewCards = game.moodKey ? getQuestionPool(game.moodKey, Number(game.deckSize)).slice(0, 3).filter(isValidCard) : [];
+
+  configureCatalogShell({
+    eyebrow: "GAME",
+    title: game.title,
+    subtitle: game.description,
+    backRoute: ROUTE_PATHS.games,
+    hideHeader: true,
+    view: "game-detail"
+  });
+
+  $("catalog-content").innerHTML = `
+    <article class="game-detail" style="--game-accent:${escapeHtml(moods[game.moodKey]?.color || '#ff2449')}">
+      <div class="game-detail__art" aria-hidden="true"><span>${escapeHtml(game.icon)}</span><small>FLIRTYFLIP</small></div>
+      <div class="game-detail__hero">
+        <div class="card-kicker">${escapeHtml(game.categories[0].replace(/-/g, ' '))}</div>
+        <h1>${escapeHtml(game.title)}</h1>
+        <p class="game-detail__hook">${escapeHtml(game.description)}</p>
+        <div class="detail-stats">
+          <div><span>Players</span><strong>2</strong></div>
+          <div><span>Duration</span><strong>${escapeHtml(game.duration)}</strong></div>
+          <div><span>Deck</span><strong>${escapeHtml(String(game.deckSize))}${game.online ? '' : ' cards'}</strong></div>
+          <div><span>Intensity</span><strong>${game.intensity ? renderIntensity(game.intensity) : 'Flexible'}</strong></div>
+        </div>
+        <button class="pill-btn detail-primary" type="button" data-action="start-catalog-game" data-game="${escapeHtml(game.id)}">${game.online ? 'Open lobby' : 'Start game'} →</button>
+      </div>
+      <section class="expect-panel">
+        <div class="eyebrow">WHAT TO EXPECT</div>
+        <h2>${game.online ? 'A simple room setup for two.' : 'A focused deck with room to talk.'}</h2>
+        <p>${game.online ? 'Choose a mood and deck length, then share the generated room link with your partner.' : 'Cards appear in a deliberate order. Take turns reading them aloud, skip anything freely and save prompts you want to revisit.'}</p>
+      </section>
+      ${previewCards.length ? `
+        <section class="prompt-preview">
+          <div class="catalog-section-heading"><div><div class="eyebrow">CARD PREVIEW</div><h2>A glimpse inside the deck.</h2></div></div>
+          <div class="prompt-preview__grid">
+            ${previewCards.map((card, index) => `<article><span>${escapeHtml(card[0])} · ${String(index + 1).padStart(2, '0')}</span><p>${escapeHtml(card[1])}</p></article>`).join('')}
+          </div>
+        </section>
+      ` : ''}
+    </article>
+  `;
+}
+
+function launchCatalogGame(gameId) {
+  const game = getGameCatalogItem(gameId);
+  if (!game) return;
+  if (game.online) return showOnline();
+
+  selectedMood = game.moodKey;
+  selectedLength = Number(game.deckSize);
+  currentCards = [];
+  currentIndex = 0;
+  skipped = 0;
+  gameSessionStatus = "setup";
+  applyHeroMood(selectedMood);
+  persistGameSession("setup");
+  startGame();
+}
+
+// ========================================
+// COURSE CATALOG COMPONENTS
+// Cards use centralized course data and show real local progress only when it exists.
+// Discovery filters include subject areas so gender is never the sole navigation path.
+// ========================================
+function renderCourseProgress(courseId, compact = false) {
+  const percent = getCourseProgressPercent(courseId);
+  if (percent === null) return "";
+  return `
+    <div class="course-progress ${compact ? 'course-progress--compact' : ''}">
+      <div class="course-progress__label"><span>Course progress</span><strong>${percent}%</strong></div>
+      <div class="course-progress__track"><span style="width:${percent}%"></span></div>
+    </div>
+  `;
+}
+
+function renderCourseCard(course) {
+  const lessons = getFlatCourseLessons(course);
+  const progress = getCourseProgress(course.id);
+  const route = `${ROUTE_PATHS.course}/${encodeURIComponent(course.id)}`;
+  return `
+    <article class="course-card">
+      <div class="course-card__top">
+        <span class="course-audience">${escapeHtml(course.category || 'Course')}</span>
+        <span class="course-monogram" aria-hidden="true">${escapeHtml(course.title.charAt(0))}</span>
+      </div>
+      <div class="course-card__body">
+        <h3>${escapeHtml(course.title)}</h3>
+        <p>${escapeHtml(course.summary || course.subtitle || '')}</p>
+        <div class="metadata-row" aria-label="Course details">
+          <span>${lessons.length} lessons</span>${course.time ? `<span>${escapeHtml(course.time)}</span>` : ''}
+        </div>
+        ${renderCourseProgress(course.id, true)}
+      </div>
+      <a class="course-card__cta" href="${route}" data-route="${route}">${progress ? 'Continue course' : 'View course'} <span aria-hidden="true">→</span></a>
+    </article>
+  `;
+}
+
+function renderCoursesCatalog(filterId = 'all') {
+  const selectedFilter = courseFilterOptions.some(({ id }) => id === filterId) ? filterId : 'all';
+  const courses = Object.values(coursesData).filter((course) => selectedFilter === 'all' || course.tags?.includes(selectedFilter));
+
+  configureCatalogShell({
+    eyebrow: 'COURSES',
+    title: 'Build a stronger relationship.',
+    subtitle: 'Short, focused learning paths for better communication, romance and connection.',
+    view: 'courses'
+  });
+
+  $('catalog-content').innerHTML = `
+    <div class="filter-strip" role="toolbar" aria-label="Filter courses">
+      ${courseFilterOptions.map(({ id, label }) => `
+        <button class="filter-chip" type="button" data-action="filter-courses" data-filter="${id}" aria-pressed="${selectedFilter === id}">${escapeHtml(label)}</button>
+      `).join('')}
+    </div>
+    <div class="catalog-section-heading">
+      <div><div class="eyebrow">LEARNING PATHS</div><h2>Grow closer, one lesson at a time.</h2></div>
+      <p>${courses.length} ${courses.length === 1 ? 'course' : 'courses'}</p>
+    </div>
+    <div class="course-grid">
+      ${courses.length ? courses.map(renderCourseCard).join('') : '<div class="empty-state"><h3>No courses in this filter yet.</h3><p>Try another topic to keep learning.</p></div>'}
+    </div>
+  `;
+}
+
+// ========================================
+// COURSE LESSON PARSING
+// Extracts a readable title and paragraphs from existing lesson strings without rewriting content.
+// Future structured lesson fields can replace this helper while keeping the reader component intact.
+// ========================================
+function parseCourseLesson(content, fallbackTitle = 'Lesson') {
+  const value = String(content || '').trim();
+  const match = value.match(/^\s*(?:\d+\.\s*)?([^–—-]+?)\s*-\s*(.*)$/s);
+  return {
+    title: (match?.[1] || value || fallbackTitle).trim(),
+    body: (match?.[2] || '').trim()
+  };
+}
+
+function getLessonSummary(content) {
+  const lesson = parseCourseLesson(content);
+  if (!lesson.body) return 'Open this lesson to read the available material.';
+  const firstSentence = lesson.body.match(/^.*?[.!?](?:\s|$)/)?.[0] || lesson.body;
+  return firstSentence.length > 170 ? `${firstSentence.slice(0, 167).trim()}…` : firstSentence.trim();
+}
+
+function formatLessonParagraphs(body) {
+  if (!body) return '<p class="lesson-unavailable">Detailed lesson content is not available yet.</p>';
+  const sentences = body.split(/(?<=[.!?])\s+/).filter(Boolean);
+  const paragraphs = [];
+
+  for (let index = 0; index < sentences.length; index += 2) {
+    paragraphs.push(sentences.slice(index, index + 2).join(' '));
+  }
+
+  return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('');
+}
+
+// ========================================
+// CATALOG ROUTING AND RENDERING
+// Public catalog actions encode optional headings in the URL; renderCatalog builds existing markup.
+// This separation lets /games and /courses survive refreshes without pushing history during render.
+// ========================================
+function showCatalog(type = 'games', heading = '') {
+  const path = type === 'courses' ? ROUTE_PATHS.courses : ROUTE_PATHS.games;
+  navigateToRoute(path);
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  })[character]);
+}
+
+function renderCatalog(type = 'games') {
+  if (type === 'courses') renderCoursesCatalog('all');
+  else renderGamesCatalog('all');
+}
+
+// Favorites reuse the games catalog route so Back, Forward and refresh remain consistent.
+function showFavorites() {
+  const favorites = readFavorites();
+  if (favorites.length === 0) {
+    toast('No favorites saved yet ♡');
+    return;
+  }
+  navigateToRoute(`${ROUTE_PATHS.games}?view=favorites`);
+}
+
+function renderFavoritesCatalog() {
+  const target = $('catalog-content');
+  if (!target) return;
+  const favorites = readFavorites();
+  const items = favorites.map((text, index) => `
+    <div class="catalog-item"><h3>Favorite ${index + 1}</h3><p>${escapeHtml(text)}</p></div>
+  `);
+  configureCatalogShell({
+    eyebrow: 'SAVED CARDS',
+    title: 'Favorites',
+    subtitle: 'Prompts you saved during your FlirtyFlip games.',
+    view: 'favorites'
+  });
+  target.innerHTML = `
+    <div class="catalog-grid">
+      ${items.length ? items.join('') : '<div class="catalog-item"><h3>No favorites yet</h3><p>Save a card during a game to see it here.</p></div>'}
+    </div>
+    <div class="catalog-actions"><button class="pill-btn" onclick="showMoods()">Play a mood →</button></div>
+  `;
+}
+
+// ========================================
+// SUPPORT ROUTING AND CONTENT
+// Policies use a query parameter under /support so direct links and refreshes retain the section.
+// Add future support sections to SUPPORT_SECTIONS and this renderer together.
+// ========================================
 function showSupport(section = 'index') {
+  const safeSection = SUPPORT_SECTIONS.has(section) ? section : 'index';
+  const suffix = safeSection === 'index' ? '' : `?section=${encodeURIComponent(safeSection)}`;
+  navigateToRoute(`${ROUTE_PATHS.support}${suffix}`);
+}
+
+function renderSupportContent(section = 'index') {
   const target = $('support-content');
   if (!target) return;
+  const safeSection = SUPPORT_SECTIONS.has(section) ? section : 'index';
 
-  if (section === 'contact') {
+  if (safeSection === 'contact') {
     target.innerHTML = `
       <h3>Contact Us</h3>
       <p>For support, refunds or questions email: <a href="mailto:craftares.business@gmail.com">craftares.business@gmail.com</a></p>
     `;
-  } else if (section === 'refund') {
+  } else if (safeSection === 'refund') {
     target.innerHTML = `
       <h3>Refund & Cancellation Policy</h3>
       <p>Last updated: August 2026</p>
@@ -2574,7 +3331,7 @@ function showSupport(section = 'index') {
       </ul>
       <p>Contact: <a href="mailto:craftares.business@gmail.com">craftares.business@gmail.com</a></p>
     `;
-  } else if (section === 'terms') {
+  } else if (safeSection === 'terms') {
     target.innerHTML = `
       <h3>Terms & Conditions</h3>
       <p>Last updated: August 2026</p>
@@ -2587,14 +3344,14 @@ function showSupport(section = 'index') {
       </ol>
       <p>Contact: <a href="mailto:craftares.business@gmail.com">craftares.business@gmail.com</a></p>
     `;
-  } else if (section === 'privacy') {
+  } else if (safeSection === 'privacy') {
     target.innerHTML = `
       <h3>Privacy Policy</h3>
       <p>Last updated: August 2026</p>
       <p>We respect your privacy. We collect account info, payment processor data (we do not store card numbers), and usage data to improve the service. We do not sell personal data.</p>
       <p>Contact: <a href="mailto:craftares.business@gmail.com">craftares.business@gmail.com</a></p>
     `;
-  } else if (section === 'faq') {
+  } else if (safeSection === 'faq') {
     target.innerHTML = `
       <h3>FAQ</h3>
       <ul>
@@ -2616,144 +3373,151 @@ function showSupport(section = 'index') {
     `;
   }
 
-  showPage('support');
 }
 
 function bindNavEvents() {
-  // Desktop mega menu: open on hover, toggle on click for keyboard accessibility
-  document.querySelectorAll('.nav-item.has-mega').forEach(item => {
-    const button = item.querySelector('.nav-link');
-    const menu = item.querySelector('.mega-menu');
-
-    // show/hide helpers
-    function open() {
-      button.setAttribute('aria-expanded', 'true');
-      menu.style.display = 'block';
-    }
-    function close() {
-      button.setAttribute('aria-expanded', 'false');
-      menu.style.display = 'none';
-    }
-
-    // hover (desktop)
-    item.addEventListener('mouseenter', open);
-    item.addEventListener('mouseleave', close);
-
-    // click toggles (keyboard users)
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      const expanded = button.getAttribute('aria-expanded') === 'true';
-      if (expanded) close(); else open();
-    });
-    // keyboard activation (Enter / Space)
-    button.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const expanded = button.getAttribute('aria-expanded') === 'true';
-        if (expanded) close(); else open();
-      }
-    });
-  });
-
-  // Allow clicking mega-menu links to open the catalog or courses
-  document.querySelectorAll('.mega-menu a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const navItem = link.closest('.nav-item');
-      const key = navItem ? navItem.dataset.key : null;
-      const text = link.textContent.trim();
-      if (key === 'games') showCatalog('games', text);
-      else if (key === 'courses') showCatalog('courses', text);
-      else showSupport('index');
-    });
-  });
-
-  // Close mega menus when clicking outside
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('.nav-item.has-mega')) return;
-    document.querySelectorAll('.nav-item.has-mega').forEach(item => {
-      const button = item.querySelector('.nav-link');
-      const menu = item.querySelector('.mega-menu');
-      if (button) button.setAttribute('aria-expanded', 'false');
-      if (menu) menu.style.display = 'none';
-    });
-  });
-
-  // Mobile drawer toggles
+  const megaItems = Array.from(document.querySelectorAll('.nav-item.has-mega'));
   const hamburger = document.getElementById('hamburger');
   const drawer = document.getElementById('mobile-drawer');
   const drawerClose = document.getElementById('drawer-close');
 
+  // Close one dropdown and keep its ARIA state synchronized with the visual class.
+  function closeMegaItem(item) {
+    const button = item.querySelector('.nav-link');
+    const menu = item.querySelector('.mega-menu');
+    if (button) button.setAttribute('aria-expanded', 'false');
+    if (menu) menu.classList.remove('is-open');
+  }
+
+  function closeAllMegaItems(except = null) {
+    megaItems.forEach((item) => { if (item !== except) closeMegaItem(item); });
+  }
+
+  // Desktop dropdowns support hover, click, keyboard focus and Escape without duplicate toggles.
+  megaItems.forEach(item => {
+    const button = item.querySelector('.nav-link');
+    const menu = item.querySelector('.mega-menu');
+    let openedByPointerHover = false;
+    menu.querySelectorAll('a').forEach((link) => link.setAttribute('role', 'menuitem'));
+
+    function open() {
+      closeAllMegaItems(item);
+      button.setAttribute('aria-expanded', 'true');
+      menu.classList.add('is-open');
+    }
+
+    function close() {
+      openedByPointerHover = false;
+      closeMegaItem(item);
+    }
+
+    item.addEventListener('mouseenter', () => {
+      if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+      openedByPointerHover = true;
+      open();
+    });
+    item.addEventListener('mouseleave', close);
+
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      if (openedByPointerHover) {
+        openedByPointerHover = false;
+        open();
+        return;
+      }
+      if (expanded) close(); else open();
+    });
+
+    // Handle keyboard activation directly so hover state cannot cancel the native button click.
+    button.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openedByPointerHover = false;
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      if (expanded) close(); else open();
+    });
+
+    item.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        close();
+        button.focus();
+      }
+    });
+
+    item.addEventListener('focusout', () => {
+      requestAnimationFrame(() => {
+        if (!item.contains(document.activeElement)) close();
+      });
+    });
+  });
+
+  // Cleanly close the mobile drawer and detach its temporary keyboard handlers.
+  function closeDrawer({ returnFocus = false } = {}) {
+    if (!hamburger || !drawer) return;
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    if (drawer._escHandler) document.removeEventListener('keydown', drawer._escHandler);
+    if (drawer._trapHandler) drawer.removeEventListener('keydown', drawer._trapHandler);
+    if (returnFocus) hamburger.focus();
+  }
+
   if (hamburger && drawer) {
     hamburger.addEventListener('click', () => {
       const wasOpen = hamburger.getAttribute('aria-expanded') === 'true';
+      if (wasOpen) return closeDrawer();
       const nowOpen = !wasOpen;
       hamburger.setAttribute('aria-expanded', String(nowOpen));
       drawer.setAttribute('aria-hidden', String(!nowOpen));
 
       if (nowOpen) {
-        // Move focus into the drawer for keyboard users
-        setTimeout(() => {
+        requestAnimationFrame(() => {
           const focusable = drawer.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
           if (focusable) focusable.focus();
-        }, 40);
+        });
 
-        // Close on Escape while drawer is open
-        const escHandler = (e) => { if (e.key === 'Escape') { hamburger.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true'); document.removeEventListener('keydown', escHandler); if (drawer._trapHandler) drawer.removeEventListener('keydown', drawer._trapHandler); } };
+        const escHandler = (event) => { if (event.key === 'Escape') closeDrawer({ returnFocus: true }); };
         document.addEventListener('keydown', escHandler);
 
-        // Trap focus inside drawer
-        const trapHandler = (e) => {
-          if (e.key !== 'Tab') return;
+        const trapHandler = (event) => {
+          if (event.key !== 'Tab') return;
           const focusables = Array.from(drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(el=>!el.disabled);
           if (focusables.length === 0) return;
           const first = focusables[0], last = focusables[focusables.length - 1];
-          if (!drawer.contains(document.activeElement)) { first.focus(); e.preventDefault(); return; }
-          if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
-          else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+          if (!drawer.contains(document.activeElement)) { first.focus(); event.preventDefault(); return; }
+          if (event.shiftKey && document.activeElement === first) { last.focus(); event.preventDefault(); }
+          else if (!event.shiftKey && document.activeElement === last) { first.focus(); event.preventDefault(); }
         };
         drawer.addEventListener('keydown', trapHandler);
         drawer._escHandler = escHandler;
         drawer._trapHandler = trapHandler;
-      } else {
-        // cleanup handlers when closing
-        if (drawer._escHandler) document.removeEventListener('keydown', drawer._escHandler);
-        if (drawer._trapHandler) drawer.removeEventListener('keydown', drawer._trapHandler);
       }
     });
   }
+
   if (drawerClose && drawer) {
-    drawerClose.addEventListener('click', () => {
-      hamburger.setAttribute('aria-expanded', 'false');
-      drawer.setAttribute('aria-hidden', 'true');
-      // cleanup any focus handlers
-      if (drawer._escHandler) document.removeEventListener('keydown', drawer._escHandler);
-      if (drawer._trapHandler) drawer.removeEventListener('keydown', drawer._trapHandler);
-    });
+    drawerClose.addEventListener('click', () => closeDrawer({ returnFocus: true }));
   }
 
-  // Drawer action wiring
-  document.querySelectorAll('.drawer-link').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const target = btn.dataset.target;
-      // Close drawer
-      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
-      if (drawer) drawer.setAttribute('aria-hidden', 'true');
-
-      // Route to appropriate screen
-      if (target === 'play') showMoods();
-      else if (target === 'support') showSupport('index');
-      else if (target === 'cards') showCatalog('games', 'Cards');
-      else if (target === 'courses') showCatalog('courses', 'Courses');
-      else if (target === 'games') showCatalog('games', 'All Games');
+  // All header links share one History API path and close transient navigation UI first.
+  document.querySelectorAll('header a[data-route]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      closeAllMegaItems();
+      closeDrawer();
+      navigateToRoute(link.dataset.route || link.getAttribute('href'));
     });
   });
 
-  // Drawer login/guest buttons
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.nav-item.has-mega')) closeAllMegaItems();
+  });
+
+  // Authentication actions reuse the existing modal and also close the mobile drawer.
   const drawerLogin = document.getElementById('drawer-login');
   const drawerGuest = document.getElementById('drawer-guest');
-  if (drawerLogin) drawerLogin.addEventListener('click', () => { showAuthModal('login'); if (drawer) drawer.setAttribute('aria-hidden','true'); });
-  if (drawerGuest) drawerGuest.addEventListener('click', () => { showAuthModal('guest'); if (drawer) drawer.setAttribute('aria-hidden','true'); });
+  if (drawerLogin) drawerLogin.addEventListener('click', () => { closeDrawer(); showAuthModal('login'); });
+  if (drawerGuest) drawerGuest.addEventListener('click', () => { closeDrawer(); showAuthModal('guest'); });
 }
 
 // -----------------------------
@@ -2762,108 +3526,224 @@ function bindNavEvents() {
 // before inline onclick handlers are available or if scripts are loaded later.
 // -----------------------------
 function bindGlobalUI() {
-  const startBtn = $("start-playing-btn");
-  const howBtn = $("see-how-btn");
-  const onlineBtn = $("play-online-btn");
   const supportBtn = $("support-btn");
+  const cardScene = $("card-scene");
 
-  if (startBtn) startBtn.addEventListener('click', (e) => { e.preventDefault(); showMoods(); });
-  if (howBtn) howBtn.addEventListener('click', (e) => { e.preventDefault(); showHow(); });
-  if (onlineBtn) onlineBtn.addEventListener('click', (e) => { e.preventDefault(); showOnline(); });
   if (supportBtn) supportBtn.addEventListener('click', (e) => { e.preventDefault(); showSupport('index'); });
+  if (cardScene) {
+    cardScene.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        flipCard();
+      }
+    });
+  }
+}
 
-  // Delegate for any dynamically-added start buttons
-  document.addEventListener('click', (e) => {
-    const target = e.target.closest && e.target.closest('.start-btn');
-    if (target) {
-      e.preventDefault();
-      startGame();
+// ========================================
+// CATALOG EVENT DELEGATION
+// One stable handler supports route links, filters and primary actions in dynamic catalog markup.
+// Course-specific actions are handled here as those views are rendered into the same shell.
+// ========================================
+function bindCatalogEvents() {
+  const content = $("catalog-content");
+  const backButton = $("catalog-back");
+
+  if (backButton) {
+    backButton.addEventListener("click", () => navigateToRoute(catalogBackRoute));
+  }
+
+  if (!content) return;
+  content.addEventListener("click", (event) => {
+    const routeLink = event.target.closest("a[data-route]");
+    if (routeLink) {
+      event.preventDefault();
+      navigateToRoute(routeLink.dataset.route || routeLink.getAttribute("href"));
+      return;
+    }
+
+    const action = event.target.closest("[data-action]");
+    if (!action) return;
+
+    if (action.dataset.action === "filter-games") {
+      const filter = gameFilterOptions.some(({ id }) => id === action.dataset.filter) ? action.dataset.filter : "all";
+      const suffix = filter === "all" ? "" : `?filter=${encodeURIComponent(filter)}`;
+      navigateToRoute(`${ROUTE_PATHS.games}${suffix}`);
+    }
+
+    if (action.dataset.action === "start-catalog-game") {
+      launchCatalogGame(action.dataset.game);
+    }
+
+    if (action.dataset.action === "filter-courses") {
+      const filter = courseFilterOptions.some(({ id }) => id === action.dataset.filter) ? action.dataset.filter : "all";
+      const suffix = filter === "all" ? "" : `?filter=${encodeURIComponent(filter)}`;
+      navigateToRoute(`${ROUTE_PATHS.courses}${suffix}`);
+    }
+
+    // Curriculum accordion and reader actions share this delegated handler because catalog views are dynamic.
+    // Edit curriculum markup in renderCourseDetail and lesson navigation markup in renderCourseLesson.
+    if (action.dataset.action === "toggle-course-section") {
+      const panelId = action.getAttribute("aria-controls");
+      const panel = panelId ? document.getElementById(panelId) : null;
+      if (!panel) return;
+      const expanded = action.getAttribute("aria-expanded") === "true";
+      action.setAttribute("aria-expanded", String(!expanded));
+      panel.hidden = expanded;
+    }
+
+    if (action.dataset.action === "open-course-lesson") {
+      const lessonIndex = Number(action.dataset.lesson);
+      saveCourseProgress(action.dataset.course, lessonIndex);
+      navigateToRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(action.dataset.course)}?lesson=${lessonIndex + 1}`);
+    }
+
+    if (action.dataset.action === "course-lesson-previous") {
+      const lessonIndex = Number(action.dataset.lesson);
+      saveCourseProgress(action.dataset.course, lessonIndex);
+      navigateToRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(action.dataset.course)}?lesson=${lessonIndex + 1}`);
+    }
+
+    if (action.dataset.action === "course-lesson-next") {
+      const lessonIndex = Number(action.dataset.lesson);
+      saveCourseProgress(action.dataset.course, Number(action.dataset.current), { complete: true });
+      saveCourseProgress(action.dataset.course, lessonIndex);
+      navigateToRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(action.dataset.course)}?lesson=${lessonIndex + 1}`);
+    }
+
+    if (action.dataset.action === "finish-course") {
+      saveCourseProgress(action.dataset.course, Number(action.dataset.current), { complete: true });
+      toast("Course complete ♡");
+      navigateToRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(action.dataset.course)}`);
     }
   });
 }
 
 // ========================================
-// OVERRIDE: structured course detail renderer
-// This function supersedes any earlier showCourseDetail definitions and
-// renders the structured coursesData with collapsible chapters/lessons.
+// COURSE DETAIL ROUTING AND RENDERING
+// Course cards navigate to /course/:slug; the renderer reads only the shared coursesData source.
+// Missing optional metadata is omitted so direct routes never expose "undefined" values.
 // ========================================
 function showCourseDetail(courseId) {
+  if (!coursesData[courseId]) return showCatalog('courses');
+  navigateToRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}`);
+}
+
+function renderCourseDetail(courseId) {
   const content = $('catalog-content');
   if (!content) return;
   const c = (typeof coursesData !== 'undefined') ? coursesData[courseId] : null;
-  if (!c) return showCatalog('courses');
+  if (!c) return;
+  const lessons = getFlatCourseLessons(c);
+  const progress = getCourseProgress(courseId);
+  const continueLesson = Math.min(progress?.lastLesson || 0, Math.max(0, lessons.length - 1));
+  let lessonNumber = 0;
 
-  content.innerHTML = `
-    <div class="course-hero">
-      <div class="eyebrow">${c.category}</div>
-      <h2>${c.title}</h2>
-      <p class="course-sub">${c.subtitle} · ${c.chapters || (c.sections ? c.sections.length : '')} chapters · ${c.time || ''}</p>
-      <p>${c.summary}</p>
-    </div>
-    <div class="course-structure">
-      ${c.sections.map((section, sidx) => `
-        <div class="course-section">
-          <button class="chapter-toggle" data-section="${sidx}" aria-expanded="false">${section.title} <span class="chapter-count">${section.lessons.length} lessons</span></button>
-          <div class="chapter-content" id="chapter-${sidx}" hidden>
-            <ol class="chapter-lessons">
-              ${section.lessons.map((lesson, lidx) => `
-                <li class="lesson-card"><div class="lesson-num">${lidx+1}</div><div class="lesson-body">${lesson}</div></li>
-              `).join('')}
-            </ol>
-          </div>
-        </div>
-      `).join('')}
-    </div>
-    <div class="catalog-actions">
-      <button class="pill-btn" onclick="showMoods()">Play a related mood</button>
-      <button class="ghost-btn" onclick="showCatalog('courses')">Back to courses</button>
-    </div>
-  `;
-
-  // Attach collapse handlers
-  content.querySelectorAll('.chapter-toggle').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = btn.dataset.section;
-      const panel = document.getElementById(`chapter-${id}`);
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      if (!expanded) { panel.hidden = false; btn.classList.add('open'); }
-      else { panel.hidden = true; btn.classList.remove('open'); }
-    });
+  configureCatalogShell({
+    eyebrow: 'COURSE',
+    title: c.title,
+    subtitle: c.subtitle,
+    backRoute: ROUTE_PATHS.courses,
+    hideHeader: true,
+    view: 'course-detail'
   });
 
-  showPage('catalog');
-}
-// const LABEL_ICONS = {
-//   ASK: "💭",
-//   SAY: "💗",
-//   REMEMBER: "✨",
-//   DO: "✦",
-//   CHALLENGE: "🎯",
-// };
-// export default romantic;
-// export { LABEL_ICONS }; 
-let currentTurn = 'A'; // whoever is "you" right now
+  const curriculum = c.sections.map((section, sectionIndex) => `
+    <section class="curriculum-group">
+      <button class="curriculum-toggle" type="button" data-action="toggle-course-section" aria-expanded="${sectionIndex === 0}" aria-controls="course-section-${sectionIndex}">
+        <span><small>${String(sectionIndex + 1).padStart(2, '0')}</small>${escapeHtml(section.title)}</span>
+        <span class="curriculum-toggle__meta">${section.lessons.length} ${section.lessons.length === 1 ? 'lesson' : 'lessons'} <b aria-hidden="true">+</b></span>
+      </button>
+      <div class="curriculum-panel" id="course-section-${sectionIndex}" ${sectionIndex === 0 ? '' : 'hidden'}>
+        ${section.lessons.map((lesson) => {
+          const currentLesson = lessonNumber;
+          const parsed = parseCourseLesson(lesson, `Lesson ${currentLesson + 1}`);
+          const isComplete = progress?.completed.includes(currentLesson);
+          lessonNumber += 1;
+          return `
+            <article class="curriculum-lesson ${isComplete ? 'is-complete' : ''}">
+              <div class="lesson-index">${String(currentLesson + 1).padStart(2, '0')}</div>
+              <div class="curriculum-lesson__body">
+                <h3>${escapeHtml(parsed.title)}</h3>
+                <p>${escapeHtml(getLessonSummary(lesson))}</p>
+              </div>
+              <button class="lesson-link" type="button" data-action="open-course-lesson" data-course="${escapeHtml(courseId)}" data-lesson="${currentLesson}">${isComplete ? 'Review' : 'Start'} <span aria-hidden="true">→</span></button>
+            </article>
+          `;
+        }).join('')}
+      </div>
+    </section>
+  `).join('');
 
-function renderTurnPill(cardEl) {
-  let pill = cardEl.querySelector('.turn-pill');
-  if (!pill) {
-    pill = document.createElement('div');
-    pill.className = 'turn-pill';
-    pill.style.cssText =
-      'text-align:center;font-size:11px;font-weight:500;' +
-      'letter-spacing:.08em;padding:4px 12px;border-radius:999px;' +
-      'display:inline-block;margin:0 auto 14px;';
-    cardEl.prepend(pill);
-  }
-  const yourTurn = currentTurn === 'A';
-  pill.textContent = yourTurn ? 'YOUR TURN' : 'THEIR TURN';
-  pill.style.background = yourTurn ? 'rgba(225,77,99,.15)' : 'rgba(138,122,118,.15)';
-  pill.style.color      = yourTurn ? '#e14d63' : '#a08d88';
-  pill.style.border     = yourTurn ? '.5px solid rgba(225,77,99,.4)' : '.5px solid rgba(138,122,118,.4)';
+  content.innerHTML = `
+    <article class="premium-course">
+      <header class="course-detail-hero">
+        <div class="course-detail-hero__mark" aria-hidden="true"><span>${escapeHtml(c.title.charAt(0))}</span><small>FLIRTYFLIP COURSE</small></div>
+        <div class="course-detail-hero__copy">
+          ${c.category ? `<div class="course-audience">${escapeHtml(c.category)}</div>` : ''}
+          <h1>${escapeHtml(c.title)}</h1>
+          <p class="course-hook">${escapeHtml(c.subtitle || c.summary || '')}</p>
+          <div class="metadata-row" aria-label="Course details"><span>${lessons.length} lessons</span>${c.time ? `<span>${escapeHtml(c.time)}</span>` : ''}</div>
+          ${renderCourseProgress(courseId)}
+          <button class="pill-btn course-primary" type="button" data-action="open-course-lesson" data-course="${escapeHtml(courseId)}" data-lesson="${continueLesson}">${progress ? 'Continue course' : 'Start course'} →</button>
+        </div>
+      </header>
+      <section class="learning-outcomes">
+        <div><div class="eyebrow">WHAT YOU'LL LEARN</div><h2>Practical ideas to take into your relationship.</h2></div>
+        <ul>${(c.outcomes || []).map((outcome) => `<li><span aria-hidden="true">✓</span>${escapeHtml(outcome)}</li>`).join('')}</ul>
+      </section>
+      <section class="curriculum">
+        <div class="catalog-section-heading"><div><div class="eyebrow">CURRICULUM</div><h2>Course lessons.</h2></div><p>${lessons.length} total</p></div>
+        <div class="curriculum-list">${curriculum}</div>
+      </section>
+    </article>
+  `;
 }
 
-function passTurn(cardEl) {
-  currentTurn = currentTurn === 'A' ? 'B' : 'A';
-  renderTurnPill(cardEl);
+// ========================================
+// FOCUSED COURSE READER
+// Displays one existing lesson at a readable line length with deterministic Previous/Next routes.
+// Completion is recorded only when the learner advances or finishes the current lesson.
+// ========================================
+function renderCourseLesson(courseId, lessonIndex) {
+  const course = coursesData[courseId];
+  const lessons = getFlatCourseLessons(course);
+  const lessonRecord = lessons[lessonIndex];
+  if (!course || !lessonRecord) return;
+  saveCourseProgress(courseId, lessonIndex);
+
+  const lesson = parseCourseLesson(lessonRecord.content, `Lesson ${lessonIndex + 1}`);
+  const positionPercent = Math.round(((lessonIndex + 1) / lessons.length) * 100);
+  const previousIndex = lessonIndex - 1;
+  const nextIndex = lessonIndex + 1;
+
+  configureCatalogShell({
+    eyebrow: 'LESSON',
+    title: lesson.title,
+    subtitle: course.title,
+    backRoute: `${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}`,
+    hideHeader: true,
+    view: 'course-reader'
+  });
+
+  $('catalog-content').innerHTML = `
+    <article class="course-reader">
+      <header class="reader-header">
+        <a href="${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}" data-route="${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}" class="reader-course-link">${escapeHtml(course.title)}</a>
+        <div class="reader-progress-label"><span>Lesson ${lessonIndex + 1} of ${lessons.length}</span><strong>${positionPercent}%</strong></div>
+        <div class="reader-progress-track"><span style="width:${positionPercent}%"></span></div>
+        <div class="eyebrow">${escapeHtml(lessonRecord.sectionTitle)}</div>
+        <h1>${escapeHtml(lesson.title)}</h1>
+      </header>
+      <div class="reader-body">
+        ${formatLessonParagraphs(lesson.body)}
+      </div>
+      <nav class="reader-navigation" aria-label="Course lesson navigation">
+        ${previousIndex >= 0 ? `<button class="ghost-btn" type="button" data-action="course-lesson-previous" data-course="${escapeHtml(courseId)}" data-lesson="${previousIndex}">← Previous lesson</button>` : '<span></span>'}
+        ${nextIndex < lessons.length
+          ? `<button class="pill-btn" type="button" data-action="course-lesson-next" data-course="${escapeHtml(courseId)}" data-current="${lessonIndex}" data-lesson="${nextIndex}">Next lesson →</button>`
+          : `<button class="pill-btn" type="button" data-action="finish-course" data-course="${escapeHtml(courseId)}" data-current="${lessonIndex}">Complete course →</button>`}
+      </nav>
+    </article>
+  `;
 }

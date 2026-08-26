@@ -7,7 +7,8 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-HV89QLZLF6');
+  // SPA analytics: the router sends one page_view after each successful route render.
+  gtag('config', 'G-HV89QLZLF6', { send_page_view: false });
   
 </script>
 <link rel="canonical" href="https://flirtyflip.com/">
@@ -19,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <!-- ========================================
@@ -30,92 +31,73 @@
   <div class="ambient ambient-2"></div>
 
   <!-- ========================================
-       NAVIGATION
-       Play Online opens the shared-room flow; Play now opens local mood selection.
+       HEADER / PRIMARY NAVIGATION
+       Edit desktop destinations and dropdown contents here; script.js owns route handling.
+       Play Online opens the shared-room flow; Play Together opens local mood selection.
        ======================================== -->
   <header class="navbar">
-    <a class="logo" href="#" onclick="showHome(); return false;">
+    <a class="logo" href="/" data-route="/" data-nav-route="home">
       <span class="logo-mark">♡</span>
       <span>FLIRTY<span>FLIP</span></span>
     </a>
 
-    <!-- Desktop nav (visible >= 900px) -->
+    <!-- Desktop navigation and dropdown menus; visible from the 901px breakpoint upward. -->
     <nav class="primary-nav" aria-label="Main">
       <ul class="nav-list">
         <li class="nav-item has-mega" data-key="games">
-          <button class="nav-link" aria-haspopup="true" aria-expanded="false">Games ▾</button>
-          <div class="mega-menu" role="menu">
+          <button class="nav-link" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="games-menu" data-nav-route="games">Games ▾</button>
+          <div id="games-menu" class="mega-menu" role="menu" aria-label="Games menu">
             <div class="mega-col">
-              <h4>All Games</h4>
+              <h4>Play</h4>
               <ul>
-                <li><a href="#">Card Games</a></li>
-                <li><a href="#">Board Games</a></li>
-                <li><a href="#">Couple Challenges</a></li>
-                <li><a href="#">Conversation Games</a></li>
-                <li><a href="#">Quick Games</a></li>
-                <li><a href="#">Romantic Games</a></li>
-                <li><a href="#">Online Multiplayer</a></li>
+                <li><a href="/games" data-route="/games">All Games</a></li>
+                <li><a href="/games?filter=quick" data-route="/games?filter=quick">Quick Games</a></li>
+                <li><a href="/games?filter=conversation" data-route="/games?filter=conversation">Conversation</a></li>
+                <li><a href="/games?filter=truth-dare" data-route="/games?filter=truth-dare">Truth &amp; Dare</a></li>
+                <li><a href="/games?filter=romantic" data-route="/games?filter=romantic">Romantic</a></li>
+                <li><a href="/games?filter=flirty" data-route="/games?filter=flirty">Flirty</a></li>
               </ul>
             </div>
             <div class="mega-col">
-              <h4>Play Together</h4>
+              <h4>Together</h4>
               <ul>
-                <li><a href="#">Start a Room</a></li>
-                <li><a href="#">Join a Room</a></li>
-                <li><a href="#">Matchmaking</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <h4>Cards</h4>
-              <ul>
-                <li><a href="#">Question Cards</a></li>
-                <li><a href="#">Truth or Dare</a></li>
-                <li><a href="#">Would You Rather</a></li>
-                <li><a href="#">Date Night Cards</a></li>
-                <li><a href="#">Conversation Cards</a></li>
-                <li><a href="#">Challenge Cards</a></li>
-                <li><a href="#">Custom Deck</a></li>
+                <li><a href="/online" data-route="/online">Play Online</a></li>
+                <li><a href="/play" data-route="/play">Choose a Mood</a></li>
               </ul>
             </div>
           </div>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick="showMoods(); return false;">Play Together</a>
+          <a class="nav-link" href="/play" data-route="/play" data-nav-route="play">Play Together</a>
         </li>
 
         <li class="nav-item has-mega" data-key="courses">
-          <button class="nav-link" aria-haspopup="true" aria-expanded="false">Courses ▾</button>
-          <div class="mega-menu" role="menu">
+          <button class="nav-link" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="courses-menu" data-nav-route="courses">Courses ▾</button>
+          <div id="courses-menu" class="mega-menu mega-menu--courses" role="menu" aria-label="Courses menu">
             <div class="mega-col">
-              <h4>For Him</h4>
+              <h4>Courses</h4>
               <ul>
-                <li><a href="#">Confident Connection</a></li>
-                <li><a href="#">Better Communication</a></li>
-                <li><a href="#">The Art of Romance</a></li>
+                <li><a href="/courses?filter=for-him" data-route="/courses?filter=for-him">For Him</a></li>
+                <li><a href="/courses?filter=communication" data-route="/courses?filter=communication">Communication</a></li>
+                <li><a href="/courses?filter=romance" data-route="/courses?filter=romance">Romance</a></li>
+                <li><a href="/courses?filter=connection" data-route="/courses?filter=connection">Connection</a></li>
               </ul>
             </div>
             <div class="mega-col">
-              <h4>For Her</h4>
+              <h4>Featured</h4>
               <ul>
-                <li><a href="#">Confident & Connected</a></li>
-                <li><a href="#">Understanding Him</a></li>
-                <li><a href="#">The Romance Playbook</a></li>
+                <li><a href="/course/confident-connection" data-route="/course/confident-connection">Confident Connection</a></li>
+                <li><a href="/course/better-communication" data-route="/course/better-communication">Better Communication</a></li>
+                <li><a href="/course/art-of-romance" data-route="/course/art-of-romance">The Art of Romance</a></li>
               </ul>
-            </div>
-            <div class="mega-col">
-              <h4>For Couples</h4>
-              <ul>
-                <li><a href="#">The Connection Blueprint</a></li>
-                <li><a href="#">Talk Like Partners</a></li>
-                <li><a href="#">Date Night Mastery</a></li>
-              </ul>
+              <a class="mega-menu__all" href="/courses" data-route="/courses">View all courses →</a>
             </div>
           </div>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#" onclick="showHow(); return false;">How it works</a>
+          <a class="nav-link" href="/how" data-route="/how" data-nav-route="how">How it works</a>
         </li>
       </ul>
     </nav>
@@ -129,19 +111,20 @@
       <button class="text-btn" id="nav-favorites" type="button" aria-label="Favorites">♡ <span id="favorites-count" class="hidden">0</span></button>
     </div>
 
-    <!-- Mobile hamburger -->
-    <button id="hamburger" class="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
+    <!-- Mobile navigation trigger; its ARIA state is synchronized by bindNavEvents(). -->
+    <button id="hamburger" class="hamburger" type="button" aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">☰</button>
 
-    <!-- Mobile drawer -->
+    <!-- Mobile navigation drawer; edit phone-sized destinations in this list. -->
     <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
-      <button class="drawer-close" id="drawer-close" aria-label="Close menu">×</button>
+      <button class="drawer-close" id="drawer-close" type="button" aria-label="Close menu">×</button>
       <nav class="drawer-nav">
         <ul>
-          <li><button class="drawer-link" data-target="games">Games</button></li>
-          <li><button class="drawer-link" data-target="play">Play Together</button></li>
-          <li><button class="drawer-link" data-target="cards">Cards</button></li>
-          <li><button class="drawer-link" data-target="courses">Courses</button></li>
-          <li><button class="drawer-link" data-target="support">Support</button></li>
+          <li><a class="drawer-link" href="/games" data-route="/games">Games</a></li>
+          <li><a class="drawer-link" href="/play" data-route="/play">Play Together</a></li>
+          <li><a class="drawer-link" href="/online" data-route="/online">Play Online</a></li>
+          <li><a class="drawer-link" href="/courses" data-route="/courses">Courses</a></li>
+          <li><a class="drawer-link" href="/how" data-route="/how">How it works</a></li>
+          <li><a class="drawer-link" href="/support" data-route="/support">Support</a></li>
           <li class="drawer-divider"></li>
           <li><button id="drawer-login">Log in</button></li>
           <li><button id="drawer-guest">Continue as guest</button></li>
@@ -178,7 +161,7 @@
           <div class="floating-note note-one">for tonight ♡</div>
           <div class="floating-note note-two">just one more...</div>
           <div class="hero-card back-card">
-            <div class="card-top">FLIRTPLAY</div>
+            <div class="card-top">FLIRTYFLIP</div>
             <div class="card-symbol">♡</div>
             <div class="card-bottom">FLIP ME</div>
           </div>
@@ -262,23 +245,23 @@
          ======================================== -->
     <section id="game" class="page game-page">
       <div class="game-top">
-        <button class="icon-btn" onclick="confirmExit()">×</button>
+        <button class="icon-btn" type="button" onclick="confirmExit()" aria-label="Exit game">×</button>
         <div class="game-progress-wrap">
           <div class="game-meta">
             <span id="game-mood-label">ROMANTIC</span>
-            <span id="game-count">1 / 10</span>
+            <span id="game-count" aria-live="polite">1 / 10</span>
           </div>
-          <div class="progress"><div id="progress-fill"></div></div>
+          <div id="game-progress" class="progress" role="progressbar" aria-label="Game progress" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1"><div id="progress-fill"></div></div>
         </div>
-        <button class="icon-btn" id="favorite-btn" onclick="toggleFavorite()">♡</button>
+        <button class="icon-btn" id="favorite-btn" type="button" onclick="toggleFavorite()" aria-label="Save this card to favorites">♡</button>
       </div>
 
       <div class="game-area">
-        <div class="game-hint" id="game-hint">Tap the card to reveal the next prompt</div>
-        <div class="card-scene" id="card-scene" onclick="flipCard()">
+        <div class="game-hint" id="game-hint">Tap for the next card</div>
+        <div class="card-scene" id="card-scene" role="button" tabindex="0" aria-label="Current prompt. Activate for the next card." onclick="flipCard()">
           <div class="play-card card-back">
             <div class="card-pattern"></div>
-            <div class="brand-small">PAIRPLAY</div>
+            <div class="brand-small">FLIRTYFLIP</div>
             <div class="big-heart">♡</div>
             <div class="flip-text">TAP TO REVEAL NEXT</div>
           </div>
@@ -291,20 +274,20 @@
               <div class="prompt-type" id="prompt-type">QUESTION</div>
               <h2 id="question-text">Your question appears here.</h2>
             </div>
-            <div class="front-bottom">PAIRPLAY · CONNECT</div>
+            <div class="front-bottom">FLIRTYFLIP · CONNECT</div>
           </div>
         </div>
 
         <div class="game-actions">
-          <button class="secondary-action" onclick="prevCard()">Previous</button>
-          <button class="secondary-action" onclick="skipCard()">Skip</button>
-          <button class="next-btn" onclick="nextCard()">NEXT CARD <span>→</span></button>
+          <button id="previous-card-btn" class="secondary-action" type="button" onclick="prevCard()">Previous</button>
+          <button id="skip-card-btn" class="secondary-action" type="button" onclick="skipCard()">Skip</button>
+          <button id="next-card-btn" class="next-btn" type="button" onclick="nextCard()">NEXT CARD <span>→</span></button>
         </div>
         <div class="game-tip">No pressure. Skip anything that doesn't feel right. ♡</div>
       </div>
     </section>
 
-    <!-- COMPLETE -->
+    <!-- RESULTS / COMPLETION -->
     <!-- ========================================
          COMPLETE SCREEN
          ======================================== -->
@@ -344,11 +327,16 @@
       <button class="pill-btn wide" onclick="showMoods()">Let's play →</button>
     </section>
 
-    <!-- CATALOG (Games & Courses) -->
-    <section id="catalog" class="page narrow">
-      <button class="back-btn" onclick="showHome()">← Back</button>
+    <!-- ========================================
+         SHARED GAMES / COURSES CATALOG SHELL
+         /games renders the Games catalog or game details; /courses renders the Courses catalog.
+         /course/:slug renders course details, while ?lesson=N renders the focused course reader.
+         Edit those generated views in script.js and keep this shared HTML shell generic.
+         ======================================== -->
+    <section id="catalog" class="page catalog-page">
+      <button id="catalog-back" class="back-btn" type="button">← Back</button>
       <div class="page-heading">
-        <div class="eyebrow">EXPLORE</div>
+        <div id="catalog-eyebrow" class="eyebrow">EXPLORE</div>
         <h2 id="catalog-heading">Catalog</h2>
         <p id="catalog-sub">Browse games and courses. Click any heading to open an example list.</p>
       </div>
@@ -368,18 +356,19 @@
   </main>
 
   <div id="toast" class="toast"></div>
+  <!-- Exit-game modal; edit its confirmation copy here and its actions in script.js. -->
   <div id="modal" class="modal hidden">
     <div class="modal-box">
       <h3>Leave the game?</h3>
       <p>Your current round will be reset.</p>
       <div class="modal-actions">
         <button class="ghost-btn" onclick="closeModal()">Keep playing</button>
-        <button class="pill-btn" onclick="closeModal(); showMoods()">Exit game</button>
+        <button class="pill-btn" onclick="exitGameToMoods()">Exit game</button>
       </div>
     </div>
   </div>
 
-  <!-- Play confirmation modal: requires two checkboxes (18+ and mutual consent) before starting -->
+  <!-- Play confirmation modal: requires two checkboxes (18+ and mutual consent) before starting. -->
   <div id="play-confirm-modal" class="modal hidden" aria-hidden="true">
     <div class="modal-box">
       <h3>CONFIRMATION</h3>
@@ -395,6 +384,7 @@
     </div>
   </div>
 
+  <!-- Authentication modal; edit its fields here and Supabase/guest behavior in script.js. -->
   <div id="auth-modal" class="auth-modal hidden" aria-hidden="true">
     <div class="auth-card">
       <button class="icon-btn auth-close" id="auth-close" type="button" aria-label="Close authentication">×</button>
@@ -428,22 +418,7 @@
     <span>Made for better date nights.</span>
   </footer>
 
-  <!-- Early-safe wrappers: define lightweight proxies for core navigation functions so inline onclick handlers never throw
-       Calls are queued if the real functions aren't ready yet. The real script flushes queued calls on load. -->
-  <script>
-    window.__pairplay_pendingActions = window.__pairplay_pendingActions || [];
-    function __pairplay_runOrQueue(fnName, args) {
-      if (typeof window[fnName] === 'function' && window[fnName] !== __pairplay_runOrQueue) {
-        try { return window[fnName].apply(null, args || []); } catch(e) { console.warn('runOrQueue call error', e); }
-      }
-      window.__pairplay_pendingActions.push({fn: fnName, args: args || []});
-    }
-    function showMoods(){ return __pairplay_runOrQueue('showMoods', []); }
-    function showHow(){ return __pairplay_runOrQueue('showHow', []); }
-    function showOnline(){ return __pairplay_runOrQueue('showOnline', []); }
-    function showHome(){ return __pairplay_runOrQueue('showHome', []); }
-  </script>
-
+  <!-- Runtime scripts: Supabase is optional; script.js owns routing, state, catalogs and interactions. -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script>
     // IMPORTANT: Supabase project URL must be the project origin ONLY — do not include /rest/v1/ or any path segments.
@@ -454,6 +429,6 @@
       anonKey: "sb_publishable_9sQoxaMCGlxWId7eTMG2qQ_8QszVqIc"
     };
   </script>
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>
