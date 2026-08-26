@@ -184,10 +184,8 @@ on conflict (course_slug, slug) do update set
   sort_order = excluded.sort_order,
   published = excluded.published;
 
--- A private bucket can hold paid media; Vercel Functions issue short-lived signed URLs after entitlement checks.
-insert into storage.buckets (id, name, public)
-values ('academy-private', 'academy-private', false)
-on conflict (id) do update set public = false;
+-- Create the private academy-private bucket through the Supabase Storage API or Dashboard.
+-- Supabase recommends treating its storage schema as read-only; no public object policy is added here.
 
 -- Row-level security protects all account and payment records even if the REST API is queried directly.
 alter table public.academy_courses enable row level security;
@@ -288,6 +286,10 @@ begin
   if v_order.provider_payment_id is not null and v_order.provider_payment_id <> p_provider_payment_id then
     raise exception 'Academy payment ID mismatch';
   end if;
+  if v_order.status = 'captured' and v_order.provider_payment_id = p_provider_payment_id then
+    return query select v_order.course_slug, v_order.user_id, 'active'::text;
+    return;
+  end if;
 
   update public.academy_payment_orders
   set provider_payment_id = p_provider_payment_id, status = 'captured', updated_at = now()
@@ -325,6 +327,10 @@ begin
   for update;
 
   if not found then return; end if;
+  if v_order.status = 'refunded' then
+    return query select v_order.course_slug, v_order.user_id, 'revoked'::text;
+    return;
+  end if;
 
   update public.academy_payment_orders set status = 'refunded', updated_at = now() where id = v_order.id;
   update public.academy_entitlements set status = 'revoked', updated_at = now()
@@ -339,7 +345,7 @@ revoke all on function public.academy_revoke_refunded_payment(text, text) from p
 grant execute on function public.academy_fulfill_payment(text, text, text) to service_role;
 grant execute on function public.academy_revoke_refunded_payment(text, text) to service_role;
 
-revoke all on public.academy_payment_orders, public.academy_entitlements, public.academy_lesson_progress, public.academy_webhook_events from anon;
+revoke all on public.academy_courses, public.academy_modules, public.academy_lessons, public.academy_payment_orders, public.academy_entitlements, public.academy_lesson_progress, public.academy_webhook_events from anon, authenticated;
 grant select on public.academy_courses, public.academy_modules to anon, authenticated;
 grant select on public.academy_lessons, public.academy_payment_orders, public.academy_entitlements to authenticated;
 grant select, insert, update on public.academy_lesson_progress to authenticated;

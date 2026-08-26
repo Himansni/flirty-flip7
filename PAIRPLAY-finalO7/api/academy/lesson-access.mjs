@@ -1,12 +1,23 @@
 // Fetch one protected lesson only after server-side entitlement verification.
 import { cleanSlug, errorResponse, jsonResponse, requireEntitlement, requireMethod, requireSupabaseUser, supabaseAdmin } from "../_lib/academy-server.mjs";
 
-async function createSignedMediaUrl(mediaPath) {
+async function createSignedMediaUrl(courseSlug, lessonSlug, mediaPath) {
   if (!mediaPath) return null;
+  const safePath = String(mediaPath).trim();
+  const pathParts = safePath.split("/");
+  if (
+    safePath.length > 1024
+    || pathParts.some((part) => !part || part === "." || part === "..")
+    || pathParts[0] !== courseSlug
+  ) {
+    console.error("Academy lesson media path rejected", { courseSlug, lessonSlug });
+    return null;
+  }
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
   const root = process.env.SUPABASE_URL?.trim().replace(/\/(?:rest\/v1)?\/?$/, "");
   if (!serviceKey || !root) return null;
-  const response = await fetch(`${root}/storage/v1/object/sign/academy-private/${encodeURIComponent(mediaPath).replace(/%2F/g, "/")}`, {
+  const encodedPath = pathParts.map((part) => encodeURIComponent(part)).join("/");
+  const response = await fetch(`${root}/storage/v1/object/sign/academy-private/${encodedPath}`, {
     method: "POST",
     headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({ expiresIn: 600 })
@@ -41,7 +52,7 @@ export default async function handler(request) {
         slug: lesson.slug,
         title: lesson.title,
         content: lesson.body || "",
-        mediaUrl: await createSignedMediaUrl(lesson.media_path)
+        mediaUrl: await createSignedMediaUrl(courseSlug, lessonSlug, lesson.media_path)
       }
     });
   } catch (error) {

@@ -12,6 +12,7 @@ export default async function handler(request) {
     if (!/^pay_[A-Za-z0-9]+$/.test(paymentId)) throw new AcademyHttpError(400, "INVALID_PAYMENT", "A valid payment ID is required.");
     const order = await findUserOrderByProviderId(user.id, orderId);
     if (!order) throw new AcademyHttpError(404, "ORDER_NOT_FOUND", "This payment order was not found.");
+    if (order.status === "refunded") throw new AcademyHttpError(409, "ORDER_REFUNDED", "This payment was refunded and cannot grant access.");
     if (!verifyCheckoutSignature(order.provider_order_id, paymentId, signature)) {
       throw new AcademyHttpError(400, "INVALID_PAYMENT_SIGNATURE", "Payment verification failed and access was not granted.");
     }

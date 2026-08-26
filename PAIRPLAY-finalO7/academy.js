@@ -11,7 +11,6 @@
   const payments = global.AcademyPayments;
   const serverPricing = new Map();
   let pendingAuthCourse = null;
-  let lastAcademyFocus = null;
 
   if (!config) {
     console.warn("FlirtyFlip Academy public configuration is unavailable.");
@@ -141,7 +140,7 @@
       ${renderAcademyMasthead()}
       <header class="academy-catalog-hero">
         <div class="academy-eyebrow">PRIVATE LEARNING · CONSENT FIRST</div>
-        <h1>FlirtyFlip <em>Academy</em></h1>
+        <h1 tabindex="-1">FlirtyFlip <em>Academy</em></h1>
         <p>Thoughtful adult education for clearer communication, deeper attention and more respectful intimacy—without pressure or guaranteed claims.</p>
       </header>
       <div class="academy-tabs" role="tablist" aria-label="Choose an Academy audience">
@@ -211,7 +210,7 @@
           <div class="academy-course-hero__visual" aria-hidden="true"><span>${academyEscape(course.monogram)}</span><small>${academyEscape(course.badge)}</small><i></i></div>
           <div class="academy-course-hero__copy">
             <div class="academy-eyebrow">${academyEscape(getAudienceLabel(course.audience))} · ADULTS 18+</div>
-            <h1>${academyEscape(course.title)}</h1>
+            <h1 tabindex="-1">${academyEscape(course.title)}</h1>
             <p class="academy-course-hero__subtitle">${academyEscape(course.subtitle)}</p>
             <p>${academyEscape(course.description)}</p>
             <div class="academy-course-hero__facts"><span>${course.lessonCount} chapters</span><span>${academyEscape(course.duration)}</span><span>Self-paced</span></div>
@@ -304,12 +303,12 @@
 
     target.innerHTML = `
       ${renderAcademyMasthead({ backPath: `/academy/course/${encodeURIComponent(course.slug)}`, backLabel: "Course" })}
-      <main class="academy-pricing-page" style="--academy-accent:${academyEscape(course.accent)}">
+      <div class="academy-pricing-page" style="--academy-accent:${academyEscape(course.accent)}">
         <section class="academy-pricing-card">
           <div class="academy-pricing-card__course"><span>${academyEscape(course.badge)}</span><strong aria-hidden="true">${academyEscape(course.monogram)}</strong></div>
           <div class="academy-pricing-card__copy">
             <div class="academy-eyebrow">SECURE ENROLLMENT</div>
-            <h1>${academyEscape(course.title)}</h1>
+            <h1 tabindex="-1">${academyEscape(course.title)}</h1>
             <p>${academyEscape(course.subtitle)}</p>
             <div class="academy-price">${price ? academyEscape(price) : "Price not configured"}<small>${price ? "One-time course access" : "Enrollment remains disabled"}</small></div>
             <ul><li>${course.lessonCount} course chapters</li><li>Self-paced lesson dashboard</li><li>Progress saved to your account</li></ul>
@@ -325,7 +324,7 @@
           <ol><li><span>01</span>Sign in with your existing FlirtyFlip account.</li><li><span>02</span>The server creates an order using its configured price.</li><li><span>03</span>Razorpay handles payment details in Checkout.</li><li><span>04</span>Verified access appears in your dashboard.</li></ol>
           <nav aria-label="Enrollment policies"><a href="${config.legalLinks.privacy}" data-academy-route="${config.legalLinks.privacy}">Privacy</a><a href="${config.legalLinks.terms}" data-academy-route="${config.legalLinks.terms}">Terms</a><a href="${config.legalLinks.refund}" data-academy-route="${config.legalLinks.refund}">Refund policy</a></nav>
         </aside>
-      </main>
+      </div>
     `;
 
     if (hydrate) hydrateAcademyPricing(slug);
@@ -365,10 +364,10 @@
     if (!target) return;
     target.innerHTML = `
       ${renderAcademyMasthead({ backPath: "/academy", backLabel: "Academy" })}
-      <main class="academy-dashboard">
-        <header><div class="academy-eyebrow">STUDENT DASHBOARD</div><h1>Your learning space.</h1><p>Purchased courses, current lessons and progress appear here after secure entitlement verification.</p></header>
+      <div class="academy-dashboard">
+        <header><div class="academy-eyebrow">STUDENT DASHBOARD</div><h1 tabindex="-1">Your learning space.</h1><p>Purchased courses, current lessons and progress appear here after secure entitlement verification.</p></header>
         <div id="academy-dashboard-content">${hasRealAcademyAccount() ? '<div class="academy-loading" role="status"><span></span>Checking your courses…</div>' : renderAcademyLoginRequired()}</div>
-      </main>
+      </div>
     `;
     if (hasRealAcademyAccount()) loadAcademyDashboard();
   }
@@ -413,10 +412,10 @@
 
     target.innerHTML = `
       ${renderAcademyMasthead({ backPath: "/academy/dashboard", backLabel: "Dashboard", compact: true })}
-      <main class="academy-reader-layout">
+      <div class="academy-reader-layout">
         <aside class="academy-reader-sidebar"><div class="academy-eyebrow">${academyEscape(course.badge)}</div><h2>${academyEscape(course.title)}</h2><ol>${lessons.map((item, index) => `<li class="${item.id === lesson.id ? "is-current" : ""}"><span>${String(index + 1).padStart(2, "0")}</span>${academyEscape(item.title)}<b aria-hidden="true">${item.id === lesson.id ? "●" : "⌁"}</b></li>`).join("")}</ol></aside>
         <article id="academy-reader-content" class="academy-reader-content">${hasRealAcademyAccount() ? '<div class="academy-loading" role="status"><span></span>Verifying lesson access…</div>' : renderAcademyLoginRequired(course.slug)}</article>
-      </main>
+      </div>
     `;
     if (hasRealAcademyAccount()) loadAcademyLesson(course, lesson);
   }
@@ -433,7 +432,7 @@
       const paragraphs = String(response.lesson?.content || "").split(/\n{2,}/).map((paragraph) => paragraph.trim()).filter(Boolean);
 
       target.innerHTML = `
-        <header><div class="academy-eyebrow">${academyEscape(lesson.moduleTitle)}</div><h1>${academyEscape(response.lesson?.title || lesson.title)}</h1><p>Lesson ${index + 1} of ${lessons.length}</p></header>
+        <header><div class="academy-eyebrow">${academyEscape(lesson.moduleTitle)}</div><h1 tabindex="-1">${academyEscape(response.lesson?.title || lesson.title)}</h1><p>Lesson ${index + 1} of ${lessons.length}</p></header>
         <div class="academy-reader-body">${paragraphs.length ? paragraphs.map((paragraph) => `<p>${academyEscape(paragraph)}</p>`).join("") : '<div class="academy-empty-copy">Lesson content has not been configured yet.</div>'}${response.lesson?.mediaUrl ? `<div class="academy-private-media"><p>Private media link expires shortly.</p><a href="${academyEscape(response.lesson.mediaUrl)}" rel="noopener">Open protected lesson media</a></div>` : ""}</div>
         <div id="academy-progress-status" aria-live="polite"></div>
         <button class="academy-complete-button" type="button" data-academy-action="complete-lesson" data-course="${academyEscape(course.slug)}" data-lesson="${academyEscape(lesson.id)}">Mark lesson complete ✓</button>
@@ -455,7 +454,7 @@
     const state = safeStatus === "success" ? (hasRealAcademyAccount() ? "pending" : "login-required") : safeStatus;
     target.innerHTML = `
       ${renderAcademyMasthead({ backPath: "/academy", backLabel: "Academy" })}
-      <main class="academy-payment-result"><div id="academy-payment-result-seal" class="academy-payment-result__seal" aria-hidden="true">◇</div><div class="academy-eyebrow">PAYMENT RESULT</div><h1 id="academy-payment-result-heading">${safeStatus === "success" ? "Checking enrollment." : safeStatus === "failed" ? "Payment was not completed." : safeStatus === "cancelled" ? "Checkout cancelled." : "Verification pending."}</h1><div id="academy-payment-result-status">${renderCheckoutStatus(state)}</div><div class="academy-payment-result__actions"><a class="academy-gold-button" href="/academy/dashboard" data-academy-route="/academy/dashboard">Open dashboard →</a>${course ? `<a href="/academy/course/${encodeURIComponent(course.slug)}" data-academy-route="/academy/course/${encodeURIComponent(course.slug)}">Return to course</a>` : ""}</div></main>
+      <div class="academy-payment-result"><div id="academy-payment-result-seal" class="academy-payment-result__seal" aria-hidden="true">◇</div><div class="academy-eyebrow">PAYMENT RESULT</div><h1 id="academy-payment-result-heading" tabindex="-1">${safeStatus === "success" ? "Checking enrollment." : safeStatus === "failed" ? "Payment was not completed." : safeStatus === "cancelled" ? "Checkout cancelled." : "Verification pending."}</h1><div id="academy-payment-result-status">${renderCheckoutStatus(state)}</div><div class="academy-payment-result__actions"><a class="academy-gold-button" href="/academy/dashboard" data-academy-route="/academy/dashboard">Open dashboard →</a>${course ? `<a href="/academy/course/${encodeURIComponent(course.slug)}" data-academy-route="/academy/course/${encodeURIComponent(course.slug)}">Return to course</a>` : ""}</div></div>
     `;
     if (safeStatus === "success" && orderId && hasRealAcademyAccount()) hydrateAcademyPaymentResult(orderId);
   }
@@ -552,8 +551,10 @@
       const routeLink = event.target.closest("[data-academy-route]");
       if (routeLink) {
         event.preventDefault();
-        lastAcademyFocus = routeLink;
         navigateToRoute(routeLink.dataset.academyRoute || routeLink.getAttribute("href"));
+        if (location.pathname.startsWith("/academy")) {
+          requestAnimationFrame(() => document.querySelector("#academy h1")?.focus({ preventScroll: true }));
+        }
         return;
       }
 
@@ -564,6 +565,7 @@
       if (type === "audience") {
         const audience = config.audiences.some(({ id }) => id === action.dataset.audience) ? action.dataset.audience : config.audiences[0].id;
         navigateToRoute(`/academy?audience=${encodeURIComponent(audience)}`);
+        document.getElementById(`academy-tab-${audience}`)?.focus();
       }
       if (type === "toggle-module") {
         const panel = document.getElementById(action.getAttribute("aria-controls"));

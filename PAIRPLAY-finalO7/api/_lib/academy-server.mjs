@@ -49,8 +49,13 @@ export async function parseJsonBody(request, maxBytes = 32_000) {
     throw new AcademyHttpError(413, "BODY_TOO_LARGE", "The request body is too large.");
   }
   try {
-    return JSON.parse(raw);
+    const payload = JSON.parse(raw);
+    if (!payload || Array.isArray(payload) || typeof payload !== "object") {
+      throw new AcademyHttpError(400, "INVALID_JSON_BODY", "The request body must be a JSON object.");
+    }
+    return payload;
   } catch (error) {
+    if (error instanceof AcademyHttpError) throw error;
     throw new AcademyHttpError(400, "INVALID_JSON", "The request body must be valid JSON.");
   }
 }
@@ -365,8 +370,7 @@ export async function revokeRefundedPayment(paymentId, eventId = null) {
 }
 
 export async function recordWebhookEvent(eventId, eventType, payload) {
-  const safeId = String(eventId || "").trim();
-  if (!safeId || safeId.length > 200) throw new AcademyHttpError(400, "INVALID_EVENT_ID", "A valid webhook event ID is required.");
+  const safeId = cleanWebhookEventId(eventId);
   const digest = createHash("sha256").update(payload).digest("hex");
   const rows = await supabaseAdmin("academy_webhook_events?on_conflict=event_id", {
     method: "POST",
@@ -374,6 +378,29 @@ export async function recordWebhookEvent(eventId, eventType, payload) {
     body: { event_id: safeId, event_type: String(eventType || "unknown").slice(0, 120), payload_sha256: digest }
   });
   return Boolean(rows?.length);
+}
+
+function cleanWebhookEventId(eventId) {
+  const safeId = String(eventId || "").trim();
+  if (!safeId || safeId.length > 200) throw new AcademyHttpError(400, "INVALID_EVENT_ID", "A valid webhook event ID is required.");
+  return safeId;
+}
+
+// Check a previously completed delivery before repeating provider or database work.
+// The unique event_id constraint remains the final concurrency guard when two deliveries race.
+export async function findWebhookEvent(eventId) {
+  const safeId = cleanWebhookEventId(eventId);
+  const query = new URLSearchParams({
+    select: "event_id,payload_sha256",
+    event_id: `eq.${safeId}`,
+    limit: "1"
+  });
+  const rows = await supabaseAdmin(`academy_webhook_events?${query}`);
+  return rows?.[0] || null;
+}
+
+export function webhookPayloadDigest(payload) {
+  return createHash("sha256").update(payload).digest("hex");
 }
 
 // If this helper path is requested directly, reveal no server details.

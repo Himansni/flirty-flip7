@@ -7,7 +7,9 @@ import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
 import test from "node:test";
 
+import { parseJsonBody, webhookPayloadDigest } from "../api/_lib/academy-server.mjs";
 import verifyPayment from "../api/academy/verify-payment.mjs";
+import webhook from "../api/academy/webhook.mjs";
 
 const originalFetch = globalThis.fetch;
 const originalEnvironment = {
@@ -15,7 +17,8 @@ const originalEnvironment = {
   SUPABASE_PUBLISHABLE_KEY: process.env.SUPABASE_PUBLISHABLE_KEY,
   SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
   RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
-  RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET
+  RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET,
+  RAZORPAY_WEBHOOK_SECRET: process.env.RAZORPAY_WEBHOOK_SECRET
 };
 
 function json(payload, status = 200) {
@@ -28,6 +31,7 @@ function configureTestEnvironment() {
   process.env.SUPABASE_SERVICE_ROLE_KEY = "service_test_key";
   process.env.RAZORPAY_KEY_ID = "rzp_test_key";
   process.env.RAZORPAY_KEY_SECRET = "razorpay_test_secret";
+  process.env.RAZORPAY_WEBHOOK_SECRET = "razorpay_test_webhook_secret";
 }
 
 function restoreTestEnvironment() {
@@ -63,6 +67,15 @@ function orderRow() {
     idempotency_key: "test-idempotency-key"
   };
 }
+
+test("rejects non-object JSON request bodies", async () => {
+  const request = new Request("https://flirtyflip.test/api/academy/progress", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(["not", "an", "object"])
+  });
+  await assert.rejects(() => parseJsonBody(request), (error) => error.status === 400 && error.code === "INVALID_JSON_BODY");
+});
 
 test("rejects a forged Checkout signature before contacting Razorpay", async (context) => {
   configureTestEnvironment();
@@ -109,4 +122,56 @@ test("grants entitlement only after a matching captured Razorpay payment", async
   assert.equal(payload.entitlementActive, true);
   assert.equal(payload.paymentStatus, "captured");
   assert.equal(fulfillmentCalls, 1);
+});
+
+test("a refunded order cannot be re-fulfilled from an old Checkout callback", async (context) => {
+  configureTestEnvironment();
+  context.after(restoreTestEnvironment);
+  let providerCalls = 0;
+  globalThis.fetch = async (url) => {
+    const target = String(url);
+    if (target.endsWith("/auth/v1/user")) return json({ id: orderRow().user_id, email: "student@example.test" });
+    if (target.includes("/rest/v1/academy_payment_orders?")) return json([{ ...orderRow(), status: "refunded", provider_payment_id: "pay_test123" }]);
+    if (target.includes("api.razorpay.com")) providerCalls += 1;
+    throw new Error(`Unexpected external call: ${url}`);
+  };
+
+  const response = await verifyPayment(paymentRequest("0".repeat(64)));
+  const payload = await response.json();
+  assert.equal(response.status, 409);
+  assert.equal(payload.code, "ORDER_REFUNDED");
+  assert.equal(providerCalls, 0);
+});
+
+test("a previously recorded Razorpay event returns before repeating side effects", async (context) => {
+  configureTestEnvironment();
+  context.after(restoreTestEnvironment);
+  const rawBody = JSON.stringify({
+    event: "payment.captured",
+    payload: { payment: { entity: { id: "pay_test123", order_id: "order_test123", amount: 100, currency: "INR", status: "captured" } } }
+  });
+  const signature = createHmac("sha256", process.env.RAZORPAY_WEBHOOK_SECRET).update(rawBody).digest("hex");
+  const calls = [];
+  globalThis.fetch = async (url) => {
+    calls.push(String(url));
+    if (String(url).includes("/rest/v1/academy_webhook_events?")) {
+      return json([{ event_id: "evt_test123", payload_sha256: webhookPayloadDigest(rawBody) }]);
+    }
+    throw new Error(`Unexpected external call: ${url}`);
+  };
+
+  const request = new Request("https://flirtyflip.test/api/academy/webhook", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Razorpay-Signature": signature,
+      "X-Razorpay-Event-Id": "evt_test123"
+    },
+    body: rawBody
+  });
+  const response = await webhook(request);
+  const payload = await response.json();
+  assert.equal(response.status, 200);
+  assert.deepEqual(payload, { received: true, duplicate: true });
+  assert.equal(calls.length, 1);
 });

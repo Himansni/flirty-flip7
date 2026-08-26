@@ -8,6 +8,9 @@ export default async function handler(request) {
     const orderId = new URL(request.url).searchParams.get("orderId");
     const order = await findUserOrderByProviderId(user.id, orderId);
     if (!order) throw new AcademyHttpError(404, "ORDER_NOT_FOUND", "This payment order was not found.");
+    if (order.status === "refunded") {
+      return jsonResponse({ order: mapOrder(order), entitlementActive: false });
+    }
 
     let capturedPayment = null;
     if (order.status !== "captured" && order.provider_payment_id) {
