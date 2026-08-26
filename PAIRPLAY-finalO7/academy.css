@@ -1,0 +1,1473 @@
+/* =========================================
+   FLIRTYFLIP ACADEMY — DESIGN TOKENS
+   Edit these scoped tokens to tune the Academy palette without changing the game UI.
+   ========================================= */
+.academy-page,
+.home-academy-entry,
+.academy-entry {
+    --academy-ink: #211814;
+    --academy-muted: #6f625c;
+    --academy-gold: #b9872f;
+    --academy-gold-dark: #8a611f;
+    --academy-gold-soft: #f5ead2;
+    --academy-cream: #fffaf0;
+    --academy-surface: #ffffff;
+    --academy-line: rgba(74, 48, 31, 0.14);
+    --academy-success: #276648;
+    --academy-danger: #9f3838;
+    --academy-shadow: 0 20px 55px rgba(55, 35, 22, 0.1);
+    --academy-radius-lg: 28px;
+    --academy-radius-md: 20px;
+    --academy-radius-sm: 14px;
+}
+/* =========================================
+   ACADEMY ENTRY POINTS
+   These styles distinguish the Academy in the existing header, drawer, and homepage.
+   ========================================= */
+.academy-nav-link {
+    position: relative;
+}
+
+.academy-nav-link::after {
+    content: "";
+    position: absolute;
+    top: 0.25rem;
+    right: 0.3rem;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    background: #c89a45;
+    box-shadow: 0 0 0 3px rgba(200, 154, 69, 0.15);
+}
+
+.drawer-link--academy span {
+    margin-left: auto;
+    padding: 0.16rem 0.45rem;
+    border: 1px solid rgba(185, 135, 47, 0.35);
+    border-radius: 999px;
+    color: #8a611f;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+/* =========================================
+   ACADEMY SHARED COMPONENTS
+   These primitives support the renderer's real class contract without affecting existing site screens.
+   ========================================= */
+.academy-page {
+    min-height: calc(100vh - 78px);
+    color: var(--academy-ink);
+    background:
+        radial-gradient(circle at 5% 2%, rgba(217, 181, 111, 0.13), transparent 25rem),
+        #fffdfa;
+}
+
+.academy-page *,
+.academy-entry * {
+    box-sizing: border-box;
+}
+
+.academy-eyebrow {
+    margin: 0 0 0.65rem;
+    color: var(--academy-gold-dark);
+    font-size: 0.76rem;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.academy-tabs {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    gap: 0.35rem;
+    overflow-x: auto;
+    padding: 0.35rem;
+    border: 1px solid var(--academy-line);
+    border-radius: 999px;
+    background: #fff;
+    scrollbar-width: none;
+}
+
+.academy-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.academy-tab {
+    min-height: 42px;
+    flex: 0 0 auto;
+    padding: 0.62rem 1.05rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--academy-muted);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.academy-tab[aria-selected="true"] {
+    background: var(--academy-ink);
+    color: #fff;
+}
+
+.academy-course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.academy-course-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-md);
+    background: var(--academy-surface);
+    box-shadow: 0 14px 36px rgba(45, 29, 21, 0.07);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.academy-course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 45px rgba(45, 29, 21, 0.11);
+}
+
+.academy-course-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.3rem;
+}
+
+.academy-course-card__body h2 {
+    margin: 0.75rem 0 0.6rem;
+    color: var(--academy-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.45rem;
+    line-height: 1.15;
+}
+
+.academy-course-card__body p {
+    margin: 0;
+    color: var(--academy-muted);
+    line-height: 1.65;
+}
+
+.academy-course-card__meta {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    color: var(--academy-muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.academy-empty-state {
+    grid-column: 1 / -1;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px dashed rgba(185, 135, 47, 0.38);
+    border-radius: var(--academy-radius-md);
+    background: rgba(255, 250, 240, 0.75);
+    text-align: center;
+}
+
+.academy-empty-state > span {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--academy-gold-dark);
+    font-size: 1.8rem;
+}
+
+.academy-empty-state p,
+.academy-empty-copy {
+    max-width: 58ch;
+    margin: 0.65rem auto 0;
+    color: var(--academy-muted);
+    line-height: 1.65;
+}
+
+.academy-module {
+    overflow: hidden;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-sm);
+    background: #fff;
+}
+
+.academy-pricing-card {
+    padding: clamp(1.35rem, 4vw, 2.5rem);
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-md);
+    background: #fff;
+    box-shadow: var(--academy-shadow);
+}
+
+.academy-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2rem;
+}
+
+.academy-inline-status {
+    margin-top: 1rem;
+    padding: 0.8rem 0.95rem;
+    border-radius: 12px;
+    background: rgba(245, 234, 210, 0.65);
+    color: var(--academy-muted);
+    font-size: 0.84rem;
+    line-height: 1.55;
+}
+
+.academy-inline-status--success {
+    background: rgba(39, 102, 72, 0.1);
+    color: var(--academy-success);
+}
+
+.academy-inline-status--error {
+    background: rgba(159, 56, 56, 0.09);
+    color: var(--academy-danger);
+}
+
+.academy-page a:focus-visible,
+.academy-page button:focus-visible,
+.academy-entry a:focus-visible {
+    outline: 3px solid rgba(185, 135, 47, 0.38);
+    outline-offset: 3px;
+}
+
+@media (max-width: 1024px) {
+    .academy-course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .academy-course-grid,
+    .academy-dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .academy-tabs {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .academy-page *,
+    .academy-entry * {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =========================================
+   RENDERER CLASS CONTRACT
+   These selectors map the Academy renderer's semantic components to the scoped design system above.
+   Keep class renames in academy.js synchronized with this section.
+   ========================================= */
+.academy-content {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 1.5rem 0 5rem;
+}
+
+.academy-gold-button {
+    display: inline-flex;
+    min-height: 48px;
+    gap: 0.55rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.78rem 1.2rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: var(--academy-gold-dark);
+    color: #fff;
+    font: inherit;
+    font-size: 0.91rem;
+    font-weight: 850;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.academy-gold-button:hover {
+    transform: translateY(-1px);
+    background: #765019;
+    box-shadow: 0 12px 28px rgba(72, 49, 24, 0.18);
+}
+
+.academy-gold-button:disabled {
+    transform: none;
+    opacity: 0.52;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.academy-entry {
+    position: relative;
+    display: grid;
+    width: min(1180px, calc(100% - 2rem));
+    grid-template-columns: 130px minmax(0, 1fr) auto;
+    gap: clamp(1.25rem, 4vw, 3rem);
+    align-items: center;
+    overflow: hidden;
+    margin: 0 auto 4rem;
+    padding: clamp(1.35rem, 4vw, 2.8rem);
+    border: 1px solid rgba(185, 135, 47, 0.22);
+    border-radius: var(--academy-radius-lg);
+    background: linear-gradient(135deg, #fffdf8, #f7e9cd);
+    box-shadow: var(--academy-shadow);
+}
+
+.academy-entry__glow {
+    position: absolute;
+    top: -8rem;
+    right: -4rem;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 50%;
+    background: rgba(210, 165, 78, 0.18);
+    filter: blur(25px);
+}
+
+.academy-entry__mark {
+    position: relative;
+    display: grid;
+    width: 120px;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid rgba(185, 135, 47, 0.38);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--academy-gold-dark);
+    box-shadow: inset 0 0 0 9px rgba(245, 234, 210, 0.72);
+}
+
+.academy-entry__mark span {
+    margin-top: 0.8rem;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.academy-entry__mark small {
+    align-self: start;
+    margin-top: -1rem;
+    font-size: 0.55rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+.academy-entry__copy,
+.academy-entry > a {
+    position: relative;
+}
+
+.academy-entry__copy h2 {
+    max-width: 19ch;
+    margin: 0;
+    color: var(--academy-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.75rem, 3.8vw, 3.15rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+}
+
+.academy-entry__copy h2 em,
+.academy-catalog-hero h1 em {
+    color: var(--academy-gold-dark);
+    font-weight: inherit;
+}
+
+.academy-entry__copy p {
+    max-width: 56ch;
+    margin: 0.8rem 0;
+    color: var(--academy-muted);
+    line-height: 1.6;
+}
+
+.academy-entry__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.academy-entry__trust span {
+    color: var(--academy-gold-dark);
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.academy-entry__trust span + span::before {
+    content: "◇";
+    margin-right: 0.55rem;
+    color: var(--academy-gold);
+}
+
+.academy-masthead {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+.academy-back,
+.academy-account-link {
+    color: var(--academy-muted);
+    font-size: 0.86rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.academy-account-link {
+    justify-self: end;
+}
+
+.academy-back:hover,
+.academy-account-link:hover {
+    color: var(--academy-gold-dark);
+}
+
+.academy-wordmark {
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    color: var(--academy-ink);
+    text-decoration: none;
+}
+
+.academy-wordmark__seal {
+    display: grid;
+    width: 2.4rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid rgba(185, 135, 47, 0.35);
+    border-radius: 50%;
+    background: var(--academy-gold-soft);
+    color: var(--academy-gold-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.academy-wordmark strong,
+.academy-wordmark small {
+    display: block;
+}
+
+.academy-wordmark strong {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.academy-wordmark small {
+    margin-top: 0.1rem;
+    color: var(--academy-gold-dark);
+    font-size: 0.6rem;
+    font-weight: 850;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.academy-catalog-hero {
+    max-width: 930px;
+    margin: 3.5rem auto;
+    text-align: center;
+}
+
+.academy-catalog-hero h1,
+.academy-course-hero h1,
+.academy-pricing-card h1,
+.academy-dashboard > header h1,
+.academy-payment-result h1,
+.academy-reader-content h1 {
+    margin: 0;
+    color: var(--academy-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.4rem, 6vw, 5.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+}
+
+.academy-catalog-hero > p {
+    max-width: 65ch;
+    margin: 1.2rem auto 0;
+    color: var(--academy-muted);
+    font-size: 1.08rem;
+    line-height: 1.75;
+}
+
+.academy-catalog-section {
+    margin-top: 1.5rem;
+}
+
+.academy-section-heading {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 1.4rem;
+}
+
+.academy-section-heading h2,
+.academy-overview-grid h2,
+.academy-benefits h2,
+.academy-pricing-preview h2,
+.academy-pricing-trust h2,
+.academy-dashboard-card h2,
+.academy-access-state h2,
+.academy-error-state h2,
+.academy-empty-state h2 {
+    margin: 0;
+    color: var(--academy-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.55rem, 3vw, 2.45rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+}
+
+.academy-section-heading > p {
+    max-width: 42ch;
+    margin: 0;
+    color: var(--academy-muted);
+    line-height: 1.55;
+    text-align: right;
+}
+
+.academy-course-card__visual {
+    position: relative;
+    min-height: 190px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.7), transparent 28%),
+        linear-gradient(135deg, var(--academy-accent, #bd9148), #f4e5c8);
+}
+
+.academy-course-card__visual > strong {
+    position: absolute;
+    right: 1.2rem;
+    bottom: 0.6rem;
+    color: rgba(53, 35, 24, 0.64);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 4.2rem;
+}
+
+.academy-course-card__visual i,
+.academy-course-hero__visual i {
+    position: absolute;
+    right: -3rem;
+    bottom: -5rem;
+    width: 13rem;
+    aspect-ratio: 1;
+    border: 1px solid rgba(71, 45, 27, 0.2);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2.3rem rgba(255, 255, 255, 0.12);
+}
+
+.academy-course-card__badge,
+.academy-course-card__free {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1;
+    padding: 0.35rem 0.58rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.78);
+    color: #594325;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.academy-course-card__free {
+    right: 1rem;
+    left: auto;
+}
+
+.academy-course-card__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    color: var(--academy-gold-dark);
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.academy-course-card > .academy-course-card__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.3rem;
+    border-top: 1px solid var(--academy-line);
+    color: var(--academy-gold-dark);
+    font-weight: 850;
+    text-decoration: none;
+}
+
+.academy-trust-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    padding: 1.2rem;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-md);
+    background: var(--academy-cream);
+}
+
+.academy-trust-strip > div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.65rem;
+    align-items: center;
+    padding: 0.6rem;
+}
+
+.academy-trust-strip > div > span {
+    grid-row: 1 / 3;
+    color: var(--academy-gold-dark);
+    font-size: 1.5rem;
+}
+
+.academy-trust-strip strong,
+.academy-trust-strip small {
+    display: block;
+}
+
+.academy-trust-strip small {
+    color: var(--academy-muted);
+}
+
+.academy-legal-footer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+    color: var(--academy-muted);
+    font-size: 0.8rem;
+}
+
+.academy-legal-footer p {
+    margin: 0;
+}
+
+.academy-legal-footer nav,
+.academy-pricing-trust nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+}
+
+.academy-legal-footer a,
+.academy-pricing-trust a {
+    color: var(--academy-gold-dark);
+    font-weight: 800;
+}
+
+.academy-course-detail > section,
+.academy-course-detail > aside {
+    margin-top: clamp(3.2rem, 7vw, 6rem);
+}
+
+.academy-course-hero {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.76fr) minmax(0, 1.24fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+    padding: clamp(1.4rem, 4vw, 3.5rem);
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-lg);
+    background: linear-gradient(135deg, #fff, #fbf0dc);
+    box-shadow: var(--academy-shadow);
+}
+
+.academy-course-hero__visual {
+    position: relative;
+    display: grid;
+    min-height: 380px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: var(--academy-radius-md);
+    background: linear-gradient(145deg, var(--academy-accent, #bd9148), #f3e2c2);
+}
+
+.academy-course-hero__visual > span {
+    z-index: 1;
+    color: rgba(53, 35, 24, 0.7);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(4rem, 10vw, 7rem);
+}
+
+.academy-course-hero__visual > small {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+}
+
+.academy-course-hero__copy > p {
+    color: var(--academy-muted);
+    line-height: 1.7;
+}
+
+.academy-course-hero__subtitle {
+    color: var(--academy-ink) !important;
+    font-size: 1.18rem;
+    font-weight: 750;
+}
+
+.academy-course-hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.2rem 0;
+}
+
+.academy-course-hero__facts span {
+    padding: 0.38rem 0.65rem;
+    border-radius: 999px;
+    background: var(--academy-gold-soft);
+    color: var(--academy-gold-dark);
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+.academy-course-hero__notice {
+    display: block;
+    max-width: 60ch;
+    margin-top: 1rem;
+    color: var(--academy-muted);
+    line-height: 1.5;
+}
+
+.academy-overview-grid,
+.academy-benefits {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(1.5rem, 5vw, 4rem);
+}
+
+.academy-overview-grid > p,
+.academy-benefits li {
+    color: var(--academy-muted);
+    line-height: 1.7;
+}
+
+.academy-outcomes__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+}
+
+.academy-outcomes__grid article {
+    display: flex;
+    gap: 0.85rem;
+    padding: 1.15rem;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-sm);
+    background: #fff;
+}
+
+.academy-outcomes__grid article > span {
+    color: var(--academy-gold-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 800;
+}
+
+.academy-outcomes__grid p {
+    margin: 0;
+    color: var(--academy-muted);
+    line-height: 1.55;
+}
+
+.academy-module-list {
+    display: grid;
+    gap: 0.85rem;
+}
+
+.academy-module__toggle {
+    display: flex;
+    width: 100%;
+    min-height: 66px;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.2rem;
+    border: 0;
+    background: #fff;
+    color: var(--academy-ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.academy-module__toggle > span {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.academy-module__toggle small,
+.academy-module__toggle > span:last-child {
+    color: var(--academy-muted);
+    font-size: 0.78rem;
+}
+
+.academy-module__toggle b {
+    color: var(--academy-gold-dark);
+    font-size: 1.3rem;
+}
+
+.academy-module__panel {
+    padding: 0 1.2rem 0.5rem;
+}
+
+.academy-lesson-preview {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+    padding: 1rem 0;
+    border-top: 1px solid var(--academy-line);
+}
+
+.academy-lesson-preview__index,
+.academy-lesson-preview__state {
+    color: var(--academy-gold-dark);
+    font-size: 0.75rem;
+    font-weight: 850;
+}
+
+.academy-lesson-preview h3 {
+    margin: 0 0 0.3rem;
+    color: var(--academy-ink);
+    font-size: 1rem;
+}
+
+.academy-lesson-preview p {
+    margin: 0;
+    color: var(--academy-muted);
+    line-height: 1.5;
+}
+
+.academy-benefits ul {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.academy-benefits li {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-sm);
+    background: #fff;
+}
+
+.academy-benefits li span {
+    color: var(--academy-gold-dark);
+}
+
+.academy-pricing-preview {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(1.4rem, 4vw, 2.8rem);
+    border-radius: var(--academy-radius-md);
+    background: linear-gradient(135deg, var(--academy-ink), #4d382c);
+    color: #fff;
+}
+
+.academy-pricing-preview h2,
+.academy-pricing-preview .academy-eyebrow {
+    color: #fff;
+}
+
+.academy-pricing-preview p {
+    margin: 0.7rem 0 0;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.academy-pricing-preview .academy-gold-button {
+    flex: 0 0 auto;
+    background: #d4aa5a;
+    color: #271d17;
+}
+
+.academy-faq__list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.academy-faq__list details {
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-sm);
+    background: #fff;
+}
+
+.academy-faq__list summary {
+    color: var(--academy-ink);
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.academy-faq__list p {
+    margin: 0.85rem 0 0;
+    color: var(--academy-muted);
+    line-height: 1.65;
+}
+
+.academy-related__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.academy-related__grid a {
+    position: relative;
+    display: block;
+    padding: 1.4rem;
+    border: 1px solid var(--academy-line);
+    border-top: 4px solid var(--academy-accent, var(--academy-gold));
+    border-radius: var(--academy-radius-sm);
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+}
+
+.academy-related__grid h3 {
+    margin: 0.55rem 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.4rem;
+}
+
+.academy-related__grid p {
+    margin: 0;
+    color: var(--academy-muted);
+    line-height: 1.55;
+}
+
+.academy-related__grid b {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    color: var(--academy-gold-dark);
+}
+
+.academy-pricing-page {
+    display: grid;
+    max-width: 980px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    gap: 1.25rem;
+    margin: 3rem auto 0;
+}
+
+.academy-pricing-card {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 1.5rem;
+}
+
+.academy-pricing-card__course {
+    position: relative;
+    display: grid;
+    min-height: 250px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: var(--academy-radius-sm);
+    background: linear-gradient(145deg, var(--academy-accent, #bd9148), #f2dfbd);
+}
+
+.academy-pricing-card__course span {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.academy-pricing-card__course strong {
+    color: rgba(53, 35, 24, 0.65);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 4rem;
+}
+
+.academy-pricing-card h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.academy-pricing-card__copy > p,
+.academy-checkout-footnote {
+    color: var(--academy-muted);
+    line-height: 1.6;
+}
+
+.academy-pricing-card__copy > ul {
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.2rem;
+    color: var(--academy-muted);
+}
+
+.academy-price small {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--academy-muted);
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.academy-payment-state {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    padding: 0.85rem;
+    border-radius: 12px;
+    background: rgba(245, 234, 210, 0.7);
+}
+
+.academy-payment-state > span {
+    color: var(--academy-gold-dark);
+    font-size: 1.25rem;
+}
+
+.academy-payment-state strong,
+.academy-payment-state p {
+    display: block;
+}
+
+.academy-payment-state p {
+    margin: 0.25rem 0 0;
+    color: var(--academy-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.academy-pricing-trust {
+    align-self: start;
+    padding: 1.5rem;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-md);
+    background: var(--academy-cream);
+}
+
+.academy-pricing-trust h2 {
+    font-size: 1.6rem;
+}
+
+.academy-pricing-trust ol {
+    display: grid;
+    gap: 1rem;
+    margin: 1.25rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.academy-pricing-trust li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    color: var(--academy-muted);
+    line-height: 1.5;
+}
+
+.academy-pricing-trust li span {
+    color: var(--academy-gold-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 800;
+}
+
+.academy-dashboard > header {
+    max-width: 760px;
+    margin: 3.5rem 0 2rem;
+}
+
+.academy-dashboard > header p {
+    color: var(--academy-muted);
+    line-height: 1.65;
+}
+
+.academy-dashboard-card {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 1.2rem;
+    padding: 1.35rem;
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-md);
+    background: #fff;
+    box-shadow: 0 14px 36px rgba(45, 29, 21, 0.07);
+}
+
+.academy-dashboard-card__mark {
+    display: grid;
+    min-height: 170px;
+    place-items: center;
+    border-radius: var(--academy-radius-sm);
+    background: linear-gradient(145deg, var(--academy-accent, #bd9148), #f2dfbd);
+    color: rgba(53, 35, 24, 0.65);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 3rem;
+}
+
+.academy-dashboard-card h2 {
+    margin-top: 0.55rem;
+    font-size: 1.55rem;
+}
+
+.academy-dashboard-card p {
+    color: var(--academy-muted);
+}
+
+.academy-dashboard-card .academy-progress {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #eee7df;
+}
+
+.academy-dashboard-card .academy-progress span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--academy-gold-dark);
+}
+
+.academy-progress__label {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.45rem 0 1rem;
+    color: var(--academy-muted);
+    font-size: 0.78rem;
+}
+
+.academy-access-state,
+.academy-error-state,
+.academy-loading {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-md);
+    background: var(--academy-cream);
+    text-align: center;
+}
+
+.academy-access-state > span,
+.academy-error-state > span {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--academy-gold-dark);
+    font-size: 2rem;
+}
+
+.academy-access-state p,
+.academy-error-state p {
+    max-width: 58ch;
+    margin: 0.7rem auto 1.2rem;
+    color: var(--academy-muted);
+    line-height: 1.65;
+}
+
+.academy-loading {
+    color: var(--academy-muted);
+}
+
+.academy-reader-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.3fr) minmax(0, 0.7fr);
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.academy-reader-sidebar,
+.academy-reader-content {
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-md);
+    background: #fff;
+}
+
+.academy-reader-sidebar {
+    align-self: start;
+    position: sticky;
+    top: 90px;
+    padding: 1.2rem;
+}
+
+.academy-reader-sidebar h2 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.35rem;
+}
+
+.academy-reader-sidebar ol {
+    display: grid;
+    gap: 0.4rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.academy-reader-sidebar li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.55rem;
+    padding: 0.65rem;
+    border-radius: 10px;
+    color: var(--academy-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.academy-reader-sidebar li.is-current {
+    background: var(--academy-gold-soft);
+    color: var(--academy-gold-dark);
+    font-weight: 800;
+}
+
+.academy-reader-content {
+    min-width: 0;
+    padding: clamp(1.35rem, 4vw, 3.2rem);
+}
+
+.academy-reader-content h1 {
+    font-size: clamp(2rem, 5vw, 3.7rem);
+}
+
+.academy-reader-content header > p,
+.academy-reader-body {
+    color: var(--academy-muted);
+    line-height: 1.8;
+}
+
+.academy-reader-body {
+    margin: 2rem 0;
+    font-size: 1.02rem;
+}
+
+.academy-complete-button {
+    min-height: 46px;
+    padding: 0.72rem 1rem;
+    border: 1px solid var(--academy-line);
+    border-radius: 999px;
+    background: var(--academy-cream);
+    color: var(--academy-gold-dark);
+    font: inherit;
+    font-weight: 850;
+    cursor: pointer;
+}
+
+.academy-reader-navigation {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--academy-line);
+}
+
+.academy-reader-navigation a {
+    color: var(--academy-gold-dark);
+    font-weight: 850;
+    text-decoration: none;
+}
+
+.academy-private-media {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: var(--academy-radius-sm);
+    background: var(--academy-cream);
+}
+
+.academy-payment-result {
+    max-width: 720px;
+    margin: 4rem auto 0;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    border: 1px solid var(--academy-line);
+    border-radius: var(--academy-radius-lg);
+    background: #fff;
+    box-shadow: var(--academy-shadow);
+    text-align: center;
+}
+
+.academy-payment-result__seal {
+    display: grid;
+    width: 5rem;
+    aspect-ratio: 1;
+    place-items: center;
+    margin: 0 auto 1.2rem;
+    border-radius: 50%;
+    background: var(--academy-gold-soft);
+    color: var(--academy-gold-dark);
+    font-size: 2rem;
+}
+
+.academy-payment-result__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.2rem;
+}
+
+.academy-payment-result__actions > a:not(.academy-gold-button) {
+    color: var(--academy-gold-dark);
+    font-weight: 800;
+}
+
+@media (max-width: 900px) {
+    .academy-entry {
+        grid-template-columns: 100px minmax(0, 1fr);
+    }
+
+    .academy-entry > .academy-gold-button {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .academy-course-hero,
+    .academy-pricing-page,
+    .academy-reader-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .academy-reader-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 700px) {
+    .academy-content {
+        width: calc(100% - 1.25rem);
+        padding-top: 0.75rem;
+    }
+
+    .academy-entry {
+        width: calc(100% - 1.25rem);
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .academy-entry__mark {
+        width: 86px;
+    }
+
+    .academy-entry > .academy-gold-button {
+        grid-column: auto;
+        justify-self: stretch;
+    }
+
+    .academy-masthead {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .academy-wordmark {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-self: center;
+        margin-bottom: 0.8rem;
+    }
+
+    .academy-masthead > div {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .academy-account-link {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .academy-catalog-hero {
+        margin: 2.5rem auto;
+    }
+
+    .academy-course-grid,
+    .academy-trust-strip,
+    .academy-outcomes__grid,
+    .academy-related__grid,
+    .academy-overview-grid,
+    .academy-benefits,
+    .academy-dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .academy-section-heading,
+    .academy-legal-footer,
+    .academy-pricing-preview {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .academy-section-heading > p {
+        text-align: left;
+    }
+
+    .academy-course-hero__visual {
+        min-height: 250px;
+    }
+
+    .academy-pricing-card,
+    .academy-dashboard-card {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .academy-pricing-card__course {
+        min-height: 180px;
+    }
+
+    .academy-dashboard-card__mark {
+        min-height: 130px;
+    }
+
+    .academy-lesson-preview {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .academy-lesson-preview__state {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 390px) {
+    .academy-content,
+    .academy-entry {
+        width: calc(100% - 1rem);
+    }
+
+    .academy-tab {
+        padding-inline: 0.72rem;
+        font-size: 0.82rem;
+    }
+
+    .academy-course-hero,
+    .academy-pricing-card,
+    .academy-pricing-trust,
+    .academy-reader-content {
+        padding: 1rem;
+    }
+
+    .academy-gold-button,
+    .academy-enroll-button {
+        width: 100%;
+    }
+
+    .academy-reader-navigation {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}

@@ -1381,6 +1381,12 @@ const ROUTE_PATHS = Object.freeze({
   games: "/games",
   courses: "/courses",
   course: "/course",
+  academy: "/academy",
+  academyCourse: "/academy/course",
+  academyPricing: "/academy/pricing",
+  academyDashboard: "/academy/dashboard",
+  academyLearn: "/academy/learn",
+  academyPayment: "/academy/payment",
   online: "/online",
   how: "/how",
   support: "/support"
@@ -1392,6 +1398,7 @@ let gameSessionStatus = "idle";
 let routerInitialized = false;
 let lastTrackedLocation = "";
 let catalogBackRoute = ROUTE_PATHS.home;
+let academyAuthNotificationQueued = false;
 
 // ========================================
 // SUPABASE AND AUTHENTICATION INTEGRATION
@@ -1424,6 +1431,17 @@ function getSupabaseClient() {
 
 function hasSupabaseConfigured() {
   return Boolean(SUPABASE_CONFIG.url && SUPABASE_CONFIG.url !== "https://YOUR_PROJECT_REF.supabase.co" && SUPABASE_CONFIG.anonKey && SUPABASE_CONFIG.anonKey !== "YOUR_ANON_KEY");
+}
+
+// Notify the Academy once per microtask after account state changes.
+// Keep this bridge here so Academy screens can refresh without adding duplicate auth listeners.
+function notifyAcademyAuthResolved() {
+  if (academyAuthNotificationQueued || typeof window === "undefined") return;
+  academyAuthNotificationQueued = true;
+  queueMicrotask(() => {
+    academyAuthNotificationQueued = false;
+    if (typeof window.handleAcademyAuthResolved === "function") window.handleAcademyAuthResolved();
+  });
 }
 
 // Ensure supabase client is ready. If window.supabase is missing, attempt to load CDN script (if not present)
@@ -1810,6 +1828,7 @@ async function initializeAuth() {
   const client = await ensureSupabaseClient(1200);
   if (!client) {
     updateAuthUI();
+    notifyAcademyAuthResolved();
     return;
   }
 
@@ -1825,12 +1844,14 @@ async function initializeAuth() {
         clearStoredGuest();
       }
       updateAuthUI();
+      notifyAcademyAuthResolved();
     });
   } catch (e) {
     console.warn('initializeAuth supabase error', e);
   }
 
   updateAuthUI();
+  notifyAcademyAuthResolved();
 }
 
 function updateAuthUI() {
@@ -2034,6 +2055,7 @@ async function submitAuthForm(event) {
     };
     writeStoredGuest(signedInUser);
     updateAuthUI();
+    notifyAcademyAuthResolved();
     closeAuthModal();
     toast("Guest mode enabled ♡");
     return;
@@ -2098,6 +2120,7 @@ async function logoutCurrentUser() {
 
   signedInUser = null;
   updateAuthUI();
+  notifyAcademyAuthResolved();
   toast("Signed out");
 }
 
@@ -2238,10 +2261,28 @@ function normalizePathname(pathname) {
   return normalized || ROUTE_PATHS.home;
 }
 
+// Decode user-controlled path segments without allowing a malformed URL to crash routing.
+function decodeRouteSegment(segment) {
+  try { return decodeURIComponent(segment); } catch (error) { return ""; }
+}
+
 function resolveRoute(pathname) {
   const path = normalizePathname(pathname);
+  if (path.startsWith(`${ROUTE_PATHS.academyCourse}/`)) {
+    return { name: "academy-course", slug: decodeRouteSegment(path.slice(ROUTE_PATHS.academyCourse.length + 1)) };
+  }
+  if (path.startsWith(`${ROUTE_PATHS.academyPricing}/`)) {
+    return { name: "academy-pricing", slug: decodeRouteSegment(path.slice(ROUTE_PATHS.academyPricing.length + 1)) };
+  }
+  if (path.startsWith(`${ROUTE_PATHS.academyLearn}/`)) {
+    const segments = path.slice(ROUTE_PATHS.academyLearn.length + 1).split("/").map(decodeRouteSegment);
+    return { name: "academy-learn", slug: segments[0] || "", lessonSlug: segments.length === 2 ? segments[1] : "" };
+  }
+  if (path.startsWith(`${ROUTE_PATHS.academyPayment}/`)) {
+    return { name: "academy-payment", status: decodeRouteSegment(path.slice(ROUTE_PATHS.academyPayment.length + 1)) };
+  }
   if (path.startsWith(`${ROUTE_PATHS.course}/`)) {
-    return { name: "course", slug: decodeURIComponent(path.slice(ROUTE_PATHS.course.length + 1)) };
+    return { name: "course", slug: decodeRouteSegment(path.slice(ROUTE_PATHS.course.length + 1)) };
   }
 
   const routeNames = {
@@ -2252,6 +2293,8 @@ function resolveRoute(pathname) {
     [ROUTE_PATHS.results]: "results",
     [ROUTE_PATHS.games]: "games",
     [ROUTE_PATHS.courses]: "courses",
+    [ROUTE_PATHS.academy]: "academy",
+    [ROUTE_PATHS.academyDashboard]: "academy-dashboard",
     [ROUTE_PATHS.online]: "online",
     [ROUTE_PATHS.how]: "how",
     [ROUTE_PATHS.support]: "support"
@@ -2285,17 +2328,47 @@ function updateRouteMetadata(route, url) {
     games: "Games — FLIRTYFLIP",
     courses: "Courses — FLIRTYFLIP",
     course: "Course — FLIRTYFLIP",
+    academy: "FlirtyFlip Academy — Consent-first relationship learning",
+    "academy-course": "Course — FlirtyFlip Academy",
+    "academy-pricing": "Enrollment — FlirtyFlip Academy",
+    "academy-dashboard": "Student Dashboard — FlirtyFlip Academy",
+    "academy-learn": "Lesson — FlirtyFlip Academy",
+    "academy-payment": "Payment Result — FlirtyFlip Academy",
     online: "Play Online — FLIRTYFLIP",
     how: "How It Works — FLIRTYFLIP",
     support: "Support — FLIRTYFLIP"
   };
-  document.title = titles[route.name] || titles.home;
+  const academyCourse = route.slug && typeof getAcademyCourse === "function" ? getAcademyCourse(route.slug) : null;
+  document.title = academyCourse && ["academy-course", "academy-pricing", "academy-learn"].includes(route.name)
+    ? `${academyCourse.title} — FlirtyFlip Academy`
+    : titles[route.name] || titles.home;
+
+  const descriptions = {
+    academy: "Explore consent-first FlirtyFlip Academy learning paths for adults 18+ focused on communication, attention, and respectful connection.",
+    "academy-dashboard": "Access verified FlirtyFlip Academy enrollments and account-owned learning progress.",
+    "academy-payment": "Review the server-verified status of a FlirtyFlip Academy enrollment."
+  };
+  const description = document.querySelector('meta[name="description"]');
+  if (description) {
+    description.content = academyCourse?.description
+      || descriptions[route.name]
+      || "Play fun couple games online with FlirtyFlip. Explore romantic questions, deep conversations, funny prompts, flirty challenges and date night games for two.";
+  }
 
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) canonical.href = `${window.location.origin}${url.pathname}`;
 
+  // Private account, lesson, and payment-result routes should not be indexed.
+  // Edit this list when adding another authenticated Academy screen.
+  const robots = document.querySelector('meta[name="robots"]');
+  if (robots) {
+    const privateAcademyRoute = ["academy-dashboard", "academy-learn", "academy-payment"].includes(route.name);
+    robots.content = privateAcademyRoute ? "noindex,nofollow" : "index,follow";
+  }
+
   // Mark the owning primary navigation item for assistive technology and visual state.
-  const activeGroup = route.name === 'course' ? 'courses'
+  const activeGroup = route.name.startsWith('academy') ? 'academy'
+    : route.name === 'course' ? 'courses'
     : ['setup', 'game', 'results'].includes(route.name) ? 'play'
       : route.name;
   document.querySelectorAll('[data-nav-route]').forEach((item) => {
@@ -2340,6 +2413,16 @@ function renderCurrentRoute(navigationType = "navigate") {
   if (route.name === "game" && !["active", "complete"].includes(gameSessionStatus)) return redirectRoute(ROUTE_PATHS.play);
   if (route.name === "results" && gameSessionStatus !== "complete") return redirectRoute(ROUTE_PATHS.play);
   if (route.name === "course" && !coursesData[route.slug]) return redirectRoute(ROUTE_PATHS.courses);
+  if (["academy-course", "academy-pricing", "academy-learn"].includes(route.name)) {
+    const academyCourse = typeof getAcademyCourse === "function" ? getAcademyCourse(route.slug) : null;
+    if (!academyCourse) return redirectRoute(ROUTE_PATHS.academy);
+    if (route.name === "academy-learn") {
+      const academyLesson = typeof getFlatAcademyLessons === "function"
+        ? getFlatAcademyLessons(academyCourse).find(({ id }) => id === route.lessonSlug)
+        : null;
+      if (!academyLesson) return redirectRoute(`${ROUTE_PATHS.academyCourse}/${encodeURIComponent(route.slug)}`);
+    }
+  }
   if (route.name === "games" && url.searchParams.get("game") && !getGameCatalogItem(url.searchParams.get("game"))) return redirectRoute(ROUTE_PATHS.games);
   if (route.name === "course" && url.searchParams.has("lesson")) {
     const requestedLesson = Number(url.searchParams.get("lesson")) - 1;
@@ -2381,6 +2464,30 @@ function renderCurrentRoute(navigationType = "navigate") {
     if (requestedLesson === null) renderCourseDetail(route.slug);
     else renderCourseLesson(route.slug, requestedLesson);
     activatePage("catalog", navigationType);
+  }
+  if (route.name === "academy") {
+    if (typeof renderAcademyCatalog === "function") renderAcademyCatalog(url.searchParams.get("audience"));
+    activatePage("academy", navigationType);
+  }
+  if (route.name === "academy-course") {
+    if (typeof renderAcademyCourseDetail === "function") renderAcademyCourseDetail(route.slug);
+    activatePage("academy", navigationType);
+  }
+  if (route.name === "academy-pricing") {
+    if (typeof renderAcademyPricing === "function") renderAcademyPricing(route.slug);
+    activatePage("academy", navigationType);
+  }
+  if (route.name === "academy-dashboard") {
+    if (typeof renderAcademyDashboard === "function") renderAcademyDashboard();
+    activatePage("academy", navigationType);
+  }
+  if (route.name === "academy-learn") {
+    if (typeof renderAcademyLesson === "function") renderAcademyLesson(route.slug, route.lessonSlug);
+    activatePage("academy", navigationType);
+  }
+  if (route.name === "academy-payment") {
+    if (typeof renderAcademyPaymentResult === "function") renderAcademyPaymentResult(route.status, url);
+    activatePage("academy", navigationType);
   }
   if (route.name === "online") {
     renderOnlineRoute(url);
@@ -2424,6 +2531,7 @@ function initializeRouter() {
 function showHome() { navigateToRoute(ROUTE_PATHS.home); }
 function showMoods() { navigateToRoute(ROUTE_PATHS.play); }
 function showHow() { navigateToRoute(ROUTE_PATHS.how); }
+function showAcademy() { navigateToRoute(ROUTE_PATHS.academy); }
 
 // ========================================
 // ONLINE LOBBY ENTRY

@@ -14,6 +14,7 @@
 <link rel="canonical" href="https://flirtyflip.com/">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index,follow" />
   <meta name="description" content=" Play fun couple games online with FlirtyFlip. Explore romantic questions, 
   deep conversations, funny prompts, flirty challenges and date night games for two." />
   <title>FLIRTYFLIP — Couple Games Online | Questions & Date Night Games.</title>
@@ -21,6 +22,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
+  <!-- Academy-specific presentation stays isolated from the established game and catalog styles. -->
+  <link rel="stylesheet" href="/academy.css" />
 </head>
 <body>
   <!-- ========================================
@@ -97,6 +100,10 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link academy-nav-link" href="/academy" data-route="/academy" data-nav-route="academy">Academy</a>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" href="/how" data-route="/how" data-nav-route="how">How it works</a>
         </li>
       </ul>
@@ -123,6 +130,7 @@
           <li><a class="drawer-link" href="/play" data-route="/play">Play Together</a></li>
           <li><a class="drawer-link" href="/online" data-route="/online">Play Online</a></li>
           <li><a class="drawer-link" href="/courses" data-route="/courses">Courses</a></li>
+          <li><a class="drawer-link drawer-link--academy" href="/academy" data-route="/academy">FlirtyFlip Academy <span>18+</span></a></li>
           <li><a class="drawer-link" href="/how" data-route="/how">How it works</a></li>
           <li><a class="drawer-link" href="/support" data-route="/support">Support</a></li>
           <li class="drawer-divider"></li>
@@ -172,6 +180,22 @@
           </div>
         </div>
       </div>
+
+      <!-- ========================================
+           FLIRTYFLIP ACADEMY ENTRY POINT
+           Edit Academy merchandising copy here; course content and pricing live in academy-data.js/backend.
+           ======================================== -->
+      <section class="academy-entry" aria-labelledby="academy-entry-title">
+        <div class="academy-entry__glow" aria-hidden="true"></div>
+        <div class="academy-entry__mark" aria-hidden="true"><span>FF</span><small>ACADEMY</small></div>
+        <div class="academy-entry__copy">
+          <div class="academy-eyebrow">PREMIUM · ADULTS 18+</div>
+          <h2 id="academy-entry-title">Learn the art of <em>closer connection.</em></h2>
+          <p>Consent-first courses for adults who want more thoughtful communication, confidence and intimacy.</p>
+          <div class="academy-entry__trust"><span>Boundaries first</span><span>Private learning</span><span>Learn at your pace</span></div>
+        </div>
+        <a class="academy-gold-button" href="/academy" data-academy-route="/academy">Explore FlirtyFlip Academy <span aria-hidden="true">→</span></a>
+      </section>
 
       <section class="section">
         <div class="section-heading">
@@ -343,6 +367,15 @@
       <div id="catalog-content" class="catalog-content"></div>
     </section>
 
+    <!-- ========================================
+         FLIRTYFLIP ACADEMY APPLICATION SHELL
+         academy.js renders catalog, detail, pricing, dashboard, payment and lesson views here.
+         Keep paid lesson bodies server-side; academy-data.js contains public metadata only.
+         ======================================== -->
+    <section id="academy" class="page academy-page" aria-live="polite">
+      <div id="academy-content" class="academy-content"></div>
+    </section>
+
     <!-- SUPPORT -->
     <section id="support" class="page narrow">
       <button class="back-btn" onclick="showHome()">← Back</button>
@@ -429,6 +462,10 @@
       anonKey: "sb_publishable_9sQoxaMCGlxWId7eTMG2qQ_8QszVqIc"
     };
   </script>
+  <!-- Academy modules load before the router so direct /academy routes can render on first paint. -->
+  <script src="/academy-data.js"></script>
+  <script src="/academy-payment.js"></script>
+  <script src="/academy.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>
