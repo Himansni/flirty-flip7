@@ -239,6 +239,14 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .mood-bottom { display:flex; justify-content:space-between; align-items:end; margin-top:20px; }
 .intensity { font-size:11px; letter-spacing:.05em; color:var(--muted); }
 .play-link { color:var(--red); font-weight:800; font-size:12px; }
+
+/* ========================================
+   PLAY MOOD-SELECTION LAYOUT
+   /play uses the same mood tokens as the homepage but a functional, scan-friendly card grid.
+   Edit selection-page width and spacing here; homepage discovery cards remain controlled above.
+   ======================================== */
+#moods { width:min(100%,var(--content-narrow)); margin:0 auto; padding:55px var(--page-pad-desktop) 100px; }
+#moods .mood-grid.large { gap:var(--card-gap); }
 /* ========================================
    MOOD TYPOGRAPHY PATTERNS
    Each mood gets its own visual language without adding image assets.
@@ -638,20 +646,59 @@ footer { width:min(100%, var(--content-max)); margin:0 auto; padding:30px var(--
 @media (max-width: 600px) {
   body::before { opacity:.025; }
   .ambient { display:none; }
-  .navbar { height:70px; padding:0 var(--page-pad-mobile); }
+
+  /* Mobile application header keeps branding first and compresses the guest/account action.
+     Edit phone-only header sizing here; desktop navigation and labels remain unchanged above. */
+  .navbar { height:68px; padding:0 14px; gap:7px; }
+  .logo { min-width:0; flex:0 1 auto; gap:6px; white-space:nowrap; }
+  .logo-mark { width:30px; height:30px; flex:0 0 30px; font-size:17px; }
+  .logo > span:last-child { font-size:13px; }
   .nav-actions .text-btn { display:none; }
+  .nav-actions { margin-left:auto; gap:5px; }
+  #nav-auth-cta { min-height:44px; height:44px; flex:0 0 auto; padding:0 12px; white-space:nowrap; font-size:0; line-height:1; }
+  #nav-auth-cta::after { content:attr(data-mobile-label); font-size:14px; }
+  #nav-favorites { display:flex; min-width:34px; min-height:44px; justify-content:center; gap:3px; padding:4px; }
+  #favorites-count { margin-left:0; padding:2px 5px; }
+  .hamburger { flex:0 0 34px; width:34px; min-height:44px; padding:4px; }
   .online-btn { width:100%; }
   .hero { padding:35px var(--page-pad-mobile) 60px; min-height:auto; overflow:hidden; }
   .hero h1 { font-size:clamp(2.55rem, 13vw, 3.25rem); }
   .hero-sub { font-size:16px; }
   .hero-buttons { flex-wrap:wrap; }
-  .hero-card-stage { height:420px; }
-  .hero-card { width:min(245px, calc(100vw - 94px)); border-radius:24px; }
-  .hero-question { font-size:22px; }
+
+  /* Homepage card artwork stays layered and physical-feeling in a shorter editorial stage.
+     Edit these transforms together to preserve the front/back-card relationship on phones. */
+  .hero-card-stage { height:300px; margin-top:6px; }
+  .hero-card { width:min(205px, calc(100vw - 112px)); padding:21px; border-radius:22px; }
+  .back-card { transform:rotate(7deg) translate(36px,-3px); }
+  .front-card { transform:rotate(-6deg) translate(-24px,17px); }
+  .hero-question { left:21px; right:21px; top:34%; font-size:clamp(18px,5.2vw,21px); }
+  .card-top { font-size:10px; }
+  .card-symbol { font-size:78px; }
+  .card-bottom { left:21px; bottom:20px; font-size:9px; }
+  .card-label { font-size:9px; }
+  .card-footer { left:21px; right:21px; bottom:20px; font-size:8px; }
+  .floating-note { padding:8px 10px; font-size:10px; }
+  .note-one { top:9%; right:7%; }
+  .note-two { bottom:10%; left:3%; }
   .section { padding:55px var(--page-pad-mobile); }
   .section-heading h2 { font-size:36px; }
   .mood-grid { grid-template-columns:1fr; }
   .mood-card { min-height:205px; }
+
+  /* Compact /play cards prioritize comparison and preserve 44px Play targets without clipping copy.
+     Edit this scoped block for selection cards; do not reuse these dimensions for homepage cards. */
+  #moods { padding:28px var(--page-pad-mobile) 64px; }
+  #moods .page-heading .back-btn { margin-bottom:20px; }
+  #moods .page-heading h2 { max-width:100%; margin-bottom:12px; font-size:clamp(2rem,9.5vw,2.65rem); line-height:1.02; overflow-wrap:anywhere; }
+  #moods .page-heading p { max-width:34rem; margin-bottom:26px; font-size:15px; line-height:1.55; }
+  #moods .mood-grid.large { gap:16px; }
+  #moods .mood-card { min-height:230px; padding:20px; border-radius:22px; justify-content:flex-start; }
+  #moods .mood-icon { margin-bottom:10px; font-size:28px; }
+  #moods .mood-title { margin-bottom:7px; font-size:clamp(1.65rem,8vw,2rem); }
+  #moods .mood-desc { font-size:13px; line-height:1.5; }
+  #moods .mood-bottom { width:100%; margin-top:auto; padding-top:16px; align-items:center; }
+  #moods .play-link { display:inline-flex; min-height:44px; align-items:center; padding:0 14px; border:1px solid rgba(255,77,103,.35); border-radius:999px; background:rgba(255,36,73,.1); color:#ff7188; }
   .how-strip { margin-bottom:55px; padding:40px var(--page-pad-mobile); }
   .narrow { padding:40px var(--page-pad-mobile) 70px; }
   .page-heading h2 { font-size:clamp(2.25rem, 11vw, 3rem); }

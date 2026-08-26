@@ -1838,21 +1838,28 @@ function updateAuthUI() {
   const cta = $("nav-auth-cta");
   if (!label || !cta) return;
 
+  // Mobile header labels stay concise without changing the full desktop account action.
+  // Edit display wording here; authentication behavior remains in the event handlers below.
+  const setCtaLabels = (desktopLabel, mobileLabel = desktopLabel) => {
+    cta.textContent = desktopLabel;
+    cta.dataset.mobileLabel = mobileLabel;
+  };
+
   if (signedInUser && signedInUser.email) {
     const displayName = signedInUser.email.split("@")[0];
     label.textContent = `Hi, ${displayName}`;
-    cta.textContent = "Log out";
+    setCtaLabels("Log out");
     return;
   }
 
   if (signedInUser && signedInUser.id && signedInUser.id.startsWith("guest-")) {
     label.textContent = "Guest mode";
-    cta.textContent = "Switch account";
+    setCtaLabels("Switch account", "Switch");
     return;
   }
 
   label.textContent = "Log in";
-  cta.textContent = "Continue as guest";
+  setCtaLabels("Continue as guest", "Guest");
 }
 
 function showAuthModal(mode = "login") {
