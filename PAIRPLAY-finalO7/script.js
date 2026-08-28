@@ -129,109 +129,98 @@ const moodQuestionSets = {
   // Includes the Quick Date set, then goes further.
   // ---------------------------------------------------------------
   25: [
-    ["ASK", "What nickname would you give us, right now, off the top of your head?"],
-    ["DO", "Hold hands for twenty seconds. No talking, no phones — just this."],
-    ["SAY", "Tell them one small thing about today that they made better."],
-    ["REMEMBER", "Describe the exact moment you knew you liked them."],
-    ["ASK", "If tonight had a soundtrack, what's the first song on it?"],
-    ["DO", "Look at each other and try not to smile for fifteen seconds. Loser picks dessert."],
-    ["SAY", "Say the compliment you almost gave them last week but didn't."],
-    ["REMEMBER", "What's the smallest detail from your first date you still remember?"],
-    ["ASK", "What's your idea of a perfect lazy Sunday with me in it?"],
-    ["DO", "Trade one thank-you for something the other doesn't usually get thanked for."],
-    ["ASK", "What's something about us that just feels easy?"],
-    ["SAY", "Name one thing about them that makes you feel safe, and say it like you mean it."],
-    ["REMEMBER", "Which date with me are you still a little proud of?"],
-    ["ASK", "If we had one tiny tradition just for us, what would it be?"],
-    ["DO", "Take turns finishing the sentence 'I like that you...' three times each."],
-    ["ASK", "What's one small thing I could do this week that would make your life easier?"],
-    ["SAY", "Describe, out loud, exactly how it feels when we're together."],
-    ["REMEMBER", "What's the most ridiculous thing you've ever caught me doing?"],
-    ["DO", "Hold their gaze for ten seconds, then tell them what you noticed."],
-    ["ASK", "What would your ideal low-key night in with me actually look like?"],
-    ["SAY", "Give one compliment you think I deserve but don't hear enough."],
-    ["REMEMBER", "What's a moment with me you replay when you're having a rough day?"],
-    ["ASK", "What's something about us as a pair that you'd call adorable?"],
-    ["DO", "Ten-second forehead kiss. Then each say one word for how it felt."],
-    ["SAY", "Tell them the thing about their laugh that gets you every time."],
-  ],
- 
-  // ---------------------------------------------------------------
-  // 50 — LONG NIGHT
-  // Designed as an arc, not a list:
-  //   1–10   playful      (low stakes, warm-up)
-  //   11–20  curious       (getting into how each other thinks)
-  //   21–30  cute          (small affectionate specifics)
-  //   31–38  flirty        (charged but still Sweet-tier)
-  //   39–45  personal      (real vulnerability, still gentle)
-  //   46–48  affectionate  (direct, unguarded)
-  //   49–50  ending        (reflection on the night itself)
-  // ---------------------------------------------------------------
-  50: [
-    // PLAYFUL
-    ["ASK", "What nickname would you give us, right now, off the top of your head?"],
-    ["DO", "Hold hands for twenty seconds. No talking, no phones — just this."],
-    ["SAY", "Tell them one small thing about today that they made better."],
-    ["REMEMBER", "Describe the exact moment you knew you liked them."],
-    ["ASK", "If tonight had a soundtrack, what's the first song on it?"],
-    ["DO", "Look at each other and try not to smile for fifteen seconds. Loser picks dessert."],
-    ["SAY", "Say the compliment you almost gave them last week but didn't."],
-    ["REMEMBER", "What's the smallest detail from your first date you still remember?"],
-    ["ASK", "What's your idea of a perfect lazy Sunday with me in it?"],
-    ["DO", "Trade one thank-you for something the other doesn't usually get thanked for."],
- 
-    // CURIOUS
-    ["ASK", "What's something about us that just feels easy?"],
-    ["REMEMBER", "Which date with me are you still a little proud of?"],
-    ["ASK", "If we had one tiny tradition just for us, what would it be?"],
-    ["DO", "Take turns finishing the sentence 'I like that you...' three times each."],
-    ["ASK", "What's one small thing I could do this week that would make your life easier?"],
-    ["REMEMBER", "What's the most ridiculous thing you've ever caught me doing?"],
-    ["ASK", "What would your ideal low-key night in with me actually look like?"],
-    ["DO", "Hold their gaze for ten seconds, then tell them what you noticed."],
-    ["ASK", "What's something about the way we argue or make up that you secretly appreciate?"],
-    ["REMEMBER", "What's a normal, unremarkable moment with me that somehow stuck with you?"],
- 
-    // CUTE
-    ["SAY", "Give one compliment you think I deserve but don't hear enough."],
-    ["ASK", "What's something about us as a pair that you'd call adorable?"],
-    ["DO", "Ten-second forehead kiss. Then each say one word for how it felt."],
-    ["SAY", "Tell them the thing about their laugh that gets you every time."],
-    ["REMEMBER", "What's the cutest thing I've done without realizing it?"],
-    ["ASK", "If our relationship had a mascot, what would it be and why?"],
-    ["DO", "Do your most exaggerated 'we're a couple' pose and hold it for five seconds."],
-    ["SAY", "Name one habit of mine you didn't expect to fall for, but did."],
-    ["ASK", "What's a tiny surprise that would still feel very 'us'?"],
-    ["REMEMBER", "What's the first thing you told a friend about me after we met?"],
- 
-    // FLIRTY
-    ["SAY", "Tell them, without hedging, one thing you find attractive about them tonight."],
-    ["DO", "Trace one word on their palm and have them guess it."],
-    ["ASK", "What's a small thing I do that you find more charming than you'd admit?"],
-    ["SAY", "Describe the first time you remember being genuinely drawn to them physically."],
-    ["DO", "Whisper one compliment instead of saying it out loud."],
-    ["ASK", "What's a version of me — a mood, a moment — that you're especially fond of?"],
-    ["SAY", "Tell them one thing about tonight, specifically, that you're enjoying."],
-    ["DO", "Hold their hand and trace slow circles on it while they talk about their day."],
- 
-    // PERSONAL
-    ["ASK", "What's something I do that makes you feel like you can be fully yourself?"],
-    ["REMEMBER", "When did you feel most proud to be with me, even quietly?"],
-    ["SAY", "Tell them one way they've made you a better version of yourself."],
-    ["ASK", "What's a fear about relationships you've felt less afraid of since being with me?"],
-    ["REMEMBER", "What's a moment that felt surprisingly intimate, even though nothing 'happened'?"],
-    ["ASK", "What's something you needed from someone before, that you now get from me without asking?"],
-    ["SAY", "Say one thing about how I handle hard days that you've never told me."],
- 
-    // AFFECTIONATE
-    ["SAY", "Tell them, plainly, what being loved by them feels like."],
-    ["DO", "Say each other's names, then just look at one another for five seconds before continuing."],
-    ["SAY", "Name one trait in me that makes you feel like you're home."],
- 
-    // ENDING
-    ["REMEMBER", "Out of everything from tonight, what's the one moment you'll remember tomorrow?"],
-    ["DO", "Hold hands, take a breath together, and just sit in it for a few seconds before you close the app."],
-  ],
+  ["ASK💭", "What’s the most adorable habit of mine that you never want me to stop?"],
+  ["DO✦", "Tuck a piece of my hair behind my ear as gently as possible."],
+  ["SAY💗", "Tell me one thing about my smile that you secretly love."],
+  ["CHALLENGE🎯", "Give me a compliment using only the softest voice you have."],
+  ["ASK💭", "What little thing do I do that always makes you want to squeeze me?"],
+  ["REMEMBER✨", "When did we have the cutest accidental moment together?"],
+  ["DO✦", "Poke my cheek lightly and then pretend you didn’t."],
+  ["SAY💗", "Say the cutest thought you’ve had about me this week."],
+  ["CHALLENGE🎯", "Try to make me laugh using only your facial expressions."],
+  ["ASK💭", "What’s your favorite silly face I make?"],
+  ["DO✦", "Lean in and whisper a tiny compliment right next to my ear."],
+  ["SAY💗", "Tell me one way I look at you that makes you feel extra loved."],
+  ["ASK💭", "What would be the cutest couple activity for us to try this month?"],
+  ["CHALLENGE🎯", "Create a secret handshake with me right now — make it as adorable as possible."],
+  ["REMEMBER✨", "What’s one moment where we were both being ridiculously cute without noticing?"],
+  ["DO✦", "Hold my face with both hands and give me your softest look."],
+  ["SAY💗", "Describe the most endearing thing about the way I talk to you."],
+  ["ASK💭", "What little nickname do you think fits us as a couple?"],
+  ["CHALLENGE🎯", "Act out the cutest way you want me to greet you when I see you."],
+  ["ASK💭", "What’s one small daily thing that always makes you feel close to me?"],
+  ["DO✦", "Rest your forehead against mine and stay there until one of us smiles first."],
+  ["SAY💗", "Say one compliment that you’ve been too shy to say until now."],
+  ["CHALLENGE🎯", "Make up a tiny love song lyric about me on the spot (it can be silly)."],
+  ["REMEMBER✨", "When did you first feel that warm ‘this is my person’ kind of cute love?"],
+  ["SAY💗", "Tell me the cutest version of us that lives in your head."],
+],
+
+// ---------------------------------------------------------------
+// 50 — LONG SWEET NIGHT
+// Full arc: cute questions → compliments → giggles → playful movements → soft affection → close.
+// ---------------------------------------------------------------
+50: [
+  // CUTE QUESTIONS
+  ["ASK💭", "What’s the smallest thing I do that makes you melt a little?"],
+  ["SAY💗", "Tell me one adorable detail about me that you notice more than I do."],
+  ["DO✦", "Gently squish my cheeks for two seconds, then look proud of yourself."],
+  ["CHALLENGE🎯", "Give me a compliment that starts with ‘You know what’s cute…’"],
+  ["ASK💭", "What silly little tradition should we start just because it’s cute?"],
+  ["DO✦", "Link both of our pinkies and swing them back and forth."],
+  ["SAY💗", "Say the cutest thing you’ve ever thought while looking at me."],
+  ["CHALLENGE🎯", "Show me the face you make when you think I’m being extra adorable."],
+  ["ASK💭", "What’s your favorite way we accidentally match or sync up?"],
+  ["REMEMBER✨", "When did you first catch yourself smiling just because of me?"],
+
+  // LITTLE COMPLIMENTS
+  ["ASK💭", "What part of my personality feels like pure sunshine to you?"],
+  ["DO✦", "Pat the top of my head softly like I’m something precious."],
+  ["SAY💗", "Tell me one thing about my laugh that you love."],
+  ["CHALLENGE🎯", "Whisper a compliment so sweet it makes you blush a little too."],
+  ["ASK💭", "What’s the cutest outfit or look of mine that lives rent-free in your head?"],
+  ["REMEMBER✨", "What’s one tiny moment that made you think ‘ugh, I love this human’?"],
+  ["DO✦", "Draw a tiny invisible heart on the back of my hand with your finger."],
+  ["SAY💗", "Confess one ridiculously soft thought you have about us."],
+  ["ASK💭", "What do you find cutest about the way I care about you?"],
+  ["CHALLENGE🎯", "Make up a super sweet and slightly silly pet name for me on the spot."],
+
+  // EASY LAUGHS
+  ["DO✦", "Try to make me laugh without saying a single word."],
+  ["SAY💗", "Tell me the funniest-cute memory we have so far."],
+  ["ASK💭", "What’s one ridiculous thing we both find way funnier than we should?"],
+  ["REMEMBER✨", "When did we last laugh so hard that it turned into a cute moment?"],
+  ["SAY💗", "Describe the cutest way I look when I’m trying not to laugh."],
+  ["ASK💭", "What silly fear or habit of mine do you find weirdly endearing?"],
+  ["REMEMBER✨", "What’s one time we were both being complete dorks and it felt perfect?"],
+  ["SAY💗", "Say something sweet and then immediately follow it with something goofy."],
+  ["ASK💭", "How do you want us to keep being playful even years from now?"],
+  ["DO✦", "Lean in and give me the softest forehead boop."],
+
+  // CUTE ACTIVITIES & MOVEMENTS
+  ["CHALLENGE🎯", "Create a secret couple pose with me right now and hold it for five seconds."],
+  ["DO✦", "Spin me in a tiny slow circle like we’re in a cute movie scene."],
+  ["CHALLENGE🎯", "Act out the most adorable way you want to be hugged."],
+  ["SAY💗", "Tell me what our cutest couple activity would be on a rainy day."],
+  ["CHALLENGE🎯", "Invent a tiny handshake that ends with something sweet."],
+  ["DO✦", "Rest your head on my shoulder and stay there while you answer the next one."],
+  ["CHALLENGE🎯", "Show me how you would dramatically ‘swoon’ over me in the cutest way."],
+  ["DO✦", "Hold both of my hands and swing them gently like excited kids."],
+
+  // SOFT AFFECTION
+  ["ASK💭", "What little gesture always makes you feel extra loved by me?"],
+  ["SAY💗", "Tell me one way I can be even cuter for you (you already are, but still)."],
+  ["DO✦", "Cup my face and look at me like I’m your favorite human."],
+  ["ASK💭", "What’s the sweetest thing you want us to do more often?"],
+  ["SAY💗", "Say the softest compliment you’ve been saving."],
+  ["DO✦", "Pull me into the coziest, warmest hug you can manage."],
+  ["CHALLENGE🎯", "Tell me, in the cutest way possible, why you like being mine."],
+
+  // CLOSE
+  ["ASK💭", "What’s the last cute thing you want us to do before this game ends?"],
+  ["SAY💗", "Tell me one tiny reason you feel lucky we’re us."],
+  ["DO✦", "Give me the softest kiss on the cheek, then smile at each other like dorks."],
+],
   },
   romantic: {
   // ROMANTIC MODE — ★★☆☆☆
@@ -250,16 +239,16 @@ const moodQuestionSets = {
   // Tone: butterflies, first-spark energy, still easy to answer.
   // ---------------------------------------------------------------
   10: [
-    ["ASK ", "What was the exact moment you realized this was becoming something real?"],
-    ["SAY", "Tell them the first thing you found attractive about them, before you knew them at all."],
+     ["ASK", "What's one reason you'd choose me again, out of everyone?"],
+    ["SAY", "Tell me the first thing you found attractive about me."],
     ["REMEMBER", "What's the earliest memory you have of missing me when I wasn't around?"],
     ["DO", "Look at each other for ten seconds and let it be a little too long, on purpose."],
-    ["ASK", "What's one reason you'd choose me again, out of everyone?"],
+    ["ASK", "When do you feel most in love with me — what's usually happening?"],
     ["CHALLENGE", "Recreate your first hello — same tone, same energy — right now."],
     ["SAY", "Tell them what your heart does, even now, when they walk into a room."],
     ["REMEMBER", "What's a small detail from early on you never told me you noticed?"],
-    ["ASK", "When do you feel the most in love with me — what's usually happening?"],
     ["DO", "Take their hand, close your eyes, and just breathe together for five seconds."],
+    ["ASK", "What's a small thing about us that still feels a little unbelievable?"],
   ],
 
   // ---------------------------------------------------------------
@@ -308,16 +297,16 @@ const moodQuestionSets = {
   // ---------------------------------------------------------------
   50: [
     // BUTTERFLIES
-    ["ASK", "What was the exact moment you realized this was becoming something real?"],
-    ["SAY", "Tell them the first thing you found attractive about them, before you knew them at all."],
-    ["REMEMBER", "What's the earliest memory you have of missing me when I wasn't around?"],
-    ["DO", "Look at each other for ten seconds and let it be a little too long, on purpose."],
-    ["ASK", "What's one reason you'd choose me again, out of everyone?"],
-    ["CHALLENGE", "Recreate your first hello — same tone, same energy — right now."],
-    ["SAY", "Tell them what your heart does, even now, when they walk into a room."],
-    ["REMEMBER", "What's a small detail from early on you never told me you noticed?"],
-    ["ASK", "When do you feel the most in love with me — what's usually happening?"],
-    ["DO", "Take their hand, close your eyes, and just breathe together for five seconds."],
+     ["ASK", "What's a version of our future together you think about but rarely say out loud?"],
+    ["REMEMBER", "What's the first night you remember not wanting to leave?"],
+    ["SAY", "Tell them one thing about loving them that still surprises you."],
+    ["CHALLENGE", "Slow dance to nothing — no music — for fifteen seconds."],
+    ["ASK", "What's something about falling for me that felt like a risk at the time?"],
+    ["REMEMBER", "What's a moment you first thought 'I could really love this person'?"],
+    ["SAY", "Describe, honestly, what it feels like when I look at you a certain way."],
+    ["ASK", "What's a fear you had about love before me that you don't carry anymore?"],
+    ["DO", "Trace 'I love you' on their back and have them guess it without speaking."],
+    ["REMEMBER", "What's the most romantic thing that's happened between us that no one else knows?"],
 
     // MEMORY
     ["ASK", "What's a version of our future together that you think about but rarely say out loud?"],
@@ -386,15 +375,15 @@ const moodQuestionSets = {
     ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
     ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
     ["ASK💭", "What's a small lie you've told me that you're finally ready to correct?"],
-    ["DO✦", "Do your best impression of me for ten seconds."],
-    ["SAY💗", "Confess one thing you find irresistible about them that you rarely say."],
-    ["CHALLENGE🎯", "Let them pick your next song and you have to dance to it, seated, for ten seconds."],
-    ["ASK💭", "What's something you pretended to like early on just to impress me?"],
-    ["DO✦", "Send a text to a friend right now saying only 'I'm having a great time.'"],
-    ["REMEMBER✨", "What's the most embarrassing thing that's happened on one of our dates?"],
-    ["CHALLENGE🎯", "Let them draw something on your arm with their finger — guess what it is."],
-    ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
-    ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
+    // ["DO✦", "Do your best impression of me for ten seconds."],
+    // ["SAY💗", "Confess one thing you find irresistible about them that you rarely say."],
+    // ["CHALLENGE🎯", "Let them pick your next song and you have to dance to it, seated, for ten seconds."],
+    // ["ASK💭", "What's something you pretended to like early on just to impress me?"],
+    // ["DO✦", "Send a text to a friend right now saying only 'I'm having a great time.'"],
+    // ["REMEMBER✨", "What's the most embarrassing thing that's happened on one of our dates?"],
+    // ["CHALLENGE🎯", "Let them draw something on your arm with their finger — guess what it is."],
+    // ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
+    // ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
   
   ],
  
@@ -404,17 +393,16 @@ const moodQuestionSets = {
   // Includes the Quick Date set, then goes further.
   // ---------------------------------------------------------------
   25: [
-    ["ASK💭", "What's a small lie you've told me that you're finally ready to correct?"],
-    ["DO✦", "Do your best impression of me for ten seconds."],
-    ["SAY💗", "Confess one thing you find irresistible about them that you rarely say."],
-    ["CHALLENGE🎯", "Let them pick your next song and you have to dance to it, seated, for ten seconds."],
-    ["ASK💭", "What's something you pretended to like early on just to impress me?"],
-    ["DO✦", "Send a text to a friend right now saying only 'I'm having a great time.'"],
-    ["REMEMBER✨", "What's the most embarrassing thing that's happened on one of our dates?"],
-    ["CHALLENGE🎯", "Let them draw something on your arm with their finger — guess what it is."],
-    ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
-    ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
     ["ASK💭", "What's something you've never admitted you're a little jealous of?"],
+    ["SAY💗", "Tell them the truth about what you thought the very first time you saw them."],
+    ["CHALLENGE🎯", "Let them pick an outfit from your closet, describe it, no vetoes allowed."],
+    ["ASK💭", "What's a moment you wanted to say 'I love you' before you actually did?"],
+    ["DO✦", "Hold eye contact and describe them out loud like you're meeting them for the first time."],
+    ["REMEMBER✨", "What's a secret you kept from me early on that you can finally tell me?"],
+    ["CHALLENGE🎯", "Do your best slow-motion 'dramatic movie reunion' walk toward them."],
+    ["ASK💭", "What's something about our relationship you'd never post online but wish you could?"],
+    ["SAY💗", "Confess the most attractive thing you've ever seen me do without trying."],
+    ["DO✦", "Let them give you a nickname right now, and answer to it for the rest of the game."],
     ["SAY💗", "Tell them the truth about what you thought the very first time you saw them."],
     ["CHALLENGE🎯", "Let them pick an outfit from your closet, describe it, no vetoes allowed."],
     ["ASK💭", "What's a moment you wanted to say 'I love you' before you actually did?"],
@@ -561,16 +549,16 @@ const moodQuestionSets = {
   // ---------------------------------------------------------------
   50: [
     // TEASE
-    ["ASK💭", "What's the first thing you notice about me when I walk into a room?"],
-    ["SAY💗", "Tell them, without hedging, what you find most attractive about them tonight."],
-    ["DO✦", "Hold eye contact for ten seconds and don't look away first."],
-    ["CHALLENGE🎯", "Whisper one thing you'd want me to do later, and nothing else."],
-    ["ASK💭", "What's an outfit of mine you secretly hope I wear again soon?"],
-    ["DO✦", "Trace one word on their palm and let them guess what it means."],
-    ["SAY💗", "Say the thing about their body language that pulls you in every time."],
-    ["CHALLENGE🎯", "Bite your lip and hold their gaze for five seconds. No laughing."],
-    ["ASK💭", "What's something you think about me when I'm not around?"],
-    ["REMEMBER✨", "What's the moment you first felt real chemistry between us?"],
+   ["ASK💭", "What's the last thing I did that you couldn't stop thinking about afterward?"],
+    ["DO✦", "Run one finger slowly along their jawline, no words."],
+    ["SAY💗", "Tell them exactly what your favorite part of tonight has been so far."],
+    ["CHALLENGE🎯", "Describe, in detail, the outfit you'd want me in for the rest of the night."],
+    ["ASK💭", "What's a small thing I do that you find more magnetic than you'd admit?"],
+    ["REMEMBER✨", "What's the moment you first wanted to kiss me?"],
+    ["DO✦", "Hold their hand and slowly trace circles on their palm while they talk."],
+    ["SAY💗", "Confess one thing about the way I move that you've never told me."],
+    ["CHALLENGE🎯", "Whisper the first thing you want to do the second this game ends."],
+    ["ASK💭", "What's a version of me — a mood, a look — that gets to you every time?"],
  
     // CHEMISTRY
     ["ASK💭", "What's the last thing I did that you couldn't stop thinking about afterward?"],
@@ -857,124 +845,118 @@ const moodQuestionSets = {
  
   },
   cozy: {
-10: [
-    ["ASK💭", "What's a fantasy you've had about me that you've never said out loud?"],
-    ["SAY💗", "Name one thing you want more of from me, no context needed."],
-    ["CHALLENGE🎯", "Describe, in one sentence, a version of tonight you'd want instead of this one."],
-    ["ASK💭", "What's something you'd want me to do that you've never asked for directly?"],
-    ["DO✦", "Whisper one word for what you're thinking right now."],
-    ["REMEMBER✨", "What's the most desire you've ever felt for me in one moment?"],
-    ["SAY💗", "Tell them one thing about themselves that fuels your imagination."],
-    ["ASK💭", "If I asked you to be in charge tonight, what's the first thing you'd do?"],
-    ["CHALLENGE🎯", "Say the sentence you'd want to hear from me right now."],
-    ["DO✦", "Hold their gaze and let them see exactly what you're thinking."],
-  ],
- 
-  // ---------------------------------------------------------------
-  // 25 — DATE NIGHT
-  // Building specificity — scenario starters, roleplay openers, deeper naming.
-  // ---------------------------------------------------------------
-  25: [
-    ["ASK💭", "What's a scenario you've imagined for us that we've never actually tried?"],
-    ["SAY💗", "Tell them one power dynamic you're curious about between us."],
-    ["CHALLENGE🎯", "Start a scene: say the first line you'd use if we were strangers meeting tonight."],
-    ["ASK💭", "What's a setting — somewhere specific — where you've imagined us together?"],
-    ["DO✦", "Take control of the next thirty seconds however you want, no explanation."],
-    ["REMEMBER✨", "What's a real moment between us that felt like your fantasy come true?"],
-    ["SAY💗", "Name one thing you want to hear me say more often, in the moment."],
-    ["ASK💭", "If we swapped who leads tonight, what would you want from that?"],
-    ["CHALLENGE🎯", "Give one instruction and see if I follow it."],
-    ["DO✦", "Trace where you'd want my hands to go next, slowly, without saying it."],
-    ["ASK💭", "What's an outfit, prop, or setup you've thought about for us?"],
-    ["SAY💗", "Tell them what patience versus urgency does for you in the moment."],
-    ["CHALLENGE🎯", "Play a character for one line — who are you, and what do you say?"],
-    ["ASK💭", "What's something you'd want to be told to do, rather than asked?"],
-    ["REMEMBER✨", "What's the boldest thing either of us has ever initiated?"],
-    ["DO✦", "Whisper exactly what you want, one sentence, no follow-up needed."],
-    ["SAY💗", "Confess one fantasy you've had that has nothing to do with anyone specific — just a feeling."],
-    ["ASK💭", "What's a version of 'in charge' that actually appeals to you?"],
-    ["CHALLENGE🎯", "Set one rule for the rest of the night and enforce it."],
-    ["DO✦", "Let them undress one part of the moment however they choose — pace, touch, silence."],
-    ["ASK💭", "What's something you'd want to explore together that you've never brought up?"],
-    ["SAY💗", "Tell them what 'losing control a little' means to you."],
-    ["REMEMBER✨", "What's a time we both wanted the same thing without saying it?"],
-    ["CHALLENGE🎯", "Give them a command using only your eyes and one gesture."],
-    ["ASK💭", "What's one boundary you'd want to name clearly before we go further tonight?"],
-  ],
- 
-  // ---------------------------------------------------------------
-  // 50 — LONG NIGHT
-  // Full arc:
-  //   1–10   curiosity        (naming what you want, low stakes)
-  //   11–20  scenario           (settings, roles, small scenes)
-  //   21–30  power                (leading/following, control, instruction)
-  //   31–40  specific desire        (direct naming, less abstraction)
-  //   41–46  consent + boundaries    (checking in, staying honest)
-  //   47–50  handoff                 (the game steps back, you two take over)
-  // ---------------------------------------------------------------
-  50: [
-    // CURIOSITY
-    ["ASK💭", "What's a fantasy you've had about me that you've never said out loud?"],
-    ["SAY💗", "Name one thing you want more of from me, no context needed."],
-    ["ASK💭", "What's something you'd want me to do that you've never asked for directly?"],
-    ["DO✦", "Whisper one word for what you're thinking right now."],
-    ["REMEMBER✨", "What's the most desire you've ever felt for me in one moment?"],
-    ["SAY💗", "Tell them one thing about themselves that fuels your imagination."],
-    ["ASK💭", "If I asked you to be in charge tonight, what's the first thing you'd do?"],
-    ["CHALLENGE🎯", "Say the sentence you'd want to hear from me right now."],
-    ["DO✦", "Hold their gaze and let them see exactly what you're thinking."],
-    ["ASK💭", "What's a fantasy that surprised even you the first time you had it?"],
- 
-    // SCENARIO
-    ["ASK💭", "What's a scenario you've imagined for us that we've never actually tried?"],
-    ["CHALLENGE🎯", "Start a scene: say the first line you'd use if we were strangers meeting tonight."],
-    ["ASK💭", "What's a setting — somewhere specific — where you've imagined us together?"],
-    ["REMEMBER✨", "What's a real moment between us that felt like your fantasy come true?"],
-    ["ASK💭", "What's an outfit, prop, or setup you've thought about for us?"],
-    ["CHALLENGE🎯", "Play a character for one line — who are you, and what do you say?"],
-    ["SAY💗", "Tell them what patience versus urgency does for you in the moment."],
-    ["ASK💭", "If we could set a scene from scratch tonight, what's the first detail you'd choose?"],
-    ["DO✦", "Set the mood however you want for the next minute — lighting, distance, silence."],
-    ["REMEMBER✨", "What's a night that felt like it was written just for us?"],
- 
-    // POWER
-    ["ASK💭", "If we swapped who leads tonight, what would you want from that?"],
-    ["CHALLENGE🎯", "Give one instruction and see if I follow it."],
-    ["DO✦", "Take control of the next thirty seconds however you want, no explanation."],
-    ["ASK💭", "What's a version of 'in charge' that actually appeals to you?"],
-    ["CHALLENGE🎯", "Set one rule for the rest of the night and enforce it."],
-    ["DO✦", "Let them undress one part of the moment however they choose — pace, touch, silence."],
-    ["ASK💭", "What's something you'd want to be told to do, rather than asked?"],
-    ["CHALLENGE🎯", "Give them a command using only your eyes and one gesture."],
-    ["SAY💗", "Tell them what 'losing control a little' means to you."],
-    ["ASK💭", "Do you want to lead or be led tonight — say it plainly."],
- 
-    // SPECIFIC DESIRE
-    ["DO✦", "Trace where you'd want my hands to go next, slowly, without saying it."],
-    ["SAY💗", "Confess one fantasy you've had that has nothing to do with anyone specific — just a feeling."],
-    ["ASK💭", "What's something you'd want to explore together that you've never brought up?"],
-    ["DO✦", "Whisper exactly what you want, one sentence, no follow-up needed."],
-    ["REMEMBER✨", "What's a time we both wanted the same thing without saying it?"],
-    ["SAY💗", "Name one thing you want to hear me say more often, in the moment."],
-    ["ASK💭", "What's a fantasy you've kept private because it felt too specific to say?"],
-    ["DO✦", "Show, don't tell — one gesture for what you want right now."],
-    ["SAY💗", "Tell them exactly how you want to be touched right now, plainly."],
-    ["ASK💭", "What's something you want tonight that you haven't asked for yet?"],
- 
-    // CONSENT + BOUNDARIES
-    ["ASK💭", "What's one boundary you'd want to name clearly before we go further tonight?"],
-    ["SAY💗", "Tell them one thing that's an enthusiastic yes for you tonight."],
-    ["ASK💭", "What's a word we should use if either of us wants to slow down?"],
-    ["SAY💗", "Say one thing you need to feel fully comfortable right now."],
-    ["ASK💭", "Is there anything on the table tonight you'd rather set aside?"],
-    ["SAY💗", "Tell them what checking in mid-way means to you — do you want it or not?"],
- 
-    // HANDOFF
-    ["ASK💭", "What's the one thing you want most right now, out of everything we've said tonight?"],
-    ["SAY💗", "Tell them plainly what you want to happen next."],
-    ["DO✦", "Kiss them slowly and let it answer the last card for you."],
-    ["CHALLENGE🎯", "Set the game down. Whatever happens next is between the two of you."],
-  ],
+
+// ---------------------------------------------------------------
+ 10: [
+  ["ASK💭", "What’s one romantic fantasy you’ve had about us that you’ve never fully said out loud?"],
+  ["SAY💗", "Tell me the version of a surprise date that would make your heart race."],
+  ["DO✦", "Pull me close and whisper one place you’d love to escape to with me."],
+  ["CHALLENGE🎯", "Describe a role we could play for the next ten minutes — and start it."],
+  ["ASK💭", "What kind of attention from me makes you feel the most desired?"],
+  ["REMEMBER✨", "When did you first catch yourself fantasizing about a different version of us?"],
+  ["DO✦", "Look at me like we’ve just met in a forbidden place and can’t look away."],
+  ["SAY💗", "Say one thing you’d want me to do if we were strangers who only had tonight."],
+  ["CHALLENGE🎯", "Choose a power dynamic for the next round — who leads, who follows."],
+  ["ASK💭", "What shared adventure feels both exciting and a little dangerous to imagine with me?"],
+],
+
+// ---------------------------------------------------------------
+// 25 — FANTASY DATE NIGHT
+// Arc: soft romantic vision → affection & novelty → role-play spark → charged pursuit.
+// ---------------------------------------------------------------
+25: [
+  ["ASK💭", "If I planned a complete surprise date for you, what elements would make it perfect?"],
+  ["DO✦", "Hold me like we’re already on a balcony in a city we’ve never visited."],
+  ["SAY💗", "Tell me how you want to feel when I look at you like you’re completely irresistible."],
+  ["CHALLENGE🎯", "Invent a short strangers-in-a-hotel-bar scenario and cast us in it."],
+  ["ASK💭", "What kind of massage-turned-something-more have you imagined between us?"],
+  ["REMEMBER✨", "When did a simple cuddle start turning into a fuller fantasy in your mind?"],
+  ["DO✦", "Kiss me as if we’ve been keeping a secret and just got a moment alone."],
+  ["SAY💗", "Confess one way you want me to pursue you more deliberately."],
+  ["CHALLENGE🎯", "Pick a mild power exchange for the next five minutes and guide me into it."],
+  ["ASK💭", "What new setting would make intimacy between us feel brand new?"],
+  ["DO✦", "Trace my arm slowly like you’re memorizing someone you’re not supposed to touch."],
+  ["SAY💗", "Describe the proposal fantasy that lives in the back of your mind (even if it’s unconventional)."],
+  ["ASK💭", "Which role-play idea feels both silly and secretly hot to try with me?"],
+  ["CHALLENGE🎯", "Speak to me for one minute as if we’re characters who aren’t allowed to want each other."],
+  ["REMEMBER✨", "What’s one fantasy we’ve brushed against that you still think about?"],
+  ["DO✦", "Pull me against you like the room might disappear and only we remain."],
+  ["SAY💗", "Tell me how you want to be admired when no one else is watching."],
+  ["ASK💭", "What shared ‘we shouldn’t be doing this’ feeling would you actually love to explore?"],
+  ["CHALLENGE🎯", "Create a quick enemies-to-lovers spark right now — start the tension."],
+  ["ASK💭", "If we could step into any fictional scenario for one night, where would we go?"],
+  ["DO✦", "Hold my face and look at me like you’ve been waiting years to finally have me."],
+  ["SAY💗", "Say the kind of intimate evening that feels like a fantasy come to life."],
+  ["CHALLENGE🎯", "Choose who gets to take the lead for the next round and announce it."],
+  ["REMEMBER✨", "When did you realize some of your fantasies only felt right with me?"],
+  ["SAY💗", "Tell me one way you want me to make you feel completely wanted tonight."],
+],
+
+// ---------------------------------------------------------------
+// 50 — LONG FANTASY NIGHT
+// Full arc: romantic vision → affection & novelty → role-play → pursuit & power → taboo edge → close.
+// ---------------------------------------------------------------
+50: [
+  // ROMANTIC VISION
+  ["ASK💭", "What’s the most beautiful version of a future trip you’ve imagined us taking?"],
+  ["SAY💗", "Tell me how you want to be surprised by me someday."],
+  ["DO✦", "Wrap your arms around me like we’re watching the sunset in a place we’ve only dreamed of."],
+  ["CHALLENGE🎯", "Describe the perfect proposal setting — even if it’s nothing traditional."],
+  ["ASK💭", "What kind of evening feels so intimate it almost belongs in a story?"],
+  ["DO✦", "Rest your head on my chest and tell me one travel fantasy while we stay close."],
+  ["SAY💗", "Say the romantic gesture from me that would feel like pure fantasy."],
+  ["CHALLENGE🎯", "Paint a quick picture of us in a city we’ve never been to, doing something only we would do."],
+  ["ASK💭", "How do you want to feel when I plan something entirely for you?"],
+  ["REMEMBER✨", "When did ordinary moments with me start feeding bigger romantic fantasies?"],
+
+  // AFFECTION & NOVELTY
+  ["ASK💭", "What kind of cuddling or kissing sequence lives in your head as ideal?"],
+  ["DO✦", "Begin a slow, deliberate massage on my shoulders as if we have nowhere else to be."],
+  ["SAY💗", "Tell me how you want to feel especially desired by me."],
+  ["CHALLENGE🎯", "Suggest one new way of being intimate we’ve never tried and describe the first step."],
+  ["ASK💭", "Where would you love to be touched if the setting were completely different?"],
+  ["REMEMBER✨", "What’s one affectionate fantasy that still makes you soft when you think about it?"],
+  ["DO✦", "Kiss a slow path along my neck like you’re discovering me for the first time."],
+  ["SAY💗", "Confess the small novelty that would make tonight feel fresh."],
+  ["ASK💭", "What shared sensory experience do you keep replaying in your mind?"],
+  ["CHALLENGE🎯", "Change the atmosphere right now — lighting, position, or pace — and own the shift."],
+
+  // ROLE-PLAY SPARK
+  ["DO✦", "Look at me as if we’ve just stepped into different roles and the real world is gone."],
+  ["SAY💗", "Tell me which character dynamic between us feels the most electric."],
+  ["ASK💭", "What fictional scenario would you actually want to try for an hour?"],
+  ["REMEMBER✨", "When did role-play stop feeling silly and start feeling tempting?"],
+  ["SAY💗", "Describe how you want me to speak to you inside a fantasy."],
+  ["ASK💭", "Which setting makes the idea of us feel deliciously different — hotel, office, rain-soaked street?"],
+  ["REMEMBER✨", "What’s one role you’ve privately wondered about trying with me?"],
+  ["SAY💗", "Say the first line of a scene you’d like us to step into."],
+  ["ASK💭", "Do you want the fantasy to stay light or can it lean darker?"],
+  ["DO✦", "Take my hand and lead me as if we’re already inside the story."],
+
+  // PURSUIT & POWER
+  ["CHALLENGE🎯", "Pursue me for the next minute — eyes, words, or touch — like you can’t hold back."],
+  ["DO✦", "Pin me gently against the nearest surface and hold the moment."],
+  ["CHALLENGE🎯", "Tell me who holds the power in the next fantasy and then take it."],
+  ["SAY💗", "Say how you want to be admired when I stop holding back."],
+  ["CHALLENGE🎯", "Switch the dynamic — if you were leading, follow; if following, lead."],
+  ["DO✦", "Whisper one commanding or surrendering sentence against my ear."],
+  ["CHALLENGE🎯", "Make me feel completely pursued for thirty full seconds."],
+  ["DO✦", "Hold my gaze like you’re deciding exactly what happens next."],
+
+  // TABOO EDGE (CONSENSUAL)
+  ["ASK💭", "What ‘we shouldn’t’ scenario still feels hot to imagine between us?"],
+  ["SAY💗", "Tell me the appeal of a secret or forbidden-feeling romance with me."],
+  ["DO✦", "Kiss me like we’re risking getting caught and don’t care."],
+  ["ASK💭", "Which power-dynamic or role-play edge feels exciting rather than scary?"],
+  ["SAY💗", "Describe a stranger-to-lovers or anonymous moment you’d want to create with me."],
+  ["DO✦", "Touch me as if this is the only night we’re allowed to have."],
+  ["CHALLENGE🎯", "Speak one line that belongs in an enemies-to-lovers or forbidden scene."],
+
+  // CLOSE
+  ["ASK💭", "Which fantasy from tonight do you actually want to keep playing with?"],
+  ["SAY💗", "Tell me one shared dream or scene you’re carrying away from this."],
+  ["DO✦", "Kiss me like the fantasy and the real us just became the same thing."],
+],
 },
   intimate: {
     // ---------------------------------------------------------------
@@ -982,114 +964,114 @@ const moodQuestionSets = {
 // Soft, private openers that invite emotional closeness and gentle heat.
 // ---------------------------------------------------------------
  10: [
-  ["ASK💭", "What’s one thing about me that makes you feel safest when we’re alone?"],
-  ["SAY💗", "Tell me, without softening it, how you want to feel with me tonight."],
-  ["DO✦", "Take my hand and hold it against your chest for ten full seconds."],
-  ["CHALLENGE🎯", "Whisper one private thing you’ve been wanting to say to me all day."],
-  ["ASK💭", "What part of being close to me feels the most intimate to you?"],
-  ["REMEMBER✨", "When did you first feel like you could fully let your guard down with me?"],
-  ["DO✦", "Trace a slow, soft line from my wrist up my arm, then stop and look at me."],
-  ["SAY💗", "Say out loud the feeling you get when we’re this close and quiet."],
-  ["CHALLENGE🎯", "Look into my eyes and tell me one thing you want from my touch right now."],
-  ["ASK💭", "What’s something you’ve wanted to share with me that still feels a little tender?"],
+  ["ASK💭", "Which sense do you want me to take away from you first tonight?"],
+  ["SAY💗", "Tell me how it feels when you can’t see what I’m about to do."],
+  ["DO✦", "Place the blindfold over my eyes slowly, then rest your hands on my shoulders."],
+  ["CHALLENGE🎯", "Put earplugs in me, then decide the first place your mouth lands in silence."],
+  ["ASK💭", "Do you want to be the one deprived, or do you want to watch me lose a sense?"],
+  ["REMEMBER✨", "When did not being able to see start making every touch feel stronger?"],
+  ["DO✦", "Cover my eyes with your hand and keep it there while you kiss my neck."],
+  ["SAY💗", "Describe what you’re going to do to me while I can’t look."],
+  ["CHALLENGE🎯", "Blindfold me, then make me wait in complete stillness for thirty seconds."],
+  ["ASK💭", "How deep into sensory loss do you want us to go tonight?"],
 ],
 
 // ---------------------------------------------------------------
-// 25 — DATE NIGHT (INTIMATE)
-// Arc: soft curiosity → growing closeness → quiet confession → gentle physical.
+// 25 — SENSORY DEPRIVATION DATE NIGHT
+// Arc: gentle removal of senses → building intensity → layered deprivation → sexual release of control.
 // ---------------------------------------------------------------
 25: [
-  ["ASK💭", "What’s the last thing I did that made you feel deeply wanted?"],
-  ["DO✦", "Run one finger slowly along my jaw, down my neck, and rest it there."],
-  ["SAY💗", "Tell me exactly what part of tonight has made you feel closest to me so far."],
-  ["CHALLENGE🎯", "Describe, in detail, how you want us to be with each other for the rest of the night."],
-  ["ASK💭", "What’s a small thing I do that makes you want to pull me closer?"],
-  ["REMEMBER✨", "When did you first realize you wanted more than just time with me?"],
-  ["DO✦", "Take my hand and place it over your heart while we keep talking."],
-  ["SAY💗", "Confess one thing about the way I look at you that you’ve never said out loud."],
-  ["CHALLENGE🎯", "Whisper the first soft thing you want the second this game ends — be specific."],
-  ["ASK💭", "What’s a version of me (look, mood, quiet moment) that makes you melt a little?"],
-  ["DO✦", "Kiss my forehead once, slowly, then stay close enough that I can feel your breath."],
-  ["SAY💗", "Tell me what your body does when I get this close and stay."],
-  ["ASK💭", "What do you want me to whisper against your skin right now?"],
-  ["CHALLENGE🎯", "Let me choose exactly where the next soft kiss lands — anywhere you allow."],
-  ["REMEMBER✨", "What’s the most private, charged moment we’ve shared that no one else knows?"],
-  ["DO✦", "Lean in until our foreheads touch and hold still for five slow seconds."],
-  ["SAY💗", "Describe, honestly, the quiet tension between us right now — no filters."],
-  ["ASK💭", "What’s one thing about tonight you’re hoping continues after the cards are put away?"],
-  ["CHALLENGE🎯", "Give me a slow kiss on the collarbone, then say one soft word for how it felt."],
-  ["ASK💭", "What’s the boldest gentle thing you’ve ever wanted to say (or do) to me but held back?"],
-  ["DO✦", "Hold my face and kiss me like you mean it — slow, no rushing."],
-  ["SAY💗", "Tell me, plainly, what you want from the rest of tonight."],
-  ["CHALLENGE🎯", "Let me pick one place to kiss you — anywhere above the waist you allow."],
-  ["REMEMBER✨", "What’s a night with me you still replay when you want to feel close and warm?"],
-  ["SAY💗", "Say the thing you’ve been thinking since this game started — uncensored and soft."],
+  ["ASK💭", "What would feel more intense right now — losing your sight or losing your ability to speak?"],
+  ["DO✦", "Blindfold me carefully, then run both hands down my arms without saying a word."],
+  ["SAY💗", "Tell me how my body reacts when I can’t anticipate your next touch."],
+  ["CHALLENGE🎯", "Put the blindfold on me and the earplugs in, then begin a slow full-body massage in silence."],
+  ["ASK💭", "Do you want me completely still, or am I allowed to reach for you while deprived?"],
+  ["REMEMBER✨", "When did darkness and quiet start feeling more intimate than light and conversation?"],
+  ["DO✦", "Cover my eyes and mouth gently with your hands while you press your body against mine."],
+  ["SAY💗", "Confess how it feels to have me unable to see the look on your face."],
+  ["CHALLENGE🎯", "Blindfold me, then use only temperature — warm breath and cool fingertips — for the next minute."],
+  ["ASK💭", "Which part of my body do you want to explore first while I can’t watch?"],
+  ["DO✦", "Remove every sense of control by guiding my hands above my head and holding them there."],
+  ["SAY💗", "Tell me what you’re thinking while I’m blind and waiting."],
+  ["ASK💭", "Should I stay silent, or do you want to hear every sound you pull from me?"],
+  ["CHALLENGE🎯", "Layer it: blindfold + earplugs + slow oil massage with zero warning of where you’ll touch next."],
+  ["REMEMBER✨", "What’s the most charged moment we’ve shared when one of us couldn’t see?"],
+  ["DO✦", "Keep me blindfolded and feed me something slowly, making me taste without looking."],
+  ["SAY💗", "Describe the exact way my skin changes when I lose the ability to predict your hands."],
+  ["ASK💭", "How long do you want to keep me in this state before you give a sense back?"],
+  ["CHALLENGE🎯", "Blindfold yourself for one full minute and let me take control of every sensation."],
+  ["ASK💭", "What feels more vulnerable — not seeing, or not being able to touch you back?"],
+  ["DO✦", "Press your forehead to mine while I’m blindfolded and just breathe with me."],
+  ["SAY💗", "Say the dirtiest soft thing you can while I can’t look at you."],
+  ["CHALLENGE🎯", "Take away my sight and my hands — hold both wrists and kiss me until I melt."],
+  ["REMEMBER✨", "When did sensory loss stop feeling like play and start feeling like surrender?"],
+  ["SAY💗", "Tell me how far you want to push the deprivation before we come back to full senses."],
 ],
 
 // ---------------------------------------------------------------
-// 50 — LONG NIGHT (INTIMATE)
-// Full arc: soft curiosity → chemistry → confession → bold gentleness → intimate → close (fade to private).
+// 50 — LONG SENSORY DEPRIVATION NIGHT
+// Full arc: soft removal → layered chemistry → deep confession → advanced control → intimate edge → slow return.
 // ---------------------------------------------------------------
 50: [
-  // TEASE / SOFT OPEN
-  ["ASK💭", "What’s the first place on my body your attention goes when no one’s looking?"],
-  ["SAY💗", "Tell me, without hedging, how you most want to feel with me tonight."],
-  ["DO✦", "Pull me close by the waist and hold me there for ten seconds."],
-  ["CHALLENGE🎯", "Whisper one private, charged thing you’ve thought about me today — nothing else."],
-  ["ASK💭", "What piece of clothing of mine do you most want to slowly take off first?"],
-  ["DO✦", "Trace one slow word on my palm, then let me guess what it means."],
-  ["SAY💗", "Say the thing about my presence that makes you want to stay close."],
-  ["CHALLENGE🎯", "Bite your lip, hold my gaze, and tell me one thing you want my mouth to do gently."],
-  ["ASK💭", "What’s something you think about me when you’re alone that you’d never say in public?"],
-  ["REMEMBER✨", "When did you first feel the shift from liking me into wanting this kind of closeness?"],
+  // SOFT REMOVAL
+  ["ASK💭", "Which sense feels safest to give up first?"],
+  ["SAY💗", "Tell me how you want me to take your sight away."],
+  ["DO✦", "Slide the blindfold over my eyes as slowly as possible."],
+  ["CHALLENGE🎯", "Add earplugs only after I’ve already adjusted to the dark."],
+  ["ASK💭", "Do you want complete silence or the sound of your own breathing amplified?"],
+  ["DO✦", "Rest both hands on my chest so I feel anchored while the world goes dark."],
+  ["SAY💗", "Say one thing you love about me not being able to see you."],
+  ["CHALLENGE🎯", "Make the first ten touches completely unpredictable."],
+  ["ASK💭", "How still do you want my body while the senses disappear?"],
+  ["REMEMBER✨", "When did losing one sense start making the others feel sharper between us?"],
 
-  // CHEMISTRY
-  ["ASK💭", "What’s the last thing I did that left you replaying it later in a warm way?"],
-  ["DO✦", "Run one finger slowly along my jawline, down my neck, and pause."],
-  ["SAY💗", "Tell me exactly what part of tonight has made you feel the most turned on and close."],
-  ["CHALLENGE🎯", "Describe in detail the way you want me dressed — or undressed — for the rest of the night."],
-  ["ASK💭", "What’s a small thing I do that hits harder than you’d normally admit?"],
-  ["REMEMBER✨", "When did you first want to go further than kissing with me?"],
-  ["DO✦", "Hold my hand and slowly guide it under fabric while we keep talking."],
-  ["SAY💗", "Confess one thing about the way I move that you’ve never said out loud."],
-  ["ASK💭", "What’s a look or mood of mine that makes you want to skip the conversation and just be close?"],
-  ["CHALLENGE🎯", "Whisper the first soft thing you want the second this game ends — be specific."],
+  // LAYERED CHEMISTRY
+  ["ASK💭", "What happens in your body when you know I can’t anticipate anything?"],
+  ["DO✦", "Begin a full-body oil massage while I’m blind and quiet."],
+  ["SAY💗", "Tell me every place you’re about to touch one second before you do."],
+  ["CHALLENGE🎯", "Remove both sight and sound, then use only your mouth for a full minute."],
+  ["ASK💭", "Should my hands stay free, or do you want them held still?"],
+  ["REMEMBER✨", "What’s the most intense thing that ever happened while one of us was blindfolded?"],
+  ["DO✦", "Pin my wrists lightly and continue the slow sensory work."],
+  ["SAY💗", "Confess how powerful it feels to decide every sensation I receive."],
+  ["ASK💭", "Do you want me to stay silent or is every reaction allowed?"],
+  ["CHALLENGE🎯", "Add temperature play while I’m still deprived of sight and sound."],
 
-  // CONFESSION
-  ["DO✦", "Kiss my neck once, slowly, then say nothing and wait for my reaction."],
-  ["SAY💗", "Tell me what happens in your body when I get this close."],
-  ["ASK💭", "What do you want me to whisper against your skin right now?"],
-  ["REMEMBER✨", "What’s the most charged private moment we’ve shared that no one else knows?"],
-  ["SAY💗", "Describe, honestly, the tension and tenderness between us right now."],
-  ["ASK💭", "What’s the boldest gentle thing you’ve ever wanted to say or do to me but didn’t?"],
-  ["REMEMBER✨", "What’s a night with me you still think about when you want to feel something deep and warm?"],
-  ["SAY💗", "Say the thing you’ve been thinking since this game started — no filters."],
-  ["ASK💭", "What’s one thing about tonight you’re hoping doesn’t stop when the cards are put down?"],
-  ["DO✦", "Lean in close enough that I can feel your breath and stay there for five seconds."],
+  // DEEP CONFESSION
+  ["DO✦", "Press your body fully against mine so I feel you even without seeing."],
+  ["SAY💗", "Tell me what you’re thinking while I can’t look back at you."],
+  ["ASK💭", "What part of this deprivation feels the most intimate to you?"],
+  ["REMEMBER✨", "When did surrendering my senses start feeling like trust instead of loss?"],
+  ["SAY💗", "Describe how my breathing changes when I can’t predict your next move."],
+  ["ASK💭", "How long do you want to keep me in this heightened state?"],
+  ["REMEMBER✨", "What’s one thing you’ve only been brave enough to do while I couldn’t see?"],
+  ["SAY💗", "Say the thing that feels too raw to say when my eyes are open."],
+  ["ASK💭", "Do you want to give me one sense back, or take another away?"],
+  ["DO✦", "Hold my face gently while I’m still blind and kiss me like we have hours."],
 
-  // BOLD GENTLE
-  ["CHALLENGE🎯", "Let me choose exactly where the next kiss lands — anywhere you allow."],
-  ["DO✦", "Hold my face and kiss me slowly, like you mean to keep going."],
-  ["CHALLENGE🎯", "Give me a slow kiss on the collarbone, then say one raw, soft word for how it felt."],
-  ["SAY💗", "Tell me, plainly, what you want from the rest of tonight."],
-  ["CHALLENGE🎯", "Let me pick one place to kiss you — anywhere above the waist you allow."],
-  ["DO✦", "Pull me close so our foreheads touch and just breathe together, no words."],
-  ["CHALLENGE🎯", "Whisper exactly what you’re thinking right now — unfiltered and honest."],
-  ["DO✦", "Let your hand rest on my waist (or lower) and hold it there for ten slow seconds."],
+  // ADVANCED CONTROL
+  ["CHALLENGE🎯", "Keep me blind and silent while you edge me with only light touch."],
+  ["DO✦", "Use your full body weight to keep me still and fully present."],
+  ["CHALLENGE🎯", "Remove the ability to touch you back completely for the next several minutes."],
+  ["SAY💗", "Tell me exactly how you want me to take the intensity."],
+  ["CHALLENGE🎯", "Layer three senses away at once and watch how my body answers."],
+  ["DO✦", "Guide every breath I take while the rest of the world is gone."],
+  ["CHALLENGE🎯", "Make me earn one sense back with only the sounds I make."],
+  ["DO✦", "Keep the deprivation going while you move from soft to unmistakably sexual."],
 
-  // INTIMATE
-  ["ASK💭", "What’s something you want from me tonight that you haven’t said yet?"],
-  ["SAY💗", "Tell me one thing your body has been signaling all night."],
-  ["DO✦", "Kiss me somewhere unexpected and wait for my reaction before you speak."],
-  ["ASK💭", "What’s one boundary or preference you’d want us to check in on before this goes further?"],
-  ["SAY💗", "Say the thing you want me to know before the night goes any further."],
-  ["DO✦", "Hold each other close and still for ten seconds — let the anticipation build."],
-  ["CHALLENGE🎯", "Tell me exactly how you want the rest of tonight to go, out loud and gently."],
+  // INTIMATE EDGE
+  ["ASK💭", "What do you need from me while I’m still lost in only sensation?"],
+  ["SAY💗", "Tell me how close you are to giving me my senses back."],
+  ["DO✦", "Bring me right to the edge using only the senses I still have."],
+  ["ASK💭", "Is there any boundary you want to name before we go further into this?"],
+  ["SAY💗", "Say the last instruction you want me to follow while I’m still deprived."],
+  ["DO✦", "Hold me through the peak without letting the blindfold or silence break."],
+  ["CHALLENGE🎯", "Decide whether I get my sight back before, during, or after I come undone."],
 
-  // CLOSE (fade to private)
-  ["ASK💭", "What’s the last thing you want said between us before we put the phones (and cards) away?"],
-  ["SAY💗", "Tell me one thing you’re looking forward to about the rest of tonight."],
-  ["DO✦", "Kiss me slowly, then set the game down — we can take it from here."],
+  // SLOW RETURN
+  ["ASK💭", "How do you want to bring me back to the full world?"],
+  ["SAY💗", "Tell me one thing you saw in me while I couldn’t see you."],
+  ["DO✦", "Remove the blindfold slowly and stay close while my eyes adjust."],
 ],
   },
   DarkDesire : {
@@ -1098,105 +1080,114 @@ const moodQuestionSets = {
 // Sharper, hungrier openers that push past gentle intimacy into darker charge.
 // ---------------------------------------------------------------
  10: [
-  ["ASK💭", "What’s the first place on my body your mind goes when you stop holding back?"],
-  ["SAY💗", "Tell me, without softening it, the darkest thing you want to do to me tonight."],
-  ["DO✦", "Pull me in by the hips hard enough that I feel owned for ten full seconds."],
-  ["CHALLENGE🎯", "Whisper the filthiest thing you’ve thought about me in the last hour — nothing else."],
-  ["ASK💭", "What piece of clothing of mine do you most want to rip or force off first?"],
-  ["REMEMBER✨", "When did you first imagine crossing the line from wanting me into needing to claim me?"],
-  ["DO✦", "Trace a slow, deliberate path from my collarbone down toward my chest with one finger, then stop like you’re deciding."],
-  ["SAY💗", "Say out loud the thing about my body that makes you lose control."],
-  ["CHALLENGE🎯", "Bite your lip, lock eyes, and tell me one thing you want me to do with my mouth — no polite version."],
-  ["ASK💭", "What’s something you’ve wanted to try with me that still feels a little dangerous?"],
+  ["ASK💭", "Where do you want my hands to start when the lights are this low?"],
+  ["SAY💗", "Tell me how you want to be touched when no one else can see."],
+  ["DO✦", "Warm the oil between your palms, then place both hands flat on my back and hold still."],
+  ["CHALLENGE🎯", "Blindfold me, then decide the first place your mouth lands."],
+  ["ASK💭", "What part of my skin do you want to map with only your fingertips?"],
+  ["REMEMBER✨", "When did slow touch start feeling more dangerous than fast?"],
+  ["DO✦", "Trace one continuous line from the base of my neck all the way down my spine."],
+  ["SAY💗", "Describe the pressure you want — light enough to tease or firm enough to claim."],
+  ["CHALLENGE🎯", "Kiss a path across my shoulders without using your hands at all."],
+  ["ASK💭", "How long do you want us to stay skin-to-skin before anything else happens?"],
 ],
 
 // ---------------------------------------------------------------
 // 25 — DATE NIGHT (DARK DESIRE)
-// Arc: sharp tease → building hunger → raw confession → physical claim.
+// Arc: sensory tease → building heat → charged confession → physical claim.
 // ---------------------------------------------------------------
 25: [
-  ["ASK💭", "What’s the last thing I did that left you thinking about me completely under you?"],
-  ["DO✦", "Run one finger slowly along my jaw, down my neck, and stop just above my chest like you own the next move."],
-  ["SAY💗", "Tell me exactly what part of tonight has made you the most dangerously turned on so far."],
-  ["CHALLENGE🎯", "Describe, in detail, how you want me dressed — or undressed and restrained — for the rest of the night."],
-  ["ASK💭", "What’s a small thing I do that makes you want to drag me somewhere private and keep me there?"],
-  ["REMEMBER✨", "When did you first want more than a kiss from me — when the want turned darker?"],
-  ["DO✦", "Take my hand and guide it slowly under your shirt (or mine) while we keep talking, no permission asked."],
-  ["SAY💗", "Confess one thing about the way I move that you’ve never said out loud because it felt too possessive."],
-  ["CHALLENGE🎯", "Whisper the first thing you want to do the second this game ends — be specific and unfiltered."],
-  ["ASK💭", "What’s a version of me (look, mood, outfit) that makes you want to skip the talking and take what you want?"],
-  ["DO✦", "Kiss my neck once, slowly and deliberately, then stay close enough that I can feel the heat of your breath."],
-  ["SAY💗", "Tell me what your body does when I get this close and you stop pretending you’re in control."],
-  ["ASK💭", "What do you want me to whisper against your skin right now — the version that makes me shiver?"],
-  ["CHALLENGE🎯", "Let me choose exactly where the next kiss lands — anywhere above the waist, and make it count."],
-  ["REMEMBER✨", "What’s the most charged, private moment we’ve shared that no one else knows and still makes you hungry?"],
-  ["DO✦", "Lean in until our bodies are almost touching and hold still for five slow seconds — make me feel the restraint."],
-  ["SAY💗", "Describe, honestly, the darker tension between us right now — no filters."],
-  ["ASK💭", "What’s one thing about tonight you’re hoping continues after the cards are put away, even if it’s intense?"],
-  ["CHALLENGE🎯", "Give me a slow, claiming kiss on the collarbone, then say one raw word for how it felt."],
-  ["ASK💭", "What’s the boldest, darkest thing you’ve ever wanted to say (or do) to me but held back?"],
-  ["DO✦", "Hold my face and kiss me like you mean to keep going — no rushing, no softness unless I earn it."],
-  ["SAY💗", "Tell me, plainly, what you want from the rest of tonight — the version that scares you a little."],
-  ["CHALLENGE🎯", "Let me pick one place to kiss you — anywhere above the waist you allow, and don’t look away."],
-  ["REMEMBER✨", "What’s a night with me you still replay when you want to feel something intense and a little dangerous?"],
-  ["SAY💗", "Say the thing you’ve been thinking since this game started — uncensored and darker."],
+  ["ASK💭", "What’s the first thing you want me to feel when the candlelight is the only light left?"],
+  ["DO✦", "Pour a little warm oil along my spine and spread it with the full length of both hands."],
+  ["SAY💗", "Tell me which part of my body you’ve been thinking about covering with slow kisses."],
+  ["CHALLENGE🎯", "Put the blindfold on me, then take your time deciding where to start."],
+  ["ASK💭", "Do you want the massage to stay relaxing, or do you want it to turn into something hungrier?"],
+  ["REMEMBER✨", "When did being touched this slowly start to feel intimate instead of just nice?"],
+  ["DO✦", "Use only your fingertips to draw lazy circles across my lower back."],
+  ["SAY💗", "Confess how it feels when my skin is under your hands and neither of us is rushing."],
+  ["CHALLENGE🎯", "Kiss every vertebra down my spine, pausing between each one."],
+  ["ASK💭", "Where should my hands go if I turn over and face you right now?"],
+  ["DO✦", "Straddle my hips and lean down so your chest rests against my back while you work the oil in."],
+  ["SAY💗", "Tell me what you want me to do with my mouth while your hands keep moving."],
+  ["ASK💭", "How much of my body do you want covered in lingering kisses before we stop?"],
+  ["CHALLENGE🎯", "Blindfold yourself for thirty seconds and let me choose the next place to touch."],
+  ["REMEMBER✨", "What’s one private night of touch that still lives in your head?"],
+  ["DO✦", "Slide both hands under me and lift just enough to press our bodies fully together."],
+  ["SAY💗", "Describe the difference between a relaxing massage and the one you actually want tonight."],
+  ["ASK💭", "Should the blindfold stay on, or do you want to watch every reaction?"],
+  ["CHALLENGE🎯", "Trace the outline of my ribs with one finger, then replace it with your mouth."],
+  ["ASK💭", "What sound do you want to pull out of me before the oil even cools?"],
+  ["DO✦", "Hold the back of my neck with one hand while the other keeps moving lower."],
+  ["SAY💗", "Say the exact way you want my skin to feel under your hands right now."],
+  ["CHALLENGE🎯", "Cover my eyes with your hand instead of a blindfold and keep kissing."],
+  ["REMEMBER✨", "When did candlelight and slow hands start feeling like foreplay?"],
+  ["SAY💗", "Tell me the one place you haven’t touched yet that you’re saving for last."],
 ],
 
 // ---------------------------------------------------------------
 // 50 — LONG NIGHT (DARK DESIRE)
-// Full arc: sharp tease → chemistry → raw confession → bold claim → intimate edge → close (fade to private).
+// Full arc: sensory open → chemistry → confession → bold claim → intimate edge → close.
 // ---------------------------------------------------------------
 50: [
-  // TEASE
-  ["ASK💭", "What’s the first place on my body your attention goes when no one’s looking and you stop being careful?"],
-  ["SAY💗", "Tell me, without hedging, the darkest thing you most want to do to me tonight."],
-  ["DO✦", "Pull me close by the hips and hold me there for ten seconds like you’re deciding how far to take it."],
-  ["CHALLENGE🎯", "Whisper one filthy, possessive thing you’ve thought about me today — nothing else."],
-  ["ASK💭", "What piece of clothing of mine do you most want gone first — preferably not gently?"],
-  ["DO✦", "Trace one slow word on my palm, then let me guess what it means while you watch my reaction."],
-  ["SAY💗", "Say the thing about my body language that makes you want to push further."],
-  ["CHALLENGE🎯", "Bite your lip, hold my gaze, and tell me one thing you want my mouth to do — no soft version."],
-  ["ASK💭", "What’s something you think about me when you’re alone that you’d never say in public?"],
-  ["REMEMBER✨", "When did you first feel the shift from attraction into wanting to claim me?"],
+  // SENSORY OPEN
+  ["ASK💭", "How dark do you want the room before my hands start moving?"],
+  ["SAY💗", "Tell me the pace you want — glacial, or just slow enough to drive us both crazy."],
+  ["DO✦", "Warm the oil, then lay both palms flat between my shoulder blades and breathe with me."],
+  ["CHALLENGE🎯", "Decide whether the blindfold goes on me or on you first."],
+  ["ASK💭", "Which stretch of skin do you want to claim with only light fingertip trails?"],
+  ["DO✦", "Drag the tips of your fingers from my wrists all the way up to my shoulders."],
+  ["SAY💗", "Say how it feels when the only light is candlelight and the only sound is skin."],
+  ["CHALLENGE🎯", "Kiss the back of my neck once, then make me wait for the second."],
+  ["ASK💭", "Do you want this massage to stay on the surface, or do you want it to sink deeper?"],
+  ["REMEMBER✨", "When did full-body touch start feeling more intense than anything faster?"],
 
   // CHEMISTRY
-  ["ASK💭", "What’s the last thing I did that left you replaying it later in a darker way?"],
-  ["DO✦", "Run one finger slowly along my jawline, down my neck, and pause like the next move is yours."],
-  ["SAY💗", "Tell me exactly what part of tonight has made you the most turned on and hungry."],
-  ["CHALLENGE🎯", "Describe in detail the outfit — or lack of one — you want me in for the rest of the night, including how restricted."],
-  ["ASK💭", "What’s a small thing I do that hits harder than you’d normally admit?"],
-  ["REMEMBER✨", "When did you first want to go further than kissing with me — when the want turned sharper?"],
-  ["DO✦", "Hold my hand and slowly guide it under fabric while we keep talking, no asking."],
-  ["SAY💗", "Confess one thing about the way I move that you’ve never said out loud because it felt too possessive."],
-  ["ASK💭", "What’s a look or mood of mine that makes you want to skip the conversation and take control?"],
-  ["CHALLENGE🎯", "Whisper the first thing you want the second this game ends — be specific and unfiltered."],
+  ["ASK💭", "What’s the first place your mouth wants to go once the oil is warmed?"],
+  ["DO✦", "Use the heels of your hands to press long, slow strokes from my lower back upward."],
+  ["SAY💗", "Tell me what changes in your body when you’re the one giving the massage."],
+  ["CHALLENGE🎯", "Blindfold me, then use only your lips for the next full minute."],
+  ["ASK💭", "How much of my weight do you want resting on you while you work?"],
+  ["REMEMBER✨", "What’s one night of skin-to-skin that still replays when you close your eyes?"],
+  ["DO✦", "Slide your hands under my hips and pull me back against you while you keep massaging."],
+  ["SAY💗", "Confess the moment tonight when the touch stopped feeling gentle and started feeling hungry."],
+  ["ASK💭", "Should I stay face-down, or do you want me turned over so you can see every reaction?"],
+  ["CHALLENGE🎯", "Trace a single line from the hollow of my throat down as far as you dare."],
 
   // CONFESSION
-  ["DO✦", "Kiss my neck once, slowly and deliberately, then say nothing and wait for my reaction."],
-  ["SAY💗", "Tell me what happens in your body when I get this close and you stop holding back."],
-  ["ASK💭", "What do you want me to whisper against your skin right now — the version that makes it harder to stay gentle?"],
-  ["REMEMBER✨", "What’s the most charged private moment we’ve shared that no one else knows and still makes you hungry?"],
-  ["SAY💗", "Describe, honestly, the darker tension between us right now."],
-  ["ASK💭", "What’s the boldest, most possessive thing you’ve ever wanted to say or do to me but didn’t?"],
-  ["REMEMBER✨", "What’s a night with me you still think about when you want to feel something intense and a little dangerous?"],
-  ["SAY💗", "Say the thing you’ve been thinking since this game started — no filters, no softening."],
-  ["ASK💭", "What’s one thing about tonight you’re hoping doesn’t stop when the cards are put down, even if it edges darker?"],
-  ["DO✦", "Lean in close enough that I can feel your breath and stay there for five seconds — make the restraint obvious."],
+  ["DO✦", "Rest your forehead between my shoulder blades and just breathe while your hands keep moving."],
+  ["SAY💗", "Tell me what you’re thinking every time your hands slow down on purpose."],
+  ["ASK💭", "What do you want my hands doing to you while you’re focused on me?"],
+  ["REMEMBER✨", "When did being blindfolded during touch start feeling safer than seeing everything?"],
+  ["SAY💗", "Describe the exact pressure that makes you lose track of time."],
+  ["ASK💭", "How long do you want us to stay like this before either of us speaks again?"],
+  ["REMEMBER✨", "What’s the most charged thing that’s ever happened after a slow massage between us?"],
+  ["SAY💗", "Say the quiet thing you’ve been holding back since the oil first touched my skin."],
+  ["ASK💭", "Do you want the candles to burn out, or should we keep just enough light to see?"],
+  ["DO✦", "Cover my eyes with one hand and use the other to keep the long strokes going."],
 
-  // BOLD
-  ["CHALLENGE🎯", "Let me choose exactly where the next kiss lands — anywhere you allow, and make it count."],
-  ["DO✦", "Hold my face and kiss me slowly, like you mean to keep going and you’re not asking."],
-  ["CHALLENGE🎯", "Give me a slow, claiming kiss on the collarbone, then say one raw word for how it felt."],
-  ["SAY💗", "Tell me, plainly, what you want from the rest of tonight — the version that scares you a little."],
-  ["CHALLENGE🎯", "Let me pick one place to kiss you — anywhere above the waist you allow, and don’t look away."],
-  ["DO✦", "Pull me close so our foreheads touch and just breathe together, no words — feel the hunger."],
-  ["CHALLENGE🎯", "Whisper exactly what you’re thinking right now — unfiltered and darker."],
-  ["DO✦", "Let your hand rest on my waist (or lower) and hold it there for ten slow seconds like you’re claiming the space."],
+  // BOLD CLAIM
+  ["CHALLENGE🎯", "Choose one area I’ve been protecting and give it your full attention."],
+  ["DO✦", "Straddle my thighs and lean your full weight into the next set of strokes."],
+  ["CHALLENGE🎯", "Kiss a slow path from one hip bone to the other without using your hands."],
+  ["SAY💗", "Tell me what you want my body to do while your hands keep claiming it."],
+  ["CHALLENGE🎯", "Take the blindfold off me for three seconds, look, then put it back on."],
+  ["DO✦", "Pin both of my wrists lightly above my head and continue the massage with your free hand."],
+  ["CHALLENGE🎯", "Whisper one raw instruction against my ear, then follow it with your mouth."],
+  ["DO✦", "Press your chest to my back and let the heat of your skin replace the oil for a while."],
 
   // INTIMATE EDGE
-  ["ASK💭", "What’s something you want from me tonight that you haven’t said yet because it felt too dark?"],
-  ["SAY💗", "Tell me one thing your body has been signaling all night that you’ve been trying to hide."],
-  ["DO✦", "Kiss me somewhere unexpected and deliberately, then set the game down — we can take it from here."],
+  ["ASK💭", "What’s one place you still haven’t touched that you’re saving until I’m fully undone?"],
+  ["SAY💗", "Tell me how close you are to stopping the massage and starting something else."],
+  ["DO✦", "Flip me over carefully and start the same slow strokes on the front of my body."],
+  ["ASK💭", "Do you want me to keep the blindfold on, or do you need to see my eyes for this next part?"],
+  ["SAY💗", "Say the thing you want me to know before the touch turns into more."],
+  ["DO✦", "Hold me completely still against you for ten full seconds with zero space between us."],
+  ["CHALLENGE🎯", "Tell me exactly how you want the rest of the night to feel, out loud and unfiltered."],
+
+  // CLOSE
+  ["ASK💭", "What’s the last thing you want said before the candles are blown out?"],
+  ["SAY💗", "Tell me one thing you’re taking with you from this slow, full-body hour."],
+  ["DO✦", "Kiss me once, deep and unhurried, then let the massage end wherever it wants to."],
 ],
   },
   DreamsFuture:{
@@ -1222,106 +1213,98 @@ const moodQuestionSets = {
   // Deeper — home, growth, milestones, and what you want from each other long-term.
   // ---------------------------------------------------------------
   25: [
-    ["ASK💭", "What does a typical Sunday look like in the life you picture for us?"],
-    ["SAY💗", "Tell them what kind of partner you want to become for them over time."],
-    ["ASK💭", "What's a career or personal goal you want me to help you chase?"],
-    ["REMEMBER✨", "What's a future you two talked about early on that still feels true?"],
-    ["ASK💭", "If we could guarantee one thing about our future, what would you ask for?"],
-    ["DO✦", "Close your eyes and describe the sound of our future home."],
-    ["ASK💭", "What's a milestone — big or small — you're most looking forward to?"],
-    ["SAY💗", "Say one way you hope we grow closer as the years go on."],
-    ["CHALLENGE🎯", "Plan our next big trip in sixty seconds, out loud, together."],
-    ["ASK💭", "What kind of home do you picture us in — describe the feeling, not just the place."],
-    ["ASK💭", "What's something about getting older together that doesn't scare you at all?"],
-    ["REMEMBER✨", "What's a moment that made you first picture 'forever' with me?"],
-    ["SAY💗", "Tell them what kind of support you hope to give them during hard years."],
-    ["ASK💭", "What's a value you want to make sure we build our life around?"],
-    ["DO✦", "Take turns finishing 'In ten years, I hope we...' three times each."],
-    ["ASK💭", "What's a routine or rhythm you want our future household to have?"],
-    ["CHALLENGE🎯", "Describe our future in one sentence, like a movie logline."],
-    ["ASK💭", "What's something you'd want us to prioritize that we don't talk about enough?"],
-    ["SAY💗", "Say one thing you trust about our future, even without knowing the details."],
-    ["REMEMBER✨", "What's a version of the future you were afraid to want before me?"],
-    ["ASK💭", "If we threw a party to celebrate 'us' in twenty years, what would it look like?"],
-    ["ASK💭", "What's a fear about the future you'd want to say out loud, just to let it go?"],
-    ["DO✦", "Hold hands and each describe the other, twenty years from now, in one sentence."],
-    ["SAY💗", "Tell them what 'growing old together' actually means to you."],
-    ["ASK💭", "What's one thing about our future you never want to change, no matter what?"],
-  ],
- 
-  // ---------------------------------------------------------------
-  // 50 — LONG NIGHT
-  // Full arc:
-  //   1–10   near future        (next year, small plans)
-  //   11–20  home & rhythm        (daily life, where you live, routines)
-  //   21–30  growth & goals         (careers, values, becoming who you want to be)
-  //   31–38  milestones                (big life moments, timing, hopes)
-  //   39–45  fears & honesty              (what worries you, said out loud)
-  //   46–50  legacy & closing               (old age, what you leave behind, reflection)
-  // ---------------------------------------------------------------
-  50: [
-    // NEAR FUTURE
-    ["ASK💭", "What's a trip we haven't taken yet that you want to plan first?"],
-    ["SAY💗", "Tell them one thing about our future you're genuinely excited about."],
-    ["ASK💭", "What's your idea of a perfect ordinary Tuesday, five years from now?"],
-    ["DO✦", "Hold hands and each name one word for what you want next year to feel like."],
-    ["ASK💭", "What's a small tradition you want us to start but haven't yet?"],
-    ["CHALLENGE🎯", "Describe our future home in exactly three details."],
-    ["ASK💭", "What's something you want to learn together someday?"],
-    ["REMEMBER✨", "What's a future you used to imagine for yourself before you met me?"],
-    ["SAY💗", "Say one thing you're looking forward to that involves both of us."],
-    ["ASK💭", "If we moved somewhere new together, where would you pick?"],
- 
-    // HOME & RHYTHM
-    ["ASK💭", "What does a typical Sunday look like in the life you picture for us?"],
-    ["DO✦", "Close your eyes and describe the sound of our future home."],
-    ["ASK💭", "What kind of home do you picture us in — describe the feeling, not just the place."],
-    ["CHALLENGE🎯", "Plan our next big trip in sixty seconds, out loud, together."],
-    ["ASK💭", "What's a routine or rhythm you want our future household to have?"],
-    ["REMEMBER✨", "What's a small domestic moment you already love that you hope stays forever?"],
-    ["ASK💭", "What's something about how we live now that you'd want to keep no matter where we end up?"],
-    ["SAY💗", "Tell them what 'home' means to you when they're the one defining it."],
-    ["ASK💭", "What's a pet, plant, or tiny responsibility you'd want us to take on together?"],
-    ["DO✦", "Take turns describing our future kitchen table and who usually sits where."],
- 
-    // GROWTH & GOALS
-    ["ASK💭", "What's a career or personal goal you want me to help you chase?"],
-    ["SAY💗", "Tell them what kind of partner you want to become for them over time."],
-    ["ASK💭", "What's a value you want to make sure we build our life around?"],
-    ["SAY💗", "Say one way you hope we grow closer as the years go on."],
-    ["ASK💭", "What's something you'd want us to prioritize that we don't talk about enough?"],
-    ["REMEMBER✨", "What's a goal of mine you've watched change since we met?"],
-    ["ASK💭", "What's a version of yourself you're hoping to grow into, with me beside you?"],
-    ["SAY💗", "Tell them what kind of support you hope to give them during hard years."],
-    ["ASK💭", "What's something you want us to get better at together?"],
-    ["DO✦", "Take turns finishing 'In ten years, I hope we...' three times each."],
- 
-    // MILESTONES
-    ["ASK💭", "What's a milestone — big or small — you're most looking forward to?"],
-    ["REMEMBER✨", "What's a moment that made you first picture 'forever' with me?"],
-    ["ASK💭", "If we threw a party to celebrate 'us' in twenty years, what would it look like?"],
-    ["CHALLENGE🎯", "Describe our future in one sentence, like a movie logline."],
-    ["ASK💭", "What's a milestone you want us to take our time with instead of rushing?"],
-    ["SAY💗", "Tell them what you hope our wedding, or whatever marks us, would feel like."],
-    ["ASK💭", "What's a chapter of life you're most curious to go through with me?"],
-    ["REMEMBER✨", "What's a moment recently that already felt like a milestone, even a quiet one?"],
- 
-    // FEARS & HONESTY
-    ["ASK💭", "What's a fear about the future you'd want to say out loud, just to let it go?"],
-    ["SAY💗", "Say one thing you trust about our future, even without knowing the details."],
-    ["REMEMBER✨", "What's a version of the future you were afraid to want before me?"],
-    ["ASK💭", "What's something about getting older together that doesn't scare you at all?"],
-    ["SAY💗", "Tell them one worry you'd want to carry together instead of alone."],
-    ["ASK💭", "What's a hard season you think we'd handle well together, and why?"],
-    ["SAY💗", "Say what steadiness from you would look like during a hard year."],
- 
-    // LEGACY & CLOSING
-    ["ASK💭", "What's one thing about our future you never want to change, no matter what?"],
-    ["DO✦", "Hold hands and each describe the other, twenty years from now, in one sentence."],
-    ["SAY💗", "Tell them what 'growing old together' actually means to you."],
-    ["ASK💭", "What's something you'd want people to say about us, decades from now?"],
-    ["REMEMBER✨", "Out of everything you've imagined tonight, what's the one future you want most?"],
-  ],
+  ["ASK💭", "What’s one small ritual you hope we still do together in ten years?"],
+  ["DO✦", "Pull me close and whisper one future memory you want us to make."],
+  ["SAY💗", "Tell me the version of our life that feels the most true to who we are."],
+  ["CHALLENGE🎯", "Describe the house, the city, or the feeling of the place we’re meant to live."],
+  ["ASK💭", "What kind of partner do you hope I keep becoming for you?"],
+  ["REMEMBER✨", "When did ‘someday’ start turning into ‘with you’?"],
+  ["DO✦", "Hold both of my hands and look at me like we’re already there."],
+  ["SAY💗", "Confess one quiet hope you have for the life we’re building."],
+  ["CHALLENGE🎯", "Paint me a picture of an ordinary Tuesday night in our future."],
+  ["ASK💭", "What do you want our laughter to sound like years from now?"],
+  ["DO✦", "Rest your head on my shoulder and tell me one dream without filtering it."],
+  ["SAY💗", "Say the thing about our future that makes your chest feel warm."],
+  ["ASK💭", "How do you want us to handle the hard seasons when they come?"],
+  ["CHALLENGE🎯", "Tell me one adventure you want us to take before we’re ‘settled’."],
+  ["REMEMBER✨", "What’s one promise we’ve already made that still feels alive?"],
+  ["DO✦", "Intertwine our fingers and keep them that way while we dream out loud."],
+  ["SAY💗", "Describe the feeling you want to come home to every day with me."],
+  ["ASK💭", "What kind of legacy do you hope we leave in each other’s lives?"],
+  ["CHALLENGE🎯", "Share one future version of us that scares you a little and excites you a lot."],
+  ["ASK💭", "Where do you see us when we need to remember why we chose this?"],
+  ["DO✦", "Pull me into a slow hug and stay there while you answer the next question."],
+  ["SAY💗", "Tell me one thing you want us to never stop doing for each other."],
+  ["CHALLENGE🎯", "Speak one sentence that starts with ‘In our future…’ and make it specific."],
+  ["REMEMBER✨", "When did you realize you wanted to build something real with me?"],
+  ["SAY💗", "Say the dream that feels almost too soft to say out loud."],
+],
+
+// ---------------------------------------------------------------
+// 50 — LONG NIGHT OF DREAMS & FUTURE
+// Full arc: soft visioning → shared longing → deeper confession → bold dreaming → intimate promise → close.
+// ---------------------------------------------------------------
+50: [
+  // SOFT VISIONING
+  ["ASK💭", "What’s the first image that comes to mind when you think of our future?"],
+  ["SAY💗", "Tell me the feeling you want our life to have more than any specific plan."],
+  ["DO✦", "Take my hand and place it over your heart while you answer."],
+  ["CHALLENGE🎯", "Describe one future morning in as much detail as you can."],
+  ["ASK💭", "What kind of rhythm do you hope our days eventually find?"],
+  ["DO✦", "Lean into me and let the quiet sit with us for a moment."],
+  ["SAY💗", "Say one thing you’re already grateful we’ll get to experience together."],
+  ["CHALLENGE🎯", "Tell me one place you want us to stand side by side someday."],
+  ["ASK💭", "How do you want us to celebrate the small wins along the way?"],
+  ["REMEMBER✨", "When did the future start feeling like something we were building instead of chasing?"],
+
+  // SHARED LONGING
+  ["ASK💭", "What’s one dream of yours that you hope becomes a dream of ours?"],
+  ["DO✦", "Hold my gaze and answer without looking away."],
+  ["SAY💗", "Tell me what ‘growing old with you’ actually looks like in your mind."],
+  ["CHALLENGE🎯", "Paint the version of us that feels the most peaceful."],
+  ["ASK💭", "What do you want our home to feel like when someone walks through the door?"],
+  ["REMEMBER✨", "What’s one early moment that made you think ‘I could build a life with this person’?"],
+  ["DO✦", "Wrap your arms around me from the side and keep talking."],
+  ["SAY💗", "Confess one quiet fear you have about the future — and one hope that is stronger."],
+  ["ASK💭", "How do you want us to keep choosing each other when life gets loud?"],
+  ["CHALLENGE🎯", "Describe the kind of love you want us to still be practicing in twenty years."],
+
+  // DEEPER CONFESSION
+  ["DO✦", "Rest your forehead against mine while you answer the next one."],
+  ["SAY💗", "Tell me the part of our future that feels the most sacred to you."],
+  ["ASK💭", "What do you need from me in order to dream bigger?"],
+  ["REMEMBER✨", "When did you stop imagining a future that didn’t include me?"],
+  ["SAY💗", "Say the thing about building a life with me that still surprises you."],
+  ["ASK💭", "How do you want us to talk about the hard dreams — the ones that might not come true?"],
+  ["REMEMBER✨", "What’s one promise we’ve already lived up to that makes you trust the next ones?"],
+  ["SAY💗", "Describe the version of me you hope is still beside you later."],
+  ["ASK💭", "What kind of team do you want us to become?"],
+  ["DO✦", "Take both of my hands and hold them while you speak."],
+
+  // BOLD DREAMING
+  ["CHALLENGE🎯", "Share one big, slightly scary dream you want us to chase together."],
+  ["DO✦", "Pull me closer as if the future is already happening right here."],
+  ["CHALLENGE🎯", "Tell me one thing you want us to be known for as a couple."],
+  ["SAY💗", "Say the future memory you most want to look back on someday."],
+  ["CHALLENGE🎯", "Describe the life that would make you feel proud of what we built."],
+  ["DO✦", "Keep physical contact the entire time you answer the next three."],
+  ["CHALLENGE🎯", "Speak one sentence that starts with ‘I hope we never stop…’"],
+  ["DO✦", "Let me hold you the way you want to be held in that future."],
+
+  // INTIMATE PROMISE
+  ["ASK💭", "What do you want to protect most about us as the years add up?"],
+  ["SAY💗", "Tell me one way you want to keep falling in love with me later."],
+  ["DO✦", "Place your hand on my chest and feel my breath while you answer."],
+  ["ASK💭", "Is there anything you need to hear from me about the life we’re building?"],
+  ["SAY💗", "Say the quiet promise you want us to keep, even when it’s hard."],
+  ["DO✦", "Hold me like the future is already safe in this moment."],
+  ["CHALLENGE🎯", "Tell me, without softening it, the life you actually want with me."],
+
+  // CLOSE
+  ["ASK💭", "What’s the last thing you want us to remember from this conversation?"],
+  ["SAY💗", "Tell me one piece of our future you’re already carrying with you."],
+  ["DO✦", "Kiss me slowly, like we’re sealing something we just built with words."],
+],
   }
 };
 // ========================================
@@ -1643,7 +1626,14 @@ const coursesData = {
       'Handle difficult conversations with more steadiness.'
     ],
     sections: [
-      { title: 'Lessons', lessons: ['Intro', 'Listening', 'Non-defensive speech', 'Asking vs accusing', 'Practical exercises', 'Practice', 'Final challenge'] }
+      { title: 'Lessons', 
+        lessons: ['Intro', 
+          'Listening', 
+          'Non-defensive speech', 
+          'Asking vs accusing',
+           'Practical exercises', 
+           'Practice', 
+           'Final challenge'] }
     ]
   },
   'art-of-romance': {
@@ -1666,7 +1656,7 @@ const coursesData = {
   },
   'How to last longer': {
     id: 'art-of-romance',
-    title: 'The Art of Romance',
+    title: 'How to last longer',
     category: 'For Him',
     subtitle: 'Create small romantic moments',
     chapters: 8,
