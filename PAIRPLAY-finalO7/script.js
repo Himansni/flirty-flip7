@@ -1663,6 +1663,24 @@ const coursesData = {
     sections: [
       { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
     ]
+  },
+  'How to last longer': {
+    id: 'art-of-romance',
+    title: 'The Art of Romance',
+    category: 'For Him',
+    subtitle: 'Create small romantic moments',
+    chapters: 8,
+    time: '~25 min',
+    tags: ['for-him', 'romance'],
+    summary: 'Turn everyday moments into meaningful romantic experiences.',
+    outcomes: [
+      'Create small rituals that make everyday connection feel intentional.',
+      'Choose thoughtful gestures that carry personal meaning.',
+      'Design date nights around attention and connection.'
+    ],
+    sections: [
+      { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
+    ]
   }
 };
 
