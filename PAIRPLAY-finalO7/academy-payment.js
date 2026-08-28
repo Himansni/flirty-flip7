@@ -8,9 +8,16 @@
   "use strict";
 
   const API_ROOT = "/api/academy";
+  const CLIENT_CONFIG_PATH = `${API_ROOT}/client-config`;
   const RAZORPAY_CHECKOUT_URL = "https://checkout.razorpay.com/v1/checkout.js";
+  const ACADEMY_AUTH_STORAGE_KEY = "flirtyflip-academy-auth-v1";
   let razorpayLoader = null;
   let checkoutBusy = false;
+  let academyClient = null;
+  let academyClientPromise = null;
+  let academyCurrentUser = null;
+  let academyAuthInitialized = false;
+  let academyAuthError = null;
 
   class AcademyApiError extends Error {
     constructor(message, status = 0, code = "ACADEMY_API_ERROR") {
@@ -21,13 +28,132 @@
     }
   }
 
-  // Read the real Supabase session created by the existing authentication system.
-  // Guest profiles intentionally have no bearer token and cannot call paid Academy APIs.
+  function validateClientConfig(payload) {
+    const rawUrl = String(payload?.supabaseUrl || "").trim();
+    const publishableKey = String(payload?.supabasePublishableKey || "").trim();
+    let url;
+    try {
+      url = new URL(rawUrl);
+    } catch (error) {
+      throw new AcademyApiError("Academy login is unavailable in this environment.", 503, "ACADEMY_AUTH_UNAVAILABLE");
+    }
+    if (url.protocol !== "https:" || !/^[a-z0-9]+\.supabase\.co$/i.test(url.hostname) || url.pathname !== "/" || !publishableKey || publishableKey.startsWith("sb_secret_")) {
+      throw new AcademyApiError("Academy login is unavailable in this environment.", 503, "ACADEMY_AUTH_UNAVAILABLE");
+    }
+    return { url: url.origin, publishableKey };
+  }
+
+  async function waitForSupabaseLibrary(timeoutMs = 4000) {
+    const startedAt = Date.now();
+    while (!global.supabase || typeof global.supabase.createClient !== "function") {
+      if (Date.now() - startedAt >= timeoutMs) {
+        throw new AcademyApiError("Academy login could not load. Refresh and try again.", 503, "ACADEMY_AUTH_UNAVAILABLE");
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    return global.supabase;
+  }
+
+  // Academy uses an isolated Supabase client so Preview test accounts never replace the game session.
+  // Edit public client values in Vercel Preview variables; never place a service-role key in this module.
+  async function getAcademySupabaseClient() {
+    if (academyClient) return academyClient;
+    if (academyClientPromise) return academyClientPromise;
+
+    academyClientPromise = (async () => {
+      const supabaseLibrary = await waitForSupabaseLibrary();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 7000);
+      let response;
+      try {
+        response = await fetch(CLIENT_CONFIG_PATH, {
+          method: "GET",
+          headers: { Accept: "application/json" },
+          credentials: "same-origin",
+          signal: controller.signal
+        });
+      } catch (error) {
+        throw new AcademyApiError("Academy login configuration could not be loaded. Please try again.", 503, "ACADEMY_AUTH_UNAVAILABLE");
+      } finally {
+        clearTimeout(timeout);
+      }
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new AcademyApiError(payload.message || "Academy login is unavailable in this environment.", response.status, payload.code || "ACADEMY_AUTH_UNAVAILABLE");
+      }
+      const config = validateClientConfig(payload);
+      academyClient = supabaseLibrary.createClient(config.url, config.publishableKey, {
+        auth: {
+          storageKey: ACADEMY_AUTH_STORAGE_KEY,
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: false
+        }
+      });
+      academyAuthError = null;
+      return academyClient;
+    })().catch((error) => {
+      academyClientPromise = null;
+      academyAuthError = error instanceof AcademyApiError
+        ? error
+        : new AcademyApiError("Academy login is unavailable in this environment.", 503, "ACADEMY_AUTH_UNAVAILABLE");
+      throw academyAuthError;
+    });
+
+    return academyClientPromise;
+  }
+
+  function notifyAcademyAuthChanged() {
+    if (typeof global.handleAcademyAuthResolved === "function") global.handleAcademyAuthResolved();
+  }
+
+  async function initializeAuth() {
+    if (academyAuthInitialized) return academyCurrentUser;
+    const client = await getAcademySupabaseClient();
+    const { data, error } = await client.auth.getSession();
+    if (error) throw new AcademyApiError("Your Academy session could not be checked. Please sign in again.", 401, "SESSION_ERROR");
+    academyCurrentUser = data?.session?.user || null;
+    academyAuthInitialized = true;
+    client.auth.onAuthStateChange((_event, session) => {
+      academyCurrentUser = session?.user || null;
+      notifyAcademyAuthChanged();
+    });
+    notifyAcademyAuthChanged();
+    return academyCurrentUser;
+  }
+
+  async function signIn(email, password) {
+    const client = await getAcademySupabaseClient();
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    if (error) throw new AcademyApiError(error.message || "Academy login failed.", error.status || 401, "ACADEMY_LOGIN_FAILED");
+    academyCurrentUser = data?.session?.user || null;
+    academyAuthInitialized = true;
+    notifyAcademyAuthChanged();
+    return data;
+  }
+
+  async function signUp(email, password) {
+    const client = await getAcademySupabaseClient();
+    const { data, error } = await client.auth.signUp({ email, password });
+    if (error) throw new AcademyApiError(error.message || "Academy signup failed.", error.status || 400, "ACADEMY_SIGNUP_FAILED");
+    academyCurrentUser = data?.session?.user || null;
+    academyAuthInitialized = true;
+    notifyAcademyAuthChanged();
+    return data;
+  }
+
+  async function sendPasswordReset(email, redirectTo) {
+    const client = await getAcademySupabaseClient();
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) throw new AcademyApiError(error.message || "Unable to send the Academy reset link.", error.status || 400, "ACADEMY_RESET_FAILED");
+  }
+
+  // Read only the isolated Academy session. Guest and game sessions cannot authorize Academy APIs.
   async function getAccessToken() {
-    const client = typeof getSupabaseClient === "function" ? getSupabaseClient() : null;
-    if (!client) return null;
+    const client = await getAcademySupabaseClient();
     const { data, error } = await client.auth.getSession();
     if (error) throw new AcademyApiError("Your session could not be checked. Please sign in again.", 401, "SESSION_ERROR");
+    academyCurrentUser = data?.session?.user || null;
     return data?.session?.access_token || null;
   }
 
@@ -216,6 +342,13 @@
 
   global.AcademyPayments = Object.freeze({
     AcademyApiError,
+    getAcademySupabaseClient,
+    getCurrentUser: () => academyCurrentUser,
+    getAuthError: () => academyAuthError,
+    initializeAuth,
+    signIn,
+    signUp,
+    sendPasswordReset,
     getAccessToken,
     getPublicCatalog,
     getEntitlements,

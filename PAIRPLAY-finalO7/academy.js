@@ -75,7 +75,8 @@
   }
 
   function hasRealAcademyAccount() {
-    return Boolean(typeof signedInUser !== "undefined" && signedInUser?.id && signedInUser?.email);
+    const user = payments?.getCurrentUser?.();
+    return Boolean(user?.id && user?.email);
   }
 
   function renderAcademyBackLink(path, label = "Back") {
@@ -349,6 +350,15 @@
   }
 
   function renderAcademyLoginRequired(courseSlug = null) {
+    const authError = payments?.getAuthError?.();
+    if (authError) {
+      return `
+        <div class="academy-access-state">
+          <span aria-hidden="true">◇</span><div><div class="academy-eyebrow">LOGIN UNAVAILABLE</div><h2>Academy authentication could not load.</h2><p>${academyEscape(authError.message)}</p>
+          <button class="academy-gold-button" type="button" data-academy-action="retry-dashboard">Try again <span aria-hidden="true">→</span></button></div>
+        </div>
+      `;
+    }
     return `
       <div class="academy-access-state">
         <span aria-hidden="true">⌁</span><div><div class="academy-eyebrow">ACCOUNT REQUIRED</div><h2>Log in to continue learning.</h2><p>Paid courses are tied to your Supabase account. Guest mode cannot purchase or unlock Academy lessons.</p>
@@ -489,7 +499,7 @@
     if (!hasRealAcademyAccount()) {
       pendingAuthCourse = slug;
       statusTarget.innerHTML = renderCheckoutStatus("login-required");
-      if (typeof showAuthModal === "function") showAuthModal("login");
+      if (typeof showAuthModal === "function") showAuthModal("login", "academy");
       return;
     }
 
@@ -544,6 +554,15 @@
     }
   }
 
+  async function retryAcademyDashboard() {
+    try {
+      await payments?.initializeAuth?.();
+    } catch (error) {
+      // loadAcademyDashboard renders the stored, sanitized configuration error and retry action.
+    }
+    loadAcademyDashboard();
+  }
+
   // One delegated handler owns dynamic Academy links, tabs, enrollment and lesson progress actions.
   // Keep actions centralized here to avoid duplicate listeners after SPA route renders.
   function bindAcademyEvents() {
@@ -576,10 +595,10 @@
       }
       if (type === "login") {
         pendingAuthCourse = action.dataset.course || null;
-        showAuthModal("login");
+        showAuthModal("login", "academy");
       }
       if (type === "enroll") beginAcademyEnrollment(action.dataset.course);
-      if (type === "retry-dashboard") loadAcademyDashboard();
+      if (type === "retry-dashboard") retryAcademyDashboard();
       if (type === "complete-lesson") completeAcademyLesson(action.dataset.course, action.dataset.lesson, action);
     });
 
@@ -597,6 +616,12 @@
   }
 
   bindAcademyEvents();
+
+  // Resolve the isolated Academy session after its UI hooks exist; failure renders a safe retry state.
+  // The game authentication client remains owned by script.js and is never replaced here.
+  payments?.initializeAuth?.().catch(() => {
+    if (location.pathname.startsWith("/academy") && typeof renderCurrentRoute === "function") renderCurrentRoute("replace");
+  });
 
   global.getAcademyCourse = getAcademyCourse;
   global.getAcademyCourses = getAcademyCourses;

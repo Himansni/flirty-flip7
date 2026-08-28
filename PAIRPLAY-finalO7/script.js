@@ -1504,6 +1504,7 @@ function ensureSupabaseClient(timeout = 4000) {
 }
 
 let authMode = "login";
+let authScope = "site";
 let signedInUser = null;
 
 // -----------------------------
@@ -1883,7 +1884,9 @@ function updateAuthUI() {
   setCtaLabels("Continue as guest", "Guest");
 }
 
-function showAuthModal(mode = "login") {
+function showAuthModal(mode = "login", scope = null) {
+  if (scope === "academy" || scope === "site") authScope = scope;
+  if (authScope === "academy" && mode === "guest") mode = "login";
   authMode = mode;
   const modal = $("auth-modal");
   if (!modal) return;
@@ -1895,6 +1898,7 @@ function showAuthModal(mode = "login") {
   const passwordInput = $("auth-password");
 
   document.querySelectorAll(".auth-tab").forEach((tab) => {
+    tab.hidden = authScope === "academy" && tab.dataset.mode === "guest";
     tab.classList.toggle("active", tab.dataset.mode === mode);
   });
 
@@ -1924,7 +1928,9 @@ function showAuthModal(mode = "login") {
     passwordInput.placeholder = mode === "guest" ? "No password needed" : "Enter a secure password";
   }
 
-  status.textContent = mode === "guest"
+  status.textContent = authScope === "academy"
+    ? "Use your Academy test account. This login is isolated from the existing FlirtyFlip game account."
+    : mode === "guest"
     ? "Guest mode works instantly and keeps your session local to this device."
     : "Use your Supabase email and password to sign in or create an account.";
 
@@ -1993,7 +1999,7 @@ function showResetPassword() {
     const submit = document.getElementById('auth-reset-submit');
     const back = document.getElementById('auth-reset-back');
     if (submit) submit.addEventListener('click', sendPasswordReset);
-    if (back) back.addEventListener('click', () => showAuthModal('login'));
+    if (back) back.addEventListener('click', () => showAuthModal('login', authScope));
   }
 
   modal.classList.remove('hidden');
@@ -2008,14 +2014,23 @@ async function sendPasswordReset() {
   if (!email) { setAuthStatus('Please enter your email address.', true); return; }
 
   setAuthStatus('Sending reset link...');
-  const client = await ensureSupabaseClient(3000);
-  if (!client) { setAuthStatus('Password reset is not available: Supabase not configured or failed to load.', true); return; }
+  const academyAuth = authScope === "academy" ? window.AcademyPayments : null;
+  const client = academyAuth ? null : await ensureSupabaseClient(3000);
+  if (academyAuth && typeof academyAuth.sendPasswordReset !== "function") {
+    setAuthStatus('Academy password reset is not available in this environment.', true);
+    return;
+  }
+  if (!academyAuth && !client) { setAuthStatus('Password reset is not available: Supabase not configured or failed to load.', true); return; }
 
   try {
     // Always return recovery links to the SPA root so a deep current route cannot become a broken callback URL.
-    const passwordResetUrl = new URL(ROUTE_PATHS.home, window.location.origin).href;
-    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: passwordResetUrl });
-    if (error) throw error;
+    const passwordResetUrl = new URL(academyAuth ? "/academy/dashboard" : ROUTE_PATHS.home, window.location.origin).href;
+    if (academyAuth) {
+      await academyAuth.sendPasswordReset(email, passwordResetUrl);
+    } else {
+      const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: passwordResetUrl });
+      if (error) throw error;
+    }
     setAuthStatus('If an account exists for that email, a reset link has been sent. Check your inbox.');
   } catch (e) {
     console.error('Password reset error', e);
@@ -2068,6 +2083,30 @@ async function submitAuthForm(event) {
 
   if (!email || !password) {
     setAuthStatus("Please enter both email and password.", true);
+    return;
+  }
+
+  if (authScope === "academy") {
+    const academyAuth = window.AcademyPayments;
+    if (!academyAuth || typeof academyAuth.signIn !== "function" || typeof academyAuth.signUp !== "function") {
+      setAuthStatus("Academy login is unavailable in this environment.", true);
+      return;
+    }
+    try {
+      setAuthStatus("Connecting to Academy…");
+      const data = authMode === "signup"
+        ? await academyAuth.signUp(email, password)
+        : await academyAuth.signIn(email, password);
+      if (authMode === "signup" && !data?.session) {
+        setAuthStatus("Account created. Check your email to confirm it, then return here to log in.");
+        return;
+      }
+      closeAuthModal();
+      toast(authMode === "signup" ? "Academy account created ♡" : "Academy login successful ♡");
+    } catch (error) {
+      console.warn("Academy authentication failed", { code: error?.code, status: error?.status });
+      setAuthStatus(error?.message || "Academy authentication failed.", true);
+    }
     return;
   }
 
@@ -3032,7 +3071,7 @@ function bindAuthEvents() {
   const authForgotBtn = $("auth-forgot");
   
   if (navLabel) {
-    navLabel.addEventListener("click", () => showAuthModal("login"));
+    navLabel.addEventListener("click", () => showAuthModal("login", "site"));
   }
   
   if (navCta) {
@@ -3042,10 +3081,10 @@ function bindAuthEvents() {
         return;
       }
       if (signedInUser && signedInUser.id && signedInUser.id.startsWith("guest-")) {
-        showAuthModal("login");
+        showAuthModal("login", "site");
         return;
       }
-      showAuthModal("guest");
+      showAuthModal("guest", "site");
     });
   }
 
@@ -3631,8 +3670,8 @@ function bindNavEvents() {
   // Authentication actions reuse the existing modal and also close the mobile drawer.
   const drawerLogin = document.getElementById('drawer-login');
   const drawerGuest = document.getElementById('drawer-guest');
-  if (drawerLogin) drawerLogin.addEventListener('click', () => { closeDrawer(); showAuthModal('login'); });
-  if (drawerGuest) drawerGuest.addEventListener('click', () => { closeDrawer(); showAuthModal('guest'); });
+  if (drawerLogin) drawerLogin.addEventListener('click', () => { closeDrawer(); showAuthModal('login', 'site'); });
+  if (drawerGuest) drawerGuest.addEventListener('click', () => { closeDrawer(); showAuthModal('guest', 'site'); });
 }
 
 // -----------------------------

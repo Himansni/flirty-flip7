@@ -60,7 +60,7 @@ The app supports log in, sign up, password reset, and guest mode. Guest mode wor
 </script>
 ```
 
-If configured, the Supabase client is loaded on demand and email/password actions use that project. Academy purchase and lesson APIs accept only a real Supabase access token; local guest profiles remain browse-only.
+If configured, the main Supabase client is loaded on demand and the existing game/account actions use that project. Academy uses a separate browser client and storage key so a non-production Academy account cannot replace or corrupt the existing game session. `/api/academy/client-config` returns only the Academy `SUPABASE_URL` and public publishable key from the current Vercel environment; privileged keys remain server-only. Academy purchase and lesson APIs accept only the isolated Academy access token, and local guest profiles remain browse-only.
 
 ## FlirtyFlip Academy architecture
 
@@ -86,7 +86,7 @@ The browser never grants access. Order amounts are read from `academy_courses.pr
    where slug = 'confident-connection';
    ```
 
-4. Set the variables listed in `.env.example` in Vercel Project Settings. Use Vercel environment scopes intentionally for Preview and Production. `SUPABASE_SERVICE_ROLE_KEY`, `RAZORPAY_KEY_SECRET`, and `RAZORPAY_WEBHOOK_SECRET` are server-only.
+4. Set the variables listed in `.env.example` in Vercel Project Settings. Use Vercel environment scopes intentionally for Preview and Production. Preview client configuration fails closed unless `SUPABASE_URL` is the reviewed Academy test project. `SUPABASE_SERVICE_ROLE_KEY`, `RAZORPAY_KEY_SECRET`, and `RAZORPAY_WEBHOOK_SECRET` are server-only and are never returned by the client-config endpoint.
 5. In Razorpay, create a webhook pointing to `https://YOUR_DOMAIN/api/academy/webhook` and subscribe to `payment.captured`, `order.paid`, and `refund.processed`. Set the identical signing secret in `RAZORPAY_WEBHOOK_SECRET`.
 6. Confirm Razorpay capture settings and complete a test-mode transaction before enabling a course. A payment that remains merely authorized does not unlock content.
 
@@ -95,7 +95,7 @@ Until a real database price, checkout flag, and payment credentials are all pres
 Run the local server-side security tests without live credentials:
 
 ```bash
-node --test tests/academy-server.test.mjs
+node --test tests/*.test.mjs
 ```
 
 ### Academy security notes
