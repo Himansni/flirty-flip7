@@ -17,7 +17,7 @@ async function readProgress(userId, courseSlug) {
   };
 }
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     requireMethod(request, ["GET", "POST"]);
     const user = await requireSupabaseUser(request);
@@ -60,3 +60,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as GET, handler as POST };

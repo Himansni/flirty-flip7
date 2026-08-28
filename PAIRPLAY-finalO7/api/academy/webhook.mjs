@@ -4,7 +4,7 @@ import { AcademyHttpError, errorResponse, findOrderByProviderId, findWebhookEven
 
 const MAX_WEBHOOK_BYTES = 256_000;
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     if (request.method !== "POST") return jsonResponse({ code: "METHOD_NOT_ALLOWED", message: "This request method is not supported." }, 405);
     const contentLength = Number(request.headers.get("content-length") || 0);
@@ -65,3 +65,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as POST };

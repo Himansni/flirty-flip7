@@ -7,7 +7,7 @@ function validIdempotencyKey(request) {
   return key;
 }
 
-export default async function handler(request) {
+async function handler(request) {
   let databaseOrder = null;
   try {
     requireMethod(request, ["POST"]);
@@ -45,3 +45,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as POST };

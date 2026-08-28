@@ -1,7 +1,7 @@
 // Public Academy availability and pricing metadata; paid lesson bodies are never returned here.
 import { errorResponse, jsonResponse, listPublishedCourses, razorpayIsConfigured, requireMethod } from "../_lib/academy-server.mjs";
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     requireMethod(request, ["GET"]);
     const providerReady = razorpayIsConfigured();
@@ -23,3 +23,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as GET };

@@ -27,7 +27,7 @@ async function createSignedMediaUrl(courseSlug, lessonSlug, mediaPath) {
   return payload?.signedURL ? `${root}/storage/v1${payload.signedURL}` : null;
 }
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     requireMethod(request, ["GET"]);
     const user = await requireSupabaseUser(request);
@@ -59,3 +59,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as GET };

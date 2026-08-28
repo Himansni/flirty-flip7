@@ -37,7 +37,7 @@ function getPublicClientConfig() {
   };
 }
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     requireMethod(request, ["GET"]);
     return jsonResponse(getPublicClientConfig());
@@ -46,4 +46,4 @@ export default async function handler(request) {
   }
 }
 
-export { getPublicClientConfig };
+export { getPublicClientConfig, handler as GET };

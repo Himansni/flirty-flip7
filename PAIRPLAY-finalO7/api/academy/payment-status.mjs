@@ -1,7 +1,7 @@
 // Reconcile a user's order with Razorpay before reporting whether entitlement is active.
 import { AcademyHttpError, errorResponse, findEntitlement, findUserOrderByProviderId, fulfillCapturedPayment, jsonResponse, mapOrder, paymentMatchesOrder, razorpayRequest, requireMethod, requireSupabaseUser } from "../_lib/academy-server.mjs";
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     requireMethod(request, ["GET"]);
     const user = await requireSupabaseUser(request);
@@ -30,3 +30,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as GET };

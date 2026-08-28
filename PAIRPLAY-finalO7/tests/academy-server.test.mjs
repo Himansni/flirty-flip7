@@ -8,8 +8,8 @@ import { createHmac } from "node:crypto";
 import test from "node:test";
 
 import { parseJsonBody, webhookPayloadDigest } from "../api/_lib/academy-server.mjs";
-import verifyPayment from "../api/academy/verify-payment.mjs";
-import webhook from "../api/academy/webhook.mjs";
+import { POST as verifyPayment } from "../api/academy/verify-payment.mjs";
+import { POST as webhook } from "../api/academy/webhook.mjs";
 
 const originalFetch = globalThis.fetch;
 const originalEnvironment = {

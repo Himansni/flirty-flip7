@@ -8,8 +8,8 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
 
-import clientConfig from "../api/academy/client-config.mjs";
-import entitlements from "../api/academy/entitlements.mjs";
+import { GET as clientConfig } from "../api/academy/client-config.mjs";
+import { GET as entitlements } from "../api/academy/entitlements.mjs";
 
 const TEST_REF = "hacnnarthuzyblahoyqu";
 const originalEnvironment = {

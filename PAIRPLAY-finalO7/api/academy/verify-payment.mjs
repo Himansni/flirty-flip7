@@ -1,7 +1,7 @@
 // Verify Checkout HMAC, fetch Razorpay's authoritative payment, and grant access only when captured.
 import { AcademyHttpError, errorResponse, findUserOrderByProviderId, fulfillCapturedPayment, jsonResponse, parseJsonBody, paymentMatchesOrder, razorpayRequest, requireMethod, requireSupabaseUser, updatePaymentOrder, verifyCheckoutSignature } from "../_lib/academy-server.mjs";
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     requireMethod(request, ["POST"]);
     const user = await requireSupabaseUser(request);
@@ -30,3 +30,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as POST };

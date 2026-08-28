@@ -1,7 +1,7 @@
 // Return only the signed-in user's current Academy entitlements.
 import { errorResponse, jsonResponse, mapEntitlement, requireMethod, requireSupabaseUser, supabaseAdmin } from "../_lib/academy-server.mjs";
 
-export default async function handler(request) {
+async function handler(request) {
   try {
     requireMethod(request, ["GET"]);
     const user = await requireSupabaseUser(request);
@@ -18,3 +18,5 @@ export default async function handler(request) {
     return errorResponse(error);
   }
 }
+
+export { handler as GET };
