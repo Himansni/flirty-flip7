@@ -33,6 +33,8 @@
   let accessPromise = null;
   let accessError = null;
   let accessUserId = null;
+  let accessGeneration = 0;
+  let handledAuthRevision = -1;
   let pendingAuthCourse = null;
   let rerenderQueued = false;
 
@@ -99,6 +101,20 @@
     });
   }
 
+  // Invalidate every account-owned cache together whenever the isolated Academy session changes.
+  // Future session-transition fields should be cleared here so guest and switched accounts fail closed.
+  function resetAcademyAccessState(nextUserId = null) {
+    accessGeneration += 1;
+    accessRecords.clear();
+    processingCourses.clear();
+    checkoutFeedback.clear();
+    accessPromise = null;
+    accessError = null;
+    accessUserId = nextUserId;
+    accessPhase = academyAuthReady() && !nextUserId ? "ready" : "idle";
+    if (!nextUserId) pendingAuthCourse = null;
+  }
+
   // Public pricing decorates CTAs, but create-order still re-reads price from Supabase.
   async function hydrateAcademyCatalog() {
     if (pricingPhase === "ready" || pricingPromise || !payments?.getPublicCatalog) return pricingPromise;
@@ -126,10 +142,7 @@
     if (!academyAuthReady()) return null;
     const user = payments?.getCurrentUser?.() || null;
     if (!user) {
-      accessUserId = null;
-      accessRecords.clear();
-      accessError = null;
-      accessPhase = "ready";
+      resetAcademyAccessState(null);
       return null;
     }
     if (!force && accessPhase === "ready" && accessUserId === user.id) return accessRecords;
@@ -138,27 +151,33 @@
     accessUserId = user.id;
     accessPhase = "checking";
     accessError = null;
-    accessPromise = (async () => {
-      const response = await payments.getEntitlements();
-      const active = (response.entitlements || []).filter(({ status }) => status === "active");
-      const nextRecords = new Map();
-      await Promise.all(active.map(async (entitlement) => {
-        let progress = null;
-        try { progress = (await payments.getProgress(entitlement.courseSlug))?.progress || null; } catch (error) { progress = null; }
-        nextRecords.set(entitlement.courseSlug, { entitlement, progress });
-      }));
-      if (payments?.getCurrentUser?.()?.id !== user.id) return;
-      accessRecords.clear();
-      nextRecords.forEach((record, slug) => accessRecords.set(slug, record));
-      accessPhase = "ready";
-    })().catch((error) => {
-      accessError = error;
-      accessPhase = "error";
-    }).finally(() => {
-      accessPromise = null;
-      renderRouteAgain();
-    });
-    return accessPromise;
+    const requestGeneration = accessGeneration;
+    let request;
+    request = (async () => {
+      try {
+        const response = await payments.getEntitlements();
+        const active = (response.entitlements || []).filter(({ status }) => status === "active");
+        const nextRecords = new Map();
+        await Promise.all(active.map(async (entitlement) => {
+          let progress = null;
+          try { progress = (await payments.getProgress(entitlement.courseSlug))?.progress || null; } catch (error) { progress = null; }
+          nextRecords.set(entitlement.courseSlug, { entitlement, progress });
+        }));
+        if (accessGeneration !== requestGeneration || payments?.getCurrentUser?.()?.id !== user.id) return;
+        accessRecords.clear();
+        nextRecords.forEach((record, slug) => accessRecords.set(slug, record));
+        accessPhase = "ready";
+      } catch (error) {
+        if (accessGeneration !== requestGeneration || payments?.getCurrentUser?.()?.id !== user.id) return;
+        accessError = error;
+        accessPhase = "error";
+      } finally {
+        if (accessPromise === request) accessPromise = null;
+        if (accessGeneration === requestGeneration) renderRouteAgain();
+      }
+    })();
+    accessPromise = request;
+    return request;
   }
 
   function ensureAcademyHydration() {
@@ -475,13 +494,11 @@
 
   // An Academy auth change clears cross-account cache before re-fetching entitlements.
   function handleAcademyAuthResolved() {
+    const authRevision = Number(payments?.getAuthRevision?.() ?? 0);
+    if (authRevision === handledAuthRevision) return;
+    handledAuthRevision = authRevision;
     const nextUserId = payments?.getCurrentUser?.()?.id || null;
-    if (nextUserId !== accessUserId) {
-      accessRecords.clear();
-      accessError = null;
-      accessPhase = academyAuthReady() && !nextUserId ? "ready" : "idle";
-      accessUserId = nextUserId;
-    }
+    resetAcademyAccessState(nextUserId);
     if (pendingAuthCourse && nextUserId) {
       const course = pendingAuthCourse;
       pendingAuthCourse = null;

@@ -134,3 +134,59 @@ test("Academy browser client uses isolated storage and never reads the game auth
   assert.equal(clientOptions.options.auth.storageKey, "flirtyflip-academy-auth-v1");
   assert.equal("getSupabaseClient" in sandbox, false);
 });
+
+test("Academy signOut clears and verifies the isolated Supabase session", async () => {
+  const source = await readFile(new URL("../academy-payment.js", import.meta.url), "utf8");
+  const purchasedUser = { id: "academy-user", email: "student@example.test" };
+  let session = { access_token: "synthetic-academy-jwt", user: purchasedUser };
+  let authListener = () => {};
+  let signOutCalls = 0;
+  const academyClient = {
+    auth: {
+      getSession: async () => ({ data: { session }, error: null }),
+      onAuthStateChange: (listener) => {
+        authListener = listener;
+        return { data: { subscription: { unsubscribe() {} } } };
+      },
+      signOut: async () => {
+        signOutCalls += 1;
+        session = null;
+        authListener("SIGNED_OUT", null);
+        return { error: null };
+      }
+    }
+  };
+  const sandbox = {
+    AbortController,
+    Headers,
+    Response,
+    URL,
+    URLSearchParams,
+    Uint8Array,
+    clearTimeout,
+    console,
+    crypto: globalThis.crypto,
+    document: {},
+    fetch: async () => new Response(JSON.stringify({
+      supabaseUrl: `https://${TEST_REF}.supabase.co`,
+      supabasePublishableKey: "sb_publishable_synthetic_test_key"
+    }), { status: 200, headers: { "Content-Type": "application/json" } }),
+    setTimeout,
+    window: {
+      crypto: globalThis.crypto,
+      supabase: { createClient: () => academyClient }
+    }
+  };
+
+  vm.runInNewContext(source, sandbox, { filename: "academy-payment.js" });
+  const payments = sandbox.window.AcademyPayments;
+  await payments.initializeAuth();
+  const signedInRevision = payments.getAuthRevision();
+  await payments.signOut();
+
+  assert.equal(signOutCalls, 1);
+  assert.equal(payments.getCurrentUser(), null);
+  assert.equal(payments.isAuthInitialized(), true);
+  assert.equal(payments.getAuthRevision(), signedInRevision + 1);
+  assert.equal(await payments.getAccessToken(), null);
+});

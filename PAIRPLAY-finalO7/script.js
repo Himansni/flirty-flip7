@@ -2058,10 +2058,28 @@ function setAuthStatus(message, isError = false) {
   status.style.color = isError ? "#ff8b9a" : "#d7d0d1";
 }
 
+// Guest and logout transitions explicitly close the isolated Academy session before changing site auth.
+// Keep Academy credentials and entitlements inside AcademyPayments; this bridge never touches game access.
+async function signOutAcademySession() {
+  const academyAuth = typeof window !== "undefined" ? window.AcademyPayments : null;
+  if (!academyAuth || typeof academyAuth.signOut !== "function") return;
+  await academyAuth.signOut();
+}
+
 async function submitAuthForm(event) {
   event.preventDefault();
 
   if (authMode === "guest") {
+    const submitButton = $("auth-submit");
+    if (submitButton) submitButton.disabled = true;
+    setAuthStatus("Closing any Academy account session…");
+    try {
+      await signOutAcademySession();
+    } catch (error) {
+      setAuthStatus(error?.message || "Academy logout could not be verified. Please try again.", true);
+      if (submitButton) submitButton.disabled = false;
+      return;
+    }
     const guestName = `Guest-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
     signedInUser = {
       id: `guest-${Date.now()}`,
@@ -2072,6 +2090,7 @@ async function submitAuthForm(event) {
     updateAuthUI();
     notifyAcademyAuthResolved();
     closeAuthModal();
+    if (submitButton) submitButton.disabled = false;
     toast("Guest mode enabled ♡");
     return;
   }
@@ -2156,6 +2175,8 @@ async function logoutCurrentUser() {
   if (client) {
     try { await client.auth.signOut(); } catch (e) { console.warn('logout error', e); }
   }
+
+  try { await signOutAcademySession(); } catch (e) { console.warn('Academy logout error', { code: e?.code, status: e?.status }); }
 
   signedInUser = null;
   updateAuthUI();

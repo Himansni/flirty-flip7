@@ -18,6 +18,7 @@
   let academyCurrentUser = null;
   let academyAuthInitialized = false;
   let academyAuthError = null;
+  let academyAuthRevision = 0;
 
   class AcademyApiError extends Error {
     constructor(message, status = 0, code = "ACADEMY_API_ERROR") {
@@ -107,39 +108,66 @@
     if (typeof global.handleAcademyAuthResolved === "function") global.handleAcademyAuthResolved();
   }
 
+  // Publish each real Academy session transition once so the UI can invalidate account-owned data.
+  // Keep this isolated from the site's game auth client and never infer paid access from browser state.
+  function commitAcademySession(user, { force = false } = {}) {
+    const nextUser = user?.id ? user : null;
+    const previousId = academyCurrentUser?.id || null;
+    const nextId = nextUser?.id || null;
+    academyCurrentUser = nextUser;
+    academyAuthInitialized = true;
+    academyAuthError = null;
+    if (force || previousId !== nextId) {
+      academyAuthRevision += 1;
+      notifyAcademyAuthChanged();
+    }
+    return academyCurrentUser;
+  }
+
   async function initializeAuth() {
     if (academyAuthInitialized) return academyCurrentUser;
     const client = await getAcademySupabaseClient();
     const { data, error } = await client.auth.getSession();
     if (error) throw new AcademyApiError("Your Academy session could not be checked. Please sign in again.", 401, "SESSION_ERROR");
-    academyCurrentUser = data?.session?.user || null;
-    academyAuthInitialized = true;
+    commitAcademySession(data?.session?.user || null, { force: true });
     client.auth.onAuthStateChange((_event, session) => {
-      academyCurrentUser = session?.user || null;
-      notifyAcademyAuthChanged();
+      commitAcademySession(session?.user || null);
     });
-    notifyAcademyAuthChanged();
     return academyCurrentUser;
   }
 
   async function signIn(email, password) {
     const client = await getAcademySupabaseClient();
+    const revisionBeforeSignIn = academyAuthRevision;
     const { data, error } = await client.auth.signInWithPassword({ email, password });
     if (error) throw new AcademyApiError(error.message || "Academy login failed.", error.status || 401, "ACADEMY_LOGIN_FAILED");
-    academyCurrentUser = data?.session?.user || null;
-    academyAuthInitialized = true;
-    notifyAcademyAuthChanged();
+    commitAcademySession(data?.session?.user || null, { force: academyAuthRevision === revisionBeforeSignIn });
     return data;
   }
 
   async function signUp(email, password) {
     const client = await getAcademySupabaseClient();
+    const revisionBeforeSignUp = academyAuthRevision;
     const { data, error } = await client.auth.signUp({ email, password });
     if (error) throw new AcademyApiError(error.message || "Academy signup failed.", error.status || 400, "ACADEMY_SIGNUP_FAILED");
-    academyCurrentUser = data?.session?.user || null;
-    academyAuthInitialized = true;
-    notifyAcademyAuthChanged();
+    commitAcademySession(data?.session?.user || null, { force: academyAuthRevision === revisionBeforeSignUp });
     return data;
+  }
+
+  // Guest Mode signs out the isolated Academy client and verifies that no Academy session remains.
+  // The game auth client is intentionally not referenced or changed here.
+  async function signOut() {
+    const client = await getAcademySupabaseClient();
+    const revisionBeforeSignOut = academyAuthRevision;
+    const { error } = await client.auth.signOut();
+    if (error) throw new AcademyApiError(error.message || "Academy logout failed. Please try again.", error.status || 401, "ACADEMY_LOGOUT_FAILED");
+
+    const { data, error: sessionError } = await client.auth.getSession();
+    if (sessionError || data?.session) {
+      throw new AcademyApiError("Academy logout could not be verified. Please try again.", 401, "ACADEMY_LOGOUT_FAILED");
+    }
+    commitAcademySession(null, { force: academyAuthRevision === revisionBeforeSignOut });
+    return null;
   }
 
   async function sendPasswordReset(email, redirectTo) {
@@ -153,7 +181,7 @@
     const client = await getAcademySupabaseClient();
     const { data, error } = await client.auth.getSession();
     if (error) throw new AcademyApiError("Your session could not be checked. Please sign in again.", 401, "SESSION_ERROR");
-    academyCurrentUser = data?.session?.user || null;
+    commitAcademySession(data?.session?.user || null);
     return data?.session?.access_token || null;
   }
 
@@ -346,11 +374,13 @@
     AcademyApiError,
     getAcademySupabaseClient,
     getCurrentUser: () => academyCurrentUser,
+    getAuthRevision: () => academyAuthRevision,
     getAuthError: () => academyAuthError,
     isAuthInitialized: () => academyAuthInitialized,
     initializeAuth,
     signIn,
     signUp,
+    signOut,
     sendPasswordReset,
     getAccessToken,
     getPublicCatalog,
