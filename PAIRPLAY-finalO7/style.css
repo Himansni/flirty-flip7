@@ -279,6 +279,22 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .length-btn.selected { background:linear-gradient(135deg,#ff2449,#b80f2d); color:#fff; border-color:#ff2449; box-shadow:0 0 28px rgba(255,36,73,.2); }
 .start-btn { min-width:230px; }
 
+/* Optional local-player names personalize turns without changing authentication or account data.
+   Edit setup field spacing here; turn-label wording and sanitization live in game-turn.js. */
+.player-name-fields { width:min(100%,640px); margin:30px auto 22px; padding:20px; border:1px solid var(--line); border-radius:20px; background:rgba(17,17,20,.72); text-align:left; }
+.player-name-fields legend { padding:0 8px; color:var(--ink); font-family:"Playfair Display",serif; font-size:20px; font-weight:700; }
+.player-name-fields legend span { margin-left:6px; color:var(--pink-dark); font-family:"DM Sans",sans-serif; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.player-name-fields > p { margin:0 0 16px; color:var(--muted); font-size:13px; line-height:1.5; }
+.player-name-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.player-name-grid label { display:grid; gap:8px; color:var(--ink); font-size:12px; font-weight:700; }
+.player-name-grid input { width:100%; min-width:0; min-height:46px; border:1px solid var(--line); border-radius:14px; background:#09090b; color:#fff; padding:11px 13px; font:inherit; }
+.player-name-grid input::placeholder { color:#6f676c; }
+.player-name-grid input:focus-visible { outline:3px solid rgba(255,77,103,.42); outline-offset:2px; border-color:var(--pink); }
+.setup-start-actions { display:flex; align-items:center; justify-content:center; gap:12px; }
+.setup-start-actions--wide { margin-top:24px; }
+.setup-start-actions .pill-btn, .setup-start-actions .secondary-action { min-height:var(--button-height); }
+.room-card .player-name-fields { margin-top:26px; }
+
 /* ========================================
    GAME SCREEN
    ======================================== */
@@ -341,6 +357,14 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .flip-text { position:absolute; bottom:35px; font-size:10px; letter-spacing:.18em; font-weight:800; opacity:.75; }
 .card-front { transform:rotateY(180deg); background:linear-gradient(145deg,#17171b,#0d0d10); color:var(--ink); padding:28px; border:1px solid rgba(255,36,73,.2); }
 .front-header { display:flex; justify-content:space-between; font-size:10px; font-weight:800; letter-spacing:.14em; color:var(--pink-dark); }
+.turn-pill { position:absolute; top:58px; left:50%; z-index:3; display:inline-flex; max-width:calc(100% - 80px); min-height:30px; align-items:center; gap:8px; transform:translateX(-50%); border:1px solid rgba(255,77,103,.28); border-radius:999px; background:rgba(90,12,34,.42); color:#fff7f9; padding:6px 11px; font-family:"DM Sans",sans-serif; font-size:10px; line-height:1; letter-spacing:.08em; text-transform:uppercase; box-shadow:0 7px 18px rgba(0,0,0,.16); }
+.turn-pill > span { width:6px; height:6px; flex:0 0 6px; border-radius:50%; background:var(--pink); box-shadow:0 0 9px rgba(255,77,103,.55); }
+.turn-pill strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.turn-pill[data-turn-kind="partner"] > span { background:#ffc2ce; box-shadow:0 0 9px rgba(255,194,206,.45); }
+.turn-pill[data-turn-kind="shared"], .turn-pill[data-turn-kind="challenge"] { border-color:rgba(255,211,145,.32); background:rgba(68,39,28,.5); }
+.turn-pill[data-turn-kind="shared"] > span, .turn-pill[data-turn-kind="challenge"] > span { background:#ffd391; box-shadow:0 0 9px rgba(255,211,145,.45); }
+.turn-pill--changed { animation:turnPillChange .22s ease-out both; }
+@keyframes turnPillChange { from { opacity:.25; transform:translateX(-50%) translateY(-3px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
 .front-content { height:75%; display:flex; flex-direction:column; justify-content:center; }
 .prompt-type { font-size:10px; letter-spacing:.18em; font-weight:800; color:#8f6d7b; margin-bottom:15px; }
 .front-content h2 { font-family:"Playfair Display",serif; font-size:31px; color:#fff; line-height:1.16; letter-spacing:-.035em; margin:0; }
@@ -352,6 +376,7 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .next-btn span { margin-left:15px; color:#fff; }
 .game-actions button:disabled { cursor:not-allowed; opacity:.42; transform:none; box-shadow:none; }
 .game-tip { font-size:11px; color:#988c92; margin-top:14px; }
+.game-turn-announcer { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
 /* ========================================
    PLAY ONLINE LOBBY
@@ -703,7 +728,13 @@ footer { width:min(100%, var(--content-max)); margin:0 auto; padding:30px var(--
   .narrow { padding:40px var(--page-pad-mobile) 70px; }
   .page-heading h2 { font-size:clamp(2.25rem, 11vw, 3rem); }
   .setup-title { font-size:clamp(2.25rem, 10vw, 2.75rem); }
+  .player-name-fields { margin-top:24px; padding:17px; }
+  .player-name-grid { grid-template-columns:1fr; }
+  .setup-start-actions { width:100%; flex-direction:column-reverse; }
+  .setup-start-actions .pill-btn, .setup-start-actions .secondary-action { width:100%; }
+  .setup-start-actions .start-btn { min-width:0; }
   .card-scene { width:min(340px, calc(100vw - (var(--page-pad-mobile) * 2))); }
+  .turn-pill { top:55px; max-width:calc(100% - 64px); }
   .front-content h2 { font-size:clamp(1.45rem, 7vw, 1.75rem); overflow-wrap:anywhere; }
   .game-top { padding-left:16px; padding-right:16px; }
   .game-actions { width:min(100%,340px); display:grid; grid-template-columns:1fr 1fr; }
@@ -762,6 +793,7 @@ footer { width:min(100%, var(--content-max)); margin:0 auto; padding:30px var(--
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior:auto; }
+  .turn-pill--changed { animation:none; }
   *, *::before, *::after {
     animation-duration:.01ms !important;
     animation-iteration-count:1 !important;
