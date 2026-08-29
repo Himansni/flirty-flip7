@@ -299,7 +299,9 @@
           name: "FlirtyFlip Academy",
           description: order.courseTitle,
           order_id: order.orderId,
-          theme: { color: "#c79a42" },
+          theme: {
+            color: getComputedStyle(document.querySelector(".academy-page") || document.documentElement).getPropertyValue("--academy-red").trim() || "#e12847"
+          },
           modal: {
             escape: true,
             confirm_close: true,
@@ -345,6 +347,7 @@
     getAcademySupabaseClient,
     getCurrentUser: () => academyCurrentUser,
     getAuthError: () => academyAuthError,
+    isAuthInitialized: () => academyAuthInitialized,
     initializeAuth,
     signIn,
     signUp,
