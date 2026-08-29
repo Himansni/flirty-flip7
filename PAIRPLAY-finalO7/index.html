@@ -294,6 +294,7 @@
               <span id="front-category">ROMANTIC</span>
               <span id="front-number">01</span>
             </div>
+            <div class="turn-pill" id="turn-pill" data-turn-kind="your"><span aria-hidden="true"></span><strong id="turn-label">Your Turn</strong></div>
             <div class="front-content">
               <div class="prompt-type" id="prompt-type">QUESTION</div>
               <h2 id="question-text">Your question appears here.</h2>
@@ -301,6 +302,7 @@
             <div class="front-bottom">FLIRTYFLIP · CONNECT</div>
           </div>
         </div>
+        <div class="game-turn-announcer" id="game-turn-announcer" aria-live="polite" aria-atomic="true"></div>
 
         <div class="game-actions">
           <button id="previous-card-btn" class="secondary-action" type="button" onclick="prevCard()">Previous</button>
@@ -467,6 +469,7 @@
   <script src="/academy-payment.js"></script>
   <script src="/academy-access.js"></script>
   <script src="/academy.js"></script>
+  <script src="/game-turn.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>

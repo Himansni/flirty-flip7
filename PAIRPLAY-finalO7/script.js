@@ -1351,8 +1351,16 @@ let currentIndex = 0;
 let skipped = 0;
 let flipped = false;
 let favorite = false;
+let gamePlayers = { yourName: "", partnerName: "" };
 // Play confirmation flag — user must confirm age and consent before starting a round
 let playConfirmed = false;
+
+// Nicknames belong only to the current resumable round; the turn resolver sanitizes every value.
+function createGamePlayers(yourName = "", partnerName = "") {
+  return typeof window !== "undefined" && window.FlirtyFlipTurn?.createPlayers
+    ? window.FlirtyFlipTurn.createPlayers(yourName, partnerName)
+    : { yourName: "", partnerName: "" };
+}
 
 // ========================================
 // ONLINE ROOM STATE
@@ -2250,6 +2258,7 @@ function persistGameSession(status = gameSessionStatus) {
     length: selectedLength,
     index: currentIndex,
     skipped,
+    players: { ...gamePlayers },
     playConfirmed,
     status
   };
@@ -2287,6 +2296,7 @@ function restoreGameSession() {
     currentCards = restoredCards;
     currentIndex = Math.max(0, Math.min(Number(saved.index) || 0, restoredCards.length - 1));
     skipped = Math.max(0, Math.min(Number(saved.skipped) || 0, restoredCards.length));
+    gamePlayers = createGamePlayers(saved.players?.yourName, saved.players?.partnerName);
     playConfirmed = Boolean(saved.playConfirmed);
     gameSessionStatus = saved.status;
     return true;
@@ -2306,6 +2316,7 @@ function clearGameSession() {
   skipped = 0;
   flipped = false;
   favorite = false;
+  gamePlayers = createGamePlayers();
   playConfirmed = false;
   gameSessionStatus = "idle";
 }
@@ -2697,7 +2708,11 @@ function renderOnlineWaiting(url) {
         <span class="status-dot"></span> WAITING FOR PARTNER
       </div>
       <div class="connected-preview" id="connected-preview">❤️ BOTH CONNECTED</div>
-      <button class="pill-btn wide" onclick="startOnlineGame()">START GAME →</button>
+      ${renderPlayerNameFields("online")}
+      <div class="setup-start-actions setup-start-actions--wide">
+        <button class="secondary-action" type="button" onclick="skipPlayerNames('online')">Skip names</button>
+        <button class="pill-btn" type="button" onclick="startOnlineGame()">START GAME →</button>
+      </div>
     </div>
   `;
   updateOnlineSteps(3);
@@ -2733,7 +2748,9 @@ function updateOnlineSteps(activeStep) {
 // ONLINE GAME START
 // Reuses the existing game engine so online play feels identical to local play.
 // ========================================
-function startOnlineGame() {
+function startOnlineGame(namesSkipped = false) {
+  if (namesSkipped) gamePlayers = createGamePlayers();
+  else updatePlayerNamesFromActiveForm();
   selectedMood = onlineMood;
   selectedLength = onlineLength;
   gameSessionStatus = "setup";
@@ -2748,6 +2765,7 @@ function selectMood(key) {
   currentCards = [];
   currentIndex = 0;
   skipped = 0;
+  gamePlayers = createGamePlayers();
   gameSessionStatus = "setup";
   applyHeroMood(key);
   persistGameSession("setup");
@@ -2759,6 +2777,37 @@ function selectMood(key) {
 // Rebuilds the selected mood and card length after navigation or a page refresh.
 // Edit deck option copy in cardLengthOptions rather than inside this template.
 // ========================================
+function renderPlayerNameFields(context = "setup") {
+  return `
+    <fieldset class="player-name-fields" data-player-name-context="${escapeHtml(context)}">
+      <legend>Who is playing? <span>Optional</span></legend>
+      <p>Add names for personal turn prompts, or skip to use neutral labels.</p>
+      <div class="player-name-grid">
+        <label><span>Your name or nickname</span><input type="text" maxlength="24" autocomplete="off" data-player-name="your" value="${escapeHtml(gamePlayers.yourName)}" placeholder="Alex" oninput="updatePlayerNamesFromActiveForm()"></label>
+        <label><span>Partner’s name or nickname</span><input type="text" maxlength="24" autocomplete="off" data-player-name="partner" value="${escapeHtml(gamePlayers.partnerName)}" placeholder="Priya" oninput="updatePlayerNamesFromActiveForm()"></label>
+      </div>
+    </fieldset>`;
+}
+
+function updatePlayerNamesFromActiveForm() {
+  if (typeof document === "undefined") return gamePlayers;
+  const activePage = document.querySelector(".page.active") || document;
+  const yourInput = activePage.querySelector('[data-player-name="your"]');
+  const partnerInput = activePage.querySelector('[data-player-name="partner"]');
+  if (!yourInput && !partnerInput) return gamePlayers;
+  gamePlayers = createGamePlayers(yourInput?.value, partnerInput?.value);
+  if (gameSessionStatus === "setup") persistGameSession("setup");
+  return gamePlayers;
+}
+
+function skipPlayerNames(context = "setup") {
+  gamePlayers = createGamePlayers();
+  document.querySelectorAll('[data-player-name="your"], [data-player-name="partner"]').forEach((input) => { input.value = ""; });
+  if (gameSessionStatus === "setup") persistGameSession("setup");
+  if (context === "online") startOnlineGame(true);
+  else startGame();
+}
+
 function renderSetupScreen() {
   const m = moods[selectedMood];
   if (!m) return;
@@ -2777,7 +2826,11 @@ function renderSetupScreen() {
     <div class="length-options">
       ${lengthButtons}
     </div>
-    <button class="pill-btn start-btn" onclick="startGame()">Start ${m.title} →</button>
+    ${renderPlayerNameFields("setup")}
+    <div class="setup-start-actions">
+      <button class="secondary-action" type="button" onclick="skipPlayerNames()">Skip names</button>
+      <button class="pill-btn start-btn" type="button" onclick="startGame()">Start ${m.title} →</button>
+    </div>
   `;
 }
 
@@ -2795,6 +2848,7 @@ function chooseLength(btn, length) {
 // Edit startup rules here; edit selectable deck labels in cardLengthOptions above.
 // ========================================
 function startGame() {
+  if (gameSessionStatus === "setup") updatePlayerNamesFromActiveForm();
   // Require explicit confirmation before starting a play session
   if (!playConfirmed) {
     showPlayConfirmation();
@@ -2878,6 +2932,36 @@ function confirmAndStart() {
 // GAME CARD RENDERING
 // Every new card starts revealed so there is never a second click just to open it.
 // ========================================
+function resolveCurrentGameTurn() {
+  if (typeof window !== "undefined" && window.FlirtyFlipTurn?.resolveTurn) {
+    return window.FlirtyFlipTurn.resolveTurn({ cards: currentCards, index: currentIndex, players: gamePlayers });
+  }
+  return { kind: "your", key: "your-turn", label: "Your Turn" };
+}
+
+// Updates the visible turn pill and its screen-reader announcement for the current card.
+// Edit label rules in game-turn.js; keep this renderer limited to safe DOM text updates.
+function updateGameTurn(card, scene) {
+  const turn = resolveCurrentGameTurn();
+  const pill = $("turn-pill");
+  const label = $("turn-label");
+  const announcer = $("game-turn-announcer");
+  const previousTurnKey = pill?.dataset.turnKey || "";
+
+  if (pill) {
+    pill.dataset.turnKind = turn.kind;
+    pill.dataset.turnKey = turn.key;
+    pill.classList.remove("turn-pill--changed");
+    if (previousTurnKey && previousTurnKey !== turn.key) {
+      pill.classList.add("turn-pill--changed");
+      pill.addEventListener("animationend", () => pill.classList.remove("turn-pill--changed"), { once: true });
+    }
+  }
+  if (label) label.textContent = turn.label;
+  if (announcer) announcer.textContent = `${turn.label}. Card ${currentIndex + 1}: ${card[0]} prompt.`;
+  if (scene) scene.setAttribute("aria-label", `${turn.label}. ${card[1]} Activate for the next card.`);
+}
+
 function updateGame(reveal = true) {
   const totalCards = currentCards.length;
   if (totalCards === 0) {
@@ -2905,6 +2989,7 @@ function updateGame(reveal = true) {
   $("prompt-type").textContent = card[0];
   $("question-text").textContent = card[1];
   $("game-hint").textContent = reveal ? "Tap for the next card" : "Tap to reveal";
+  updateGameTurn(card, scene);
 
   // Update favorite button state based on persisted favorites for this card
   const currentText = card ? card[1] : null;
@@ -3312,10 +3397,11 @@ function launchCatalogGame(gameId) {
   currentCards = [];
   currentIndex = 0;
   skipped = 0;
+  gamePlayers = createGamePlayers();
   gameSessionStatus = "setup";
   applyHeroMood(selectedMood);
   persistGameSession("setup");
-  startGame();
+  navigateToRoute(ROUTE_PATHS.setup);
 }
 
 // ========================================
