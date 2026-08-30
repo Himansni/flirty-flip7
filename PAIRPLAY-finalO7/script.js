@@ -3480,9 +3480,13 @@ function renderSupportContent(section = 'index') {
 
 function bindNavEvents() {
   const megaItems = Array.from(document.querySelectorAll('.nav-item.has-mega'));
+  const megaItemClosers = new WeakMap();
   const hamburger = document.getElementById('hamburger');
   const drawer = document.getElementById('mobile-drawer');
   const drawerClose = document.getElementById('drawer-close');
+  const desktopDropdownQuery = window.matchMedia('(min-width: 900px)');
+  const desktopHoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const desktopDropdownCloseDelay = 150;
 
   // Close one dropdown and keep its ARIA state synchronized with the visual class.
   function closeMegaItem(item) {
@@ -3493,50 +3497,77 @@ function bindNavEvents() {
   }
 
   function closeAllMegaItems(except = null) {
-    megaItems.forEach((item) => { if (item !== except) closeMegaItem(item); });
+    megaItems.forEach((item) => {
+      if (item === except) return;
+      const close = megaItemClosers.get(item);
+      if (close) close(); else closeMegaItem(item);
+    });
   }
 
   // Desktop dropdowns support hover, click, keyboard focus and Escape without duplicate toggles.
   megaItems.forEach(item => {
     const button = item.querySelector('.nav-link');
     const menu = item.querySelector('.mega-menu');
-    let openedByPointerHover = false;
+    let pinnedByClick = false;
+    let closeTimer = 0;
     menu.querySelectorAll('a').forEach((link) => link.setAttribute('role', 'menuitem'));
 
+    function cancelScheduledClose() {
+      window.clearTimeout(closeTimer);
+      closeTimer = 0;
+    }
+
     function open() {
+      cancelScheduledClose();
       closeAllMegaItems(item);
       button.setAttribute('aria-expanded', 'true');
       menu.classList.add('is-open');
     }
 
     function close() {
-      openedByPointerHover = false;
+      cancelScheduledClose();
+      pinnedByClick = false;
       closeMegaItem(item);
+    }
+    megaItemClosers.set(item, close);
+
+    function schedulePointerClose() {
+      cancelScheduledClose();
+      closeTimer = window.setTimeout(() => {
+        closeTimer = 0;
+        if (pinnedByClick || item.matches(':hover') || item.matches(':focus-within')) return;
+        close();
+      }, desktopDropdownCloseDelay);
     }
 
     item.addEventListener('mouseenter', () => {
-      if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-      openedByPointerHover = true;
+      if (!desktopDropdownQuery.matches || !desktopHoverQuery.matches) return;
+      cancelScheduledClose();
       open();
     });
-    item.addEventListener('mouseleave', close);
+    item.addEventListener('mouseleave', () => {
+      if (!desktopDropdownQuery.matches || !desktopHoverQuery.matches || pinnedByClick) return;
+      schedulePointerClose();
+    });
+    menu.addEventListener('mouseenter', cancelScheduledClose);
+    menu.addEventListener('mouseleave', () => {
+      if (!desktopDropdownQuery.matches || !desktopHoverQuery.matches || pinnedByClick) return;
+      schedulePointerClose();
+    });
 
     button.addEventListener('click', (event) => {
       event.preventDefault();
       const expanded = button.getAttribute('aria-expanded') === 'true';
-      if (openedByPointerHover) {
-        openedByPointerHover = false;
-        open();
-        return;
-      }
-      if (expanded) close(); else open();
+      if (expanded && pinnedByClick) return close();
+      pinnedByClick = true;
+      open();
     });
 
     // Handle keyboard activation directly so hover state cannot cancel the native button click.
     button.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' && event.key !== ' ') return;
       event.preventDefault();
-      openedByPointerHover = false;
+      pinnedByClick = false;
       const expanded = button.getAttribute('aria-expanded') === 'true';
       if (expanded) close(); else open();
     });
@@ -3548,9 +3579,10 @@ function bindNavEvents() {
       }
     });
 
+    item.addEventListener('focusin', cancelScheduledClose);
     item.addEventListener('focusout', () => {
       requestAnimationFrame(() => {
-        if (!item.contains(document.activeElement)) close();
+        if (!item.matches(':focus-within')) close();
       });
     });
   });
