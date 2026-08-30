@@ -374,17 +374,7 @@ const moodQuestionSets = {
     ["CHALLENGE🎯", "Let them draw something on your arm with their finger — guess what it is."],
     ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
     ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
-    ["ASK💭", "What's a small lie you've told me that you're finally ready to correct?"],
-    // ["DO✦", "Do your best impression of me for ten seconds."],
-    // ["SAY💗", "Confess one thing you find irresistible about them that you rarely say."],
-    // ["CHALLENGE🎯", "Let them pick your next song and you have to dance to it, seated, for ten seconds."],
-    // ["ASK💭", "What's something you pretended to like early on just to impress me?"],
-    // ["DO✦", "Send a text to a friend right now saying only 'I'm having a great time.'"],
-    // ["REMEMBER✨", "What's the most embarrassing thing that's happened on one of our dates?"],
-    // ["CHALLENGE🎯", "Let them draw something on your arm with their finger — guess what it is."],
-    // ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
-    // ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
-  
+
   ],
  
   // ---------------------------------------------------------------
@@ -604,6 +594,8 @@ const moodQuestionSets = {
     ["CHALLENGE🎯", "Tell them exactly how you want the rest of tonight to go, out loud."],
  
     // CLOSE (fade to private)
+    ["ASK💭", "What would help you feel most wanted and comfortable for the rest of tonight?"],
+    ["DO✦", "Pause together, name one clear yes and one boundary for whatever comes next."],
     ["ASK💭", "What's the last thing you want said between us before we put the phones away?"],
     ["SAY💗", "Tell them one thing you're looking forward to about the rest of tonight."],
     ["DO✦", "Kiss them slowly, then set the game down — you two can take it from here."],
@@ -716,6 +708,8 @@ const moodQuestionSets = {
   ["CHALLENGE🎯", "Tell me exactly how you want the rest of tonight to go, out loud."],
 
   // CLOSE (fade to private)
+  ["ASK💭", "What would help you feel most comfortable and wanted for the rest of tonight?"],
+  ["DO✦", "Pause together, name one clear yes and one boundary for whatever comes next."],
   ["ASK💭", "What’s the last thing you want said between us before we put the phones (and cards) away?"],
   ["SAY💗", "Tell me one thing you’re looking forward to about the rest of tonight."],
   ["DO✦", "Kiss me slowly, then set the game down — we can take it from here."],
@@ -1068,6 +1062,10 @@ const moodQuestionSets = {
   ["DO✦", "Hold me through the peak without letting the blindfold or silence break."],
   ["CHALLENGE🎯", "Decide whether I get my sight back before, during, or after I come undone."],
 
+  // CONSENT CHECK-IN
+  ["ASK💭", "What kind of closeness would feel most meaningful to you tonight?"],
+  ["DO✦", "Take a quiet moment together to ask what would feel good, and what would not."],
+
   // SLOW RETURN
   ["ASK💭", "How do you want to bring me back to the full world?"],
   ["SAY💗", "Tell me one thing you saw in me while I couldn’t see you."],
@@ -1183,6 +1181,10 @@ const moodQuestionSets = {
   ["SAY💗", "Say the thing you want me to know before the touch turns into more."],
   ["DO✦", "Hold me completely still against you for ten full seconds with zero space between us."],
   ["CHALLENGE🎯", "Tell me exactly how you want the rest of the night to feel, out loud and unfiltered."],
+
+  // CONSENT CHECK-IN
+  ["ASK💭", "What kind of intensity feels exciting to you tonight — and what would take it too far?"],
+  ["SAY💗", "Tell me one clear yes you want me to remember tonight."],
 
   // CLOSE
   ["ASK💭", "What’s the last thing you want said before the candles are blown out?"],
