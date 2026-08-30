@@ -385,16 +385,6 @@ const moodQuestionSets = {
     ["CHALLENGE🎯", "Let them draw something on your arm with their finger — guess what it is."],
     ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
     ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
-    ["ASK💭", "What's a small lie you've told me that you're finally ready to correct?"],
-    ["DO✦", "Do your best impression of me for ten seconds."],
-    ["SAY💗", "Confess one thing you find irresistible about them that you rarely say."],
-    ["CHALLENGE🎯", "Let them pick your next song and you have to dance to it, seated, for ten seconds."],
-    ["ASK💭", "What's something you pretended to like early on just to impress me?"],
-    ["DO✦", "Send a text to a friend right now saying only 'I'm having a great time.'"],
-    ["REMEMBER✨", "What's the most embarrassing thing that's happened on one of our dates?"],
-    ["CHALLENGE🎯", "Let them draw something on your arm with their finger — guess what it is."],
-    ["ASK💭", "What's a habit of mine you find weirdly endearing but never mention?"],
-    ["DO✦", "Give your best flirty one-liner, in character, like you're meeting me for the first time."],
   
   ],
  
@@ -616,6 +606,8 @@ const moodQuestionSets = {
     ["CHALLENGE🎯", "Tell them exactly how you want the rest of tonight to go, out loud."],
  
     // CLOSE (fade to private)
+    ["ASK💭", "What would help you feel most wanted and comfortable for the rest of tonight?"],
+    ["DO✦", "Pause together, name one clear yes and one boundary for whatever comes next."],
     ["ASK💭", "What's the last thing you want said between us before we put the phones away?"],
     ["SAY💗", "Tell them one thing you're looking forward to about the rest of tonight."],
     ["DO✦", "Kiss them slowly, then set the game down — you two can take it from here."],
@@ -728,6 +720,8 @@ const moodQuestionSets = {
   ["CHALLENGE🎯", "Tell me exactly how you want the rest of tonight to go, out loud."],
 
   // CLOSE (fade to private)
+  ["ASK💭", "What would help you feel most comfortable and wanted for the rest of tonight?"],
+  ["DO✦", "Pause together, name one clear yes and one boundary for whatever comes next."],
   ["ASK💭", "What’s the last thing you want said between us before we put the phones (and cards) away?"],
   ["SAY💗", "Tell me one thing you’re looking forward to about the rest of tonight."],
   ["DO✦", "Kiss me slowly, then set the game down — we can take it from here."],
@@ -1087,6 +1081,8 @@ const moodQuestionSets = {
   ["CHALLENGE🎯", "Tell me exactly how you want the rest of tonight to go, out loud and gently."],
 
   // CLOSE (fade to private)
+  ["ASK💭", "What kind of closeness would feel most meaningful to you tonight?"],
+  ["DO✦", "Take a quiet moment together to ask what would feel good, and what would not."],
   ["ASK💭", "What’s the last thing you want said between us before we put the phones (and cards) away?"],
   ["SAY💗", "Tell me one thing you’re looking forward to about the rest of tonight."],
   ["DO✦", "Kiss me slowly, then set the game down — we can take it from here."],
@@ -1196,6 +1192,17 @@ const moodQuestionSets = {
   // INTIMATE EDGE
   ["ASK💭", "What’s something you want from me tonight that you haven’t said yet because it felt too dark?"],
   ["SAY💗", "Tell me one thing your body has been signaling all night that you’ve been trying to hide."],
+
+  // CLEAR CLOSE
+  ["ASK💭", "What kind of intensity feels exciting to you tonight — and what would take it too far?"],
+  ["SAY💗", "Tell me one clear yes you want me to remember tonight."],
+  ["DO✦", "Move close enough to feel the tension, then ask: ‘Do you want more, less, or a pause?’"],
+  ["CHALLENGE🎯", "Take turns naming one bold idea and one boundary; keep only what you both want."],
+  ["REMEMBER✨", "What’s a charged moment when clear communication made everything feel better?"],
+  ["ASK💭", "What would make you feel most desired without guessing or pressure?"],
+  ["DO✦", "Hold eye contact, ask for a specific kind of touch, and wait for an enthusiastic yes."],
+  ["SAY💗", "Say the word or phrase you want to use if either of you needs to slow down."],
+  ["REMEMBER✨", "What part of tonight do you want to remember as feeling safe, wanted, and fully mutual?"],
   ["DO✦", "Kiss me somewhere unexpected and deliberately, then set the game down — we can take it from here."],
 ],
   },
