@@ -1384,6 +1384,7 @@ const SUPPORT_SECTIONS = new Set(["index", "contact", "refund", "terms", "privac
 let gameSessionStatus = "idle";
 let routerInitialized = false;
 let lastTrackedLocation = "";
+let lastRenderedLocation = "";
 let catalogBackRoute = ROUTE_PATHS.home;
 
 // ========================================
@@ -2361,13 +2362,19 @@ function renderCurrentRoute(navigationType = "navigate") {
   if (route.name === "game" && !["active", "complete"].includes(gameSessionStatus)) return redirectRoute(ROUTE_PATHS.play);
   if (route.name === "results" && gameSessionStatus !== "complete") return redirectRoute(ROUTE_PATHS.play);
   if (route.name === "course" && !coursesData[route.slug]) return redirectRoute(ROUTE_PATHS.courses);
-  if (route.name === "games" && url.searchParams.get("game") && !getGameCatalogItem(url.searchParams.get("game"))) return redirectRoute(ROUTE_PATHS.games);
+  if (route.name === "games" && url.searchParams.get("game")) {
+    const requestedMiniGame = url.searchParams.get("game");
+    const miniGames = typeof window !== "undefined" ? window.FlirtyFlipCoupleGames : null;
+    if (url.searchParams.get("mode") !== "together" || !miniGames?.hasGame(requestedMiniGame)) return redirectRoute(ROUTE_PATHS.games);
+  }
   if (route.name === "course" && url.searchParams.has("lesson")) {
     const requestedLesson = Number(url.searchParams.get("lesson")) - 1;
     if (!Number.isInteger(requestedLesson) || !getFlatCourseLessons(coursesData[route.slug])[requestedLesson]) {
       return redirectRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(route.slug)}`);
     }
   }
+
+  if (route.name !== "games") window.FlirtyFlipCoupleGames?.cleanup?.();
 
   if (route.name === "home") activatePage("home", navigationType);
   if (route.name === "play") {
@@ -2388,9 +2395,10 @@ function renderCurrentRoute(navigationType = "navigate") {
     activatePage("complete", navigationType);
   }
   if (route.name === "games") {
-    if (url.searchParams.get("view") === "favorites") renderFavoritesCatalog();
-    else if (url.searchParams.get("game")) renderGameDetail(url.searchParams.get("game"));
-    else renderGamesCatalog(url.searchParams.get("filter") || "all");
+    if (url.searchParams.get("view") === "favorites") {
+      window.FlirtyFlipCoupleGames?.cleanup?.();
+      renderFavoritesCatalog();
+    } else renderCoupleGamesRoute(url);
     activatePage("catalog", navigationType);
   }
   if (route.name === "courses") {
@@ -2415,6 +2423,7 @@ function renderCurrentRoute(navigationType = "navigate") {
 
   updateRouteMetadata(route, url);
   trackRoutePageView(url);
+  lastRenderedLocation = `${url.pathname}${url.search}${url.hash}`;
 }
 
 // Push or replace a same-origin SPA location, then render it through the shared router.
@@ -2422,6 +2431,7 @@ function navigateToRoute(path, { replace = false } = {}) {
   const target = new URL(path, window.location.origin);
   if (target.origin !== window.location.origin) return;
   const destination = `${target.pathname}${target.search}${target.hash}`;
+  if (!window.FlirtyFlipCoupleGames?.canNavigate?.(destination)) return;
   const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
   const method = replace || destination === current ? "replaceState" : "pushState";
   window.history[method]({ flirtyFlipRoute: true }, "", destination);
@@ -2433,7 +2443,14 @@ function initializeRouter() {
   if (routerInitialized) return;
   routerInitialized = true;
   restoreGameSession();
-  window.addEventListener("popstate", () => renderCurrentRoute("popstate"));
+  window.addEventListener("popstate", () => {
+    const destination = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (!window.FlirtyFlipCoupleGames?.canNavigate?.(destination)) {
+      window.history.pushState({ flirtyFlipRoute: true }, "", lastRenderedLocation || ROUTE_PATHS.games);
+      return;
+    }
+    renderCurrentRoute("popstate");
+  });
   window.history.replaceState({ flirtyFlipRoute: true }, "", `${window.location.pathname}${window.location.search}${window.location.hash}`);
   renderCurrentRoute("initial");
 }
@@ -3093,9 +3110,34 @@ function configureCatalogShell({ eyebrow, title, subtitle, backRoute = ROUTE_PAT
 }
 
 // ========================================
-// GAMES CATALOG COMPONENTS
-// Visual discovery cards are generated from gameCatalogData and existing mood metadata.
-// Filters and detail links stay in the URL so reload and browser history remain deterministic.
+// PLAYABLE COUPLE GAMES ROUTE
+// The shared router delegates /games modes to couple-games.js while legacy question decks stay isolated.
+// Edit catalog/game presentation in couple-games.js and its scoped stylesheet, not in the route table.
+// ========================================
+function renderCoupleGamesRoute(url) {
+  const root = $("catalog-content");
+  const mode = url.searchParams.get("mode") || "";
+  const gameId = url.searchParams.get("game") || "";
+  const isActiveGame = mode === "together" && Boolean(gameId);
+  const shell = isActiveGame
+    ? { eyebrow: "COUPLE GAME", title: "Play Together", subtitle: "", backRoute: `${ROUTE_PATHS.games}?mode=together`, hideHeader: true, view: "couple-game-active" }
+    : mode === "together"
+      ? { eyebrow: "PLAY TOGETHER", title: "Eight games. One shared screen.", subtitle: "Add optional nicknames, then choose a quick game for two.", backRoute: ROUTE_PATHS.games, view: "couple-games" }
+      : mode === "online"
+        ? { eyebrow: "PLAY ONLINE", title: "Private rooms for two devices.", subtitle: "Online play stays locked until its dedicated secure service passes verification.", backRoute: ROUTE_PATHS.games, view: "couple-games" }
+        : { eyebrow: "GAMES", title: "Choose how you want to play.", subtitle: "Play eight mini-games together now or check secure online-room availability.", backRoute: ROUTE_PATHS.home, hideHeader: true, view: "couple-games" };
+
+  configureCatalogShell(shell);
+  if (!root || !window.FlirtyFlipCoupleGames) {
+    if (root) root.innerHTML = `<div class="empty-state">Games could not load. Refresh the page and try again.</div>`;
+    return;
+  }
+  window.FlirtyFlipCoupleGames.render(root, { url, navigate: navigateToRoute });
+}
+
+// ========================================
+// LEGACY QUESTION-DECK DISCOVERY COMPONENTS
+// Kept for the original question-card experience and Favorites; the new /games catalog renders above.
 // ========================================
 function renderIntensity(intensity) {
   if (!intensity) return "";
