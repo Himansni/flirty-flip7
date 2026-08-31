@@ -21,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="./style.css">
+ <link rel="stylesheet" href="/couple-games.css">
 </head>
 <body>
   <!-- ========================================
@@ -48,21 +49,17 @@
           <button class="nav-link" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="games-menu" data-nav-route="games">Games ▾</button>
           <div id="games-menu" class="mega-menu" role="menu" aria-label="Games menu">
             <div class="mega-col">
-              <h4>Play</h4>
+              <h4>Play Together</h4>
               <ul>
-                <li><a href="/games" data-route="/games">All Games</a></li>
-                <li><a href="/games?filter=quick" data-route="/games?filter=quick">Quick Games</a></li>
-                <li><a href="/games?filter=conversation" data-route="/games?filter=conversation">Conversation</a></li>
-                <li><a href="/games?filter=truth-dare" data-route="/games?filter=truth-dare">Truth &amp; Dare</a></li>
-                <li><a href="/games?filter=romantic" data-route="/games?filter=romantic">Romantic</a></li>
-                <li><a href="/games?filter=flirty" data-route="/games?filter=flirty">Flirty</a></li>
+                <li><a href="/games?mode=together" data-route="/games?mode=together">Play on one device</a></li>
+                <li><a href="/games?mode=together" data-route="/games?mode=together">Choose a mini-game</a></li>
               </ul>
             </div>
             <div class="mega-col">
-              <h4>Together</h4>
+              <h4>Play Online</h4>
               <ul>
-                <li><a href="/online" data-route="/online">Play Online</a></li>
-                <li><a href="/play" data-route="/play">Choose a Mood</a></li>
+                <li><a href="/games?mode=online" data-route="/games?mode=online">Create private room</a></li>
+                <li><a href="/games?mode=online" data-route="/games?mode=online">Join with room code</a></li>
               </ul>
             </div>
           </div>
@@ -120,8 +117,8 @@
       <nav class="drawer-nav">
         <ul>
           <li><a class="drawer-link" href="/games" data-route="/games">Games</a></li>
-          <li><a class="drawer-link" href="/play" data-route="/play">Play Together</a></li>
-          <li><a class="drawer-link" href="/online" data-route="/online">Play Online</a></li>
+          <li><a class="drawer-link" href="/games?mode=together" data-route="/games?mode=together">Play Together</a></li>
+          <li><a class="drawer-link" href="/games?mode=online" data-route="/games?mode=online">Play Online</a></li>
           <li><a class="drawer-link" href="/courses" data-route="/courses">Courses</a></li>
           <li><a class="drawer-link" href="/how" data-route="/how">How it works</a></li>
           <li><a class="drawer-link" href="/support" data-route="/support">Support</a></li>
@@ -432,6 +429,10 @@
     };
   </script>
   <script src="/game-turn.js"></script>
+  <!-- Local couple mini-games are isolated from the existing question-card engine. -->
+  <script src="/couple-games-data.js"></script>
+  <script src="/couple-games-online.js"></script>
+  <script src="/couple-games.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>
