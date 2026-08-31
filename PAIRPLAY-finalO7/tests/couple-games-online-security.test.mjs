@@ -8,10 +8,11 @@ import test from "node:test";
 import vm from "node:vm";
 import { buildOnlineClientConfig } from "../api/online/client-config.mjs";
 
-const [dataSource, onlineSource, migration, envExample] = await Promise.all([
+const [dataSource, onlineSource, migration, userLockMigration, envExample] = await Promise.all([
   readFile(new URL("../couple-games-data.js", import.meta.url), "utf8"),
   readFile(new URL("../couple-games-online.js", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260830000000_couple_games_realtime.sql", import.meta.url), "utf8"),
+  readFile(new URL("../supabase/migrations/20260831000000_couple_games_user_locking.sql", import.meta.url), "utf8"),
   readFile(new URL("../.env.example", import.meta.url), "utf8")
 ]);
 
@@ -146,6 +147,32 @@ test("migration contains no broad destructive operation or Academy reference", (
   const deletes = Array.from(migration.matchAll(/delete\s+from\s+public\.([a-z0-9_]+)/gi), (match) => match[1]);
   assert.deepEqual(deletes, ["couple_game_rooms", "couple_game_rate_limits"]);
   assert.match(migration, /status in \('closed','expired'\) and updated_at < now\(\) - interval '24 hours'/i);
+});
+
+test("forward-only repair serializes create and join with the same per-user transaction lock", () => {
+  assert.doesNotMatch(userLockMigration, /\b(drop\s+(table|schema|policy)|truncate|delete\s+from|alter\s+table[^;]+drop)\b/i);
+  assert.doesNotMatch(userLockMigration, /academy|razorpay|entitlement|purchase|production/i);
+  assert.equal((userLockMigration.match(/pg_advisory_xact_lock/gi) || []).length, 2);
+  assert.equal((userLockMigration.match(/hashtextextended\('couple-game-user:' \|\| v_user_id::text, 0\)/gi) || []).length, 2);
+  assert.doesNotMatch(userLockMigration, /pg_advisory_lock\s*\(/i);
+
+  for (const functionName of ["create_room", "join_room"]) {
+    const declaration = userLockMigration.match(new RegExp(`create or replace function public\\.couple_game_${functionName}[\\s\\S]*?\\$\\$;`, "i"))?.[0];
+    assert.ok(declaration, `${functionName} must be redefined`);
+    assert.match(declaration, /security definer set search_path =/i);
+    assert.match(declaration, /v_user_id uuid := auth\.uid\(\)/i);
+    assert.match(declaration, /pg_advisory_xact_lock[\s\S]+v_user_id::text/i);
+  }
+
+  assert.ok(
+    userLockMigration.indexOf("pg_advisory_xact_lock") < userLockMigration.indexOf("active_room_exists"),
+    "create must acquire the user lock before checking active rooms"
+  );
+  const joinStart = userLockMigration.indexOf("create or replace function public.couple_game_join_room");
+  const joinBody = userLockMigration.slice(joinStart);
+  assert.ok(joinBody.indexOf("pg_advisory_xact_lock") < joinBody.indexOf("select * into v_room"));
+  assert.match(userLockMigration, /on conflict \(room_id, user_id\) do update/i);
+  assert.match(userLockMigration, /couple_game_memberships[\s\S]+player_number = 2/i);
 });
 
 test("all five isolated tables use RLS and browser roles have no direct write grant", () => {
