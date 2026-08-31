@@ -45,6 +45,8 @@
     subscriptionEpoch: 0,
     subscribingRoomId: "",
     heartbeat: null,
+    reconcileTimer: null,
+    reconciling: false,
     renderTimer: null,
     revealTimer: null,
     initialized: false,
@@ -317,6 +319,9 @@
     runtime.channel = null;
     if (runtime.heartbeat) global.clearInterval(runtime.heartbeat);
     runtime.heartbeat = null;
+    if (runtime.reconcileTimer) global.clearInterval(runtime.reconcileTimer);
+    runtime.reconcileTimer = null;
+    runtime.reconciling = false;
     if (runtime.renderTimer) global.clearInterval(runtime.renderTimer);
     runtime.renderTimer = null;
     if (runtime.revealTimer) global.clearTimeout(runtime.revealTimer);
@@ -329,7 +334,7 @@
     runtime.subscribingRoomId = roomId;
     const epoch = runtime.subscriptionEpoch;
     try {
-      await runtime.client.realtime.setAuth();
+      await runtime.client.realtime.setAuth(runtime.session.access_token);
     } catch (_) {
       runtime.subscribingRoomId = "";
       runtime.message = "Unable to authorize the private room stream. Retry the connection.";
@@ -341,8 +346,14 @@
       .on("postgres_changes", { event: "*", schema: "public", table: "couple_game_rooms", filter: `id=eq.${roomId}` }, () => fetchRoom(roomId))
       .on("postgres_changes", { event: "*", schema: "public", table: "couple_game_participants", filter: `room_id=eq.${roomId}` }, () => fetchRoom(roomId))
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "couple_game_actions", filter: `room_id=eq.${roomId}` }, (payload) => receiveAcceptedAction(payload.new))
+      .on("system", "*", (payload) => {
+        if (payload?.extension === "postgres_changes" && payload?.status === "ok") fetchRoom(roomId);
+      })
       .subscribe((status) => {
-        if (status === "SUBSCRIBED") runtime.message = "Both devices are connected through the private room stream.";
+        if (status === "SUBSCRIBED") {
+          runtime.message = "Both devices are connected through the private room stream.";
+          fetchRoom(roomId);
+        }
         if (["CHANNEL_ERROR", "TIMED_OUT"].includes(status)) runtime.message = "Connection interrupted. Reconnecting safely…";
         renderCurrent();
       });
@@ -358,6 +369,13 @@
     };
     touch();
     runtime.heartbeat = global.setInterval(touch, 25000);
+    // Realtime is the fast signal; this authenticated read repairs any event missed during a reconnect or replication gap.
+    const reconcile = async () => {
+      if (runtime.reconciling || !runtime.room) return;
+      runtime.reconciling = true;
+      try { await fetchRoom(runtime.room.id); } finally { runtime.reconciling = false; }
+    };
+    runtime.reconcileTimer = global.setInterval(reconcile, 4000);
     if (runtime.renderTimer) global.clearInterval(runtime.renderTimer);
     runtime.renderTimer = global.setInterval(renderCurrent, 1000);
   }
