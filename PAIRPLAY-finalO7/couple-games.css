@@ -231,6 +231,40 @@
 .cg-online-safety ul { display:grid; gap:9px; margin:14px 0 0; padding-left:20px; color:var(--cg-muted); line-height:1.5; }
 
 /* ========================================
+   ISOLATED PLAY ONLINE LOBBY
+   These styles prepare the test-only room, ready, synchronized-game and reconnect states.
+   ======================================== */
+.cg-online-auth,.cg-online-room { width:min(100%,1080px); min-height:calc(100dvh - 280px); display:grid; align-content:center; gap:24px; margin:0 auto; }
+.cg-online-auth { max-width:760px; }
+.cg-online-auth h2,.cg-online-room h2,.cg-online-game h2 { margin:7px 0 8px; font-family:"Playfair Display",serif; font-size:clamp(2.25rem,5vw,4.3rem); line-height:1; }
+.cg-online-auth > p,.cg-online-room p { color:var(--cg-muted); line-height:1.65; }
+.cg-online-auth label,.cg-online-entry-actions label,.cg-online-test-login label { display:grid; gap:8px; color:var(--cg-muted); font-size:.72rem; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+.cg-online-auth input { width:100%; min-height:48px; padding:0 14px; border:1px solid var(--cg-line); border-radius:13px; outline:0; background:#0d0a0c; color:var(--cg-ink); font-size:16px; text-transform:none; }
+.cg-online-auth input:focus { border-color:rgba(255,36,73,.7); box-shadow:0 0 0 3px rgba(255,36,73,.14); }
+.cg-online-entry-actions { display:grid; grid-template-columns:1fr minmax(190px,.7fr) 1fr; align-items:end; gap:12px; }
+.cg-online-auth__note { padding:14px 16px; border:1px solid rgba(217,174,99,.25); border-radius:14px; background:rgba(217,174,99,.055); font-size:.78rem; }
+.cg-online-test-login { display:grid; grid-template-columns:1fr 1fr auto; align-items:end; gap:12px; padding:20px; border:1px solid var(--cg-line); border-radius:18px; background:rgba(255,255,255,.025); }
+.cg-online-test-login .cg-eyebrow { grid-column:1/-1; }
+.cg-online-room__header { display:flex; justify-content:space-between; align-items:end; gap:26px; padding-bottom:22px; border-bottom:1px solid var(--cg-line); }
+.cg-online-room__header h2 strong { color:#efc77e; letter-spacing:.08em; }
+.cg-online-players { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.cg-online-player { display:grid; gap:8px; min-height:150px; padding:24px; border:1px solid var(--cg-line); border-radius:22px; background:#151014; }
+.cg-online-player.is-ready { border-color:rgba(217,174,99,.4); background:linear-gradient(145deg,rgba(217,174,99,.08),#151014); }
+.cg-online-player > span { color:#ff7c92; font-size:.67rem; font-weight:900; letter-spacing:.13em; }
+.cg-online-player strong { font-family:"Playfair Display",serif; font-size:clamp(1.45rem,3vw,2.3rem); }
+.cg-online-player small { color:var(--cg-muted); text-transform:capitalize; }
+.cg-online-game-picker { display:grid; gap:16px; padding:22px; border:1px solid rgba(217,174,99,.3); border-radius:20px; background:rgba(217,174,99,.045); }
+.cg-online-game-picker > div { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
+.cg-online-game-picker button { min-height:48px; padding:10px; border:1px solid var(--cg-line); border-radius:12px; background:#181116; color:#fff; font-weight:800; }
+.cg-online-game-picker button:hover { border-color:#ff4565; }
+.cg-online-game { display:grid; justify-items:center; gap:26px; padding:clamp(24px,5vw,48px); border:1px solid var(--cg-line); border-radius:28px; background:radial-gradient(circle at 50% 0,rgba(255,36,73,.1),transparent 42%),#0e0a0d; }
+.cg-online-game .cg-game-copy { display:grid; justify-items:center; }
+.cg-online-game__control { width:100%; display:grid; justify-items:center; gap:24px; }
+.cg-online-game .cg-result-card { margin-top:12px; }
+.cg-online-room__status { min-height:24px; margin:0; text-align:center; }
+.cg-online-room [data-online-live] { position:absolute !important; width:1px; height:1px; overflow:hidden; padding:0; border:0; margin:-1px; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; }
+
+/* ========================================
    COUPLE GAME RESPONSIVE LAYOUTS
    Validate these scoped breakpoints at 320, 390, 768, 1024 and 1440px.
    ======================================== */
@@ -250,6 +284,10 @@
   .cg-toss-layout { grid-template-columns:1fr; }
   .cg-coin-scene { width:min(58vw,230px); }
   .cg-box-grid { grid-template-columns:repeat(4,1fr); }
+  .cg-online-entry-actions,.cg-online-test-login { grid-template-columns:1fr; }
+  .cg-online-test-login .cg-eyebrow { grid-column:auto; }
+  .cg-online-room__header { display:grid; align-items:start; }
+  .cg-online-game-picker > div { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (max-width:520px) {
   .catalog-page[data-catalog-view="couple-games"] { padding-left:16px; padding-right:16px; }
@@ -278,6 +316,10 @@
   .cg-door__panel strong { font-size:.62rem; }
   .cg-door__number { top:14px; font-size:.66rem; }
   .cg-door__panel i { width:6px; height:6px; }
+  .cg-online-players { grid-template-columns:1fr; }
+  .cg-online-player { min-height:128px; padding:20px; }
+  .cg-online-game { padding:22px 14px; border-radius:21px; }
+  .cg-online-game-picker > div { grid-template-columns:1fr; }
 }
 
 /* ========================================

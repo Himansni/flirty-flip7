@@ -6,12 +6,13 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const [html, script, styles, online, migration] = await Promise.all([
+const [html, script, styles, online, migration, vercel] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../script.js", import.meta.url), "utf8"),
   readFile(new URL("../couple-games.css", import.meta.url), "utf8"),
   readFile(new URL("../couple-games-online.js", import.meta.url), "utf8"),
-  readFile(new URL("../supabase/migrations/20260830000000_couple_games_realtime.sql", import.meta.url), "utf8")
+  readFile(new URL("../supabase/migrations/20260830000000_couple_games_realtime.sql", import.meta.url), "utf8"),
+  readFile(new URL("../vercel.json", import.meta.url), "utf8")
 ]);
 
 test("desktop and mobile navigation expose only the two new Games modes", () => {
@@ -60,24 +61,32 @@ test("mini-game styles cover phone grids, staged results, 3D controls and reduce
   assert.doesNotMatch(styles, /\.cg-result-modal/);
 });
 
-test("online client requires a separate publishable configuration and never fakes readiness", () => {
-  assert.match(online, /FLIRTYFLIP_ONLINE_GAMES_CONFIG/);
+test("online client requires a separate publishable configuration and never reuses an existing auth client", () => {
+  assert.match(online, /\/api\/online\/client-config/);
   assert.match(online, /sb_publishable_/);
-  assert.match(online, /ready:\s*false/);
+  assert.match(online, /sessionStorageAdapter/);
+  assert.match(online, /signInAnonymously/);
   assert.doesNotMatch(online, /PAIRPLAY_SUPABASE_CONFIG|anonKey|service[_-]?role/i);
 });
 
+test("Vercel keeps SPA deep links while allowing the Online config function to execute", () => {
+  const config = JSON.parse(vercel);
+  assert.deepEqual(config.rewrites, [{ source: "/((?!api/).*)", destination: "/index.html" }]);
+});
+
 test("online schema is authenticated, two-player, expiring and replay protected", () => {
-  for (const table of ["couple_game_rooms", "couple_game_participants", "couple_game_actions"]) {
+  for (const table of ["couple_game_rooms", "couple_game_memberships", "couple_game_participants", "couple_game_actions", "couple_game_rate_limits"]) {
     assert.match(migration, new RegExp(`alter table public\\.${table} enable row level security`, "i"));
     assert.match(migration, new RegExp(`revoke all on public\\.${table} from public, anon, authenticated`, "i"));
   }
   assert.match(migration, /player_number in \(1, 2\)/i);
-  assert.match(migration, /couple_game_participants_active_slot_idx/i);
+  assert.match(migration, /couple_game_memberships_active_slot_idx/i);
   assert.match(migration, /expires_at timestamptz not null/i);
-  assert.match(migration, /unique \(room_id, actor_user_id, idempotency_key\)/i);
+  assert.match(migration, /unique \(room_id, actor_player_number, idempotency_key\)/i);
   assert.match(migration, /and version = p_expected_version/i);
   assert.match(migration, /grant execute on function public\.couple_game_create_room\(text\) to authenticated/i);
+  assert.match(migration, /grant execute on function public\.couple_game_submit_action\(uuid, bigint, uuid, jsonb\) to authenticated/i);
   assert.match(migration, /revoke all on function public\.couple_game_expire_rooms\(\) from public, anon, authenticated/i);
+  assert.doesNotMatch(migration, /p_next_state|actor_user_id|host_user_id/i);
   assert.doesNotMatch(migration, /grant\s+(insert|update|delete|all)\s+on[^;]+to\s+(anon|authenticated)/i);
 });

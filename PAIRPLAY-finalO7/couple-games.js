@@ -369,10 +369,9 @@
       </div>`;
   }
 
-  // Online remains an explicit setup boundary; this task does not change its adapter or migration.
+  // Play Online is rendered by its isolated test-project adapter and stays disabled until public configuration is approved.
   function renderOnlineSetup() {
-    const readiness = global.FlirtyFlipOnlineGames?.getReadiness?.() || { status: "Setup required", reason: "The dedicated online service is not configured." };
-    runtime.root.innerHTML = `<section class="cg-online-state" aria-labelledby="cg-online-title"><div class="cg-online-state__signal" aria-hidden="true"><span></span><span></span></div><span class="cg-status-badge">${escapeHtml(readiness.status)}</span><h2 id="cg-online-title">Private online rooms are not enabled yet.</h2><p>${escapeHtml(readiness.reason)}</p><div class="cg-online-safety"><strong>What happens next</strong><ul><li>A dedicated Supabase Realtime project is configured.</li><li>Authenticated two-player room policies are applied and reviewed.</li><li>Two separate browser sessions pass expiry and disconnect testing.</li></ul></div><a class="pill-btn" href="/games?mode=together" data-cg-route="/games?mode=together">Play Together Instead</a></section>`;
+    global.FlirtyFlipOnlineGames?.render?.(runtime.root, { navigate: runtime.navigate });
   }
 
   function gameShell(game, body) {
@@ -815,6 +814,7 @@
     bindRoot(root);
     readSession();
     const mode = url.searchParams.get("mode") || "";
+    if (mode !== "online") global.FlirtyFlipOnlineGames?.cleanup?.();
     const requestedGame = url.searchParams.get("game") || "";
     const nextGame = mode === "together" && getGame(requestedGame) ? requestedGame : "";
     if (nextGame !== runtime.gameId) {
@@ -841,6 +841,7 @@
 
   function cleanup() {
     clearPendingWork();
+    global.FlirtyFlipOnlineGames?.cleanup?.();
     runtime.activeRound = false;
     runtime.stage = "idle";
     runtime.result = null;
