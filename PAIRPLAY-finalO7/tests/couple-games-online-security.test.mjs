@@ -8,11 +8,12 @@ import test from "node:test";
 import vm from "node:vm";
 import { buildOnlineClientConfig } from "../api/online/client-config.mjs";
 
-const [dataSource, onlineSource, migration, userLockMigration, envExample] = await Promise.all([
+const [dataSource, onlineSource, migration, userLockMigration, joinConflictMigration, envExample] = await Promise.all([
   readFile(new URL("../couple-games-data.js", import.meta.url), "utf8"),
   readFile(new URL("../couple-games-online.js", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260830000000_couple_games_realtime.sql", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260831000000_couple_games_user_locking.sql", import.meta.url), "utf8"),
+  readFile(new URL("../supabase/migrations/20260831010000_couple_games_join_conflict_repair.sql", import.meta.url), "utf8"),
   readFile(new URL("../.env.example", import.meta.url), "utf8")
 ]);
 
@@ -56,6 +57,18 @@ test("public config is disabled by default and never returns a secret value", ()
     schemaVersion: "20260830000000-v2",
     status: "setup_required"
   });
+});
+
+test("forward-only join repair uses verified constraints and preserves the per-user lock", () => {
+  assert.doesNotMatch(joinConflictMigration, /\b(drop\s+(table|schema|policy)|truncate|delete\s+from|alter\s+table[^;]+drop)\b/i);
+  assert.doesNotMatch(joinConflictMigration, /academy|razorpay|entitlement|purchase|production/i);
+  assert.match(joinConflictMigration, /on conflict on constraint couple_game_memberships_pkey/i);
+  assert.match(joinConflictMigration, /on conflict on constraint couple_game_participants_pkey/i);
+  assert.doesNotMatch(joinConflictMigration, /on conflict\s*\(\s*room_id/i);
+  assert.match(joinConflictMigration, /pg_advisory_xact_lock[\s\S]+hashtextextended\('couple-game-user:' \|\| v_user_id::text, 0\)/i);
+  assert.match(joinConflictMigration, /security definer set search_path = pg_catalog, public/i);
+  assert.match(joinConflictMigration, /return query select v_room\.id, v_existing, null::text/i);
+  assert.match(joinConflictMigration, /grant execute on function public\.couple_game_join_room\(text, text\) to authenticated/i);
 });
 
 test("public config accepts only a matching HTTPS Supabase project and reviewed schema", () => {
