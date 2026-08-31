@@ -126,7 +126,7 @@
   }
 
   function safeMessage(error, fallback = "Unable to complete that request.") {
-    const code = String(error?.code || error?.message || "").toLowerCase();
+    const code = [error?.code, error?.message].filter(Boolean).join(" ").toLowerCase();
     if (code.includes("email_not_confirmed") || code.includes("email not confirmed")) return "Confirm this test account’s email before signing in.";
     if (code.includes("invalid_login_credentials") || code.includes("invalid login credentials")) return "The email or password was not accepted by the test project.";
     if (code.includes("rate_limited")) return "Too many attempts. Please wait before trying again.";
