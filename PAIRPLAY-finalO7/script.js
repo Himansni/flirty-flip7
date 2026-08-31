@@ -1585,6 +1585,32 @@ validateMoodDecks();
 // Keep content here for easy editing by a normal-level coder.
 // ========================================
 const coursesData = {
+
+'better-communication': {
+    id: 'better-communication',
+    title: 'THE INTIMACY BLUEPRINT FOR MEN',
+    category: 'For Him',
+    subtitle: 'Become More Present. More Connected. More Confident.',
+    chapters: 7,
+    //time: '~22 min',
+    tags: ['for-him', 'communication'],
+    summary: 'The Intimacy Blueprint for Men is not designed to teach you how to manipulate attraction, perform masculinity, or become someone you are not It is designed to help you develop the internal and relational skills required to create deeper, healthier, more intentional intimacy.',
+    outcomes: [
+      'A practical framework for understanding yourself, communicating with depth, creating genuine connection, and building healthier intimacy.',
+      'Express needs clearly and without accusation.',
+      'Handle difficult conversations with more steadiness.'
+    ],
+    sections: [
+      { title: 'Lessons', 
+        lessons: ['Intro- Intimacy is one of the most important parts of a meaningful relationship, yet very few men are deliberately taught how to build it. We learn how to work, compete, communicate professionally, and solve problems, but the skills required to create emotional safety, express vulnerability, understand desire, communicate boundaries, handle rejection, and remain connected during difficult moments are often left to chance. The Intimacy Blueprint for Men is designed to change that.', 
+          'THE CENTRAL IDEA - The central idea of this course is simple: intimacy is a skill that can be developed. It isn t something that only naturally confident people possess, and it isn t created by a single technique or perfect relationship strategy. Meaningful intimacy develops through repeated experiences of awareness, communication, trust, safety, vulnerability, responsiveness, and mutual respect. You cannot control whether another person will reciprocate your feelings, but you can become more capable of communicating honestly, understanding your own needs, respecting another person s autonomy, and contributing positively to the relationship. The source material similarly presents confidence as involving awareness of wants and needs, communication, feeling safe and grounded, body awareness, and approaching intimacy with curiosity rather than treating it purely as performance.', 
+          'INTIMACY IS MORE THAN PHYSICAL CLOSENESS- Physical closeness can be meaningful, but physical proximity alone does not guarantee emotional connection. Two people can spend enormous amounts of time together while feeling misunderstood or emotionally distant, while a short but honest conversation can sometimes create a much deeper sense of connection. Intimacy therefore needs to be understood as a multidimensional experience involving the emotional, mental, physical, and relational aspects of a person s life. Recognising these dimensions gives you a more complete framework for evaluating what is actually happening in your relationships rather than reducing intimacy to one category of behaviour.', 
+          'ATTRACTION IS NOT THE SAME AS INTIMACY - Attraction creates interest, chemistry, and desire, but intimacy creates understanding. You can be strongly attracted to someone without knowing their emotional world, values, fears, or needs. Likewise, a person can remain deeply important to you even when attraction naturally changes over time. Understanding this distinction prevents you from treating chemistry as the sole measure of relationship quality. Attraction can open the door, but intimacy is what allows two people to develop a deeper understanding of each other once they are inside the relationship.',
+           'INTIMACY REQUIRES BEING SEEN - Genuine intimacy becomes difficult when every interaction is built around maintaining an image. If you constantly hide uncertainty, avoid difficult emotions, pretend everything is fine, or only reveal the parts of yourself that you believe will be accepted, another person can know your presentation without truly knowing you. Vulnerability creates the possibility of something deeper because it allows another person to encounter a more authentic version of you. Vulnerability does not mean telling everyone everything; it means being willing to communicate something real when there is an appropriate level of trust and some emotional risk involved.', 
+           'SAFETY COMES BEFORE DEPTH - Deep connection requires an environment where people can communicate honestly without fearing humiliation, manipulation, punishment, or pressure. Emotional safety does not mean avoiding disagreement or making every interaction comfortable. It means being able to experience difficult conversations while maintaining respect for each person,s dignity and autonomy. When people know their boundaries will be respected and their vulnerability will not be weaponised against them, they have greater freedom to communicate honestly. This is why safety is not a secondary feature of intimacy—it is one of its foundations.', 
+           'CONNECTION OVER PERFORMANCE - When intimacy becomes a performance, your attention shifts away from the actual experience and toward evaluating yourself. You begin asking whether you are impressive enough, attractive enough, confident enough, or doing everything correctly. That mental pressure can make it harder to notice what is actually happening between you and another person. A connection-oriented mindset works differently. Instead of constantly evaluating yourself, you become curious about the experience: what are you feeling, what is the other person communicating, what feels comfortable, what needs to be discussed, and what would allow both people to feel more connected? The source material similarly encourages approaching sex as an experience rather than a performance and developing presence and curiosity.'] }
+    ]
+  },
   'confident-connection': {
     id: 'confident-connection',
     title: 'Confident Connection',
@@ -1621,31 +1647,7 @@ const coursesData = {
       }
     ]
   },
-  'better-communication': {
-    id: 'better-communication',
-    title: 'Better Communication',
-    category: 'For Him',
-    subtitle: 'Listen & express clearly',
-    chapters: 7,
-    time: '~22 min',
-    tags: ['for-him', 'communication'],
-    summary: 'Learn how to listen, express yourself, and handle difficult conversations.',
-    outcomes: [
-      'Listen without preparing a defensive response.',
-      'Express needs clearly and without accusation.',
-      'Handle difficult conversations with more steadiness.'
-    ],
-    sections: [
-      { title: 'Lessons', 
-        lessons: ['Intro', 
-          'Listening', 
-          'Non-defensive speech', 
-          'Asking vs accusing',
-           'Practical exercises', 
-           'Practice', 
-           'Final challenge'] }
-    ]
-  },
+  
   'art-of-romance': {
     id: 'art-of-romance',
     title: 'The Art of Romance',
