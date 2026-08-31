@@ -264,6 +264,8 @@
   async function fetchRoom(roomId, initial = false) {
     if (!runtime.client || !roomId) return false;
     const previousVersion = Number(runtime.room?.version || 0);
+    const previousStatus = runtime.room?.status || "";
+    const previousGameId = runtime.room?.game_id || "";
     const [roomResult, playersResult, playerNumberResult] = await Promise.all([
       runtime.client.from("couple_game_rooms").select("id,room_code,game_id,status,state,version,round_number,expires_at,updated_at").eq("id", roomId).single(),
       runtime.client.from("couple_game_participants").select("room_id,player_number,nickname,is_ready,last_seen_at,left_at").eq("room_id", roomId).order("player_number"),
@@ -290,6 +292,10 @@
       runtime.acceptedVersion = Number(runtime.room.version || 0);
       runtime.revealedVersion = Number(runtime.room.version || 0);
       runtime.visualStage = runtime.room.status === "complete" ? "completed" : "idle";
+    } else if (runtime.room.status === "active" && (previousStatus !== "active" || previousGameId !== runtime.room.game_id)) {
+      runtime.acceptedVersion = Number(runtime.room.version || 0);
+      runtime.revealedVersion = Number(runtime.room.version || 0);
+      runtime.visualStage = "idle";
     } else if (Number(runtime.room.version || 0) > previousVersion && runtime.room.state?.phase === "complete") {
       receiveAcceptedAction({ room_version: runtime.room.version, resulting_state: runtime.room.state });
     }
