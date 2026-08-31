@@ -75,13 +75,35 @@
     tails: "Choose the next shared snack or song"
   });
 
+  // Every mini-game prompt carries an explicit category and audience tag.
+  // Keep this catalog public-safe; 18+ deck content remains behind its existing consent gate elsewhere.
+  const tagPrompt = (category, text, audience = "all-couples") => Object.freeze({ category, audience, text });
+  const taggedWheel = wheel.map((category) => Object.freeze({
+    ...category,
+    outcomes: Object.freeze(category.outcomes.map((text) => tagPrompt(category.label, text)))
+  }));
+  const taggedRapidPrompts = rapidPrompts.map((text) => tagPrompt("Rapid Fire", text));
+  const taggedMysteryOutcomes = mysteryOutcomes.map((outcome) => Object.freeze({ ...outcome, category: outcome.type, audience: "all-couples" }));
+  const taggedDice = Object.fromEntries(Object.entries(dice).map(([face, outcome]) => [face, Object.freeze({ ...outcome, category: outcome.type, audience: "all-couples" })]));
+  const taggedDoors = doors.map((outcome) => Object.freeze({ ...outcome, category: outcome.type, audience: "all-couples" }));
+
   global.FlirtyFlipCoupleGameData = Object.freeze({
     coinDefaults,
-    dice: Object.freeze(dice),
-    doors: Object.freeze(doors),
+    coinPrompts: Object.freeze({
+      heads: tagPrompt("Reward", coinDefaults.heads),
+      tails: tagPrompt("Reward", coinDefaults.tails)
+    }),
+    dice: Object.freeze(taggedDice),
+    doors: Object.freeze(taggedDoors),
     games: Object.freeze(games),
-    mysteryOutcomes: Object.freeze(mysteryOutcomes),
-    rapidPrompts: Object.freeze(rapidPrompts),
-    wheel: Object.freeze(wheel)
+    mysteryOutcomes: Object.freeze(taggedMysteryOutcomes),
+    rapidPrompts: Object.freeze(taggedRapidPrompts),
+    reactionRewards: Object.freeze([
+      tagPrompt("Reward", "Winner chooses the next song or shared snack."),
+      tagPrompt("Reward", "Winner chooses the next question or mini-game."),
+      tagPrompt("Reward", "Winner receives one enthusiastic compliment from their partner.")
+    ]),
+    ticTacToeReward: tagPrompt("Reward", "Choose the next question or game"),
+    wheel: Object.freeze(taggedWheel)
   });
 })(window);

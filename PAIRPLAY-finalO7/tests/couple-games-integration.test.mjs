@@ -43,7 +43,7 @@ test("the shared router delegates only /games to the isolated engine", () => {
   assert.match(script, /renderFavoritesCatalog\(\)/);
 });
 
-test("mini-game styles cover phone grids, focus, reduced motion and lightweight properties", () => {
+test("mini-game styles cover phone grids, staged results, 3D controls and reduced motion", () => {
   assert.match(styles, /@media \(max-width:520px\)/);
   assert.match(styles, /@media \(prefers-reduced-motion:reduce\)/);
   assert.match(styles, /min-height:44px/);
@@ -51,6 +51,13 @@ test("mini-game styles cover phone grids, focus, reduced motion and lightweight 
   assert.doesNotMatch(styles, /backdrop-filter/);
   assert.match(styles, /\.cg-winning-line/);
   assert.match(styles, /@keyframes cg-celebrate/);
+  assert.match(styles, /\.cg-result-card/);
+  assert.match(styles, /\[data-cg-live\][^{]*\{[^}]*clip-path:inset\(50%\)/s);
+  assert.match(styles, /transform-style:preserve-3d/);
+  assert.match(styles, /@keyframes cg-coin-flip/);
+  assert.match(styles, /@keyframes cg-dice-tumble/);
+  assert.match(styles, /@keyframes cg-box-sequence/);
+  assert.doesNotMatch(styles, /\.cg-result-modal/);
 });
 
 test("online client requires a separate publishable configuration and never fakes readiness", () => {
