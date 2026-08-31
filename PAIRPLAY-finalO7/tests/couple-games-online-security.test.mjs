@@ -166,6 +166,13 @@ test("connection status has a bounded reconnect threshold", () => {
   assert.equal(adapter.participantConnection({ last_seen_at: "2026-08-31T09:59:59.000Z", left_at: "2026-08-31T09:59:59.000Z" }, now), "left");
 });
 
+test("test-account login reports safe actionable feedback", () => {
+  assert.equal(adapter.safeMessage({ message: "Email not confirmed" }), "Confirm this test account’s email before signing in.");
+  assert.equal(adapter.safeMessage({ code: "invalid_login_credentials" }), "The email or password was not accepted by the test project.");
+  assert.match(onlineSource, /role="status" aria-live="polite"/);
+  assert.match(onlineSource, /runtime\.pending \? "Signing in…" : "Sign in to Test Project"/);
+});
+
 test("migration contains no broad destructive operation or Academy reference", () => {
   assert.doesNotMatch(migration, /\b(drop\s+(table|schema)|truncate|alter\s+table[^;]+drop)\b/i);
   assert.doesNotMatch(migration, /academy|razorpay|entitlement|purchase/i);

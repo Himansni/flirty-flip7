@@ -127,6 +127,8 @@
 
   function safeMessage(error, fallback = "Unable to complete that request.") {
     const code = String(error?.code || error?.message || "").toLowerCase();
+    if (code.includes("email_not_confirmed") || code.includes("email not confirmed")) return "Confirm this test account’s email before signing in.";
+    if (code.includes("invalid_login_credentials") || code.includes("invalid login credentials")) return "The email or password was not accepted by the test project.";
     if (code.includes("rate_limited")) return "Too many attempts. Please wait before trying again.";
     if (code.includes("room_unavailable")) return "That room is unavailable or has expired.";
     if (code.includes("stale_version")) return "The room changed on the other device. Syncing the latest state…";
@@ -561,7 +563,7 @@
 
   function authMarkup() {
     const anonymous = runtime.config?.anonymousAuthEnabled;
-    return `<section class="cg-online-auth" aria-labelledby="cg-online-auth-title"><span class="cg-eyebrow">ISOLATED TEST AUTH</span><h2 id="cg-online-auth-title">Create a private room for two.</h2><p>${escapeHtml(runtime.message)}</p><label>Nickname<input data-online-input="nickname" maxlength="24" autocomplete="nickname" placeholder="Your nickname"></label><div class="cg-online-entry-actions"><button class="pill-btn" type="button" data-online-action="create-room">Create Room</button><label>Room code<input data-online-input="room-code" maxlength="6" autocomplete="off" inputmode="text" placeholder="ABC234"></label><button class="ghost-btn" type="button" data-online-action="join-room">Join Room</button></div>${anonymous ? `<p class="cg-online-auth__note">A temporary anonymous test identity will be created only after you choose Create or Join.</p>` : `<form class="cg-online-test-login" data-online-test-login><span class="cg-eyebrow">TEST ACCOUNT FALLBACK</span><label>Email<input type="email" name="email" autocomplete="username" required></label><label>Password<input type="password" name="password" autocomplete="current-password" required></label><button class="ghost-btn" type="submit">Sign in to Test Project</button></form>`}<a class="cg-text-action" href="/games?mode=together" data-online-route="/games?mode=together">Play Together instead</a></section>`;
+    return `<section class="cg-online-auth" aria-labelledby="cg-online-auth-title"><span class="cg-eyebrow">ISOLATED TEST AUTH</span><h2 id="cg-online-auth-title">Create a private room for two.</h2><p role="status" aria-live="polite">${escapeHtml(runtime.message)}</p><label>Nickname<input data-online-input="nickname" maxlength="24" autocomplete="nickname" placeholder="Your nickname"></label><div class="cg-online-entry-actions"><button class="pill-btn" type="button" data-online-action="create-room">Create Room</button><label>Room code<input data-online-input="room-code" maxlength="6" autocomplete="off" inputmode="text" placeholder="ABC234"></label><button class="ghost-btn" type="button" data-online-action="join-room">Join Room</button></div>${anonymous ? `<p class="cg-online-auth__note">A temporary anonymous test identity will be created only after you choose Create or Join.</p>` : `<form class="cg-online-test-login" data-online-test-login><span class="cg-eyebrow">TEST ACCOUNT FALLBACK</span><label>Email<input type="email" name="email" autocomplete="username" required></label><label>Password<input type="password" name="password" autocomplete="current-password" required></label><button class="ghost-btn" type="submit" ${runtime.pending ? "disabled" : ""}>${runtime.pending ? "Signing in…" : "Sign in to Test Project"}</button></form>`}<a class="cg-text-action" href="/games?mode=together" data-online-route="/games?mode=together">Play Together instead</a></section>`;
   }
 
   function lobbyMarkup() {
@@ -694,6 +696,7 @@
       normalizeRoomCode,
       participantConnection,
       resolveServerResult,
+      safeMessage,
       sanitizeNickname,
       visualStageAfterAction,
       validatePublicConfig
