@@ -289,6 +289,7 @@
     if (initial) {
       runtime.acceptedVersion = Number(runtime.room.version || 0);
       runtime.revealedVersion = Number(runtime.room.version || 0);
+      runtime.visualStage = runtime.room.status === "complete" ? "completed" : "idle";
     } else if (Number(runtime.room.version || 0) > previousVersion && runtime.room.state?.phase === "complete") {
       receiveAcceptedAction({ room_version: runtime.room.version, resulting_state: runtime.room.state });
     }

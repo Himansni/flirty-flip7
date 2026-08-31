@@ -136,6 +136,7 @@ test("browser adapter stays isolated and stores only scoped reconnect state in s
   assert.match(onlineSource, /payload\?\.extension === "postgres_changes" && payload\?\.status === "ok"/);
   assert.match(onlineSource, /runtime\.reconcileTimer = global\.setInterval\(reconcile, 4000\)/);
   assert.match(onlineSource, /if \(runtime\.reconciling \|\| !runtime\.room\) return/);
+  assert.match(onlineSource, /runtime\.visualStage = runtime\.room\.status === "complete" \? "completed" : "idle"/);
 });
 
 test("online availability excludes Reaction Test and keeps all seven server-safe games", () => {
