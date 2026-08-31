@@ -8,13 +8,14 @@ import test from "node:test";
 import vm from "node:vm";
 import { buildOnlineClientConfig } from "../api/online/client-config.mjs";
 
-const [dataSource, onlineSource, migration, userLockMigration, joinConflictMigration, joinQualificationMigration, envExample] = await Promise.all([
+const [dataSource, onlineSource, migration, userLockMigration, joinConflictMigration, joinQualificationMigration, resumeMigration, envExample] = await Promise.all([
   readFile(new URL("../couple-games-data.js", import.meta.url), "utf8"),
   readFile(new URL("../couple-games-online.js", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260830000000_couple_games_realtime.sql", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260831000000_couple_games_user_locking.sql", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260831010000_couple_games_join_conflict_repair.sql", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260831020000_couple_games_join_qualification_repair.sql", import.meta.url), "utf8"),
+  readFile(new URL("../supabase/migrations/20260831030000_couple_games_active_room_resume.sql", import.meta.url), "utf8"),
   readFile(new URL("../.env.example", import.meta.url), "utf8")
 ]);
 
@@ -81,6 +82,16 @@ test("follow-up join repair qualifies reconnect predicates without weakening sec
   assert.match(joinQualificationMigration, /on conflict on constraint couple_game_participants_pkey/i);
   assert.match(joinQualificationMigration, /pg_advisory_xact_lock[\s\S]+v_user_id::text/i);
   assert.match(joinQualificationMigration, /security definer set search_path = pg_catalog, public/i);
+});
+
+test("active-room resume is caller-scoped and restores closed-tab sessions", () => {
+  assert.doesNotMatch(resumeMigration, /academy|razorpay|service_role|drop\s+|truncate|delete\s+from/i);
+  assert.match(resumeMigration, /security definer[\s\S]*set search_path = pg_catalog, public/i);
+  assert.match(resumeMigration, /m\.user_id = v_user_id[\s\S]*m\.left_at is null/i);
+  assert.match(resumeMigration, /revoke all on function public\.couple_game_resume_room\(\) from public, anon/i);
+  assert.match(resumeMigration, /grant execute on function public\.couple_game_resume_room\(\) to authenticated/i);
+  assert.match(onlineSource, /else if \(runtime\.session\) await resumeActiveRoom\(\)/);
+  assert.match(onlineSource, /errorText\.includes\("active_room_exists"\) && await resumeActiveRoom\(\)/);
 });
 
 test("public config accepts only a matching HTTPS Supabase project and reviewed schema", () => {

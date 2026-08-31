@@ -180,6 +180,7 @@
         runtime.message = runtime.session ? "Dedicated test session restored." : "Enter a nickname to create or join a private room.";
         const roomId = runtime.session ? readReconnectRoom() : "";
         if (roomId) await restoreRoom(roomId);
+        else if (runtime.session) await resumeActiveRoom();
       } catch (_) {
         runtime.status = "setup_required";
         runtime.message = "The isolated online configuration is unavailable. Play Together still works normally.";
@@ -218,12 +219,29 @@
     renderCurrent();
   }
 
+  // Recover only the signed-in user's active room when tab-scoped reconnect state is unavailable.
+  async function resumeActiveRoom() {
+    const { data, error } = await runtime.client.rpc("couple_game_resume_room");
+    if (error) throw error;
+    const active = data?.[0];
+    if (!active?.room_id) return false;
+    runtime.playerNumber = Number(active.player_number);
+    saveReconnectRoom(active.room_id);
+    await restoreRoom(active.room_id);
+    return true;
+  }
+
   async function createRoom(nickname) {
     const cleanName = sanitizeNickname(nickname);
     if (!cleanName) throw new Error("invalid_nickname");
     await ensureOnlineSession();
     const { data, error } = await runtime.client.rpc("couple_game_create_room", { p_nickname: cleanName });
-    if (error || !data?.[0]) throw error || new Error("room_unavailable");
+    if (error) {
+      const errorText = [error.code, error.message].filter(Boolean).join(" ").toLowerCase();
+      if (errorText.includes("active_room_exists") && await resumeActiveRoom()) return;
+      throw error;
+    }
+    if (!data?.[0]) throw new Error("room_unavailable");
     runtime.playerNumber = Number(data[0].player_number);
     saveReconnectRoom(data[0].room_id);
     await restoreRoom(data[0].room_id);
