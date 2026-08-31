@@ -8,12 +8,13 @@ import test from "node:test";
 import vm from "node:vm";
 import { buildOnlineClientConfig } from "../api/online/client-config.mjs";
 
-const [dataSource, onlineSource, migration, userLockMigration, joinConflictMigration, envExample] = await Promise.all([
+const [dataSource, onlineSource, migration, userLockMigration, joinConflictMigration, joinQualificationMigration, envExample] = await Promise.all([
   readFile(new URL("../couple-games-data.js", import.meta.url), "utf8"),
   readFile(new URL("../couple-games-online.js", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260830000000_couple_games_realtime.sql", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260831000000_couple_games_user_locking.sql", import.meta.url), "utf8"),
   readFile(new URL("../supabase/migrations/20260831010000_couple_games_join_conflict_repair.sql", import.meta.url), "utf8"),
+  readFile(new URL("../supabase/migrations/20260831020000_couple_games_join_qualification_repair.sql", import.meta.url), "utf8"),
   readFile(new URL("../.env.example", import.meta.url), "utf8")
 ]);
 
@@ -69,6 +70,17 @@ test("forward-only join repair uses verified constraints and preserves the per-u
   assert.match(joinConflictMigration, /security definer set search_path = pg_catalog, public/i);
   assert.match(joinConflictMigration, /return query select v_room\.id, v_existing, null::text/i);
   assert.match(joinConflictMigration, /grant execute on function public\.couple_game_join_room\(text, text\) to authenticated/i);
+});
+
+test("follow-up join repair qualifies reconnect predicates without weakening security", () => {
+  assert.doesNotMatch(joinQualificationMigration, /\b(drop\s+(table|schema|policy)|truncate|delete\s+from|alter\s+table[^;]+drop)\b/i);
+  assert.doesNotMatch(joinQualificationMigration, /academy|razorpay|entitlement|purchase|production/i);
+  assert.match(joinQualificationMigration, /update public\.couple_game_participants as p[\s\S]+where p\.room_id = v_room\.id and p\.player_number = v_existing and p\.left_at is null/i);
+  assert.doesNotMatch(joinQualificationMigration, /where room_id = v_room\.id and player_number = v_existing/i);
+  assert.match(joinQualificationMigration, /on conflict on constraint couple_game_memberships_pkey/i);
+  assert.match(joinQualificationMigration, /on conflict on constraint couple_game_participants_pkey/i);
+  assert.match(joinQualificationMigration, /pg_advisory_xact_lock[\s\S]+v_user_id::text/i);
+  assert.match(joinQualificationMigration, /security definer set search_path = pg_catalog, public/i);
 });
 
 test("public config accepts only a matching HTTPS Supabase project and reviewed schema", () => {
