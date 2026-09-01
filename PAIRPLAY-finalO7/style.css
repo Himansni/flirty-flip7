@@ -482,6 +482,17 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .auth-submit { margin-top:10px; }
 .auth-status { min-height:22px; margin:12px 0 0; color:#d7d0d1; font-size:12px; line-height:1.5; }
 
+/* Password recovery route — reuses the account form language on a focused SPA page.
+   Edit recovery layout here; session processing and validation live in script.js. */
+.password-reset-page { min-height:calc(100dvh - 190px); }
+.password-reset-card { margin:24px auto 0; }
+.password-reset-card h2 { margin:0 0 12px; font-family:"Playfair Display",serif; font-size:clamp(2.1rem,7vw,3rem); line-height:1; letter-spacing:-.04em; }
+.password-reset-card .auth-status { margin:0 0 22px; }
+.password-reset-card .auth-status[data-state="error"] { color:#ff8b9a; }
+.password-reset-card .auth-status[data-state="success"] { color:#f7d7e2; }
+.password-reset-card > .text-btn { margin-top:18px; color:var(--pink); }
+.password-reset-card .auth-form[hidden], .password-reset-card > .text-btn.hidden { display:none; }
+
 footer { width:min(100%, var(--content-max)); margin:0 auto; padding:30px var(--page-pad-desktop) 45px; display:flex; justify-content:space-between; color:#9b8f95; font-size:10px; letter-spacing:.06em; }
 
 /* ========================================

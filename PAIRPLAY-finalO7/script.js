@@ -1375,6 +1375,7 @@ const ROUTE_PATHS = Object.freeze({
   courses: "/courses",
   course: "/course",
   online: "/online",
+  resetPassword: "/reset-password",
   how: "/how",
   support: "/support"
 });
@@ -1402,6 +1403,17 @@ const SUPABASE_CONFIG = (typeof window !== 'undefined' && window.PAIRPLAY_SUPABA
 
 // Lazy supabase client factory — create client only when needed (and only in browser)
 let _supabaseClient = null;
+let _authStateListenerBound = false;
+
+// Register immediately after createClient so Supabase's one-time PASSWORD_RECOVERY event cannot be missed.
+function bindSupabaseAuthStateListener(client) {
+  if (_authStateListenerBound || !client?.auth?.onAuthStateChange) return;
+  client.auth.onAuthStateChange((event, session) => {
+    applyAuthenticatedSession(event, session);
+  });
+  _authStateListenerBound = true;
+}
+
 function getSupabaseClient() {
   if (typeof window === 'undefined') return null;
   if (_supabaseClient) return _supabaseClient;
@@ -1409,9 +1421,12 @@ function getSupabaseClient() {
   if (!window.supabase || typeof window.supabase.createClient !== 'function') return null;
   try {
     _supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+    bindSupabaseAuthStateListener(_supabaseClient);
     return _supabaseClient;
-  } catch (e) {
-    console.warn('Failed to create supabase client', e);
+  } catch (_) {
+    _supabaseClient = null;
+    _authStateListenerBound = false;
+    console.warn('Failed to create Supabase client');
     return null;
   }
 }
@@ -1436,7 +1451,7 @@ function ensureSupabaseClient(timeout = 4000) {
       resolve(client || null);
     };
 
-    console.debug('ensureSupabaseClient: start', { timeout, SUPABASE_CONFIG });
+    console.debug('ensureSupabaseClient: start', { timeout, configured: hasSupabaseConfigured() });
     const existing = getSupabaseClient();
     if (existing) {
       console.debug('ensureSupabaseClient: existing client found');
@@ -1481,6 +1496,40 @@ function ensureSupabaseClient(timeout = 4000) {
 
 let authMode = "login";
 let signedInUser = null;
+let passwordRecoveryState = "checking";
+let passwordRecoveryMessage = "Verifying your secure recovery link…";
+let passwordRecoveryRedirectTimer = null;
+let passwordRecoveryCallbackPresent = false;
+let passwordRecoveryAuthorized = false;
+
+// Return only the two fixed authentication destinations approved by the application.
+// Production canonicalizes www/non-www to flirtyflip.com; local development keeps its current origin.
+function getAuthRedirectUrls() {
+  if (typeof window === "undefined" || !window.FlirtyFlipAuthRedirects?.getAuthRedirectUrls) {
+    throw new Error("auth_redirect_config_unavailable");
+  }
+  return window.FlirtyFlipAuthRedirects.getAuthRedirectUrls(window.location);
+}
+
+// Detect implicit Supabase callback fragments without reading, logging or persisting their values.
+function hasSensitiveAuthFragment(url = new URL(window.location.href)) {
+  const hash = new URLSearchParams(url.hash.replace(/^#/, ""));
+  return ["access_token", "refresh_token", "provider_token", "token_hash"].some((key) => hash.has(key));
+}
+
+function hasAuthErrorFragment(url = new URL(window.location.href)) {
+  const hash = new URLSearchParams(url.hash.replace(/^#/, ""));
+  return hash.has("error") || hash.has("error_code") || hash.has("error_description");
+}
+
+// Remove a processed implicit callback from browser history so tokens cannot remain in the address bar.
+function cleanAuthFragmentFromUrl() {
+  if (typeof window === "undefined") return;
+  const url = new URL(window.location.href);
+  if (!hasSensitiveAuthFragment(url) && !hasAuthErrorFragment(url)) return;
+  window.history.replaceState({ flirtyFlipRoute: true }, "", `${url.pathname}${url.search}`);
+  lastRenderedLocation = `${url.pathname}${url.search}`;
+}
 
 // -----------------------------
 // EDITABLE CONFIG
@@ -1823,32 +1872,94 @@ function updateFavoritesBadge() {
 // Initializes Supabase or guest sessions and owns login, signup, reset and logout behavior.
 // Edit account-provider behavior here; edit modal fields and provider configuration in index.html.
 // ========================================
+function isPasswordRecoveryRoute() {
+  return typeof window !== "undefined" && normalizePathname(window.location.pathname) === ROUTE_PATHS.resetPassword;
+}
+
+function setPasswordRecoveryState(state, message) {
+  passwordRecoveryState = state;
+  passwordRecoveryMessage = message;
+
+  const status = $("password-recovery-status");
+  const form = $("password-recovery-form");
+  const submit = $("password-recovery-submit");
+  const requestNew = $("password-recovery-request-new");
+  if (status) {
+    status.textContent = message;
+    status.dataset.state = state;
+  }
+  if (form) form.hidden = !["ready", "updating"].includes(state);
+  if (submit) submit.disabled = state !== "ready";
+  if (requestNew) requestNew.classList.toggle("hidden", state !== "error");
+}
+
+function renderPasswordRecoveryPage() {
+  setPasswordRecoveryState(passwordRecoveryState, passwordRecoveryMessage);
+}
+
+function applyAuthenticatedSession(event, session) {
+  if (event === "PASSWORD_RECOVERY" && passwordRecoveryCallbackPresent && session?.user) {
+    passwordRecoveryAuthorized = true;
+  }
+  if (session?.user) {
+    signedInUser = session.user;
+    clearStoredGuest();
+  } else if (event === "SIGNED_OUT" || !readStoredGuest()) {
+    signedInUser = null;
+  }
+
+  if (isPasswordRecoveryRoute()) {
+    if (session?.user && passwordRecoveryAuthorized) {
+      if (!["updating", "success"].includes(passwordRecoveryState)) {
+        setPasswordRecoveryState("ready", "Your recovery link is verified. Choose a new password.");
+      }
+      cleanAuthFragmentFromUrl();
+    } else if (event === "INITIAL_SESSION" || event === "SIGNED_OUT" || session?.user) {
+      setPasswordRecoveryState("error", "This recovery link is invalid or has expired. Request a new link and try again.");
+      cleanAuthFragmentFromUrl();
+    }
+  } else if (session?.user) {
+    // Signup confirmation uses Supabase JS v2's implicit callback processing on the home route.
+    cleanAuthFragmentFromUrl();
+  }
+
+  updateAuthUI();
+}
+
 async function initializeAuth() {
   const guestProfile = readStoredGuest();
   if (guestProfile) signedInUser = guestProfile;
 
+  passwordRecoveryCallbackPresent = isPasswordRecoveryRoute() && hasSensitiveAuthFragment();
+  passwordRecoveryAuthorized = false;
+
+  if (isPasswordRecoveryRoute() && hasAuthErrorFragment()) {
+    passwordRecoveryCallbackPresent = false;
+    setPasswordRecoveryState("error", "This recovery link is invalid or has expired. Request a new link and try again.");
+    cleanAuthFragmentFromUrl();
+  }
+
   // Try to ensure the supabase client is available, but don't block initialization for long
   const client = await ensureSupabaseClient(1200);
   if (!client) {
+    if (isPasswordRecoveryRoute()) {
+      setPasswordRecoveryState("error", "Password recovery is temporarily unavailable. Please try again.");
+    }
     updateAuthUI();
     return;
   }
 
   try {
-    const { data: { session } } = await client.auth.getSession();
-    if (session?.user) {
-      signedInUser = session.user;
-    }
+    const { data: { session }, error } = await client.auth.getSession();
+    if (error) throw error;
+    applyAuthenticatedSession("INITIAL_SESSION", session);
 
-    client.auth.onAuthStateChange((_event, session) => {
-      signedInUser = session?.user || null;
-      if (session?.user) {
-        clearStoredGuest();
-      }
-      updateAuthUI();
-    });
   } catch (e) {
-    console.warn('initializeAuth supabase error', e);
+    console.warn('initializeAuth: Supabase request failed');
+    if (isPasswordRecoveryRoute()) {
+      setPasswordRecoveryState("error", "This recovery link is invalid or has expired. Request a new link and try again.");
+      cleanAuthFragmentFromUrl();
+    }
   }
 
   updateAuthUI();
@@ -2012,14 +2123,52 @@ async function sendPasswordReset() {
   if (!client) { setAuthStatus('Password reset is not available: Supabase not configured or failed to load.', true); return; }
 
   try {
-    // Always return recovery links to the SPA root so a deep current route cannot become a broken callback URL.
-    const passwordResetUrl = new URL(ROUTE_PATHS.home, window.location.origin).href;
-    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: passwordResetUrl });
+    const { passwordRecovery } = getAuthRedirectUrls();
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: passwordRecovery });
     if (error) throw error;
     setAuthStatus('If an account exists for that email, a reset link has been sent. Check your inbox.');
   } catch (e) {
-    console.error('Password reset error', e);
+    console.error('Password reset request failed');
     setAuthStatus((e && e.message) ? `Error: ${e.message}` : 'Failed to send reset link. Please try again later.', true);
+  }
+}
+
+async function submitPasswordRecovery(event) {
+  event.preventDefault();
+  if (passwordRecoveryState !== "ready") return;
+
+  const newPassword = $("password-recovery-new")?.value || "";
+  const confirmPassword = $("password-recovery-confirm")?.value || "";
+  if (newPassword.length < 8) {
+    setPasswordRecoveryState("ready", "Use at least 8 characters for your new password.");
+    return;
+  }
+  if (newPassword !== confirmPassword) {
+    setPasswordRecoveryState("ready", "The two passwords do not match. Please try again.");
+    return;
+  }
+
+  const client = await ensureSupabaseClient(3000);
+  if (!client) {
+    setPasswordRecoveryState("error", "Password recovery is temporarily unavailable. Request a new link and try again.");
+    return;
+  }
+
+  setPasswordRecoveryState("updating", "Updating your password securely…");
+  try {
+    const { data, error } = await client.auth.updateUser({ password: newPassword });
+    if (error || !data?.user) throw error || new Error("password_update_failed");
+
+    const newInput = $("password-recovery-new");
+    const confirmInput = $("password-recovery-confirm");
+    if (newInput) newInput.value = "";
+    if (confirmInput) confirmInput.value = "";
+    cleanAuthFragmentFromUrl();
+    setPasswordRecoveryState("success", "Password updated successfully. Returning you to FlirtyFlip…");
+    clearTimeout(passwordRecoveryRedirectTimer);
+    passwordRecoveryRedirectTimer = setTimeout(() => navigateToRoute(ROUTE_PATHS.home, { replace: true }), 1600);
+  } catch (_) {
+    setPasswordRecoveryState("error", "This recovery session is invalid or has expired. Request a new link and try again.");
   }
 }
 
@@ -2072,10 +2221,10 @@ async function submitAuthForm(event) {
 
   // Ensure client is present, try loading the CDN if necessary
   setAuthStatus('Preparing authentication…');
-  console.debug('submitAuthForm: starting', { authMode, email });
+  console.debug('submitAuthForm: starting', { authMode });
   const client = await ensureSupabaseClient(3000);
   if (!client) {
-    console.error('submitAuthForm: supabase client not available', { SUPABASE_CONFIG });
+    console.error('submitAuthForm: supabase client not available');
     setAuthStatus("Supabase is not configured yet or failed to load. Replace the demo URL and anon key in index.html with your project values and ensure the Supabase script can load.", true);
     return;
   }
@@ -2084,11 +2233,15 @@ async function submitAuthForm(event) {
     setAuthStatus("Working on it…");
     console.debug('submitAuthForm: using client', { clientAvailable: !!client });
     const request = authMode === "signup"
-      ? client.auth.signUp({ email, password })
+      ? client.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: getAuthRedirectUrls().signupConfirmation }
+      })
       : client.auth.signInWithPassword({ email, password });
 
     const { data, error } = await request;
-    console.debug('submitAuthForm: auth result', { data, error });
+    console.debug('submitAuthForm: auth request completed', { succeeded: !error, hasUser: Boolean(data?.user) });
     if (error) {
       // Supabase v2 may return error objects with message or status
       const message = error?.message || error?.error_description || (error?.status ? `HTTP ${error.status}` : 'Authentication failed');
@@ -2103,7 +2256,7 @@ async function submitAuthForm(event) {
     closeAuthModal();
     toast(authMode === "signup" ? "Account created successfully ♡" : "Logged in successfully ♡");
   } catch (error) {
-    console.error('submitAuthForm: caught error', error);
+    console.error('submitAuthForm: authentication request failed');
     setAuthStatus((error && error.message) || "Something went wrong while authenticating.", true);
   }
 }
@@ -2277,6 +2430,7 @@ function resolveRoute(pathname) {
     [ROUTE_PATHS.games]: "games",
     [ROUTE_PATHS.courses]: "courses",
     [ROUTE_PATHS.online]: "online",
+    [ROUTE_PATHS.resetPassword]: "reset-password",
     [ROUTE_PATHS.how]: "how",
     [ROUTE_PATHS.support]: "support"
   };
@@ -2310,6 +2464,7 @@ function updateRouteMetadata(route, url) {
     courses: "Courses — FLIRTYFLIP",
     course: "Course — FLIRTYFLIP",
     online: "Play Online — FLIRTYFLIP",
+    "reset-password": "Reset Password — FLIRTYFLIP",
     how: "How It Works — FLIRTYFLIP",
     support: "Support — FLIRTYFLIP"
   };
@@ -2334,11 +2489,13 @@ function trackRoutePageView(url) {
   const locationKey = `${url.pathname}${url.search}`;
   if (lastTrackedLocation === locationKey) return;
   lastTrackedLocation = locationKey;
+  const publicUrl = new URL(url.href);
+  publicUrl.hash = "";
 
   if (typeof window.gtag === "function") {
     window.gtag("event", "page_view", {
       page_path: locationKey,
-      page_location: url.href,
+      page_location: publicUrl.href,
       page_title: document.title
     });
   }
@@ -2417,6 +2574,10 @@ function renderCurrentRoute(navigationType = "navigate") {
     renderOnlineRoute(url);
     activatePage("online", navigationType);
   }
+  if (route.name === "reset-password") {
+    renderPasswordRecoveryPage();
+    activatePage("reset-password", navigationType);
+  }
   if (route.name === "how") activatePage("how", navigationType);
   if (route.name === "support") {
     renderSupportContent(url.searchParams.get("section") || "index");
@@ -2425,7 +2586,9 @@ function renderCurrentRoute(navigationType = "navigate") {
 
   updateRouteMetadata(route, url);
   trackRoutePageView(url);
-  lastRenderedLocation = `${url.pathname}${url.search}${url.hash}`;
+  lastRenderedLocation = hasSensitiveAuthFragment(url) || hasAuthErrorFragment(url)
+    ? `${url.pathname}${url.search}`
+    : `${url.pathname}${url.search}${url.hash}`;
 }
 
 // Push or replace a same-origin SPA location, then render it through the shared router.
@@ -3036,6 +3199,8 @@ function bindAuthEvents() {
   const authTabs = document.querySelectorAll(".auth-tab");
   const navFav = $("nav-favorites");
   const authForgotBtn = $("auth-forgot");
+  const passwordRecoveryForm = $("password-recovery-form");
+  const requestNewRecovery = $("password-recovery-request-new");
   
   if (navLabel) {
     navLabel.addEventListener("click", () => showAuthModal("login"));
@@ -3073,6 +3238,14 @@ function bindAuthEvents() {
 
   if (authForm) {
     authForm.addEventListener("submit", submitAuthForm);
+  }
+
+  if (passwordRecoveryForm) {
+    passwordRecoveryForm.addEventListener("submit", submitPasswordRecovery);
+  }
+
+  if (requestNewRecovery) {
+    requestNewRecovery.addEventListener("click", () => showResetPassword());
   }
 }
 

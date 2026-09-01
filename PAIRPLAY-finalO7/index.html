@@ -352,6 +352,32 @@
       </div>
       <div id="support-content" class="support-content"></div>
     </section>
+
+    <!-- ========================================
+         PASSWORD RECOVERY
+         Supabase recovery links return to /reset-password; behavior lives in script.js.
+         Keep this form limited to new-password entry and never render URL credentials here.
+         ======================================== -->
+    <section id="reset-password" class="page narrow password-reset-page">
+      <button class="back-btn" type="button" onclick="showHome()">← Back to FlirtyFlip</button>
+      <div class="auth-card password-reset-card">
+        <div class="eyebrow">ACCOUNT SECURITY</div>
+        <h2>Choose a new password</h2>
+        <p id="password-recovery-status" class="auth-status" role="status" aria-live="polite">Verifying your secure recovery link…</p>
+        <form id="password-recovery-form" class="auth-form">
+          <label class="auth-field">
+            <span>New password</span>
+            <input id="password-recovery-new" name="new-password" type="password" minlength="8" autocomplete="new-password" required />
+          </label>
+          <label class="auth-field">
+            <span>Confirm password</span>
+            <input id="password-recovery-confirm" name="confirm-password" type="password" minlength="8" autocomplete="new-password" required />
+          </label>
+          <button id="password-recovery-submit" class="pill-btn wide auth-submit" type="submit" disabled>Update Password</button>
+        </form>
+        <button id="password-recovery-request-new" class="text-btn hidden" type="button">Request a new recovery link</button>
+      </div>
+    </section>
   </main>
 
   <div id="toast" class="toast"></div>
@@ -433,6 +459,7 @@
   <script src="/couple-games-data.js"></script>
   <script src="/couple-games-online.js"></script>
   <script src="/couple-games.js"></script>
+  <script src="/auth-redirects.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>
