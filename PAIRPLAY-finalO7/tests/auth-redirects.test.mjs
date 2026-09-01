@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { createContext, runInContext } from "node:vm";
 
 const require = createRequire(import.meta.url);
 const redirects = require("../auth-redirects.js");
@@ -15,6 +16,20 @@ const [helperSource, html, script, vercel] = await Promise.all([
   readFile(new URL("../script.js", import.meta.url), "utf8"),
   readFile(new URL("../vercel.json", import.meta.url), "utf8")
 ]);
+
+function extractFunction(source, name) {
+  const functionStart = source.indexOf(`function ${name}`);
+  assert.notEqual(functionStart, -1, `${name} must exist`);
+  const start = source.slice(functionStart - 6, functionStart) === "async " ? functionStart - 6 : functionStart;
+  const bodyStart = source.indexOf("{", start);
+  let depth = 0;
+  for (let index = bodyStart; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") depth -= 1;
+    if (depth === 0) return source.slice(start, index + 1);
+  }
+  throw new Error(`Could not extract ${name}`);
+}
 
 test("Production password recovery uses the canonical FlirtyFlip route", () => {
   for (const host of ["https://flirtyflip.com/games", "https://www.flirtyflip.com/games?mode=online"]) {
@@ -46,6 +61,11 @@ test("Supabase recovery and signup calls use only the fixed redirect helper", ()
   assert.match(script, /resetPasswordForEmail\(email, \{ redirectTo: passwordRecovery \}\)/);
   assert.match(script, /options: \{ emailRedirectTo: getAuthRedirectUrls\(\)\.signupConfirmation \}/);
   assert.doesNotMatch(script, /resetPasswordForEmail\([^\n]+window\.location\.origin/);
+});
+
+test("Production authentication fallback uses the project origin without a REST path", () => {
+  assert.match(script, /url: "https:\/\/irspllhipxekdqvuppyr\.supabase\.co"/);
+  assert.doesNotMatch(script, /irspllhipxekdqvuppyr\.supabase\.co\/rest\/v1/);
 });
 
 test("the redirect helper loads before the authentication code that consumes it", () => {
@@ -80,6 +100,130 @@ test("normal authenticated and guest flows remain available outside recovery", (
   assert.match(script, /if \(session\?\.user\) \{\s*signedInUser = session\.user;\s*clearStoredGuest\(\);/);
   assert.match(script, /else if \(event === "SIGNED_OUT" \|\| !readStoredGuest\(\)\)/);
   assert.match(script, /if \(authMode === "guest"\)/);
+});
+
+test("signup waits for confirmation while an immediate session signs in normally", async () => {
+  assert.match(script, /const requestMode = authMode/);
+  assert.match(script, /requestMode === "signup" && !data\?\.session/);
+  assert.match(script, /Check your email to confirm your account, then return here to log in\./);
+  assert.match(script, /signedInUser = data\?\.session\?\.user \|\| data\?\.user \|\| null/);
+
+  const submitAuthFormSource = extractFunction(script, "submitAuthForm");
+  const runSignup = async (session) => {
+    const calls = { close: 0, guestClear: 0, statuses: [], toasts: [], ui: 0 };
+    const emailInput = { value: "person@example.invalid", checkValidity: () => true };
+    const passwordInput = { value: "A-secure-test-password" };
+    const user = { id: "test-user", email: "person@example.invalid" };
+    const context = createContext({
+      authMode: "signup",
+      signedInUser: { id: "guest-before-signup" },
+      $: (id) => id === "auth-email" ? emailInput : id === "auth-password" ? passwordInput : null,
+      setAuthStatus: (message) => calls.statuses.push(message),
+      ensureSupabaseClient: async () => ({
+        auth: {
+          signUp: async () => ({ data: { user, session: session ? { user } : null }, error: null })
+        }
+      }),
+      getAuthRedirectUrls: () => ({ signupConfirmation: "https://flirtyflip.com/" }),
+      clearStoredGuest: () => { calls.guestClear += 1; },
+      updateAuthUI: () => { calls.ui += 1; },
+      closeAuthModal: () => { calls.close += 1; },
+      toast: (message) => calls.toasts.push(message),
+      console: { debug() {}, error() {} }
+    });
+    runInContext(`${submitAuthFormSource}; this.submitAuthForm = submitAuthForm;`, context);
+    await context.submitAuthForm({ preventDefault() {} });
+    return { calls, context, passwordInput };
+  };
+
+  const pending = await runSignup(false);
+  assert.equal(pending.context.signedInUser, null);
+  assert.equal(pending.calls.close, 0);
+  assert.match(pending.calls.statuses.at(-1), /check your email to confirm/i);
+  assert.equal(pending.passwordInput.value, "");
+
+  const immediate = await runSignup(true);
+  assert.equal(immediate.context.signedInUser.id, "test-user");
+  assert.equal(immediate.calls.close, 1);
+  assert.match(immediate.calls.toasts.at(-1), /Account created successfully/);
+});
+
+test("authentication failures use safe mapped copy instead of raw provider details", () => {
+  assert.match(script, /function getSafeAuthErrorMessage\(error, context = "auth"\)/);
+  assert.match(script, /The email or password was not accepted\. Please check your credentials and try again\./);
+  assert.match(script, /Please confirm your email address before signing in\./);
+  assert.match(script, /Too many authentication attempts were made\./);
+  assert.match(script, /setAuthStatus\(getSafeAuthErrorMessage\(e, "reset"\), true\)/);
+  assert.match(script, /setAuthStatus\(getSafeAuthErrorMessage\(error, requestMode\), true\)/);
+  assert.doesNotMatch(script, /setAuthStatus\(\(e && e\.message\)|setAuthStatus\(\(error && error\.message\)/);
+
+  const context = createContext({});
+  runInContext(`${extractFunction(script, "getSafeAuthErrorMessage")}; this.mapError = getSafeAuthErrorMessage;`, context);
+  assert.match(context.mapError({ message: "Invalid login credentials" }), /email or password was not accepted/i);
+  assert.match(context.mapError({ message: "Email not confirmed" }), /confirm your email address/i);
+  assert.match(context.mapError({ message: "Email rate limit exceeded" }), /too many authentication attempts/i);
+  assert.match(context.mapError({ message: "Email rate limit exceeded" }, "reset"), /too many reset requests/i);
+  assert.match(context.mapError({ message: "Invalid email" }), /valid email address/i);
+  assert.match(context.mapError({ message: "Password should be at least 8 characters" }), /at least 8 characters/i);
+  assert.match(context.mapError({ message: "User already registered" }), /If an account exists/i);
+  assert.match(context.mapError({ message: "Failed to fetch" }), /couldn't reach the authentication service/i);
+  assert.match(context.mapError({ message: "provider internal diagnostic" }), /temporarily unavailable/i);
+});
+
+test("password reset requests reject invalid email and block duplicate in-flight submissions", async () => {
+  assert.match(script, /!email \|\| !emailEl\.checkValidity\(\)/);
+  assert.match(script, /if \(passwordResetRequestPending\) return/);
+  assert.match(script, /if \(submitButton\) submitButton\.disabled = true/);
+  assert.match(script, /finally \{\s*passwordResetRequestPending = false/);
+
+  const sendPasswordResetSource = extractFunction(script, "sendPasswordReset");
+  const makeContext = (valid) => {
+    const calls = { requests: 0, statuses: [] };
+    const emailInput = { value: valid ? "person@example.invalid" : "not-an-email", checkValidity: () => valid };
+    const submitButton = { disabled: false, isConnected: true };
+    const context = createContext({
+      passwordResetRequestPending: false,
+      $: (id) => id === "auth-email" ? emailInput : id === "auth-reset-submit" ? submitButton : null,
+      setAuthStatus: (message) => calls.statuses.push(message),
+      ensureSupabaseClient: async () => ({
+        auth: {
+          resetPasswordForEmail: async () => {
+            calls.requests += 1;
+            await new Promise((resolve) => setTimeout(resolve, 5));
+            return { error: null };
+          }
+        }
+      }),
+      getAuthRedirectUrls: () => ({ passwordRecovery: "https://flirtyflip.com/reset-password" }),
+      getSafeAuthErrorMessage: () => "safe error",
+      console: { error() {} },
+      setTimeout
+    });
+    runInContext(`${sendPasswordResetSource}; this.sendPasswordReset = sendPasswordReset;`, context);
+    return { calls, context, submitButton };
+  };
+
+  const invalid = makeContext(false);
+  await invalid.context.sendPasswordReset();
+  assert.equal(invalid.calls.requests, 0);
+  assert.match(invalid.calls.statuses.at(-1), /valid email address/i);
+
+  const concurrent = makeContext(true);
+  const first = concurrent.context.sendPasswordReset();
+  const second = concurrent.context.sendPasswordReset();
+  await Promise.all([first, second]);
+  assert.equal(concurrent.calls.requests, 1);
+  assert.equal(concurrent.context.passwordResetRequestPending, false);
+  assert.equal(concurrent.submitButton.disabled, false);
+});
+
+test("successful password recovery clears the one-time authorization state", () => {
+  assert.match(script, /passwordRecoveryAuthorized = false;\s*passwordRecoveryCallbackPresent = false;\s*cleanAuthFragmentFromUrl\(\)/);
+  assert.match(script, /event === "PASSWORD_RECOVERY" && passwordRecoveryCallbackPresent && session\?\.user/);
+  assert.match(script, /else if \(event === "INITIAL_SESSION" \|\| event === "SIGNED_OUT" \|\| session\?\.user\)/);
+  const initialization = script.slice(script.indexOf("async function initializeAuth"), script.indexOf("function updateAuthUI"));
+  assert.match(initialization, /passwordRecoveryAuthorized = false/);
+  assert.ok(initialization.indexOf("passwordRecoveryAuthorized = false") < initialization.indexOf("client.auth.getSession()"));
 });
 
 test("authentication diagnostics do not log email, sessions or callback tokens", () => {

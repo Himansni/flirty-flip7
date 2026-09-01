@@ -1397,7 +1397,7 @@ let catalogBackRoute = ROUTE_PATHS.home;
 const SUPABASE_CONFIG = (typeof window !== 'undefined' && window.PAIRPLAY_SUPABASE_CONFIG)
   ? window.PAIRPLAY_SUPABASE_CONFIG
   : {
-    url: "https://irspllhipxekdqvuppyr.supabase.co/rest/v1/",
+    url: "https://irspllhipxekdqvuppyr.supabase.co",
     anonKey: "sb_publishable_9sQoxaMCGlxWId7eTMG2qQ_8QszVqIc"
   };
 
@@ -1501,6 +1501,7 @@ let passwordRecoveryMessage = "Verifying your secure recovery link…";
 let passwordRecoveryRedirectTimer = null;
 let passwordRecoveryCallbackPresent = false;
 let passwordRecoveryAuthorized = false;
+let passwordResetRequestPending = false;
 
 // Return only the two fixed authentication destinations approved by the application.
 // Production canonicalizes www/non-www to flirtyflip.com; local development keeps its current origin.
@@ -1529,6 +1530,40 @@ function cleanAuthFragmentFromUrl() {
   if (!hasSensitiveAuthFragment(url) && !hasAuthErrorFragment(url)) return;
   window.history.replaceState({ flirtyFlipRoute: true }, "", `${url.pathname}${url.search}`);
   lastRenderedLocation = `${url.pathname}${url.search}`;
+}
+
+// Translate provider/network failures into stable, non-sensitive account messages.
+// Add new provider cases here instead of rendering raw backend error strings in the UI.
+function getSafeAuthErrorMessage(error, context = "auth") {
+  const detail = String(error?.message || error?.error_description || "").toLowerCase();
+
+  if (/invalid login credentials|invalid_credentials/.test(detail)) {
+    return "The email or password was not accepted. Please check your credentials and try again.";
+  }
+  if (/email not confirmed|email_not_confirmed/.test(detail)) {
+    return "Please confirm your email address before signing in.";
+  }
+  if (/rate limit|too many requests|security purposes|after \d+ seconds|429/.test(detail)) {
+    return context === "reset"
+      ? "Too many reset requests were made. Please wait a few minutes and try again."
+      : "Too many authentication attempts were made. Please wait a few minutes and try again.";
+  }
+  if (/invalid email|email address.*invalid/.test(detail)) {
+    return "Enter a valid email address and try again.";
+  }
+  if (/weak password|password should be at least|password.*characters/.test(detail)) {
+    return "Use at least 8 characters for your password.";
+  }
+  if (/already registered|user already exists/.test(detail)) {
+    return "If an account exists for that email, check your inbox or log in.";
+  }
+  if (/failed to fetch|network|load failed|timeout/.test(detail)) {
+    return "We couldn't reach the authentication service. Check your connection and try again.";
+  }
+
+  return context === "reset"
+    ? "Password reset is temporarily unavailable. Please try again later."
+    : "Authentication is temporarily unavailable. Please try again.";
 }
 
 // -----------------------------
@@ -2116,11 +2151,21 @@ async function sendPasswordReset() {
   const emailEl = $('auth-email');
   if (!emailEl) return;
   const email = emailEl.value.trim();
-  if (!email) { setAuthStatus('Please enter your email address.', true); return; }
+  if (!email || !emailEl.checkValidity()) { setAuthStatus('Enter a valid email address and try again.', true); return; }
+  if (passwordResetRequestPending) return;
+
+  const submitButton = $('auth-reset-submit');
+  passwordResetRequestPending = true;
+  if (submitButton) submitButton.disabled = true;
 
   setAuthStatus('Sending reset link...');
   const client = await ensureSupabaseClient(3000);
-  if (!client) { setAuthStatus('Password reset is not available: Supabase not configured or failed to load.', true); return; }
+  if (!client) {
+    setAuthStatus('Password reset is temporarily unavailable. Please try again later.', true);
+    passwordResetRequestPending = false;
+    if (submitButton?.isConnected) submitButton.disabled = false;
+    return;
+  }
 
   try {
     const { passwordRecovery } = getAuthRedirectUrls();
@@ -2129,7 +2174,10 @@ async function sendPasswordReset() {
     setAuthStatus('If an account exists for that email, a reset link has been sent. Check your inbox.');
   } catch (e) {
     console.error('Password reset request failed');
-    setAuthStatus((e && e.message) ? `Error: ${e.message}` : 'Failed to send reset link. Please try again later.', true);
+    setAuthStatus(getSafeAuthErrorMessage(e, "reset"), true);
+  } finally {
+    passwordResetRequestPending = false;
+    if (submitButton?.isConnected) submitButton.disabled = false;
   }
 }
 
@@ -2163,6 +2211,8 @@ async function submitPasswordRecovery(event) {
     const confirmInput = $("password-recovery-confirm");
     if (newInput) newInput.value = "";
     if (confirmInput) confirmInput.value = "";
+    passwordRecoveryAuthorized = false;
+    passwordRecoveryCallbackPresent = false;
     cleanAuthFragmentFromUrl();
     setPasswordRecoveryState("success", "Password updated successfully. Returning you to FlirtyFlip…");
     clearTimeout(passwordRecoveryRedirectTimer);
@@ -2213,9 +2263,18 @@ async function submitAuthForm(event) {
   const passwordInput = $("auth-password");
   const email = emailInput?.value.trim();
   const password = passwordInput?.value;
+  const requestMode = authMode;
 
   if (!email || !password) {
     setAuthStatus("Please enter both email and password.", true);
+    return;
+  }
+  if (!emailInput.checkValidity()) {
+    setAuthStatus("Enter a valid email address and try again.", true);
+    return;
+  }
+  if (requestMode === "signup" && password.length < 8) {
+    setAuthStatus("Use at least 8 characters for your password.", true);
     return;
   }
 
@@ -2232,7 +2291,7 @@ async function submitAuthForm(event) {
   try {
     setAuthStatus("Working on it…");
     console.debug('submitAuthForm: using client', { clientAvailable: !!client });
-    const request = authMode === "signup"
+    const request = requestMode === "signup"
       ? client.auth.signUp({
         email,
         password,
@@ -2243,21 +2302,30 @@ async function submitAuthForm(event) {
     const { data, error } = await request;
     console.debug('submitAuthForm: auth request completed', { succeeded: !error, hasUser: Boolean(data?.user) });
     if (error) {
-      // Supabase v2 may return error objects with message or status
-      const message = error?.message || error?.error_description || (error?.status ? `HTTP ${error.status}` : 'Authentication failed');
-      throw new Error(message);
+      throw error;
     }
 
-    signedInUser = data?.user || null;
+    // With email confirmation enabled Supabase returns a user but no session. Keep the
+    // app signed out until the confirmation callback establishes a real session.
+    if (requestMode === "signup" && !data?.session) {
+      signedInUser = null;
+      clearStoredGuest();
+      if (passwordInput) passwordInput.value = "";
+      updateAuthUI();
+      setAuthStatus("Check your email to confirm your account, then return here to log in.");
+      return;
+    }
+
+    signedInUser = data?.session?.user || data?.user || null;
     if (signedInUser) {
       clearStoredGuest();
     }
     updateAuthUI();
     closeAuthModal();
-    toast(authMode === "signup" ? "Account created successfully ♡" : "Logged in successfully ♡");
+    toast(requestMode === "signup" ? "Account created successfully ♡" : "Logged in successfully ♡");
   } catch (error) {
     console.error('submitAuthForm: authentication request failed');
-    setAuthStatus((error && error.message) || "Something went wrong while authenticating.", true);
+    setAuthStatus(getSafeAuthErrorMessage(error, requestMode), true);
   }
 }
 
