@@ -184,10 +184,10 @@ test("connection status has a bounded reconnect threshold", () => {
 
 test("test-account login reports safe actionable feedback", () => {
   assert.equal(adapter.safeMessage({ message: "Email not confirmed" }), "Confirm this test account’s email before signing in.");
-  assert.equal(adapter.safeMessage({ code: "invalid_login_credentials" }), "The email or password was not accepted by the test project.");
-  assert.equal(adapter.safeMessage({ code: "invalid_credentials", message: "Invalid login credentials" }), "The email or password was not accepted by the test project.");
+  assert.equal(adapter.safeMessage({ code: "invalid_login_credentials" }), "The email or password was not accepted. Please check your credentials and try again.");
+  assert.equal(adapter.safeMessage({ code: "invalid_credentials", message: "Invalid login credentials" }), "The email or password was not accepted. Please check your credentials and try again.");
   assert.match(onlineSource, /role="status" aria-live="polite"/);
-  assert.match(onlineSource, /runtime\.pending \? "Signing in…" : "Sign in to Test Project"/);
+  assert.match(onlineSource, /runtime\.pending \? "Signing in…" : "Sign in to Play Online"/);
 });
 
 test("migration contains no broad destructive operation or Academy reference", () => {
