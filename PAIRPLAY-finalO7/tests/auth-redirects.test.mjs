@@ -231,6 +231,7 @@ test("authentication diagnostics do not log email, sessions or callback tokens",
   assert.doesNotMatch(script, /submitAuthForm: auth result', \{ data, error \}/);
   const consoleLines = script.split("\n").filter((line) => /console\.(?:debug|log|warn|error)/.test(line)).join("\n");
   assert.doesNotMatch(consoleLines, /access_token|refresh_token|token_hash|newPassword|confirmPassword|authMode, email|\{ data, error \}/i);
+  assert.doesNotMatch(script, /console\.error\(['"](?:Password reset request failed|submitAuthForm: authentication request failed)/);
   assert.match(script, /publicUrl\.hash = ""/);
   assert.match(script, /page_location: publicUrl\.href/);
   assert.doesNotMatch(script, /page_location: url\.href/);

@@ -2173,7 +2173,7 @@ async function sendPasswordReset() {
     if (error) throw error;
     setAuthStatus('If an account exists for that email, a reset link has been sent. Check your inbox.');
   } catch (e) {
-    console.error('Password reset request failed');
+    console.warn('Password reset request failed');
     setAuthStatus(getSafeAuthErrorMessage(e, "reset"), true);
   } finally {
     passwordResetRequestPending = false;
@@ -2324,7 +2324,7 @@ async function submitAuthForm(event) {
     closeAuthModal();
     toast(requestMode === "signup" ? "Account created successfully ♡" : "Logged in successfully ♡");
   } catch (error) {
-    console.error('submitAuthForm: authentication request failed');
+    console.warn('submitAuthForm: authentication request failed');
     setAuthStatus(getSafeAuthErrorMessage(error, requestMode), true);
   }
 }
