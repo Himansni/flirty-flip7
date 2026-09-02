@@ -63,6 +63,7 @@ img, svg, video { display:block; max-width:100%; }
 button, a { font: inherit; }
 button { min-height:44px; cursor: pointer; touch-action:manipulation; }
 button:focus-visible, a:focus-visible { outline: 3px solid rgba(255,36,73,.45); outline-offset: 3px; }
+.sr-only { position:absolute!important; width:1px!important; height:1px!important; padding:0!important; margin:-1px!important; overflow:hidden!important; clip:rect(0,0,0,0)!important; white-space:nowrap!important; border:0!important; }
 
 /* ========================================
    TYPOGRAPHY + CINEMATIC TEXTURE
@@ -185,10 +186,12 @@ body::before {
 @keyframes pageIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 
 /* ========================================
-   HERO / CINEMATIC LANDING
+   HOMEPAGE HERO ENHANCEMENTS
+   Controls the landing hierarchy, CTA emphasis and supporting value line.
+   Edit homepage-only spacing and CTA balance here without changing shared buttons.
    ======================================== */
 .hero {
-  width:min(100%, var(--content-max)); margin: 0 auto; min-height: 660px; padding: 65px var(--page-pad-desktop) 80px;
+  width:min(100%, var(--content-max)); margin: 0 auto; min-height: 720px; padding: 65px var(--page-pad-desktop) 80px;
   display:grid; grid-template-columns: 1fr 1fr; align-items:center; gap:70px;
 }
 .eyebrow { font-size:11px; letter-spacing:.19em; font-weight:800; color:var(--pink); margin-bottom:16px; }
@@ -198,15 +201,44 @@ body::before {
 .hero h1 { font-size:var(--heading-display); margin:0 0 24px; }
 em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.25); }
 .hero-sub { max-width:580px; font-size:18px; line-height:1.7; color:var(--muted); margin:0 0 30px; }
-.hero-buttons { display:flex; gap:15px; align-items:center; }
-.trust-row { display:flex; gap:18px; flex-wrap:wrap; margin-top:25px; color:#8a8085; font-size:12px; }
+.hero-buttons { display:flex; gap:13px; align-items:center; }
+.hero-primary-cta { min-height:54px; padding:14px 29px; box-shadow:0 16px 42px rgba(255,36,73,.3); }
+.hero-secondary-cta { min-height:50px; padding:13px 21px; border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.035); color:var(--muted-strong); box-shadow:none; }
+.hero-secondary-cta:hover { border-color:rgba(255,36,73,.38); color:var(--ink); }
+.hero-value-line { margin:20px 0 0; color:#948a8f; font-size:12px; line-height:1.6; letter-spacing:.015em; }
+.hero-value-line span { margin:0 5px; color:rgba(255,77,103,.65); }
+.hero-tertiary-link { min-height:44px; margin-top:5px; padding:7px 0; border:0; background:transparent; color:var(--muted); font-size:13px; font-weight:700; }
+.hero-tertiary-link:hover { color:var(--ink); }
+.hero-tertiary-link span { display:inline-block; margin-left:5px; color:var(--red); transition:transform .2s ease; }
+.hero-tertiary-link:hover span { transform:translateY(2px); }
 
-.hero-card-stage { height:290px; min-width:0; position:relative; display:grid; place-items:center; perspective:1200px; }
+/* ========================================
+   INTERACTIVE SAMPLE CARD
+   The isolated preview uses its own state in bindHeroSampleCard(); it never reads or writes game state.
+   Keep both faces the same size to prevent layout shift during the 3D reveal.
+   ======================================== */
+.hero-card-stage { height:520px; min-width:0; position:relative; display:grid; place-items:center; perspective:1200px; }
 .hero-card {
   width:min(330px, 72%); aspect-ratio: .69; border-radius:30px; position:absolute; padding:27px;
   box-shadow:var(--shadow); overflow:hidden;
 }
-.back-card { background:linear-gradient(150deg,#171316,#33222a); color:#fff; transform:rotate(9deg) translate(55px,-3px); }
+.back-card { background:linear-gradient(150deg,#171316,#33222a); color:#fff; transform:rotate(9deg) translate(55px,-28px); }
+.hero-sample-card { z-index:2; padding:0; border:0; background:transparent; color:#171316; transform:rotate(-8deg) translate(-35px,-14px); box-shadow:none; overflow:visible; }
+.hero-sample-card__inner { position:absolute; inset:0; border-radius:30px; box-shadow:var(--shadow); transform-style:preserve-3d; transition:transform .56s cubic-bezier(.2,.72,.2,1), box-shadow .25s ease; }
+.hero-sample-card:hover .hero-sample-card__inner { box-shadow:0 34px 100px rgba(0,0,0,.58), 0 0 34px rgba(255,36,73,.14); }
+.hero-sample-card:focus-visible { outline:3px solid rgba(255,77,103,.75); outline-offset:8px; }
+.hero-sample-card.is-flipped .hero-sample-card__inner { transform:rotateY(180deg); }
+.hero-sample-face { position:absolute; inset:0; display:block; padding:27px; border-radius:30px; overflow:hidden; backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+.hero-sample-face--cover { background:linear-gradient(145deg,#ffe6ef,#f4c9dc); }
+.hero-sample-face--cover::after, .hero-sample-face--question::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.48),transparent 36%); }
+.hero-sample-face--question { background:linear-gradient(145deg,#ffe6ef,#f4c9dc); opacity:1; transform:rotateY(180deg); transition:opacity .17s ease, transform .17s ease; }
+.hero-sample-card.is-changing .hero-sample-face--question { opacity:0; transform:rotateY(180deg) scale(.985); }
+.hero-sample-face > * { z-index:1; }
+.hero-sample-meta { position:absolute; z-index:5; right:5%; bottom:0; width:min(245px,70%); }
+.hero-sample-meta p { display:flex; justify-content:space-between; gap:16px; margin:0; color:var(--muted); font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+.hero-sample-cta { display:inline-flex; min-height:44px; align-items:center; margin-top:6px; padding:4px 0; border:0; background:transparent; color:#ff6a7e; font-size:13px; font-weight:800; }
+.hero-sample-cta[hidden] { display:none; }
+.hero-sample-cta span { margin-left:6px; }
 .front-card { background:linear-gradient(145deg,#ffe6ef,#f4c9dc); color:#171316; transform:rotate(-8deg) translate(-35px,25px); transition: transform .35s ease, background .45s ease, box-shadow .35s ease, color .25s ease; position:relative; overflow:hidden; }
 .front-card::after { content:""; position:absolute; inset:0; border-radius:30px; pointer-events:none; opacity:0; transform:scale(1); transition: opacity .45s ease, transform .45s ease; }
 .front-card.mood-playful::after { background: radial-gradient(circle at 20% 20%, rgba(255,200,80,.06), transparent 40%); opacity:1; transform:scale(1.02); }
@@ -231,6 +263,24 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .section-heading { display:flex; justify-content:space-between; align-items:end; gap:30px; margin-bottom:32px; }
 .section-heading h2 { margin:0; font-family:"Playfair Display",serif; font-size:44px; letter-spacing:-.04em; }
 .section-heading p { max-width:350px; color:var(--muted); line-height:1.6; margin:0; }
+
+/* ========================================
+   HOW IT WORKS SECTION
+   These three homepage cards summarize the real local flow; edit their copy in index.html.
+   Keep the layout lightweight so the section scans quickly on desktop and stacks cleanly on phones.
+   ======================================== */
+.home-how { padding-top:clamp(52px,7vw,82px); padding-bottom:clamp(58px,8vw,96px); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.home-how-heading { max-width:620px; margin-bottom:32px; }
+.home-how-heading h2 { margin:0; font-family:"Playfair Display",serif; font-size:var(--heading-section); letter-spacing:-.04em; }
+.home-how-heading p { margin:12px 0 0; color:var(--muted); line-height:1.6; }
+.home-how-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--card-gap); }
+.home-how-card { min-width:0; min-height:220px; padding:26px; border:1px solid var(--line); border-radius:var(--radius-md); background:linear-gradient(145deg,rgba(24,24,28,.82),rgba(12,12,14,.92)); box-shadow:0 16px 45px rgba(0,0,0,.18); }
+.home-how-card__top { display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+.home-how-icon { width:46px; height:46px; display:grid; place-items:center; border:1px solid rgba(255,36,73,.3); border-radius:15px; background:rgba(255,36,73,.09); color:#ff6a7e; font-family:"Playfair Display",serif; font-size:22px; }
+.home-how-icon--cards { transform:rotate(-5deg); }
+.home-how-number { color:#70676b; font-size:11px; font-weight:800; letter-spacing:.16em; }
+.home-how-card h3 { margin:0 0 9px; font-family:"Playfair Display",serif; font-size:23px; letter-spacing:-.025em; }
+.home-how-card p { margin:0; color:var(--muted); font-size:14px; line-height:1.65; }
 
 /* ========================================
    MOOD SELECTOR
@@ -272,11 +322,6 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .mood-flirty::before { background-image:repeating-linear-gradient(135deg, rgba(255,36,73,.8) 0 2px, transparent 2px 12px); }
 .mood-spicy::before { background-image:repeating-linear-gradient(45deg, rgba(255,100,40,.8) 0 2px, transparent 2px 9px); }
 
-
-.how-strip { border-top:1px solid var(--line); border-bottom:1px solid var(--line); max-width:1250px; margin:0 auto 90px; padding:45px 5vw; display:grid; grid-template-columns:repeat(3,1fr); gap:35px; }
-.step span { color:var(--pink); font-weight:800; font-size:11px; }
-.step h3 { margin:12px 0 6px; font-size:18px; }
-.step p { margin:0; color:var(--muted); line-height:1.55; font-size:14px; }
 
 .narrow { width:min(100%, var(--content-narrow)); margin:0 auto; padding:55px var(--page-pad-desktop) 100px; }
 .page-heading h2 { font-size:var(--heading-page); margin:0 0 16px; }
@@ -712,25 +757,40 @@ footer { width:min(100%, var(--content-max)); margin:0 auto; padding:30px var(--
   .hero { padding:35px var(--page-pad-mobile) 60px; min-height:auto; overflow:hidden; }
   .hero h1 { font-size:clamp(2.55rem, 13vw, 3.25rem); }
   .hero-sub { font-size:16px; }
-  .hero-buttons { flex-wrap:wrap; }
+  .hero-buttons { width:100%; flex-direction:column; align-items:stretch; gap:10px; }
+  .hero-primary-cta, .hero-secondary-cta { width:100%; justify-content:center; }
+  .hero-value-line { max-width:330px; margin-top:17px; font-size:11px; }
+  .hero-tertiary-link { margin-top:3px; }
 
-  /* Homepage card artwork stays layered and physical-feeling in a shorter editorial stage.
+  /* Interactive homepage preview stays layered and leaves dedicated room for its progress/CTA row.
      Edit these transforms together to preserve the front/back-card relationship on phones. */
-  .hero-card-stage { height:300px; margin-top:6px; }
-  .hero-card { width:min(205px, calc(100vw - 112px)); padding:21px; border-radius:22px; }
-  .back-card { transform:rotate(7deg) translate(36px,-3px); }
+  .hero-card-stage { height:390px; margin-top:14px; }
+  .hero-card { width:min(210px, calc(100vw - 110px)); padding:21px; border-radius:22px; }
+  .back-card { transform:rotate(7deg) translate(32px,-20px); }
   .front-card { transform:rotate(-6deg) translate(-24px,17px); }
+  .hero-sample-card { padding:0; transform:rotate(-6deg) translate(-22px,-13px); }
+  .hero-sample-card__inner, .hero-sample-face { border-radius:22px; }
+  .hero-sample-face { padding:21px; }
   .hero-question { left:21px; right:21px; top:34%; font-size:clamp(18px,5.2vw,21px); }
   .card-top { font-size:10px; }
   .card-symbol { font-size:78px; }
   .card-bottom { left:21px; bottom:20px; font-size:9px; }
   .card-label { font-size:9px; }
   .card-footer { left:21px; right:21px; bottom:20px; font-size:8px; }
+  .hero-sample-meta { right:3%; bottom:0; width:min(220px,72%); }
+  .hero-sample-meta p { font-size:9px; }
+  .hero-sample-cta { font-size:12px; }
   .floating-note { padding:8px 10px; font-size:10px; }
   .note-one { top:9%; right:7%; }
   .note-two { bottom:10%; left:3%; }
   .section { padding:55px var(--page-pad-mobile); }
   .section-heading h2 { font-size:36px; }
+  .home-how { padding-top:52px; padding-bottom:58px; }
+  .home-how-heading { margin-bottom:24px; }
+  .home-how-heading h2 { font-size:clamp(2rem,10vw,2.55rem); }
+  .home-how-grid { grid-template-columns:1fr; gap:14px; }
+  .home-how-card { min-height:0; padding:22px; }
+  .home-how-card__top { margin-bottom:22px; }
   .mood-grid { grid-template-columns:1fr; }
   .mood-card { min-height:205px; }
 
@@ -747,7 +807,6 @@ footer { width:min(100%, var(--content-max)); margin:0 auto; padding:30px var(--
   #moods .mood-desc { font-size:13px; line-height:1.5; }
   #moods .mood-bottom { width:100%; margin-top:auto; padding-top:16px; align-items:center; }
   #moods .play-link { display:inline-flex; min-height:44px; align-items:center; padding:0 14px; border:1px solid rgba(255,77,103,.35); border-radius:999px; background:rgba(255,36,73,.1); color:#ff7188; }
-  .how-strip { margin-bottom:55px; padding:40px var(--page-pad-mobile); }
   .narrow { padding:40px var(--page-pad-mobile) 70px; }
   .page-heading h2 { font-size:clamp(2.25rem, 11vw, 3rem); }
   .setup-title { font-size:clamp(2.25rem, 10vw, 2.75rem); }

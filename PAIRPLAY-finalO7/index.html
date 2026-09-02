@@ -144,38 +144,76 @@
          Change headline, buttons or hero copy here.
          ======================================== -->
     <section id="home" class="page active">
+      <!-- Homepage Hero Enhancements: keep the primary and secondary actions routed through the existing helpers. -->
       <div class="hero">
         <div class="hero-copy">
           <div class="eyebrow">A DIGITAL DATE-NIGHT GAME</div>
           <h1>Put the phones down.<br><em>Pick a card.</em></h1>
           <p class="hero-sub">Questions, little challenges and unexpected conversations designed to make you laugh, open up and fall for each other again.</p>
           <div class="hero-buttons">
-            <button id="start-playing-btn" class="pill-btn" onclick="showMoods()">Start playing <span>→</span></button>
-            <button id="see-how-btn" class="ghost-btn" onclick="showHow()">See how it works</button>
-            <button id="play-online-btn" class="online-btn" onclick="showOnline()">Play Online ↗</button>
+            <button id="start-playing-btn" class="pill-btn hero-primary-cta" onclick="showMoods()">Start Playing <span>→</span></button>
+            <button id="play-online-btn" class="online-btn hero-secondary-cta" onclick="showOnline()">Play Online <span aria-hidden="true">↗</span></button>
           </div>
-          <div class="trust-row">
-            <span>♡ No signup</span>
-            <span>✦ Works on mobile</span>
-            <span>∞ Free to try</span>
-          </div>
+          <p class="hero-value-line">Free to start <span aria-hidden="true">•</span> No download <span aria-hidden="true">•</span> Play together anywhere</p>
+          <button id="see-how-btn" class="hero-tertiary-link" onclick="showHow()">See how it works <span aria-hidden="true">↓</span></button>
         </div>
 
+        <!-- Interactive Sample Card: edit the three general-audience prompts in HERO_SAMPLE_PROMPTS in script.js. -->
         <div class="hero-card-stage">
           <div class="floating-note note-one">for tonight ♡</div>
           <div class="floating-note note-two">just one more...</div>
-          <div class="hero-card back-card">
+          <div class="hero-card back-card" aria-hidden="true">
             <div class="card-top">FLIRTYFLIP</div>
             <div class="card-symbol">♡</div>
             <div class="card-bottom">FLIP ME</div>
           </div>
-          <div class="hero-card front-card">
-            <div class="card-label">ROMANTIC</div>
-            <div class="hero-question">“What is one tiny thing I do that always makes you smile?”</div>
-            <div class="card-footer">01 · CONNECTION</div>
+          <button id="hero-sample-card" class="hero-card hero-sample-card" type="button" aria-pressed="false" aria-describedby="hero-sample-hint">
+            <span class="hero-sample-card__inner">
+              <span class="hero-sample-face hero-sample-face--cover" aria-hidden="true">
+                <span class="card-top">FLIRTYFLIP</span>
+                <span class="card-symbol">♡</span>
+                <span class="card-bottom">TAP TO REVEAL</span>
+              </span>
+              <span class="hero-sample-face hero-sample-face--question" aria-hidden="true">
+                <span class="card-label">ROMANTIC</span>
+                <span class="hero-question" id="hero-sample-question">“What's one small thing I do that always makes you smile?”</span>
+                <span class="card-footer" id="hero-sample-footer">01 · CONNECTION</span>
+              </span>
+            </span>
+          </button>
+          <div class="hero-sample-meta">
+            <p id="hero-sample-hint"><span id="hero-sample-action">Tap to reveal</span><span id="hero-sample-count">1 of 3</span></p>
+            <button id="hero-sample-cta" class="hero-sample-cta" type="button" hidden>Try the full game <span aria-hidden="true">→</span></button>
           </div>
+          <div id="hero-sample-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
         </div>
       </div>
+
+      <!-- How It Works Section: keep these three concise steps aligned with the real local-game flow. -->
+      <section id="home-how" class="home-how section" aria-labelledby="home-how-title">
+        <div class="home-how-heading">
+          <div class="eyebrow">HOW IT WORKS</div>
+          <h2 id="home-how-title">How It Works</h2>
+          <p>Three simple steps to a better date night.</p>
+        </div>
+        <div class="home-how-grid">
+          <article class="home-how-card">
+            <div class="home-how-card__top"><span class="home-how-icon" aria-hidden="true">✦</span><span class="home-how-number">01</span></div>
+            <h3>Choose your vibe</h3>
+            <p>Pick the mood that feels right for both of you.</p>
+          </article>
+          <article class="home-how-card">
+            <div class="home-how-card__top"><span class="home-how-icon home-how-icon--cards" aria-hidden="true">♡</span><span class="home-how-number">02</span></div>
+            <h3>Take turns drawing cards</h3>
+            <p>Reveal questions, prompts and playful challenges together.</p>
+          </article>
+          <article class="home-how-card">
+            <div class="home-how-card__top"><span class="home-how-icon" aria-hidden="true">∞</span><span class="home-how-number">03</span></div>
+            <h3>Laugh, talk &amp; get closer</h3>
+            <p>Discover new things about each other while having fun.</p>
+          </article>
+        </div>
+      </section>
 
       <section class="section">
         <div class="section-heading">
@@ -188,11 +226,6 @@
         <div id="home-moods" class="mood-grid"></div>
       </section>
 
-      <section class="how-strip">
-        <div class="step"><span>01</span><h3>Pick a mood</h3><p>Choose the feeling that matches tonight.</p></div>
-        <div class="step"><span>02</span><h3>Tap to reveal + advance</h3><p>Tap the card or NEXT CARD. The next prompt appears already revealed.</p></div>
-        <div class="step"><span>03</span><h3>Get closer</h3><p>Answer, laugh, challenge each other, repeat.</p></div>
-      </section>
     </section>
 
     <!-- MOODS -->

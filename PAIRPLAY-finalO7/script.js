@@ -106,6 +106,17 @@ const moods = {
    },
 };
 
+// ========================================
+// INTERACTIVE HOMEPAGE SAMPLE CARD
+// Edit these three general-audience previews here; this data is intentionally separate from game decks.
+// The preview never reads or writes selectedMood, currentCards, sessionStorage or Supabase state.
+// ========================================
+const HERO_SAMPLE_PROMPTS = Object.freeze([
+  Object.freeze({ label: "ROMANTIC", question: "What's one small thing I do that always makes you smile?", footer: "01 · CONNECTION" }),
+  Object.freeze({ label: "DATE NIGHT", question: "What would your perfect date with me look like?", footer: "02 · IMAGINATION" }),
+  Object.freeze({ label: "TOGETHER", question: "What's something you'd love for us to try together?", footer: "03 · DISCOVERY" })
+]);
+
 // Separate 25-card and 50-card prompt pools so each deck length can be edited independently.
 const moodQuestionSets = {
   sweet: {
@@ -2366,33 +2377,77 @@ function renderMoodCards(targetId) {
   `).join("");
 }
 
-// Apply a mood class to the large hero front card so it visually matches the mood palette.
-function applyHeroMood(key) {
-  if (typeof document === 'undefined') return;
-  try {
-    const el = document.querySelector('.hero-card.front-card');
-    if (!el) return;
-    // remove existing mood- classes
-    Array.from(el.classList).filter(c => c.startsWith('mood-')).forEach(c => el.classList.remove(c));
-    el.classList.add(`mood-${key}`);
-    // Update label and hero sample question for visual consistency
-    const lbl = el.querySelector('.card-label');
-    if (lbl && moods[key]) {
-      try {
-        lbl.style.transition = 'opacity .28s ease';
-        lbl.style.opacity = 0;
-        setTimeout(() => { lbl.textContent = moods[key].title.toUpperCase(); lbl.style.opacity = 1; }, 140);
-      } catch (e) { lbl.textContent = moods[key].title.toUpperCase(); }
+// Bind the isolated preview once. Native button semantics provide Enter/Space support;
+// a short transition lock prevents repeated taps from skipping or corrupting its local index.
+function bindHeroSampleCard() {
+  const card = $("hero-sample-card");
+  const label = card?.querySelector(".card-label");
+  const question = $("hero-sample-question");
+  const footer = $("hero-sample-footer");
+  const action = $("hero-sample-action");
+  const count = $("hero-sample-count");
+  const announcer = $("hero-sample-announcer");
+  const startCta = $("hero-sample-cta");
+  if (!card || !label || !question || !footer || !action || !count || !announcer || !startCta || card.dataset.bound === "true") return;
+
+  card.dataset.bound = "true";
+  let sampleIndex = 0;
+  let isRevealed = false;
+  let transitionLocked = false;
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const revealDuration = reducedMotion ? 0 : 560;
+  const changeDuration = reducedMotion ? 0 : 170;
+
+  const renderSample = () => {
+    const sample = HERO_SAMPLE_PROMPTS[sampleIndex];
+    label.textContent = sample.label;
+    question.textContent = `“${sample.question}”`;
+    footer.textContent = sample.footer;
+    count.textContent = `${sampleIndex + 1} of ${HERO_SAMPLE_PROMPTS.length}`;
+    action.textContent = isRevealed ? (sampleIndex === HERO_SAMPLE_PROMPTS.length - 1 ? "Tap to replay" : "Tap for another") : "Tap to reveal";
+    card.setAttribute("aria-pressed", String(isRevealed));
+    card.setAttribute("aria-label", isRevealed
+      ? `Sample question ${sampleIndex + 1} of ${HERO_SAMPLE_PROMPTS.length}: ${sample.question}. Activate for the next sample.`
+      : `Reveal sample question ${sampleIndex + 1} of ${HERO_SAMPLE_PROMPTS.length}.`);
+    startCta.hidden = !(isRevealed && sampleIndex === HERO_SAMPLE_PROMPTS.length - 1);
+  };
+
+  const unlockAfter = (delay) => {
+    window.setTimeout(() => { transitionLocked = false; }, delay);
+  };
+
+  const activateSample = () => {
+    if (transitionLocked) return;
+    transitionLocked = true;
+
+    if (!isRevealed) {
+      isRevealed = true;
+      card.classList.add("is-flipped");
+      renderSample();
+      announcer.textContent = `Sample question ${sampleIndex + 1}: ${HERO_SAMPLE_PROMPTS[sampleIndex].question}`;
+      unlockAfter(revealDuration);
+      return;
     }
-    const heroQ = el.querySelector('.hero-question');
-    if (heroQ && moods[key] && Array.isArray(moods[key].questions) && moods[key].questions.length > 0) {
-      try {
-        heroQ.style.transition = 'opacity .32s ease';
-        heroQ.style.opacity = 0;
-        setTimeout(() => { heroQ.textContent = moods[key].questions[0][1]; heroQ.style.opacity = 1; }, 160);
-      } catch (e) { heroQ.textContent = moods[key].questions[0][1]; }
-    }
-  } catch (e) { /* ignore errors in non-ideal DOM states */ }
+
+    card.classList.add("is-changing");
+    window.setTimeout(() => {
+      sampleIndex = (sampleIndex + 1) % HERO_SAMPLE_PROMPTS.length;
+      renderSample();
+      card.classList.remove("is-changing");
+      announcer.textContent = `Sample question ${sampleIndex + 1}: ${HERO_SAMPLE_PROMPTS[sampleIndex].question}`;
+      unlockAfter(changeDuration);
+    }, changeDuration);
+  };
+
+  card.addEventListener("click", activateSample);
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    activateSample();
+  });
+
+  startCta.addEventListener("click", showMoods);
+  renderSample();
 }
 
 // ========================================
@@ -2859,7 +2914,6 @@ function selectMood(key) {
   skipped = 0;
   gamePlayers = createGamePlayers();
   gameSessionStatus = "setup";
-  applyHeroMood(key);
   persistGameSession("setup");
   navigateToRoute(ROUTE_PATHS.setup);
 }
@@ -3256,7 +3310,7 @@ function toast(message){
 // ========================================
 if (typeof document !== 'undefined') {
   // render after a short delay to let other scripts set up
-  setTimeout(() => { renderMoodCards("home-moods"); applyHeroMood(selectedMood); }, 10);
+  setTimeout(() => { renderMoodCards("home-moods"); }, 10);
 }
 
 function bindAuthEvents() {
@@ -3526,7 +3580,6 @@ function launchCatalogGame(gameId) {
   skipped = 0;
   gamePlayers = createGamePlayers();
   gameSessionStatus = "setup";
-  applyHeroMood(selectedMood);
   persistGameSession("setup");
   navigateToRoute(ROUTE_PATHS.setup);
 }
@@ -3958,6 +4011,7 @@ function bindGlobalUI() {
       }
     });
   }
+  bindHeroSampleCard();
 }
 
 // ========================================
