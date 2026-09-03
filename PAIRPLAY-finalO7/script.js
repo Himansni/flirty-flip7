@@ -1675,22 +1675,13 @@ function validateMoodDecks() {
 validateMoodDecks();
 
 // ========================================
-// COURSES DATA
-// Structured course data for the catalog and course detail views.
-// Edit course title → subtitle → category → chapters → lessons.
-// Keep content here for easy editing by a normal-level coder.
+// COURSE CONTENT
+// Long outcomes and lesson bodies stay separate from editable catalog metadata.
+// Edit titles, summaries, categories and ordering in course-catalog.js instead.
 // ========================================
-const coursesData = {
+const courseContentData = {
 
 'better-communication': {
-    id: 'better-communication',
-    title: 'THE INTIMACY BLUEPRINT FOR MEN',
-    category: 'For Him',
-    subtitle: 'Become More Present. More Connected. More Confident.',
-    chapters: 7,
-    //time: '~22 min',
-    tags: ['for-him', 'communication'],
-    summary: 'The Intimacy Blueprint for Men is not designed to teach you how to manipulate attraction, perform masculinity, or become someone you are not It is designed to help you develop the internal and relational skills required to create deeper, healthier, more intentional intimacy.',
     outcomes: [
       'A practical framework for understanding yourself, communicating with depth, creating genuine connection, and building healthier intimacy.',
       'Express needs clearly and without accusation.',
@@ -1708,14 +1699,6 @@ const coursesData = {
     ]
   },
   'confident-connection': {
-    id: 'confident-connection',
-    title: 'Confident Connection',
-    category: 'For Him',
-    subtitle: 'Build confidence & presence',
-    chapters: 8,
-    time: '~25 min',
-    tags: ['for-him', 'connection'],
-    summary: 'Courses focused on confidence, communication, intimacy, and being a better partner.',
     outcomes: [
       'Practice grounded presence instead of performing confidence.',
       'Notice emotional signals through words, tone and body language.',
@@ -1745,14 +1728,6 @@ const coursesData = {
   },
   
   'art-of-romance': {
-    id: 'art-of-romance',
-    title: 'The Art of Romance',
-    category: 'For Him',
-    subtitle: 'Create small romantic moments',
-    chapters: 8,
-    time: '~25 min',
-    tags: ['for-him', 'romance'],
-    summary: 'Turn everyday moments into meaningful romantic experiences.',
     outcomes: [
       'Create small rituals that make everyday connection feel intentional.',
       'Choose thoughtful gestures that carry personal meaning.',
@@ -1762,15 +1737,7 @@ const coursesData = {
       { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
     ]
   },
-  'How to last longer': {
-    id: 'art-of-romance',
-    title: 'How to last longer',
-    category: 'For Him',
-    subtitle: 'Create small romantic moments',
-    chapters: 8,
-    time: '~25 min',
-    tags: ['for-him', 'romance'],
-    summary: 'Turn everyday moments into meaningful romantic experiences.',
+  'how-to-last-longer': {
     outcomes: [
       'Create small rituals that make everyday connection feel intentional.',
       'Choose thoughtful gestures that carry personal meaning.',
@@ -1784,16 +1751,20 @@ const coursesData = {
 
 // ========================================
 // COURSE DISCOVERY AND PROGRESS CONFIGURATION
-// Filters reflect categories actually present in coursesData; progress stays local to this device.
+// Combines catalog metadata with separate lesson content; progress stays local to this device.
 // Supabase integration can replace these storage helpers later without changing course renderers.
 // ========================================
-const courseFilterOptions = [
-  { id: 'all', label: 'All' },
-  { id: 'for-him', label: 'For Him' },
-  { id: 'communication', label: 'Communication' },
-  { id: 'romance', label: 'Romance' },
-  { id: 'connection', label: 'Connection' }
-];
+const courseCatalogApi = typeof window !== 'undefined' ? window.FlirtyFlipCourseCatalog : null;
+const courseFilterOptions = courseCatalogApi?.filters || [{ id: 'all', label: 'All' }];
+const courseCategories = courseCatalogApi?.categories || [];
+const coursesData = Object.fromEntries((courseCatalogApi?.courses || []).map((metadata) => [
+  metadata.slug,
+  {
+    ...metadata,
+    outcomes: courseContentData[metadata.id]?.outcomes || [],
+    sections: courseContentData[metadata.id]?.sections || []
+  }
+]));
 const COURSE_PROGRESS_KEY = 'flirtyflip-course-progress-v1';
 
 function getFlatCourseLessons(course) {
@@ -3372,6 +3343,7 @@ function bindAuthEvents() {
 }
 
 if (typeof document !== 'undefined') {
+  renderCourseNavigation();
   bindGlobalUI();
   bindAuthEvents();
   // Initialize favorites badge from storage
@@ -3587,8 +3559,27 @@ function launchCatalogGame(gameId) {
 // ========================================
 // COURSE CATALOG COMPONENTS
 // Cards use centralized course data and show real local progress only when it exists.
-// Discovery filters include subject areas so gender is never the sole navigation path.
+// Edit display metadata and category labels in course-catalog.js, not in these renderers.
 // ========================================
+function renderCourseNavigation() {
+  const categoryMenu = $('course-category-menu');
+  const featuredMenu = $('course-featured-menu');
+
+  if (categoryMenu) {
+    categoryMenu.innerHTML = courseCategories.map(({ id, label }) => {
+      const route = `${ROUTE_PATHS.courses}?filter=${encodeURIComponent(id)}`;
+      return `<li><a href="${route}" data-route="${route}">${escapeHtml(label)}</a></li>`;
+    }).join('');
+  }
+
+  if (featuredMenu) {
+    featuredMenu.innerHTML = (courseCatalogApi?.getFeaturedCourses?.() || []).map((course) => {
+      const route = `${ROUTE_PATHS.course}/${encodeURIComponent(course.slug)}`;
+      return `<li><a href="${route}" data-route="${route}">${escapeHtml(course.navigationLabel || course.title)}</a></li>`;
+    }).join('');
+  }
+}
+
 function renderCourseProgress(courseId, compact = false) {
   const percent = getCourseProgressPercent(courseId);
   if (percent === null) return "";
@@ -3602,12 +3593,16 @@ function renderCourseProgress(courseId, compact = false) {
 
 function renderCourseCard(course) {
   const lessons = getFlatCourseLessons(course);
-  const progress = getCourseProgress(course.id);
-  const route = `${ROUTE_PATHS.course}/${encodeURIComponent(course.id)}`;
+  const progress = getCourseProgress(course.slug);
+  const route = `${ROUTE_PATHS.course}/${encodeURIComponent(course.slug)}`;
+  const categoryLabel = courseCatalogApi?.getCategory?.(course.category)?.label || 'Course';
+  const courseAction = course.comingSoon
+    ? '<span class="course-card__cta" aria-label="Coming soon">Coming soon <span aria-hidden="true">♡</span></span>'
+    : `<a class="course-card__cta" href="${route}" data-route="${route}">${progress ? 'Continue course' : 'View course'} <span aria-hidden="true">→</span></a>`;
   return `
     <article class="course-card">
       <div class="course-card__top">
-        <span class="course-audience">${escapeHtml(course.category || 'Course')}</span>
+        <span class="course-audience">${escapeHtml(categoryLabel)}</span>
         <span class="course-monogram" aria-hidden="true">${escapeHtml(course.title.charAt(0))}</span>
       </div>
       <div class="course-card__body">
@@ -3616,16 +3611,24 @@ function renderCourseCard(course) {
         <div class="metadata-row" aria-label="Course details">
           <span>${lessons.length} lessons</span>${course.time ? `<span>${escapeHtml(course.time)}</span>` : ''}
         </div>
-        ${renderCourseProgress(course.id, true)}
+        ${renderCourseProgress(course.slug, true)}
       </div>
-      <a class="course-card__cta" href="${route}" data-route="${route}">${progress ? 'Continue course' : 'View course'} <span aria-hidden="true">→</span></a>
+      ${courseAction}
     </article>
   `;
 }
 
 function renderCoursesCatalog(filterId = 'all') {
   const selectedFilter = courseFilterOptions.some(({ id }) => id === filterId) ? filterId : 'all';
-  const courses = Object.values(coursesData).filter((course) => selectedFilter === 'all' || course.tags?.includes(selectedFilter));
+  const courses = courseCatalogApi?.getVisibleCourses?.(selectedFilter)
+    .map((course) => coursesData[course.slug])
+    .filter(Boolean) || [];
+  const courseGroups = courseCategories
+    .map((category) => ({
+      ...category,
+      courses: courses.filter((course) => course.category === category.id)
+    }))
+    .filter(({ courses: categoryCourses }) => categoryCourses.length > 0);
 
   configureCatalogShell({
     eyebrow: 'COURSES',
@@ -3640,13 +3643,15 @@ function renderCoursesCatalog(filterId = 'all') {
         <button class="filter-chip" type="button" data-action="filter-courses" data-filter="${id}" aria-pressed="${selectedFilter === id}">${escapeHtml(label)}</button>
       `).join('')}
     </div>
-    <div class="catalog-section-heading">
-      <div><div class="eyebrow">LEARNING PATHS</div><h2>Grow closer, one lesson at a time.</h2></div>
-      <p>${courses.length} ${courses.length === 1 ? 'course' : 'courses'}</p>
-    </div>
-    <div class="course-grid">
-      ${courses.length ? courses.map(renderCourseCard).join('') : '<div class="empty-state"><h3>No courses in this filter yet.</h3><p>Try another topic to keep learning.</p></div>'}
-    </div>
+    ${courseGroups.length ? courseGroups.map((group) => `
+      <section class="course-category-section" aria-labelledby="course-category-${escapeHtml(group.id)}">
+        <div class="catalog-section-heading">
+          <div><div class="eyebrow">LEARNING PATHS</div><h2 id="course-category-${escapeHtml(group.id)}">${escapeHtml(group.label)}</h2></div>
+          <p>${group.courses.length} ${group.courses.length === 1 ? 'course' : 'courses'}</p>
+        </div>
+        <div class="course-grid">${group.courses.map(renderCourseCard).join('')}</div>
+      </section>
+    `).join('') : '<div class="empty-state"><h3>No courses in this filter yet.</h3><p>Try another topic to keep learning.</p></div>'}
   `;
 }
 
@@ -4108,6 +4113,7 @@ function renderCourseDetail(courseId) {
   if (!content) return;
   const c = (typeof coursesData !== 'undefined') ? coursesData[courseId] : null;
   if (!c) return;
+  const categoryLabel = courseCatalogApi?.getCategory?.(c.category)?.label || '';
   const lessons = getFlatCourseLessons(c);
   const progress = getCourseProgress(courseId);
   const continueLesson = Math.min(progress?.lastLesson || 0, Math.max(0, lessons.length - 1));
@@ -4154,7 +4160,7 @@ function renderCourseDetail(courseId) {
       <header class="course-detail-hero">
         <div class="course-detail-hero__mark" aria-hidden="true"><span>${escapeHtml(c.title.charAt(0))}</span><small>FLIRTYFLIP COURSE</small></div>
         <div class="course-detail-hero__copy">
-          ${c.category ? `<div class="course-audience">${escapeHtml(c.category)}</div>` : ''}
+          ${categoryLabel ? `<div class="course-audience">${escapeHtml(categoryLabel)}</div>` : ''}
           <h1>${escapeHtml(c.title)}</h1>
           <p class="course-hook">${escapeHtml(c.subtitle || c.summary || '')}</p>
           <div class="metadata-row" aria-label="Course details"><span>${lessons.length} lessons</span>${c.time ? `<span>${escapeHtml(c.time)}</span>` : ''}</div>

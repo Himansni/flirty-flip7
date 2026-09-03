@@ -81,20 +81,13 @@
           <div id="courses-menu" class="mega-menu mega-menu--courses" role="menu" aria-label="Courses menu">
             <div class="mega-col">
               <h4>Courses</h4>
-              <ul>
-                <li><a href="/courses?filter=for-him" data-route="/courses?filter=for-him">For Him</a></li>
-                <li><a href="/courses?filter=communication" data-route="/courses?filter=communication">Communication</a></li>
-                <li><a href="/courses?filter=romance" data-route="/courses?filter=romance">Romance</a></li>
-                <li><a href="/courses?filter=connection" data-route="/courses?filter=connection">Connection</a></li>
-              </ul>
+              <!-- Category links are generated from course-catalog.js so labels stay in one file. -->
+              <ul id="course-category-menu"></ul>
             </div>
             <div class="mega-col">
               <h4>Featured</h4>
-              <ul>
-                <li><a href="/course/confident-connection" data-route="/course/confident-connection">Confident Connection</a></li>
-                <li><a href="/course/better-communication" data-route="/course/better-communication">Better Communication</a></li>
-                <li><a href="/course/art-of-romance" data-route="/course/art-of-romance">The Art of Romance</a></li>
-              </ul>
+              <!-- Featured course links use the same centralized titles and slugs as /courses. -->
+              <ul id="course-featured-menu"></ul>
               <a class="mega-menu__all" href="/courses" data-route="/courses">View all courses →</a>
             </div>
           </div>
@@ -370,7 +363,7 @@
          SHARED GAMES / COURSES CATALOG SHELL
          /games renders the Games catalog or game details; /courses renders the Courses catalog.
          /course/:slug renders course details, while ?lesson=N renders the focused course reader.
-         Edit those generated views in script.js and keep this shared HTML shell generic.
+         Edit course metadata in course-catalog.js and generated view markup in script.js.
          ======================================== -->
     <section id="catalog" class="page catalog-page">
       <button id="catalog-back" class="back-btn" type="button">← Back</button>
@@ -483,7 +476,7 @@
     <span>Made for better date nights.</span>
   </footer>
 
-  <!-- Runtime scripts: Supabase is optional; script.js owns routing, state, catalogs and interactions. -->
+  <!-- Runtime scripts: Supabase is optional; course-catalog.js loads before the shared renderer. -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script>
     // IMPORTANT: Supabase project URL must be the project origin ONLY — do not include /rest/v1/ or any path segments.
@@ -500,6 +493,7 @@
   <script src="/couple-games-online.js"></script>
   <script src="/couple-games.js"></script>
   <script src="/auth-redirects.js"></script>
+  <script src="/course-catalog.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>
