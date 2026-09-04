@@ -216,7 +216,9 @@ const moodQuestionSets = {
   ["CHALLENGE🎯", "Invent a tiny handshake that ends with something sweet."],
   ["DO✦", "Rest your head on my shoulder and stay there while you answer the next one."],
   ["CHALLENGE🎯", "Show me how you would dramatically ‘swoon’ over me in the cutest way."],
-  ["DO✦", "Hold both of my hands and swing them gently like excited kids."],
+  ["DO✦", "Hold both of my hands and swing them gently like excited kids."]
+  ["ASK💭", "What do you find cutest about the way I care about you?"],
+  ["CHALLENGE🎯", "Make up a super sweet and slightly silly pet name for me on the spot."],
 
   // SOFT AFFECTION
   ["ASK💭", "What little gesture always makes you feel extra loved by me?"],
@@ -416,6 +418,7 @@ const moodQuestionSets = {
     ["ASK💭", "What's a fear you've never said out loud about us?"],
     ["CHALLENGE🎯", "Recreate the face you made the first time you realized you liked me."],
     ["REMEMBER✨", "What's a moment you almost messed this up, and how close did it get?"],
+    ["DO✦", "Slide both hands under me and lift just enough to press our bodies fully together."],
     ["SAY💗", "Tell them one thing you think about when you can't sleep and they're not there."],
     ["DO✦", "Whisper the cheesiest pickup line you can think of, dead serious."],
   ],
@@ -956,6 +959,8 @@ const moodQuestionSets = {
   ["SAY💗", "Describe a stranger-to-lovers or anonymous moment you’d want to create with me."],
   ["DO✦", "Touch me as if this is the only night we’re allowed to have."],
   ["CHALLENGE🎯", "Speak one line that belongs in an enemies-to-lovers or forbidden scene."],
+  ["SAY💗", "Say one thing you love about me not being able to see you."],
+  ["CHALLENGE🎯", "Make the first ten touches completely unpredictable."],
 
   // CLOSE
   ["ASK💭", "Which fantasy from tonight do you actually want to keep playing with?"],
@@ -1314,6 +1319,8 @@ const moodQuestionSets = {
   ["CHALLENGE🎯", "Tell me, without softening it, the life you actually want with me."],
 
   // CLOSE
+  ["DO✦", "Keep physical contact the entire time you answer the next three."],
+  ["CHALLENGE🎯", "Speak one sentence that starts with ‘I hope we never stop…’"],
   ["ASK💭", "What’s the last thing you want us to remember from this conversation?"],
   ["SAY💗", "Tell me one piece of our future you’re already carrying with you."],
   ["DO✦", "Kiss me slowly, like we’re sealing something we just built with words."],
@@ -1698,6 +1705,7 @@ const courseContentData = {
            'CONNECTION OVER PERFORMANCE - When intimacy becomes a performance, your attention shifts away from the actual experience and toward evaluating yourself. You begin asking whether you are impressive enough, attractive enough, confident enough, or doing everything correctly. That mental pressure can make it harder to notice what is actually happening between you and another person. A connection-oriented mindset works differently. Instead of constantly evaluating yourself, you become curious about the experience: what are you feeling, what is the other person communicating, what feels comfortable, what needs to be discussed, and what would allow both people to feel more connected? The source material similarly encourages approaching sex as an experience rather than a performance and developing presence and curiosity.'] }
     ]
   },
+   /* New course */
   'confident-connection': {
     outcomes: [
       'Practice grounded presence instead of performing confidence.',
@@ -1705,6 +1713,7 @@ const courseContentData = {
       'Ask clearer questions and respond with more attention.',
       'Build comfort through steady, low-pressure connection.'
     ],
+  
     sections: [
       {
         title: 'Overview',
@@ -1726,7 +1735,9 @@ const courseContentData = {
       }
     ]
   },
-  
+
+  /* New course */
+
   'art-of-romance': {
     outcomes: [
       'Create small rituals that make everyday connection feel intentional.',
@@ -1744,7 +1755,14 @@ const courseContentData = {
       'Design date nights around attention and connection.'
     ],
     sections: [
-      { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
+      { title: 'Lessons', lessons: ['Intro', 
+        'Small rituals',
+         'Gifts that mean more', 
+         'Date design', 
+         'Connection techniques', 
+         'Practice', 
+         'Final challenge', 
+         'Wrap up'] }
     ]
   }
 };
