@@ -216,7 +216,7 @@ const moodQuestionSets = {
   ["CHALLENGE🎯", "Invent a tiny handshake that ends with something sweet."],
   ["DO✦", "Rest your head on my shoulder and stay there while you answer the next one."],
   ["CHALLENGE🎯", "Show me how you would dramatically ‘swoon’ over me in the cutest way."],
-  ["DO✦", "Hold both of my hands and swing them gently like excited kids."]
+  ["DO✦", "Hold both of my hands and swing them gently like excited kids 🫠."]
   ["ASK💭", "What do you find cutest about the way I care about you?"],
   ["CHALLENGE🎯", "Make up a super sweet and slightly silly pet name for me on the spot."],
 
@@ -418,9 +418,9 @@ const moodQuestionSets = {
     ["ASK💭", "What's a fear you've never said out loud about us?"],
     ["CHALLENGE🎯", "Recreate the face you made the first time you realized you liked me."],
     ["REMEMBER✨", "What's a moment you almost messed this up, and how close did it get?"],
-    ["DO✦", "Slide both hands under me and lift just enough to press our bodies fully together."],
     ["SAY💗", "Tell them one thing you think about when you can't sleep and they're not there."],
     ["DO✦", "Whisper the cheesiest pickup line you can think of, dead serious."],
+     ["SAY💗", "Tell them one thing you think about when you can't sleep and they're not there."],
   ],
  
   // ---------------------------------------------------------------
@@ -1696,7 +1696,46 @@ const courseContentData = {
     ],
     sections: [
       { title: 'Lessons', 
-        lessons: ['Intro- Intimacy is one of the most important parts of a meaningful relationship, yet very few men are deliberately taught how to build it. We learn how to work, compete, communicate professionally, and solve problems, but the skills required to create emotional safety, express vulnerability, understand desire, communicate boundaries, handle rejection, and remain connected during difficult moments are often left to chance. The Intimacy Blueprint for Men is designed to change that.', 
+        lessons: [ ` Introduction -  After This Section, You Will Be Able To
+
+Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
+
+Communicate reassurance, boundaries, needs, and requests directly.
+
+Build relationship agreements based on reciprocity and fairness.
+
+Recognize pursuit-withdrawal patterns early enough to interrupt them.
+
+Apply secure-functioning principles and the Five A's to everyday relationship behavior.
+
+Create closeness without requiring either partner to chase, control, or disappear.
+
+Source foundation: all four books.
+
+Your Transformation
+Introduction -  After This Section, You Will Be Able To
+
+Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
+
+Communicate reassurance, boundaries, needs, and requests directly.
+
+Build relationship agreements based on reciprocity and fairness.
+
+Recognize pursuit-withdrawal patterns early enough to interrupt them.
+
+Apply secure-functioning principles and the Five A's to everyday relationship behavior.
+
+Create closeness without requiring either partner to chase, control, or disappear.
+
+Source foundation: all four books.
+
+Your Transformation
+
+By the end of When She Stops Chasing You, the central question should no longer be:
+
+"How do I make her chase me again?"
+
+You should be able to examine what actually happened between you, recognize attachment activation without obeying it, identify your role in a pursuit-distance cycle, communicate responsibility without manipulation, determine whether reconciliation has genuine foundations, tolerate separation without immediately replacing the relationship, and choose future partners more intelligently.`,
           'THE CENTRAL IDEA - The central idea of this course is simple: intimacy is a skill that can be developed. It isn t something that only naturally confident people possess, and it isn t created by a single technique or perfect relationship strategy. Meaningful intimacy develops through repeated experiences of awareness, communication, trust, safety, vulnerability, responsiveness, and mutual respect. You cannot control whether another person will reciprocate your feelings, but you can become more capable of communicating honestly, understanding your own needs, respecting another person s autonomy, and contributing positively to the relationship. The source material similarly presents confidence as involving awareness of wants and needs, communication, feeling safe and grounded, body awareness, and approaching intimacy with curiosity rather than treating it purely as performance.', 
           'INTIMACY IS MORE THAN PHYSICAL CLOSENESS- Physical closeness can be meaningful, but physical proximity alone does not guarantee emotional connection. Two people can spend enormous amounts of time together while feeling misunderstood or emotionally distant, while a short but honest conversation can sometimes create a much deeper sense of connection. Intimacy therefore needs to be understood as a multidimensional experience involving the emotional, mental, physical, and relational aspects of a person s life. Recognising these dimensions gives you a more complete framework for evaluating what is actually happening in your relationships rather than reducing intimacy to one category of behaviour.', 
           'ATTRACTION IS NOT THE SAME AS INTIMACY - Attraction creates interest, chemistry, and desire, but intimacy creates understanding. You can be strongly attracted to someone without knowing their emotional world, values, fears, or needs. Likewise, a person can remain deeply important to you even when attraction naturally changes over time. Understanding this distinction prevents you from treating chemistry as the sole measure of relationship quality. Attraction can open the door, but intimacy is what allows two people to develop a deeper understanding of each other once they are inside the relationship.',
@@ -1706,7 +1745,7 @@ const courseContentData = {
     ]
   },
    /* New course */
-  'confident-connection': {
+  'confident-communication': {
     outcomes: [
       'Practice grounded presence instead of performing confidence.',
       'Notice emotional signals through words, tone and body language.',
@@ -1738,34 +1777,3078 @@ const courseContentData = {
 
   /* New course */
 
-  'art-of-romance': {
+  // -------- "How Men Heal After Goodbye"-------------
+
+  'party-ka-din': {
     outcomes: [
-      'Create small rituals that make everyday connection feel intentional.',
-      'Choose thoughtful gestures that carry personal meaning.',
-      'Design date nights around attention and connection.'
+      `This course is about learning how to move through that loss without pretending not to care,
+       becoming consumed by it, rushing into another relationship,
+        or turning heartbreak into permanent emotional avoidance. 
+        It synthesizes the most relevant relationship psychology from Attached, 
+        Wired for Love, How to Be an Adult in Relationships, and Women Who Love Too Much, 
+        while following the premium-course structure you specified`
     ],
     sections: [
-      { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
+      { title: 'Lessons',
+         lessons: [`When Goodbye Activates More Than Memory - Why losing one person can suddenly make your whole emotional world feel unstable.
+
+One of the strangest experiences after a breakup is discovering that your feelings can become stronger after access to the person disappears.
+
+Before the relationship ended, you may have been frustrated with her. You may have wanted more space. You might even have wondered whether the relationship was right for you. Then she leaves, becomes unavailable, stops replying, or makes the breakup final—and suddenly your mind behaves as though recovering her is the most urgent problem in your life.
+
+You replay conversations.
+
+You remember moments you previously took for granted.
+
+You check your phone more often.
+
+You wonder whether she is thinking about you.
+
+You imagine her meeting someone else.
+
+Small pieces of information acquire enormous emotional importance.
+
+Attachment psychology helps explain why.
+
+Attached describes romantic partners as attachment figures whose availability can influence feelings of security. When an important connection becomes uncertain or unavailable, the attachment system can become highly activated. An anxious pattern may intensify pursuit and preoccupation; an avoidant pattern may initially rely on distance or emotional suppression but can still experience attachment distress when the separation becomes real.
+
+This means that intensity after a breakup does not automatically prove that ending the relationship was a mistake.
+
+Sometimes you are grieving the woman.
+
+Sometimes you are reacting to rejection.
+
+Sometimes you are frightened by the sudden absence of reassurance.
+
+Sometimes your ego is injured because she chose to leave.
+
+Sometimes you are grieving the future you imagined.
+
+And usually several of these are happening simultaneously.
+
+Men can make serious mistakes when all these experiences are compressed into one sentence:
+
+"I need her back."
+
+That sentence may contain six different psychological needs.
+
+Healing begins when you separate them.
+
+What You Are Learning
+
+You are learning to identify what a breakup has actually activated inside you.
+
+Instead of treating every wave of distress as evidence that you should reconnect, you learn to distinguish:
+
+attachment activation,
+loneliness,
+rejection,
+wounded pride,
+sexual longing,
+genuine relational love,
+guilt,
+regret,
+fear of replacement,
+and grief.
+
+The goal is not to intellectualize your feelings away.
+
+It is to understand them accurately enough that they stop making every decision for you.
+
+Practical Application
+
+Imagine she ends the relationship on Sunday.
+
+On Wednesday you see that she followed someone new online.
+
+Your immediate reaction is jealousy, anxiety, anger, and an overwhelming urge to contact her.
+
+The unexamined response might become:
+
+"I knew she never cared."
+
+or:
+
+"I have to tell her how much I love her before it's too late."
+
+A more accurate internal response might be:
+
+"Seeing this triggered my fear that she can replace me. That feeling is real. But I currently do not know what this online activity means, and I do not need to act on the fear tonight."
+
+That distinction can prevent one painful evening from creating weeks of additional damage.
+
+Practice — Name What You Actually Lost
+
+Complete these separately:
+
+I miss her because...
+
+I miss being in a relationship because...
+
+I am afraid because...
+
+I feel rejected because...
+
+I regret...
+
+I am jealous of the possibility that...
+
+The future I thought we would have included...
+
+The part of myself I feel I lost is...
+
+Then read the answers again.
+
+Do not call all of them "missing her."
+
+They are different losses.
+
+Different losses require different forms of healing.
+
+After This Section, You Will Be Able To
+Recognize attachment activation after romantic separation.
+Distinguish grief from panic, loneliness, jealousy, guilt, and wounded pride.
+Interpret intense emotions without automatically treating them as instructions.
+Identify exactly what the relationship's ending removed from your life.
+Create distance between emotional activation and impulsive behavior.`,
+
+//------------2nd chapter-----------------------
+
+`Grieve the Person and the Future That Never Happened - Healing requires mourning more than memories.
+
+People often imagine grief as missing someone who used to be present.
+
+Breakup grief is more complicated.
+
+You lose what happened.
+
+But you also lose what was supposed to happen.
+
+The trip you discussed.
+
+The place you might have lived.
+
+The wedding you imagined.
+
+The children you occasionally talked about.
+
+The version of yourself who assumed she would still be there next year.
+
+Some of the strongest heartbreak therefore comes from events that never occurred.
+
+That can feel irrational:
+
+"How can I mourn something I never actually had?"
+
+Because psychologically, anticipated futures can become part of our identity long before they become reality.
+
+David Richo's approach is particularly important here because he treats endings and grief as part of mature loving rather than as evidence that love failed. The updated edition of How to Be an Adult in Relationships explicitly expands its treatment of relationship endings.
+
+Grief also asks something that many men have been trained to resist:
+
+feel what cannot currently be fixed.
+
+Problem-solving is extremely useful when a problem has a solution.
+
+But loss often creates pain without an immediate action that can remove it.
+
+This is why some men unconsciously convert grief into activities that feel more controllable:
+
+anger,
+
+obsessive exercise,
+
+work,
+
+alcohol,
+
+casual sex,
+
+dating apps,
+
+revenge fantasies,
+
+repeated contact,
+
+social-media monitoring,
+
+or immediate pursuit of another partner.
+
+The behavior changes.
+
+The unresolved loss remains underneath it.
+
+Healing does not require sitting permanently inside sadness. It requires allowing enough contact with sadness that the breakup becomes an integrated event rather than an emotional debt repeatedly collected by future relationships.
+
+What You Are Learning
+
+You are learning to grieve deliberately instead of only waiting for time to pass.
+
+You will distinguish between:
+
+remembering her and remaining psychologically attached to an imagined future.
+
+You will also learn that acceptance does not mean agreeing with what happened.
+
+Acceptance means recognizing:
+
+This is what is true right now.
+
+Only then can your energy begin moving toward what comes next.
+
+Practical Application
+
+Perhaps you keep imagining one conversation where everything changes.
+
+She finally understands your side.
+
+You apologize perfectly.
+
+She realizes she still loves you.
+
+You reunite.
+
+That fantasy can temporarily relieve pain.
+
+But if she has clearly ended the relationship, repeatedly rehearsing reconciliation can prevent your mind from adapting to reality.
+
+The healthier position is not:
+
+"I must stop loving her immediately."
+
+It is:
+
+"I can still love what mattered while accepting that I do not currently have this relationship."
+
+Those two truths can coexist.
+
+Practice — The Three-Loss Exercise
+
+Write three separate lists.
+
+What I Actually Lost
+
+Specific realities:
+
+companionship,
+physical affection,
+daily conversation,
+shared routines,
+her family,
+emotional support.
+What I Expected to Have
+
+Future experiences:
+
+marriage,
+travel,
+a home,
+children,
+celebrations,
+growing older together.
+What I Believe the Breakup Says About Me
+
+For example:
+
+I failed.
+I wasn't enough.
+Nobody will stay.
+I wasted years.
+She will find somebody better.
+I will never feel this way again.
+
+Now examine the third list carefully.
+
+The first two contain losses.
+
+The third contains interpretations.
+
+Do not mourn an interpretation as though it were a proven fact.
+
+After This Section, You Will Be Able To
+Identify both real and imagined losses created by a breakup.
+Allow grief without turning it immediately into avoidance or action.
+Separate the end of a relationship from judgments about your worth.
+Recognize bargaining fantasies that keep you emotionally suspended.
+Practice acceptance without pretending that the relationship meant nothing. `, 
+
+//------------3rd chapter-------------------------
+
+           `Tell the Truth About the Relationship - Do not heal from a fantasy version of what happened.
+
+Memory becomes selective after separation.
+
+When loneliness peaks, the brain can create a highlight reel.
+
+Her laugh.
+
+The first date.
+
+The trip.
+
+The way she slept beside you.
+
+The message she sent when you were struggling.
+
+The relationship begins to feel beautiful and irreplaceable.
+
+Then anger arrives and memory performs the opposite edit.
+
+Her criticism.
+
+The arguments.
+
+The things she did wrong.
+
+Her emotional distance.
+
+The ending.
+
+Now she becomes the villain.
+
+Neither version is complete.
+
+Healing requires the capacity to hold the whole relationship at once.
+
+The beautiful parts were real.
+
+The painful parts were real.
+
+Your mistakes were real.
+
+Her mistakes were real.
+
+Love may have been real.
+
+And incompatibility may also have been real.
+
+This is where attachment frameworks become useful—but also where they are frequently misused.
+
+Someone reads Attached and concludes:
+
+"She was avoidant. That's why everything failed."
+
+Or:
+
+"I was anxious, so I ruined everything."
+
+Attachment styles are tools for recognizing patterns, not court verdicts assigning guilt. Attached describes anxious, avoidant, and secure tendencies to help readers understand relationship dynamics and compatibility.
+
+Tatkin's work broadens the analysis by asking how the couple system functioned. Did partners protect one another? Were there clear agreements? Could conflict be repaired? Did each understand the other's vulnerabilities? Could both people feel secure inside the relationship?
+
+A mature post-breakup review therefore asks:
+
+What happened between us repeatedly?
+
+Maybe you withdrew whenever she became emotional.
+
+Maybe she pursued until you felt trapped.
+
+Maybe neither of you knew how to pause conflict safely.
+
+Maybe one person carried almost all the emotional labor.
+
+Maybe there was betrayal.
+
+Maybe there was incompatibility.
+
+Maybe the relationship was healthy for years and still eventually ended.
+
+Understanding the pattern prevents two equally damaging conclusions:
+
+"Everything was my fault."
+
+and
+
+"Everything was hers."
+
+Neither produces useful growth.
+
+What You Are Learning
+
+You are learning how to conduct an honest relationship postmortem without turning it into self-punishment.
+
+You will examine:
+
+triggers,
+recurring conflicts,
+communication,
+emotional availability,
+boundaries,
+expectations,
+compatibility,
+repair attempts,
+and your own contribution.
+
+The purpose is not to determine who was the worse person.
+
+It is to discover what you must carry forward and what you must not repeat.
+
+Practical Application
+
+Suppose most arguments ended the same way:
+
+She raised an issue.
+
+You felt criticized.
+
+You defended yourself.
+
+She intensified.
+
+You shut down.
+
+She followed you or kept messaging.
+
+You withdrew further.
+
+Later, one of you apologized without resolving the original issue.
+
+Looking only at the final argument tells you very little.
+
+Looking at the repeated cycle tells you considerably more.
+
+Your lesson might not be:
+
+"I should never date an emotional woman again."
+
+It may be:
+
+"I interpret complaints as attacks so quickly that I stop listening before I understand what my partner is asking for."
+
+That is actionable knowledge.
+
+Practice — The Relationship Postmortem
+
+Choose five major recurring problems.
+
+For each, answer:
+
+What usually triggered it?
+
+What did she do next?
+
+What did I feel?
+
+What did I do?
+
+How did my behavior affect her?
+
+How did her behavior affect me?
+
+How did we eventually reconnect?
+
+Was the problem actually resolved?
+
+Then complete:
+
+My responsibility was...
+Her responsibility was...
+The incompatibility neither person could fix was...
+What I would do differently next time is...
+
+Keep all four statements.
+
+Removing any one of them distorts the lesson.
+
+After This Section, You Will Be Able To
+Evaluate a past relationship without idealizing or demonizing it.
+Use attachment concepts without turning them into blame labels.
+Identify recurring relationship cycles rather than isolated arguments.
+Separate personal responsibility from unnecessary self-condemnation.
+Extract specific lessons that can improve future relationships.`,
+
+
+//------------4rth chapter-------------------------
+
+           `Break the Contact Hope Crash Cycle - Sometimes what feels like connection is actually repeated reopening of the wound.
+
+Breakups can produce a peculiar psychological loop.
+
+You feel terrible.
+
+You contact her.
+
+She replies.
+
+You feel relief.
+
+The conversation gives you hope.
+
+Then she becomes distant again.
+
+You crash.
+
+You contact her again.
+
+For a few minutes or hours, the anxiety decreases.
+
+Then uncertainty returns.
+
+The pattern begins again.
+
+The problem is not that communication with an ex is always unhealthy.
+
+The problem is using contact primarily to regulate distress while pretending you are seeking closure.
+
+Attachment activation can make intermittent contact especially powerful. When access to a significant partner is uncertain, even small signals—one message, one like, one warm conversation—can carry disproportionately large emotional meaning.
+
+Digital life intensifies this.
+
+Earlier generations could separate physically and lose much of their access to each other's daily lives.
+
+Now you can know:
+
+when she was online,
+
+where she went,
+
+what she wore,
+
+who followed her,
+
+which photograph she liked,
+
+whether she watched your story.
+
+You can technically be broken up while psychologically checking into the relationship twenty times a day.
+
+This prevents the nervous system from receiving a consistent message:
+
+The relationship has changed.
+
+Richo's emphasis on allowing becomes particularly relevant. If the relationship has ended, mature love requires recognizing the other person's autonomy rather than using emotional pressure to keep them relationally accessible.
+
+And Norwood's work, while explicitly written around women's compulsive relationship patterns, offers a broader insight worth adapting cautiously: healing requires withdrawing excessive attention from monitoring or changing another person and returning that attention to one's own recovery and life.
+
+No-contact is therefore not a magical manipulation technique.
+
+It should not mean:
+
+"Disappear so she misses you."
+
+Used well, distance means:
+
+"Stop repeatedly using the person you are grieving as the primary medicine for grieving them."
+
+That is a completely different objective.
+
+What You Are Learning
+
+You are learning how to create boundaries around post-breakup communication.
+
+You will distinguish:
+
+necessary communication,
+mutual friendship later,
+genuine reconciliation conversations,
+emotional checking,
+reassurance seeking,
+jealousy monitoring,
+and disguised attempts to maintain the former relationship.
+Practical Application
+
+There may be valid reasons to remain in contact:
+
+shared children,
+
+property,
+
+work,
+
+finances,
+
+pets,
+
+or agreed practical responsibilities.
+
+In those situations, healing does not require theatrical blocking or hostility.
+
+Communication can become clear and functional.
+
+But if there are no shared responsibilities and every conversation leaves you destabilized for two days, the question becomes:
+
+Is this contact helping me relate to reality—or postponing it?
+
+Practice — The 30-Day Contact Audit
+
+For every interaction with your ex, record:
+
+Why did I contact her?
+
+What was I hoping would happen?
+
+How did I feel immediately afterward?
+
+How did I feel six hours later?
+
+Did this interaction create clarity or uncertainty?
+
+Would I still have sent it if I knew reconciliation was impossible?
+
+That final question is particularly revealing.
+
+If the answer is no, the message may be less about communication and more about maintaining hope.
+
+After This Section, You Will Be Able To
+Identify reassurance-seeking disguised as communication.
+Recognize social-media behaviors that maintain attachment activation.
+Establish respectful boundaries without using silence as manipulation.
+Determine when communication supports healing and when it interrupts it.
+Protect your recovery while respecting your former partner's autonomy.`, 
+
+//------------5th chapter-------------------------
+           `Become a Whole Man Again - Do not replace the relationship. Rebuild the life around it.
+
+There is a stage of healing when the central problem is no longer constant heartbreak.
+
+It is emptiness.
+
+Your phone is quieter.
+
+Weekends are different.
+
+Nobody automatically asks how your day went.
+
+Plans that once involved two people now require a decision from one.
+
+This stage can feel less dramatic than the breakup itself, but it determines whether a man genuinely rebuilds or simply searches for another person to fill the vacancy.
+
+A relationship naturally occupies space.
+
+Healthy love can become part of your identity without consuming it.
+
+But sometimes, especially in intense or long relationships, other parts of life shrink:
+
+friendships become weaker,
+
+interests disappear,
+
+personal goals become shared goals,
+
+alone time becomes unfamiliar,
+
+and emotional support becomes concentrated almost entirely in one person.
+
+When the relationship disappears, the reduced life becomes visible.
+
+The answer is not exaggerated independence.
+
+"I don't need anybody."
+
+That is not the same as healing.
+
+Secure attachment does not require emotional self-sufficiency. Attached explicitly treats closeness and dependency needs as normal features of intimate relationships.
+
+The better goal is interdependence:
+
+I can form deep bonds.
+
+I can rely on someone.
+
+I can be relied upon.
+
+And I remain a person with friendships, values, competence, routines, interests, and direction beyond the relationship.
+
+Norwood's recovery framework emphasizes redirecting attention away from compulsive focus on a partner and toward one's own development. Although her book addresses women specifically, that principle translates usefully here.
+
+You are not rebuilding because you need to show your ex what she lost.
+
+You are rebuilding because your life deserves to become larger again.
+
+What You Are Learning
+
+You are learning to restore identity after romantic loss.
+
+You will rebuild across several domains:
+
+body — sleep, food, exercise, physical regulation.
+
+people — friendships, family, community.
+
+competence — work, learning, practical ability.
+
+purpose — goals that remain meaningful without a partner.
+
+enjoyment — experiences that do not need romantic validation.
+
+solitude — the ability to be alone without interpreting aloneness as rejection.
+
+Practical Application
+
+Suppose you start going to the gym intensely after the breakup.
+
+Exercise can be excellent.
+
+But ask why you are doing it.
+
+There is a difference between:
+
+"I want my body and routine to become stronger."
+
+and:
+
+"I need to become so attractive that she regrets leaving me."
+
+The activity is identical.
+
+The psychological direction is opposite.
+
+One brings your attention home.
+
+The other keeps your entire transformation organized around her.
+
+The same applies to career success, money, clothes, social life, or dating.
+
+If every improvement secretly ends with:
+
+"...so she sees what she lost,"
+
+she is still psychologically directing your life.
+
+Practice — The Life Reclamation Map
+
+Score your current satisfaction from 1–10 in:
+
+Physical health
+Sleep
+Friendship
+Family connection
+Career/work
+Money
+Learning
+Purpose
+Fun
+Solitude
+Emotional support
+Romantic readiness
+
+Choose the three weakest areas.
+
+For each one, establish one weekly behavior for the next six weeks.
+
+Then ask:
+
+If my ex never knew I made this improvement, would I still want it?
+
+If yes, it probably belongs to you.
+
+After This Section, You Will Be Able To
+Rebuild identity without using self-improvement as revenge.
+Create emotional support beyond a romantic partner.
+Distinguish healthy interdependence from dependence and defensive isolation.
+Develop routines that make solitude sustainable rather than threatening.
+Measure recovery through the expansion of your life, not your ex's reaction.`, 
+           `Do Not Make the Next Woman Pay for the Last One - Dating again is not proof that you healed.
+
+Eventually another woman may enter your life.
+
+And this creates a new test.
+
+Not:
+
+Can someone else want me?
+
+But:
+
+Can I meet someone new without making her responsible for what happened before her?
+
+Unresolved heartbreak can quietly follow a man into his next relationship.
+
+He becomes suspicious because his ex betrayed him.
+
+He withholds affection because vulnerability previously hurt.
+
+He demands reassurance because he remembers being abandoned.
+
+He compares.
+
+He tests.
+
+He keeps emotional distance.
+
+He insists that he is "protecting his peace."
+
+The new partner encounters defenses created by someone she has never met.
+
+At the opposite extreme, a man can move too quickly.
+
+A new woman's attention feels extraordinary because it temporarily neutralizes rejection.
+
+He interprets relief as compatibility.
+
+Within weeks, he is emotionally invested because he needs the new relationship to prove something:
+
+that he is desirable,
+
+that he was not the problem,
+
+that he can replace his ex,
+
+that he is no longer alone.
+
+Neither extreme produces good partner selection.
+
+Attached argues for evaluating availability and attachment compatibility rather than allowing chemistry alone to determine romantic decisions.
+
+Tatkin's framework adds another filter: can two people actually create a secure, fair, cooperative partnership? Attraction is meaningful, but relationship capacity must eventually become observable.
+
+And Richo's Five A's—attention, acceptance, appreciation, affection, and allowing—provide a useful test for whether you are actually relating to the person in front of you instead of using her to repair the past.
+
+Before asking whether she is right for you, ask:
+
+Can I see her clearly?
+
+What You Are Learning
+
+You are learning how to determine whether you are emotionally ready to date.
+
+You will evaluate new partners through:
+
+availability,
+consistency,
+reciprocity,
+attraction,
+compatibility,
+emotional maturity,
+communication,
+boundaries,
+and willingness to build security.
+
+You will also recognize when a new relationship is functioning primarily as pain relief.
+
+Practical Application
+
+You meet someone new.
+
+She is attractive, warm, interested, and emotionally available.
+
+But she does not create the same intensity your former relationship did.
+
+You conclude:
+
+"There's no spark."
+
+Pause.
+
+Sometimes extreme chemistry reflects compatibility.
+
+Sometimes unpredictability, uncertainty, pursuit, or familiar attachment dynamics create emotional intensity that people learn to mistake for extraordinary love.
+
+A calmer connection can initially feel less compelling precisely because your nervous system is not being repeatedly activated.
+
+This does not mean you should force attraction.
+
+It means calm should not automatically be mistaken for boredom.
+
+Practice — The New Partner Filter
+
+Before becoming seriously involved, evaluate:
+
+How do I feel around her most often?
+
+Can she communicate directly?
+
+Can I communicate directly with her?
+
+Is interest reciprocal?
+
+Are words and behavior consistent?
+
+Do I respect who she is, or mainly how she makes me feel about myself?
+
+Can we disagree without punishment or disappearance?
+
+Am I comparing her to my ex?
+
+Am I rushing because I fear being alone?
+
+Then answer:
+
+If my previous relationship had never happened, would I still choose this woman?
+
+That question helps separate genuine attraction from rebound psychology.
+
+After This Section, You Will Be Able To
+Recognize signs that you are dating primarily to escape loneliness or rejection.
+Evaluate a new partner for availability and compatibility.
+Avoid transferring old suspicions and defenses onto someone new.
+Distinguish emotional intensity from secure connection.
+Enter new relationships because you are interested in the person rather than desperate for replacement.`, 
+           `Love Differently After Goodbye - The strongest evidence that you healed is not that you forgot her. It is that you no longer repeat what the relationship taught you to recognize.
+
+Healing does not mean reaching a day when the relationship becomes meaningless.
+
+Some former partners remain emotionally significant long after the desire to reunite has disappeared.
+
+You may hear a song and remember her.
+
+Pass a familiar place.
+
+Remember an anniversary.
+
+Wonder occasionally how her life turned out.
+
+None of this proves that you failed to move on.
+
+Healing is better measured through freedom of response.
+
+You can remember without needing to contact.
+
+You can miss without abandoning the present.
+
+You can acknowledge your mistakes without defining yourself by them.
+
+You can recognize hers without needing punishment.
+
+You can meet another woman without demanding that she repair what the previous relationship damaged.
+
+Most importantly, you can love with greater skill.
+
+Tatkin's secure-functioning model emphasizes mutual protection, fairness, sensitivity to each partner, explicit agreements, and effective repair.
+
+Attached contributes awareness of availability, responsiveness, attachment needs, and compatibility.
+
+Richo adds mindful adulthood: attention, acceptance, appreciation, affection, allowing, healthy boundaries, and the capacity to survive endings without losing one's self.
+
+And Norwood's work contributes a crucial warning about allowing romantic preoccupation to consume the rest of one's life. Her book is explicitly written about women in unhealthy relationships, so its gender-specific claims should not simply be transferred to men; the broader lesson relevant here is to maintain a self beyond the relationship rather than organizing life around changing or retaining another person.
+
+Together, these perspectives produce a more demanding definition of healing:
+
+You are not merely recovering from a woman.
+
+You are becoming more capable of relationship.
+
+That means asking for what you need before resentment accumulates.
+
+Giving reassurance without feeling controlled.
+
+Requesting space without disappearing.
+
+Listening without immediately defending yourself.
+
+Setting boundaries before they become explosions.
+
+Repairing after conflict.
+
+Choosing available partners.
+
+Maintaining your own life.
+
+Allowing someone to love you without expecting them to heal everything that happened before them.
+
+And accepting that even a meaningful relationship cannot guarantee permanence.
+
+That last lesson may be the hardest.
+
+You can love well and still risk loss.
+
+Maturity is not learning how to make abandonment impossible.
+
+It is becoming capable of loving deeply without requiring certainty that you will never have to grieve again.
+
+What You Are Learning
+
+You are integrating the entire course into a personal relationship philosophy.
+
+You should now be able to recognize:
+
+what activates you,
+
+how you react,
+
+what kind of partner fits you,
+
+what kind of partner you need to become,
+
+and
+
+which relationship behaviors you refuse to repeat.
+
+Practical Application
+
+In a future relationship, your partner says:
+
+"You've been distant for two days. I don't know what's going on."
+
+Previously you might respond:
+
+"I'm fine. Stop overthinking."
+
+Now you recognize what that response creates.
+
+A stronger answer might be:
+
+"You're right that I've been quieter. I'm stressed about work and I've gone inward. It isn't about you. I want tonight to decompress, and tomorrow I'd like us to have dinner and reconnect."
+
+You have protected both realities.
+
+Your need for space.
+
+Her need for relational clarity.
+
+That is what healing eventually becomes:
+
+not superior insight,
+
+but better behavior.
+
+Practice — Your Relationship Constitution
+
+Write one page titled:
+
+The Man I Want to Be in Love
+
+Complete:
+
+When I feel abandoned, I will...
+
+When I feel controlled, I will...
+
+When I need space, I will...
+
+When my partner needs reassurance, I will...
+
+When I make a mistake, I will...
+
+When conflict becomes intense, I will...
+
+When jealousy appears, I will...
+
+When I notice myself withdrawing, I will...
+
+I will never again normalize...
+
+I will actively protect...
+
+The qualities I will seek in a partner are...
+
+The qualities I must bring to that partner are...
+
+Finally:
+
+What did goodbye teach me that staying together never could?
+
+Your answer is the final lesson.
+
+After This Section, You Will Be Able To
+Convert breakup lessons into specific future relationship behaviors.
+Communicate needs, boundaries, reassurance, and space more securely.
+Identify partners capable of reciprocal, emotionally available relationships.
+Maintain individuality without using independence to avoid intimacy.
+Remember a former relationship without allowing it to govern the present.
+Enter future love with greater discernment rather than greater fear.`,
+           `Wrap Up - Your Transformation - After completing How Men Heal After Goodbye, healing should no longer mean simply reaching the point where you stop thinking about her.
+
+You should be able to understand why the loss affected you the way it did, distinguish attachment panic from genuine relational decisions, grieve both the person and the future you expected, examine the relationship without either idealizing or demonizing it, establish boundaries around contact, rebuild a life that does not depend on romantic validation, and recognize when you are genuinely ready for somebody new.
+
+Most importantly, the breakup should become information rather than identity.
+
+You do not need to become colder because love hurt.
+
+You need to become more discerning about whom you choose, more honest about what you need, more responsible for how you behave when frightened, and more capable of maintaining yourself while becoming deeply attached to someone else.
+
+That is a stronger measure of recovery than forgetting her:
+
+the next time you love, you know how to love without abandoning yourself—or the person beside you.`
+          ] 
+        }
     ]
   },
-  'how-to-last-longer': {
+
+  //===================----------------=================
+
+  'art-of-dance': {
     outcomes: [
       'Create small rituals that make everyday connection feel intentional.',
       'Choose thoughtful gestures that carry personal meaning.',
       'Design date nights around attention and connection.'
     ],
-    sections: [
-      { title: 'Lessons', lessons: ['Intro', 
-        'Small rituals',
-         'Gifts that mean more', 
-         'Date design', 
-         'Connection techniques', 
-         'Practice', 
-         'Final challenge', 
-         'Wrap up'] }
+     sections: [
+      { title: 'Lessons', lessons: ['Intro', 'Small rituals', 'Gifts that mean more', 'Date design', 'Connection techniques', 'Practice', 'Final challenge', 'Wrap up'] }
     ]
-  }
-};
+  
+    
+  },
+  'The-Art-of-Receiving-Love': {
+    outcomes: [
+     ` When Loving Him Costs You is not a course about blaming men or teaching women 
+              to leave at the first sign of difficulty. It is about learning to distinguish healthy relationship investment from chronic emotional overinvestment.`,
+    ],
+     sections : [
+      { title: 'Lessons', lessons: [`Intro - When Love Starts Taking More Than It Gives - The first warning is often not that you stopped loving him—it is that you slowly stopped recognizing yourself.
+
+Unhealthy relationships do not always begin with obvious cruelty or dramatic betrayal. Sometimes the erosion is gradual.
+
+You begin canceling plans because he may want to see you.
+
+You monitor his mood before deciding how you are allowed to feel.
+
+You repeatedly explain behavior that hurts you.
+
+Your standards change.
+
+What once would have felt unacceptable becomes something you describe as “complicated.”
+
+You stop asking whether the relationship is working and start asking how you can make yourself easier to love.
+
+This is an important psychological shift.
+
+In a healthy relationship, compromise happens inside a stable sense of self.
+
+In an unhealthy pattern, compromise can slowly become self-abandonment.
+
+Robin Norwood s work is especially relevant here. Women Who Love Too Much examines women whose emotional lives become increasingly organized around a difficult, unavailable, troubled, or inconsistent partner. Attention moves away from the question:
+
+“Is this relationship good for me?”
+
+and toward:
+
+“How can I finally make this relationship work?”
+
+That difference matters.
+
+Because effort feels virtuous.
+
+Loyalty feels virtuous.
+
+Patience feels virtuous.
+
+Understanding another person's wounds feels compassionate.
+
+But healthy qualities can become destructive when they repeatedly require you to violate your own emotional reality.
+
+David Richo s framework adds another important distinction. Mature love includes attention, acceptance, appreciation, affection, and allowing—but these qualities are not meant to erase boundaries or transform one partner into the emotional caretaker of the other.
+
+Love can require generosity.
+
+It should not require disappearance.
+
+What You Are Learning
+
+You are learning how to distinguish:
+
+compromise from self-abandonment,
+loyalty from fear of leaving,
+patience from tolerating chronic harm,
+compassion from rescuing,
+and commitment from emotional dependency.
+
+You will begin measuring the cost of the relationship, rather than evaluating it only by how strongly you feel.
+
+Practical Application
+
+Imagine he repeatedly cancels plans at the last minute.
+
+You feel hurt.
+
+But instead of addressing the pattern, you tell yourself:
+
+“He has a stressful job.”
+
+“He doesn't express emotions like I do.”
+
+“He had a difficult childhood.”
+
+“He probably doesn't realize how it affects me.”
+
+Any of those explanations could contain truth.
+
+But explanations and boundaries serve different purposes.
+
+Understanding why he behaves this way does not answer whether you should continually accept the behavior.
+
+A healthier question becomes:
+
+Can I understand his reasons while still taking my own experience seriously?
+
+Practice — The Relationship Cost Audit
+
+Rate the relationship from 1 to10 in these areas:
+
+Emotional peace
+Self-respect
+Trust
+Friendships
+Family connection
+Confidence
+Physical health
+Sleep
+Work/study concentration
+Financial stability
+Personal goals
+Freedom to speak honestly
+Ability to say no
+Sense of identity
+
+Then answer:
+
+What have I gained from loving him?
+
+What have I repeatedly sacrificed?
+
+Which sacrifices were freely chosen?
+
+Which sacrifices were made because I feared what would happen if I stopped?
+
+That final distinction is critical.
+
+After This Section, You Will Be Able To
+Identify where relationship compromise has become self-abandonment.
+Evaluate the emotional and practical cost of maintaining the relationship.
+Distinguish understanding someone's behavior from excusing it.
+Recognize when your life has begun revolving disproportionately around your partner.
+Describe what healthy commitment should not require you to sacrifice.`,
+// ---------====================== sec lesson----------- 
+        ` Why Uncertainty Can Feel Like Love - Sometimes the relationship feels powerful because you never feel completely secure inside it.
+
+One of the most confusing relationship experiences is feeling intensely attached to someone who consistently makes you uncertain.
+
+He is affectionate, then distant.
+
+Interested, then unavailable.
+
+Future-focused one week and vague the next.
+
+After an argument, he disappears.
+
+When you finally begin detaching, he becomes affectionate again.
+
+The emotional intensity can feel like evidence of extraordinary chemistry.
+
+Sometimes it is chemistry.
+
+But sometimes uncertainty itself is intensifying attachment.
+
+Attached provides a useful framework for understanding anxious and avoidant relationship patterns.
+
+Someone with strong anxious tendencies may become increasingly focused on signs of rejection or abandonment. Someone with avoidant tendencies may experience closeness as pressure and seek greater distance.
+
+When those tendencies interact, a cycle can develop:
+
+She seeks reassurance.
+
+He withdraws.
+
+His withdrawal increases her anxiety.
+
+Her pursuit increases his discomfort.
+
+He withdraws further.
+
+Then, after distance becomes large enough, he may reconnect.
+
+She experiences enormous relief.
+
+The relief itself can make the relationship feel intensely rewarding.
+
+But emotional relief is not the same thing as emotional security.
+
+This is why some women discover that stable partners initially feel “less exciting” than inconsistent partners.
+
+Their nervous system may have learned to associate uncertainty with intensity.
+
+That does not mean secure relationships should feel emotionally flat.
+
+It means constant anxiety should not automatically be interpreted as passion.
+
+What You Are Learning
+
+You are learning to distinguish:
+
+attraction from activation,
+
+chemistry from unpredictability,
+
+missing someone from feeling insecure about access to them.
+
+You are also learning how your own attachment responses may influence the relationship.
+
+Practical Application
+
+Suppose he does not reply for eight hours.
+
+You send another message.
+
+Then another.
+
+Eventually he replies warmly.
+
+The anxiety disappears immediately.
+
+For the next several hours you feel close again.
+
+You may interpret this emotional swing as:
+
+“We have such a powerful connection.”
+
+But ask:
+
+Would the connection still feel this powerful if his availability were predictable?
+
+That question can expose whether uncertainty has become part of the attraction.
+
+Practice — The Activation vs Connection Test
+
+Think about five emotionally intense moments with him.
+
+For each one ask:
+
+Was I experiencing closeness—or relief after uncertainty?
+
+Did I feel secure before the interaction?
+
+Was I afraid he was pulling away?
+
+Did his attention calm an anxiety he had helped create?
+
+Would I still consider this romantic if the pattern happened to my closest friend?
+
+Then identify your most common response when you fear losing him:
+
+pursuit,
+overexplaining,
+apologizing excessively,
+sexual reassurance,
+jealousy,
+monitoring,
+emotional shutdown,
+testing him,
+threatening to leave.
+
+Understanding the response gives you a chance to change it.
+
+After This Section, You Will Be Able To
+Recognize anxious-avoidant relationship dynamics.
+Distinguish emotional security from relief after uncertainty.
+Identify your own attachment-related reactions.
+Evaluate whether unpredictability is amplifying attraction.
+Respond to relational uncertainty more deliberately rather than automatically.`, 
+        // ---------====================== 3rd lesson----------- 
+        `Stop Trying to Earn What Should Be Mutual - Love becomes exhausting when your role changes from partner to persuader.
+
+One of the most damaging relationship beliefs is:
+
+“If I love him well enough, eventually he will love me the way I need.”
+
+This belief can keep a person emotionally invested for years.
+
+You explain your needs more clearly.
+
+Become more patient.
+
+Become less demanding.
+
+Give him space.
+
+Try to be more attractive.
+
+Avoid difficult conversations.
+
+Forgive another incident.
+
+Support another crisis.
+
+Wait for another promise.
+
+Eventually your emotional life becomes organized around his potential rather than his actual behavior.
+
+Norwood’s work repeatedly examines this dynamic: love becomes entangled with rescuing, fixing, changing, or rehabilitating another person.
+
+The relationship stops being evaluated according to reciprocity.
+
+Instead, the question becomes:
+
+How much more should I give before he finally becomes capable of giving back?
+
+But adult relationships are not rehabilitation programs.
+
+You can encourage growth.
+
+You can support someone.
+
+You can have compassion for their history.
+
+You cannot perform their emotional development for them.
+
+Richo’s concept of allowing is important here.
+
+Allowing another person to be who they actually are means surrendering the fantasy that love gives you the power to redesign them.
+
+Sometimes acceptance produces closeness.
+
+Sometimes acceptance produces a painful realization:
+
+The person I love may genuinely be unable or unwilling to offer the relationship I need.
+
+That realization can be more difficult than anger because it removes the project.
+
+There is nothing left to fix.
+
+There is only a decision.
+
+What You Are Learning
+
+You are learning to distinguish:
+
+loving someone from managing them,
+supporting someone from rescuing them,
+communicating needs from repeatedly negotiating basic standards,
+and believing in someone's potential from building a relationship around that potential.
+Practical Application
+
+He says:
+
+“I know I need to communicate better.”
+
+Three months later, the same pattern continues.
+
+After another argument he says:
+
+“I promise I'll change.”
+
+You feel hope.
+
+Again.
+
+At this point, the relevant question is no longer whether his apology is sincere.
+
+He may genuinely mean it every time.
+
+The relevant question is:
+
+Does sincere regret reliably become different behavior?
+
+Relationships are lived through patterns, not intentions.
+
+Practice — Potential vs Reality
+
+Create two columns.
+
+Who He Could Be
+
+Write everything you believe he could become if he:
+
+healed,
+committed,
+communicated,
+stopped drinking,
+became more responsible,
+processed his past,
+became emotionally available.
+
+Then write:
+
+Who He Is With Me Right Now
+
+Describe only repeated observable behavior.
+
+Now ask:
+
+If nothing changed for the next three years, would I still choose this relationship?
+
+Do not answer according to the man you hope he becomes.
+
+Answer according to the relationship you actually have.
+
+After This Section, You Will Be Able To
+Identify when love has turned into a project of changing your partner.
+Separate potential from demonstrated relationship capacity.
+Evaluate apologies according to behavioral change.
+Stop assuming responsibility for another adult's emotional development.
+Decide what you can accept without abandoning your own needs.`, 
+        // ---------====================== 4th lesson----------- 
+        `Boundaries Are Where Love Meets Self-Respect - A boundary does not control what he does. It determines what you will participate in.
+
+Boundaries are frequently misunderstood.
+
+People say:
+
+“You're not allowed to talk to her.”
+
+“You have to answer my messages.”
+
+“You can't go out with your friends.”
+
+These may be demands or relationship agreements, but they are not automatically boundaries.
+
+A genuine boundary is centered on your participation.
+
+For example:
+
+“If shouting begins, I will end the conversation and return when we can speak respectfully.”
+
+“If exclusivity is not what you want, I will not continue this relationship as an exclusive partnership.”
+
+“If you repeatedly disappear for days without communication, this relationship will not work for me.”
+
+The difference is subtle but powerful.
+
+Control says:
+
+You must behave this way so I feel safe.
+
+A boundary says:
+
+You are free to choose your behavior, and I am responsible for deciding what I will remain available for.
+
+Richo's Five A's make this especially important.
+
+Acceptance does not mean approving everything.
+
+Allowing does not mean tolerating everything.
+
+You can acknowledge another person's right to live according to their choices while simultaneously recognizing that those choices may make intimacy with them impossible.
+
+Tatkin's secure-functioning model adds another layer: healthy relationships require explicit agreements and mutual protection.
+
+Boundaries should not become two people defending separate territories forever.
+
+In secure relationships they gradually become shared agreements:
+
+What do we both believe protects this relationship?
+
+Healthy couples discuss fidelity.
+
+Privacy.
+
+Digital behavior.
+
+Conflict.
+
+Money.
+
+Family.
+
+Friendships.
+
+Sex.
+
+Time.
+
+Communication.
+
+The goal is not maximum restriction.
+
+It is maximum clarity.
+
+What You Are Learning
+
+You are learning how to create boundaries that are clear, behavioral, realistic, and enforceable.
+
+You will distinguish:
+
+boundary,
+request,
+preference,
+agreement,
+ultimatum,
+and control.
+
+You will also learn that a boundary repeatedly stated but never enforced eventually teaches the other person that it is optional.
+
+Practical Application
+
+Suppose he repeatedly insults you during arguments.
+
+You say:
+
+“Please don't speak to me that way.”
+
+Nothing changes.
+
+You say it again.
+
+Nothing changes.
+
+Eventually the problem is no longer only that he violates the boundary.
+
+You must ask:
+
+What action am I willing to take when the boundary is crossed?
+
+Perhaps:
+
+“I want to resolve problems with you. But I will not continue conversations where either of us insults the other. If that happens, I will leave the conversation and we can revisit it later.”
+
+The boundary now includes behavior.
+
+Practice — Rewrite Your Boundaries
+
+Write five statements beginning with:
+
+“He needs to...”
+
+Example:
+
+“He needs to stop disappearing.”
+
+Now rewrite each into:
+
+“If X continues, I will...”
+
+Example:
+
+“If prolonged unexplained disappearances continue, I will reconsider whether this relationship meets my requirements for reliability.”
+
+Then identify:
+
+What consequence can I genuinely carry out?
+
+A boundary you are unwilling to uphold is not yet a functioning boundary.
+
+After This Section, You Will Be Able To
+Distinguish boundaries from control and demands.
+Communicate relationship limits clearly.
+Create consequences you can realistically enforce.
+Evaluate whether important relationship agreements are mutual.
+Protect self-respect without using boundaries as punishment.`, 
+        // ---------====================== 5th lesson----------- 
+        `Decide Whether This Love Can Become Safe - Not every difficult relationship must end—but love alone cannot make every relationship workable.
+
+Once you stop trying to rescue the relationship, a more serious question becomes possible:
+
+Can this relationship actually become healthy?
+
+The answer should not depend solely on:
+
+how much you love him,
+
+how long you have been together,
+
+how painful leaving would feel,
+
+or how wonderful the relationship can be during good periods.
+
+A viable relationship needs capacity.
+
+Tatkin's secure-functioning approach is especially useful here because it focuses on the relationship both partners create.
+
+Can you protect one another emotionally?
+
+Can disagreements happen without humiliation or abandonment?
+
+Are promises reliable?
+
+Can trust be repaired?
+
+Do both people adapt?
+
+Does each partner care about the other's wellbeing?
+
+Can you create agreements that both people follow?
+
+Attached adds availability and responsiveness.
+
+Richo adds acceptance, affection, attention, appreciation, allowing, boundaries, and emotional adulthood.
+
+Together these ideas produce an important distinction:
+
+Relationship problems versus relationship structure.
+
+A relationship problem might be:
+
+“We disagree about how often to visit family.”
+
+A structural problem might be:
+
+“He refuses to discuss anything that makes him uncomfortable.”
+
+Problems can often be negotiated.
+
+Structural problems affect the ability to negotiate anything.
+
+This is why the most important question is not:
+
+Do we have problems?
+
+Every relationship does.
+
+It is:
+
+Do we have the capacity to work on problems together?
+
+What You Are Learning
+
+You are learning to evaluate a relationship according to:
+
+reciprocity,
+emotional safety,
+accountability,
+responsiveness,
+trust,
+compatibility,
+repair,
+respect,
+willingness,
+and sustained behavioral change.
+Practical Application
+
+Two couples may both argue frequently.
+
+In Couple A:
+
+Both sometimes become reactive, but they apologize, discuss what happened, change behavior, and gradually improve.
+
+In Couple B:
+
+One person repeatedly insults, disappears, lies, or refuses responsibility while the other repeatedly attempts repair.
+
+The number of arguments may look similar.
+
+The relationship capacity is completely different.
+
+This is why “we fight sometimes” tells you almost nothing.
+
+The quality of repair matters far more.
+
+Practice — The Relationship Viability Test
+
+Score each from 0–5:
+
+Safety
+
+Respect
+
+Trust
+
+Reciprocity
+
+Communication
+
+Accountability
+
+Reliability
+
+Conflict repair
+
+Boundary respect
+
+Shared values
+
+Future compatibility
+
+Mutual willingness to change
+
+Now answer:
+
+Which score exists because of actual behavior?
+
+Which score exists mainly because I believe he can improve?
+
+Then ask:
+
+If I met him today exactly as he is now, would I choose this relationship again?
+
+That question strips away sunk cost.
+
+After This Section, You Will Be Able To
+Evaluate whether a relationship has genuine repair capacity.
+Distinguish temporary relationship problems from structural dysfunction.
+Assess reciprocity and emotional safety realistically.
+Identify whether change is mutual or carried primarily by one person.
+Make relationship decisions from evidence rather than history or fear.`, 
+        // ---------====================== 6th lesson----------- 
+        `When Leaving Hurts More Than Staying but Staying Costs More - Sometimes the hardest relationship decision is choosing temporary pain over permanent erosion.
+
+Leaving does not automatically feel empowering.
+
+Sometimes it feels terrible.
+
+You may know intellectually that the relationship is unhealthy and still desperately miss him.
+
+You may remember everything good about him the moment you consider leaving.
+
+You may imagine him changing for someone else.
+
+You may fear being alone.
+
+You may wonder whether you were too demanding.
+
+You may worry that you will regret the decision forever.
+
+These feelings do not necessarily mean you should return.
+
+They mean attachment does not disappear the moment judgment becomes clear.
+
+This distinction is essential.
+
+People sometimes assume:
+
+“If leaving is this painful, maybe leaving is wrong.”
+
+But painful and wrong are not synonyms.
+
+Richo's treatment of relationship endings helps here. Mature love includes the ability to confront loss rather than demanding that every meaningful relationship continue indefinitely.
+
+Norwood's recovery perspective contributes another important insight: when a person's emotional life has become organized around another individual, separation can initially feel like losing much more than the partner.
+
+You may also lose:
+
+your emotional project,
+
+your daily focus,
+
+your role as rescuer,
+
+your imagined future,
+
+your source of intensity,
+
+your identity as his partner.
+
+This is why leaving can create emptiness even when the relationship itself was exhausting.
+
+You are not only losing him.
+
+You are learning who you are without managing the relationship.
+
+What You Are Learning
+
+You are learning how to leave without turning grief into evidence that the relationship should be restarted.
+
+You will also learn how to reduce behaviors that keep the attachment continually activated:
+
+constant checking,
+
+unnecessary contact,
+
+social-media monitoring,
+
+asking mutual friends for updates,
+
+and using new partners primarily to avoid grief.
+
+Practical Application
+
+Suppose three weeks after ending the relationship you feel worse than you did during the relationship.
+
+Your mind says:
+
+“At least when we were together, I wasn't this lonely.”
+
+That may be true.
+
+But compare the correct things.
+
+Do not compare:
+
+today's worst breakup day
+
+with
+
+the relationship's best memory.
+
+Compare the broader realities:
+
+Who were you becoming while staying?
+
+What repeatedly happened?
+
+What did staying require?
+
+What would returning require you to ignore?
+
+Grief can distort comparison.
+
+Practice — The Return Test
+
+Whenever you strongly want to go back, answer:
+
+What am I feeling right now?
+
+What triggered the urge?
+
+What exactly do I miss?
+
+What relationship problem has actually changed?
+
+What evidence do I have of change?
+
+If I return today, what will be different besides my temporary relief?
+
+Save the answers.
+
+Compare them across several weeks.
+
+You may discover that the desire to return rises and falls with loneliness rather than with new evidence about the relationship.
+
+After This Section, You Will Be Able To
+Understand why leaving can hurt even when leaving is healthy.
+Separate attachment grief from relationship viability.
+Recognize behaviors that repeatedly reactivate the bond.
+Evaluate reunion based on changed conditions rather than emotional discomfort.
+Begin rebuilding identity outside the relationship.`,
+        // ---------====================== 7th lesson----------- 
+         `Love Again Without Losing Yourself - The goal is not to become harder to hurt. It is to become harder to abandon.
+
+The danger after an exhausting relationship is overcorrection.
+
+You may decide:
+
+“I'll never trust anyone that much again.”
+
+“I will leave the moment a man disappoints me.”
+
+“I don't need anybody.”
+
+“I'll keep everything casual.”
+
+Emotional distance can feel like strength after overinvestment.
+
+But avoiding intimacy is not the opposite of unhealthy attachment.
+
+It is another way fear can organize relationships.
+
+The better objective is secure interdependence.
+
+You can love deeply.
+
+Need someone.
+
+Depend on someone.
+
+Build a life together.
+
+And still retain your standards, friendships, identity, voice, boundaries, and ability to leave if the relationship becomes fundamentally incompatible with your wellbeing.
+
+Attached helps you recognize availability and compatibility earlier.
+
+Tatkin helps you evaluate whether the two of you can create secure functioning.
+
+Richo reminds you that mature loving combines closeness with allowing.
+
+Norwood's work warns against disappearing into another person's problems.
+
+Together, the lesson becomes:
+
+Love should expand your life, not require you to continuously shrink yourself to keep it.
+
+That does not mean every healthy relationship feels easy.
+
+You will compromise.
+
+You will sometimes prioritize your partner.
+
+You may support him through illness, grief, unemployment, family difficulty, or periods when he cannot give equally.
+
+Healthy relationships are not mathematically balanced every day.
+
+The deeper question is whether sacrifice exists inside reciprocity and respect.
+
+Does he care what the sacrifice costs you?
+
+Would he make comparable sacrifices?
+
+Can you speak honestly about your needs?
+
+Can the relationship adapt?
+
+Do you remain recognizable to yourself?
+
+Those questions distinguish devotion from self-erasure.
+
+What You Are Learning
+
+You are integrating a new relationship standard.
+
+Instead of selecting primarily for:
+
+chemistry,
+
+intensity,
+
+potential,
+
+status,
+
+appearance,
+
+or the thrill of being chosen,
+
+you learn to include:
+
+consistency,
+
+availability,
+
+reciprocity,
+
+emotional responsibility,
+
+boundary respect,
+
+shared values,
+
+and repair capacity.
+
+Practical Application
+
+Imagine meeting a man who is warm, consistent, communicative, and interested.
+
+He tells you where you stand.
+
+There are no disappearing acts.
+
+No need to decode messages.
+
+No constant question about whether he wants you.
+
+Part of you may initially think:
+
+“Something is missing.”
+
+Before assuming there is no chemistry, ask:
+
+Is something missing—or is anxiety missing?
+
+If previous relationships linked attraction with uncertainty, security may initially feel unfamiliar.
+
+Unfamiliar does not automatically mean wrong.
+
+Practice — Your Relationship Standard
+
+Create three categories.
+
+Non-Negotiables
+
+Examples:
+
+respect,
+honesty,
+fidelity if monogamous,
+emotional safety,
+boundary respect.
+Important Preferences
+
+Examples:
+
+communication style,
+lifestyle,
+affection,
+ambition,
+social habits.
+Flexible Differences
+
+Things you can comfortably negotiate.
+
+Then complete:
+
+In my next relationship, I will not confuse ____ with love.
+
+I will speak sooner when ____ happens.
+
+I will stop trying to rescue someone from _____.
+
+I know I am beginning to lose myself when _____.
+
+A partner earns deeper trust from me by _____.
+
+I will know love is costing too much when _____.
+
+Review these standards when you begin dating—not only after becoming emotionally attached.
+
+After This Section, You Will Be Able To
+Enter future relationships without becoming emotionally closed.
+Evaluate partners for availability, reciprocity, and secure relationship capacity.
+Distinguish healthy sacrifice from chronic self-erasure.
+Maintain boundaries and identity while becoming deeply attached.
+Recognize unhealthy patterns earlier instead of waiting until leaving becomes extremely difficult.
+Choose relationships in which love and self-respect can coexist.`,
+        // ---------====================== 8th lesson-----------
+          `Wrap up - Your Transformation
+
+After When Loving Him Costs You, you should no longer evaluate a relationship only by asking how strongly you love him or how painful losing him would be.
+
+You should be capable of evaluating what the relationship is actually asking you to become.
+
+You can recognize when uncertainty is intensifying attachment, when compassion has become rescuing, when hope is being built around potential rather than behavior, and when repeated compromise has crossed into self-abandonment. You can communicate boundaries, evaluate whether genuine repair is possible, and understand why leaving may still hurt even when leaving protects you.
+
+Most importantly, you do not have to choose between loving someone and belonging to yourself.
+
+Healthy intimacy asks you to bring your full self into the relationship.
+
+If keeping the relationship requires that self to continually become smaller, the cost is no longer merely compromise.
+
+It is the relationship itself.`] }
+    ],
+   
+  /* 1. Add course lessons in courseContentData */
+
+'love-without-losing-yourself': {
+  outcomes: [
+    'Recognise your personal needs, values and non-negotiables.',
+    'Communicate boundaries with clarity and respect.',
+    'Build a relationship without abandoning your identity.'
+  ],
+  sections: [
+    {
+      title: 'Lessons',
+      lessons: [
+        'Introduction - A healthy relationship should add to your life, not require you to become smaller inside it.',
+        'Knowing Your Needs - Learn the difference between a preference, a need and a non-negotiable.',
+        'Keeping Your Identity - Maintain your friendships, goals, interests and self-respect while loving someone deeply.',
+        'Speaking With Clarity - Learn to express what you need without hints, guilt or emotional games.',
+        'Healthy Boundaries - Set limits that protect your peace while still allowing connection.',
+        'Practice - Write your personal relationship standards and one boundary you want to communicate.',
+        'Final Challenge - Have one calm, honest conversation about a need you usually keep silent.'
+      ]
+    }
+  ]
+},
+"More-Than-Just-A-Game ": {
+  outcomes: [
+    'Recognise your personal needs, values and non-negotiables.',
+    'Communicate boundaries with clarity and respect.',
+    'Build a relationship without abandoning your identity.'
+  ],
+  sections: [
+    {
+      title: 'Lessons',
+      lessons: [
+       ` Introduction -  After This Section, You Will Be Able To
+
+Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
+
+Communicate reassurance, boundaries, needs, and requests directly.
+
+Build relationship agreements based on reciprocity and fairness.
+
+Recognize pursuit-withdrawal patterns early enough to interrupt them.
+
+Apply secure-functioning principles and the Five A's to everyday relationship behavior.
+
+Create closeness without requiring either partner to chase, control, or disappear.
+
+
+
+Your Transformation
+
+By the end of When She Stops Chasing You, the central question should no longer be:
+
+"How do I make her chase me again?"
+
+You should be able to examine what actually happened between you, recognize attachment activation without obeying it, identify your role in a pursuit-distance cycle, communicate responsibility without manipulation, determine whether reconciliation has genuine foundations, tolerate separation without immediately replacing the relationship, and choose future partners more intelligently.`,
+       
+`The Moment the Chase Ends - Her silence is information—but it is not an explanation.
+When someone repeatedly pursues connection, the pursued partner can gradually begin treating that pursuit as part of the relationship's background. She texts first. She brings up problems. She asks whether everything is okay. She tries to reconnect after arguments. Because she repeatedly restores contact, you may never have to discover what the relationship feels like when she stops doing that work.
+
+Then she stops.
+
+One mistake is immediately concluding, She doesn't care anymore. Another is assuming, She wants me to chase her now. Both interpretations may occasionally be true, but neither should be your starting assumption.
+
+Withdrawal can mean many things. Someone may be emotionally exhausted. She may have concluded that repeated conversations are producing no change. She may be protecting herself. Her feelings may genuinely have changed. She may be reconsidering the relationship. She may already have decided to leave.
+
+The important distinction is between observable behavior and the meaning you assign to it.
+
+Attachment dynamics make this harder. A person who previously felt comfortable because the other partner consistently sought closeness can suddenly experience intense attachment activation when that attention disappears. The same person who previously wanted more space may suddenly become preoccupied with getting closeness back. Attached describes secure, anxious, and avoidant relationship tendencies and shows how proximity and distance can activate very different responses.
+
+This means you must resist making permanent decisions from the first emotional shock.
+
+Her withdrawal is a moment to become curious about reality.
+
+Not:
+
+How do I make her want me again?
+
+But:
+
+What was actually happening between us before she stopped trying?
+
+That question begins the course.
+
+What You Are Learning
+
+You are learning to separate three things that often become psychologically fused after relationship withdrawal:
+
+what happened, what you fear it means, and what you actually know.
+
+You will also begin distinguishing ordinary temporary distance from a larger pattern of disengagement.
+
+Most importantly, you will stop treating another person's pursuit as automatic proof that the relationship is healthy.
+
+Practical Application
+
+Imagine she previously complained that you rarely initiated plans.
+
+Eventually she stops complaining.
+
+At first you feel relieved.
+
+Three weeks later she stops asking to meet as often. Her messages become functional rather than affectionate. Suddenly you become anxious and begin sending more messages than you ever did before.
+
+The insecure interpretation is:
+
+"She's playing games."
+
+A more disciplined interpretation is:
+
+"Something in our relationship has changed. Before reacting, I need to understand the sequence that led here."
+
+The same discipline applies after a breakup. Checking whether she viewed your story, analyzing her online status, sending indirect posts, or repeatedly asking mutual friends about her may provide momentary relief while keeping you psychologically trapped inside uncertainty.
+
+Practice — The Facts/Story Audit
+
+Take one situation involving her recent withdrawal and divide a page into two columns.
+
+Facts
+
+Write only observable information.
+
+For example:
+
+She has not initiated a conversation for six days.
+She declined two invitations.
+She said she needs space.
+She removed our shared photos.
+
+Then write:
+
+My interpretation
+
+She never loved me.
+She's testing me.
+There must be another man.
+If I don't act immediately, I will lose her forever.
+
+Now circle anything in the second column that you cannot actually verify.
+
+The purpose is not emotional suppression. It is learning not to confuse fear with evidence.
+
+After This Section, You Will Be Able To
+Separate observable relationship changes from fear-driven interpretations.
+Recognize when the loss of pursuit activates your own attachment system.
+Assess withdrawal without immediately chasing, blaming, or catastrophizing.
+Identify the relationship conditions that existed before her behavior changed.
+.`,
+
+        `The Relationship You Were Both Creating -Stop asking who started the cycle and learn how the cycle kept itself alive.
+
+Relationships often become organized around repeated roles.
+
+One person seeks closeness.
+
+The other becomes uncomfortable and creates distance.
+
+More distance produces more pursuit.
+
+More pursuit produces more distance.
+
+Eventually both people can sincerely believe the other is causing the problem.
+
+This is one of the most useful ideas for understanding why "she stopped chasing" is rarely the complete story.
+
+Attached describes the particularly difficult interaction that can emerge between anxious and avoidant attachment tendencies: one person's attempts to restore proximity can intensify the other's desire for distance.
+
+Tatkin approaches the same territory from another direction. Instead of asking only about individual attachment styles, his secure-functioning model asks what the two-person system is creating. His work emphasizes mutual safety, fairness, sensitivity, agreements, understanding one's partner, and repairing ruptures quickly.
+
+This changes the question from:
+
+Who was the needy one?
+
+or
+
+Who was emotionally unavailable?
+
+to:
+
+What happened between us whenever one person became frightened?
+
+Perhaps she pursued harder when she felt uncertain.
+
+Perhaps you withdrew because her requests felt like criticism.
+
+Your withdrawal increased her uncertainty.
+
+Her increased pursuit felt even more demanding.
+
+You withdrew further.
+
+Neither person necessarily designed the cycle consciously.
+
+But eventually the cycle becomes stronger than either individual's intentions.
+
+Norwood adds another useful perspective from the pursuer's side. Her work describes situations where attention becomes increasingly focused on monitoring, rescuing, fixing, or changing a partner while the pursuer's own life contracts. Her recovery model explicitly shifts attention away from controlling another person and back toward one's own life.
+
+So when a woman finally stops pursuing, one possibility is that she has begun withdrawing from a role she could no longer sustain.
+
+That does not automatically make her right.
+
+It does not automatically make you wrong.
+
+It means you need to understand the system before deciding what to do about the relationship.
+
+What You Are Learning
+
+You are developing the ability to analyze a relationship as a feedback loop.
+
+Instead of describing yourself as "the distant one" and her as "the emotional one," you learn to identify:
+
+trigger → reaction → partner reaction → escalation → temporary resolution → repetition.
+
+That gives you something far more useful than blame: a map.
+
+Practical Application
+
+Suppose she says:
+
+"You never tell me what you're feeling."
+
+You experience it as criticism and become quiet.
+
+She interprets silence as evidence that you do not care.
+
+She sends longer messages.
+
+You feel overwhelmed and delay responding.
+
+She becomes angrier.
+
+Eventually you apologize, things improve briefly, and neither of you changes the structure underneath the argument.
+
+Months later, she stops asking you to open up.
+
+You interpret that as peace.
+
+She experiences it as resignation.
+
+The absence of conflict can therefore sometimes mean the problem was solved.
+
+But sometimes it means one person stopped expecting repair.
+
+Those are very different situations.
+
+Practice — Map Your Relationship Loop
+
+Choose three recurring conflicts.
+
+For each one write:
+
+1. Trigger: What happened first?
+
+2. Her move: What did she do?
+
+3. My interpretation: What meaning did I give it?
+
+4. My move: What did I do next?
+
+5. Her interpretation: What might my behavior have communicated?
+
+6. Escalation: How did the situation become worse?
+
+7. Repair: Who usually restored connection?
+
+Then ask:
+
+What happened when she stopped performing Step 7?
+
+You may discover why her withdrawal feels so dramatic now.
+
+After This Section, You Will Be Able To
+Map the pursuit-distance cycle without reducing either partner to a stereotype.
+Identify how your behavior may unintentionally intensify your partner's behavior.
+Distinguish conflict resolution from emotional resignation.
+Recognize when one partner has been carrying disproportionate responsibility for reconnecting.
+Analyze relationship patterns without turning attachment labels into accusations.`,
+// -------------------------
+        `What Her Distance Wakes Up in You -Sometimes you do not realize how attached you are until access to the person disappears.
+
+A breakup—or even sudden emotional distance—can transform a person's psychology remarkably quickly.
+
+Someone you occasionally took for granted can become almost impossible to stop thinking about.
+
+You replay conversations.
+
+You remember her best qualities more vividly than her difficult ones.
+
+Your phone becomes emotionally charged.
+
+A notification creates hope.
+
+Silence feels personal.
+
+This does not necessarily mean you suddenly discovered she is your soulmate.
+
+It can mean your attachment system has become activated.
+
+Attached emphasizes that attachment needs are not signs of weakness. Human beings seek connection, reassurance, availability, and responsiveness from important partners. The problem is not needing connection. The problem is what you do when the need becomes activated.
+
+Tatkin adds the nervous-system dimension: partners become important sources of safety and threat regulation, and conflict can quickly move people toward defensive rather than cooperative states. His relationship work therefore emphasizes slowing distress, understanding arousal, and repairing quickly.
+
+This matters enormously after she withdraws.
+
+Your first impulse may be action:
+
+send another message,
+
+drive to see her,
+
+write a long apology,
+
+download dating apps,
+
+sleep with somebody,
+
+post something to make her jealous,
+
+delete everything,
+
+block her,
+
+unblock her,
+
+promise marriage,
+
+promise therapy,
+
+promise that everything will change.
+
+Action temporarily reduces uncertainty.
+
+But not all action creates wisdom.
+
+A more mature skill is learning to tolerate enough emotional activation that you can ask:
+
+What exactly am I afraid of right now?
+
+Losing her?
+
+Being alone?
+
+Being rejected?
+
+Knowing she may eventually love somebody else?
+
+Feeling that you failed?
+
+Having to face parts of yourself the relationship allowed you to avoid?
+
+These are different wounds.
+
+They require different responses.
+
+What You Are Learning
+
+You are learning emotional differentiation.
+
+Instead of compressing everything into:
+
+"I miss her,"
+
+you become able to distinguish grief, abandonment fear, wounded pride, loneliness, guilt, sexual longing, regret, jealousy, and genuine love.
+
+That distinction gives you considerably better control over what happens next.
+
+Practical Application
+
+She says she does not want contact for a month.
+
+At 11:30 p.m. you see that she is online.
+
+Your body reacts before your reasoning does.
+
+You imagine who she might be talking to.
+
+The impulse appears:
+
+"Just send one message."
+
+This is exactly where relationship maturity becomes behavioral rather than theoretical.
+
+Respecting her boundary does not mean you feel calm.
+
+It means your discomfort does not automatically overrule another person's stated boundary.
+
+Similarly, if she has not requested no contact, restraint can still be useful. Repeated communication motivated primarily by anxiety can turn a request for connection into pressure.
+
+Practice — The Attachment Activation Map
+
+For seven days, whenever you feel a strong urge to contact, monitor, check, retaliate, or escape, record:
+
+Cue: What happened?
+
+Body: What did you physically notice?
+
+Emotion: What am I actually feeling?
+
+Story: What am I telling myself?
+
+Impulse: What do I want to do immediately?
+
+Need: What am I actually seeking—connection, reassurance, certainty, dignity, closure?
+
+Secure response: What action would I respect tomorrow?
+
+Do not aim for emotional perfection.
+
+Aim for a gap between impulse and behavior.
+
+That gap is one of the foundations of secure relating.
+
+After This Section, You Will Be Able To
+Identify attachment activation before acting on it.
+Separate genuine relational needs from panic-driven impulses.
+Recognize jealousy, loneliness, grief, regret, and rejection as distinct emotional experiences.
+Regulate yourself enough to respect boundaries during separation.
+Choose behavior according to values rather than momentary anxiety.,`,
+
+// -------------------------------------
+        `'Stop Trying to Win Her Back - If reconciliation requires pressure, it is not reconciliation yet.
+
+After someone withdraws, the natural temptation is to focus entirely on the outcome:
+
+How do I get her back?
+
+That question can produce impressive-looking behavior.
+
+Long messages.
+
+Flowers.
+
+Promises.
+
+Sudden emotional openness.
+
+Declarations about your future.
+
+Sometimes these gestures are sincere.
+
+But sincerity alone does not make them evidence of change.
+
+The more useful question is:
+
+What would make me safer and more capable in a relationship even if she never returns?
+
+That distinction is critical because transformation performed exclusively to control somebody else's decision is still a form of control.
+
+Richo's model of mature love offers five practices: attention, acceptance, appreciation, affection, and allowing. The last one is particularly important here. Allowing means recognizing the reality of another person rather than trying to force reality into the outcome you prefer.
+
+If she says:
+
+"I don't want this relationship anymore,"
+
+mature love may include the painful capacity to hear what she is actually saying.
+
+If she says:
+
+"I don't know,"
+
+maturity may require allowing uncertainty instead of demanding a decision that calms your anxiety.
+
+If she says:
+
+"I'm willing to talk, but I need to see real change,"
+
+then the task becomes behavioral.
+
+Tatkin's secure-functioning approach points toward mutual fairness, safety, sensitivity, explicit agreements, learning one's partner, and effective repair.
+
+Change therefore cannot merely sound like:
+
+"I'll communicate better."
+
+It needs to become observable.
+
+For example:
+
+"When conflict happens, I will not disappear for two days. I will tell you that I need thirty minutes to regulate and confirm when I'll return to the conversation."
+
+That is behavior.
+
+What You Are Learning
+
+You are learning the difference between:
+
+persuasion and repair,
+
+regret and responsibility,
+
+promising and changing,
+
+wanting her and being capable of relating well to her.
+
+You are also learning that an apology should not contain a hidden invoice requiring forgiveness, contact, or reconciliation in return.
+
+Practical Application
+
+If contact is appropriate and welcomed, a mature repair conversation might involve four elements:
+
+Recognition: What happened?
+
+Ownership: What did I contribute?
+
+Impact: How might it have affected you?
+
+Change: What will be different behaviorally?
+
+Not:
+
+"I only acted that way because you kept..."
+
+Not:
+
+"I've changed, so you owe me another chance."
+
+And not:
+
+"Nobody will ever love you like I do."
+
+A clean repair leaves the other person free.
+
+That freedom is part of what makes the repair trustworthy.
+
+Practice — The No-Persuasion Repair
+
+Write the message you desperately want to send.
+
+Then remove:
+
+attempts to create guilt,
+dramatic promises,
+accusations,
+references designed to create jealousy,
+demands for immediate answers,
+explanations that erase responsibility,
+pressure disguised as romance.
+
+Now rewrite it around four sentences:
+
+I recognize...
+
+I take responsibility for...
+
+I understand that may have affected you by...
+
+Regardless of what you decide, I am working on...
+
+Do not send the exercise automatically.
+
+Its purpose is first to clarify your own thinking.
+
+After This Section, You Will Be Able To
+Distinguish genuine repair from attempts to regain control.
+Take responsibility without collapsing into shame or defensiveness.
+Translate vague promises into observable relationship behavior.
+Communicate without using guilt, jealousy, pressure, or emotional bargaining.
+Respect another person's freedom while still expressing your own feelings clearly..'`,
+//------------------------------
+        `Repair, Release, or Leave the Door Closed - Missing someone does not answer whether the relationship should continue.
+
+Once the first emotional storm settles, a harder question arrives:
+
+Should this relationship actually be rebuilt?
+
+People frequently substitute feeling for evaluation.
+
+"I still love her."
+
+That matters.
+
+But it is not enough.
+
+You can love someone with whom you cannot build a functional partnership.
+
+You can miss someone whose presence repeatedly destabilized your life.
+
+You can regret your mistakes and still conclude that returning would recreate the same system.
+
+You can also discover that two imperfect people have enough goodwill, accountability, compatibility, and willingness to build something substantially healthier.
+
+The distinction requires evidence.
+
+Attached encourages attention to compatibility and the ability of partners to meet attachment needs rather than relying purely on romantic chemistry.
+
+Tatkin's secure-functioning framework asks whether the relationship can become a mutually protective, fair, collaborative two-person system rather than a contest between individual interests.
+
+Richo adds another essential idea: mature loving includes accepting reality, maintaining boundaries, and sometimes surviving the ending of a relationship rather than forcing its continuation. His revised edition specifically addresses ending relationships as part of adult loving.
+
+So evaluate the relationship through capacity, not longing.
+
+Can both people acknowledge their contribution?
+
+Can both communicate honestly?
+
+Can boundaries be respected?
+
+Can conflict be repaired?
+
+Is there reciprocity?
+
+Are core values compatible?
+
+Does the relationship contain genuine emotional safety?
+
+Is affection still accompanied by respect?
+
+Most importantly:
+
+Are both people actually choosing the relationship?
+
+One person cannot perform mutuality alone.
+
+What You Are Learning
+
+You are learning relationship decision-making.
+
+You will stop framing your options as only:
+
+get her back versus lose her forever.
+
+A more mature set of possibilities exists:
+
+repair together,
+
+separate respectfully,
+
+create temporary distance,
+
+remain apart,
+
+or—in some circumstances—recognize that reopening the relationship would recreate harm.
+
+Practical Application
+
+Imagine she agrees to meet.
+
+There are two possible conversations.
+
+Conversation A spends ninety minutes discussing how much you miss each other.
+
+Conversation B asks:
+
+What repeatedly failed between us?
+What responsibility does each person accept?
+What would change behaviorally?
+What boundaries would be necessary?
+What would we do differently during the next conflict?
+Are we both genuinely willing to try?
+
+Conversation A may feel more romantic.
+
+Conversation B tells you whether reconciliation has a foundation.
+
+If the relationship includes coercion, intimidation, violence, serious untreated addiction, or other safety concerns, the appropriate priority is not a couples exercise but safety and suitable professional support. Tatkin's own couples-workshop materials make similar exclusions for relationships in active crisis or involving intimate-partner violence.
+
+Practice — The Relationship Viability Scorecard
+
+Score each category from 0–5:
+
+Mutual willingness
+
+Emotional safety
+
+Respect
+
+Trust
+
+Accountability
+
+Reciprocity
+
+Conflict repair
+
+Compatible future
+
+Boundary respect
+
+Observable change
+
+Then answer:
+
+If nothing changed except that we missed each other, would this relationship work six months from now?
+
+That question often reveals more than:
+
+"Do we still have feelings?"
+
+After This Section, You Will Be Able To
+Evaluate reconciliation using evidence rather than loneliness.
+Distinguish chemistry and attachment from relationship compatibility.
+Identify whether repair is genuinely mutual.
+Recognize when releasing a relationship may be healthier than restarting it.
+Define the concrete conditions required before considering reconciliation.',`,
+//===================================
+        `Learn to Be Alone Without Becoming Closed - The goal after heartbreak is not to stop needing love. It is to stop needing a relationship to escape yourself.
+
+After a breakup there is often an empty space that the relationship previously occupied.
+
+Morning messages disappear.
+
+Weekend plans disappear.
+
+Physical affection disappears.
+
+Shared rituals disappear.
+
+A person who was woven through your ordinary day suddenly exists mostly inside memory.
+
+That emptiness can create enormous pressure to fill the space quickly.
+
+You reinstall dating apps.
+
+You reconnect with an ex.
+
+You pursue casual intimacy.
+
+You search for someone who resembles her.
+
+Or you decide that relationships are no longer worth the risk and become emotionally unavailable yourself.
+
+Neither rebound dependence nor permanent withdrawal constitutes healing.
+
+Richo explicitly treats relationship endings and grief as part of adult loving. The 20th-anniversary material includes surviving breakups while maintaining self-esteem and learning from relationship patterns rather than simply erasing the experience.
+
+Norwood approaches recovery from another direction. A central part of her model is redirecting enormous amounts of attention previously spent monitoring or changing another person toward one's own life, development, interests, support system, and recovery.
+
+Although Norwood wrote specifically about women caught in compulsive relationship patterns, the underlying principle is useful here regardless of gender:
+
+A life that has become organized around another person's attention needs to become your life again.
+
+This is not the shallow advice to "focus on yourself."
+
+It means rebuilding structures that make identity larger than romantic status.
+
+Friendships.
+
+Family.
+
+Physical health.
+
+Work.
+
+Learning.
+
+Purpose.
+
+Money.
+
+Sleep.
+
+Solitude.
+
+Play.
+
+Competence.
+
+Community.
+
+The aim is not proving that you do not need anyone.
+
+Secure people can need others.
+
+The aim is becoming capable of choosing love because it enriches your life rather than because loneliness makes almost any attachment feel preferable.
+
+What You Are Learning
+
+You are learning to distinguish solitude from abandonment.
+
+You are also learning how unprocessed relationships can quietly determine future partner selection.
+
+If you rush into another relationship while still seeking reassurance that you are desirable, the new person can become treatment for the old rejection.
+
+That is unfair to both of you.
+
+Practical Application
+
+Imagine meeting somebody attractive two months after the breakup.
+
+Ask yourself:
+
+"Am I interested in discovering who this woman actually is?"
+
+or:
+
+"Am I mainly interested in what being wanted by her would make me feel about myself?"
+
+Both desires can coexist.
+
+But recognizing the second prevents you from disguising emotional anesthesia as new love.
+
+The same applies to living alone.
+
+A quiet Saturday evening can either become evidence that your life is empty or an opportunity to discover which parts of your identity disappeared inside the previous relationship.
+
+Practice — The Life Re-Expansion Plan
+
+Create five categories:
+
+Body
+
+Friendship
+
+Purpose
+
+Competence
+
+Enjoyment
+
+Choose one weekly action for each.
+
+Then add a sixth:
+
+Relationship Recovery
+
+Once each week, answer:
+
+What do I miss about her?
+What do I miss about having someone?
+What do I not miss?
+What have I learned about myself?
+What pattern do I refuse to reproduce?
+What quality do I want to bring into my next relationship?
+
+Run this exercise for four weeks before judging whether being alone is "working."
+
+After This Section, You Will Be Able To
+Grieve a relationship without making reunion your only path to relief.
+Rebuild routines and identity outside romantic attachment.
+Recognize rebound motivation before involving another person.
+Distinguish missing your former partner from fearing solitude.
+Approach future dating from curiosity rather than emotional emergency.'`,
+
+`Choose and Build Secure Love Next Time - The final lesson is not how to keep someone chasing. It is how to create a relationship where chasing is unnecessary.
+
+Suppose your former partner does not return.
+
+Or suppose you reconcile.
+
+Eventually the same question remains:
+
+What kind of relationship are you now capable of building?
+
+This is where everything in the course converges.
+
+Attached teaches you to pay attention to attachment compatibility, availability, responsiveness, and direct communication rather than mistaking instability for chemistry.
+
+Tatkin pushes beyond individual compatibility toward secure functioning: two people deliberately creating fairness, mutual protection, agreements, responsiveness, and rapid repair. His Wired for Love framework specifically emphasizes creating a "couple bubble," learning one's partner, seeing their perspective, maintaining connection rituals, and handling conflict in ways that preserve the relationship.
+
+Richo's Five A's offer another layer:
+
+Attention: I notice you.
+
+Acceptance: I do not require you to become somebody else before I can relate to reality.
+
+Appreciation: I actively recognize what is valuable in you.
+
+Affection: Warmth becomes behavior rather than assumption.
+
+Allowing: Our closeness does not cancel your autonomy.
+
+Norwood contributes the warning that love becomes unhealthy when one person's life increasingly revolves around changing, rescuing, monitoring, or controlling another.
+
+Put those together and a striking principle emerges:
+
+Secure love requires both dependence and differentiation.
+
+You should matter to each other.
+
+You should affect each other.
+
+You should rely on each other.
+
+But neither person should need to disappear for the relationship to survive.
+
+That principle changes how you choose a partner.
+
+Instead of asking only:
+
+"Do I feel chemistry?"
+
+you start asking:
+
+"Can we tell each other what we need?"
+
+"Does she respond consistently?"
+
+"Can I respond consistently?"
+
+"Can disagreement occur without threatening the relationship?"
+
+"Do we repair?"
+
+"Can we remain individuals while building a real 'we'?"
+
+"Is this relationship reciprocal?"
+
+This is a considerably higher standard than merely finding someone who keeps choosing you.
+
+What You Are Learning
+
+You are learning to build a relationship deliberately rather than reactively.
+
+You will know what to look for in a future partner, what to contribute yourself, how to communicate needs earlier, and how to prevent small disappointments from hardening into the pursuit-withdrawal structure that brought you into this course.
+
+Practical Application
+
+Imagine your future partner texts:
+
+"You seemed distant tonight. Is something wrong?"
+
+The old pattern might be:
+
+"Nothing."
+
+She asks again.
+
+You become irritated.
+
+She becomes anxious.
+
+The cycle begins.
+
+Secure communication sounds more like:
+
+"I'm overloaded from work and quieter than usual. It isn't about us. I need an hour to decompress, and then I'd like to spend some time with you."
+
+That response does four things.
+
+It provides information.
+
+It reduces unnecessary threat.
+
+It protects your need for space.
+
+It confirms reconnection.
+
+Small behaviors like this prevent many relationship problems from becoming identity-level conflicts.
+
+Practice — Your Secure Relationship Operating Agreement
+
+Before your next serious relationship—or together if reconciliation occurs—write your answers to these ten questions:
+
+How do I normally behave when I feel rejected?
+How do I behave when I feel controlled?
+What kind of reassurance genuinely helps me?
+How do I ask for space without creating abandonment?
+How should conflict pauses work?
+What behavior counts as disrespect?
+What boundaries do I need around phones, social media, ex-partners, friends, and privacy?
+How do I prefer affection and appreciation to be expressed?
+How will we repair after hurting each other?
+What will I do if I notice myself returning to old patterns?
+
+Do not treat the agreement as permanent law.
+
+Review it as the relationship develops.
+
+The goal is not eliminating conflict.
+
+The goal is preventing uncertainty from repeatedly turning love into a chase.
+
+After This Section, You Will Be Able To
+Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
+Communicate reassurance, boundaries, needs, and requests directly.
+Build relationship agreements based on reciprocity and fairness.
+Recognize pursuit-withdrawal patterns early enough to interrupt them.
+Apply secure-functioning principles and the Five A's to everyday relationship behavior.
+Create closeness without requiring either partner to chase, control, or disappear.`
+      ]
+    }
+  ]
+},
+
+},
+}
 
 // ========================================
 // COURSE DISCOVERY AND PROGRESS CONFIGURATION

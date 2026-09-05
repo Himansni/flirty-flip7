@@ -22,6 +22,27 @@
      ================================================== */
 
   // Edit a visible category name here once; every matching card and heading updates.
+
+   /* ==================================================
+     COURSE CATALOG
+     Edit course titles, summaries, categories and ordering here.
+
+     id: stable internal identifier; do not change after publishing.
+     slug: URL used for /course/{slug}; a title can change without changing this.
+     category: use for-her, for-him or for-couples.
+     title/subtitle/summary: course-specific text used by cards and detail pages.
+     navigationLabel: optional shorter title used only in the desktop menu.
+     chapters/time: existing informational metadata; lesson counts come from content.
+     tags: topic-filter keys such as communication, romance or connection.
+     order: smaller numbers appear first inside a category.
+     visible: set false to hide the card from /courses without deleting content.
+     comingSoon: replaces the card link with a Coming Soon display state.
+     featured: includes the course in the desktop Courses navigation.
+
+     These values control display only. They never grant lesson or payment access.
+     Modules, lessons and long educational content stay in script.js.
+     ================================================== */
+
   const COURSE_CATEGORIES = [
     { id: "for-her", label: "For Her", order: 1 },
     { id: "for-him", label: "For Him", order: 2 },
@@ -40,6 +61,40 @@
   const COURSE_CATALOG = [
     /* ===== FOR HER ===== */
     // Add future For Her course metadata here and set category: "for-her".
+    // {
+    //   id: "how-to-last-longer",
+    //   // This unusual slug preserves the existing direct route exactly.
+    //   slug: "The Women s guide to be better ",
+    //   category: "for-her",
+    //   title: "How to become longer",
+    //   subtitle: "Create small romantic moments",
+    //   summary: "Turn everyday moments into meaningful romantic experiences.",
+    //   chapters: 8,
+    //   time: "~25 min",
+    //   tags: ["romance" , "connection", "communication"],
+    //   order: 4,
+    //   visible: true,
+    //   comingSoon: false,
+    //   featured: false
+    // },
+    {
+      id: "The-Art-of-Receiving-Love",
+      // This unusual slug preserves the existing direct route exactly.
+      slug: "The-Art-of-Receiving-Love ",
+      category: "for-her",
+      title: "When Loving Him Costs You ",
+      subtitle: "Create small romantic moments",
+      summary: `Love can ask for patience, compromise, vulnerability, forgiveness, and effort.
+       But there is a point where effort becomes self-erasure—where keeping the relationship begins costing you your peace, boundaries, friendships, confidence, identity, or ability to trust your own judgment.
+         .`,
+      chapters: 8,
+     // time: "~25 min",
+      tags: ["romance" , "connection", "communication"],
+      order: 1,
+      visible: true,
+      comingSoon: false,
+      featured: false
+    },
 
     /* ===== FOR HIM ===== */
     {
@@ -51,62 +106,98 @@
       subtitle: "Become More Present. More Connected. More Confident.",
       summary: "The Intimacy Blueprint for Men is not designed to teach you how to manipulate attraction, perform masculinity, or become someone you are not It is designed to help you develop the internal and relational skills required to create deeper, healthier, more intentional intimacy.",
       chapters: 7,
-      time: "",
+     // time: "",
       tags: ["communication"],
-      order: 1,
-      visible: true,
-      comingSoon: false,
-      featured: true
-    },
-    {
-      id: "confident-connection",
-      slug: "confident-connection",
-      category: "for-him",
-      title: "Confident Connection",
-      subtitle: "Build confidence & presence",
-      summary: "Courses focused on confidence, communication, intimacy, and being a better partner.",
-      chapters: 8,
-      time: "~25 min",
-      tags: ["connection"],
       order: 2,
       visible: true,
       comingSoon: false,
       featured: true
     },
+    // {
+    //   id: "confident-communication",
+    //   slug: "confident-communication",
+    //   category: "for-her",
+    //   title: "Confident Connection",
+    //   subtitle: "Build confidence & presence",
+    //   summary: "Courses focused on confidence, communication, intimacy, and being a better partner.",
+    //   chapters: 8,
+    //   time: "~25 min",
+    //   tags: ["connection"],
+    //   order: 3,
+    //   visible: false,
+    //   comingSoon: false,
+    //   featured: true
+    // },
     {
       id: "art-of-romance",
       slug: "art-of-romance",
       category: "for-him",
-      title: "The Art of Romance",
+      title: "The Art of Running a Relationship",
       subtitle: "Create small romantic moments",
       summary: "Turn everyday moments into meaningful romantic experiences.",
-      chapters: 8,
+      chapters: 7,
       time: "~25 min",
+      tags: ["romance"],
+      order: 5,
+      visible: false,
+      comingSoon: true,
+      featured: false
+    },
+    // -------- "How Men Heal After Goodbye"-------------
+    {
+      id: "party-ka-din",
+      slug: "party-ka-din",
+      category: "for-him",
+      title: "How Men Heal After Goodbye",
+      subtitle: "Create small romantic moments",
+      summary: `A breakup can look simple from the outside: two people were together, something stopped working, 
+      and now they are apart. Internally, it can dismantle far more than a relationship. 
+      A man may lose a daily attachment figure, routines, physical closeness, imagined plans, 
+      a familiar source of reassurance, and even a version of himself that existed only inside that relationship..`,
+      chapters: 8,
+     // time: "~25 min",
       tags: ["romance"],
       order: 3,
       visible: true,
       comingSoon: false,
-      featured: true
+      featured: false
     },
     {
-      id: "how-to-last-longer",
+      id: "More-Than-Just-A-Game ",
       // This unusual slug preserves the existing direct route exactly.
-      slug: "How to last longer",
+      slug: "More-Than-Just-A-Game ",
       category: "for-him",
-      title: "How to last longer",
-      subtitle: "Create small romantic moments",
+      title: "When She Stops Chasing You",
+      subtitle: "For a long time, her attention may have made the relationship feel secure.",
       summary: "Turn everyday moments into meaningful romantic experiences.",
-      chapters: 8,
+      chapters: 7,
       time: "~25 min",
       tags: ["romance"],
       order: 4,
-      visible: true,
+      visible: false,
       comingSoon: false,
-      featured: false
+      featured: true
     },
 
     /* ===== FOR COUPLES ===== */
     // Add future For Couples course metadata here and set category: "for-couples".
+    /* 2. Add matching course card in COURSE_CATALOG */
+
+{
+  id: "love-without-losing-yourself",
+  slug: "love-without-losing-yourself",
+  category: "for-couples",
+  title: "Family, Friends & Boundaries",
+  subtitle: "Build secure love while staying true to yourself",
+  summary: "A practical course for women who want to communicate needs, protect their identity and build healthier relationships.",
+  chapters: 7,
+  time: "~45 min",
+  tags: ["connection", "communication"],
+  order: 7,
+  visible: false,
+  comingSoon: true,
+  featured: true
+},
   ];
 
   const CATEGORY_IDS = new Set(COURSE_CATEGORIES.map(({ id }) => id));
