@@ -1745,7 +1745,7 @@ You should be able to examine what actually happened between you, recognize atta
     ]
   },
    /* New course */
-  'confident-communication': {
+  'confident-connection': {
     outcomes: [
       'Practice grounded presence instead of performing confidence.',
       'Notice emotional signals through words, tone and body language.',
@@ -2858,7 +2858,7 @@ the next time you love, you know how to love without abandoning yourself—or th
 
   //===================----------------=================
 
-  'art-of-dance': {
+  'art-of-romance': {
     outcomes: [
       'Create small rituals that make everyday connection feel intentional.',
       'Choose thoughtful gestures that carry personal meaning.',
@@ -3872,7 +3872,8 @@ If keeping the relationship requires that self to continually become smaller, th
 
 It is the relationship itself.`] }
     ],
-   
+  },
+
   /* 1. Add course lessons in courseContentData */
 
 'love-without-losing-yourself': {
@@ -3896,7 +3897,7 @@ It is the relationship itself.`] }
     }
   ]
 },
-"More-Than-Just-A-Game ": {
+'the-moment-the-chase-ends': {
   outcomes: [
     'Recognise your personal needs, values and non-negotiables.',
     'Communicate boundaries with clarity and respect.',
@@ -4847,7 +4848,48 @@ Create closeness without requiring either partner to chase, control, or disappea
   ]
 },
 
-},
+}
+
+const courseCatalogApi = typeof window !== 'undefined' ? window.FlirtyFlipCourseCatalog : null;
+
+// Validate the metadata/content contract before building the renderer data.
+function validateCourseContentMapping(content, catalog) {
+  const issues = [];
+  const catalogIds = new Set(catalog.map((course) => course.id));
+  const contentKeys = Object.keys(content);
+
+  for (const metadata of catalog) {
+    if (metadata.comingSoon) continue;
+    const course = content[metadata.id];
+    if (!course) {
+      issues.push(`Missing lesson content for catalog id "${metadata.id}".`);
+      continue;
+    }
+    if (!Array.isArray(course.sections)) {
+      issues.push(`Course "${metadata.id}" sections must be an array.`);
+      continue;
+    }
+    let lessonCount = 0;
+    course.sections.forEach((section, index) => {
+      if (!Array.isArray(section?.lessons)) {
+        issues.push(`Course "${metadata.id}" section ${index + 1} lessons must be an array.`);
+        return;
+      }
+      lessonCount += section.lessons.length;
+    });
+    if (lessonCount === 0) issues.push(`Course "${metadata.id}" has no lessons.`);
+  }
+
+  contentKeys
+    .filter((key) => !catalogIds.has(key))
+    .forEach((key) => issues.push(`Orphan lesson content key "${key}" has no catalog course.`));
+
+  return issues;
+}
+
+const courseContentIssues = validateCourseContentMapping(courseContentData, courseCatalogApi?.courses || []);
+if (courseContentIssues.length) {
+  console.warn(`Course content warnings:\n${courseContentIssues.join("\n")}`);
 }
 
 // ========================================
@@ -4855,7 +4897,6 @@ Create closeness without requiring either partner to chase, control, or disappea
 // Combines catalog metadata with separate lesson content; progress stays local to this device.
 // Supabase integration can replace these storage helpers later without changing course renderers.
 // ========================================
-const courseCatalogApi = typeof window !== 'undefined' ? window.FlirtyFlipCourseCatalog : null;
 const courseFilterOptions = courseCatalogApi?.filters || [{ id: 'all', label: 'All' }];
 const courseCategories = courseCatalogApi?.categories || [];
 const coursesData = Object.fromEntries((courseCatalogApi?.courses || []).map((metadata) => [

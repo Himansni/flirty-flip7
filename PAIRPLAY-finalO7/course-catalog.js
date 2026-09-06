@@ -19,6 +19,11 @@
 
      These values control display only. They never grant lesson or payment access.
      Modules, lessons and long educational content stay in script.js.
+
+     Safe new course pattern:
+       Catalog: id: "my-course", slug: "my-course"
+       Content: 'my-course': { outcomes: [...], sections: [...] }
+     The catalog id must exactly equal the courseContentData key.
      ================================================== */
 
   // Edit a visible category name here once; every matching card and heading updates.
@@ -61,22 +66,21 @@
   const COURSE_CATALOG = [
     /* ===== FOR HER ===== */
     // Add future For Her course metadata here and set category: "for-her".
-    // {
-    //   id: "how-to-last-longer",
-    //   // This unusual slug preserves the existing direct route exactly.
-    //   slug: "The Women s guide to be better ",
-    //   category: "for-her",
-    //   title: "How to become longer",
-    //   subtitle: "Create small romantic moments",
-    //   summary: "Turn everyday moments into meaningful romantic experiences.",
-    //   chapters: 8,
-    //   time: "~25 min",
-    //   tags: ["romance" , "connection", "communication"],
-    //   order: 4,
-    //   visible: true,
-    //   comingSoon: false,
-    //   featured: false
-    // },
+    {
+      id: "how-to-last-longer",
+      slug: "How to last longer",
+      category: "for-her",
+      title: "How to last longer",
+      subtitle: "Create small romantic moments",
+      summary: "Turn everyday moments into meaningful romantic experiences.",
+      chapters: 8,
+      time: "~25 min",
+      tags: ["romance", "connection", "communication"],
+      order: 4,
+      visible: false,
+      comingSoon: true,
+      featured: false
+    },
     {
       id: "The-Art-of-Receiving-Love",
       // This unusual slug preserves the existing direct route exactly.
@@ -113,26 +117,26 @@
       comingSoon: false,
       featured: true
     },
-    // {
-    //   id: "confident-communication",
-    //   slug: "confident-communication",
-    //   category: "for-her",
-    //   title: "Confident Connection",
-    //   subtitle: "Build confidence & presence",
-    //   summary: "Courses focused on confidence, communication, intimacy, and being a better partner.",
-    //   chapters: 8,
-    //   time: "~25 min",
-    //   tags: ["connection"],
-    //   order: 3,
-    //   visible: false,
-    //   comingSoon: false,
-    //   featured: true
-    // },
+    {
+      id: "confident-connection",
+      slug: "confident-connection",
+      category: "for-him",
+      title: "Confident Connection",
+      subtitle: "Build confidence & presence",
+      summary: "Courses focused on confidence, communication, intimacy, and being a better partner.",
+      chapters: 8,
+      time: "~25 min",
+      tags: ["connection"],
+      order: 1,
+      visible: true,
+      comingSoon: false,
+      featured: true
+    },
     {
       id: "art-of-romance",
       slug: "art-of-romance",
       category: "for-him",
-      title: "The Art of Running a Relationship",
+      title: "The Art of Romance",
       subtitle: "Create small romantic moments",
       summary: "Turn everyday moments into meaningful romantic experiences.",
       chapters: 7,
@@ -163,18 +167,18 @@
       featured: false
     },
     {
-      id: "More-Than-Just-A-Game ",
+      id: "the-moment-the-chase-ends",
       // This unusual slug preserves the existing direct route exactly.
-      slug: "More-Than-Just-A-Game ",
+      slug: "the-moment-the-chase-ends",
       category: "for-him",
       title: "When She Stops Chasing You",
       subtitle: "For a long time, her attention may have made the relationship feel secure.",
       summary: "Turn everyday moments into meaningful romantic experiences.",
-      chapters: 7,
+      chapters: 8,
       time: "~25 min",
       tags: ["romance"],
       order: 4,
-      visible: false,
+      visible: true,
       comingSoon: false,
       featured: true
     },
@@ -198,6 +202,8 @@
   comingSoon: true,
   featured: true
 },
+
+
   ];
 
   const CATEGORY_IDS = new Set(COURSE_CATEGORIES.map(({ id }) => id));

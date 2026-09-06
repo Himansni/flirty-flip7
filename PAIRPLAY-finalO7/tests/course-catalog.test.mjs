@@ -58,7 +58,7 @@ test("visible courses filter and sort by category then editable order", () => {
   assert.ok(visibleForHim.every(({ category }) => category === "for-him"));
   assert.deepEqual(
     Array.from(catalog.getVisibleCourses("romance"), ({ slug }) => slug),
-    ["art-of-romance", "How to last longer"]
+    ["The-Art-of-Receiving-Love ", "party-ka-din", "the-moment-the-chase-ends"]
   );
 });
 
