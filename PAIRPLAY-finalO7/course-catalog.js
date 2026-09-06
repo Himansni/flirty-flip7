@@ -128,21 +128,21 @@
     //   comingSoon: false,
     //   featured: true
     // },
-    {
-      id: "art-of-romance",
-      slug: "art-of-romance",
-      category: "for-him",
-      title: "The Art of Running a Relationship",
-      subtitle: "Create small romantic moments",
-      summary: "Turn everyday moments into meaningful romantic experiences.",
-      chapters: 7,
-      time: "~25 min",
-      tags: ["romance"],
-      order: 5,
-      visible: false,
-      comingSoon: true,
-      featured: false
-    },
+    // {
+    //   id: "art-of-romance",
+    //   slug: "art-of-romance",
+    //   category: "for-him",
+    //   title: "The Art of Running a Relationship",
+    //   subtitle: "Create small romantic moments",
+    //   summary: "Turn everyday moments into meaningful romantic experiences.",
+    //   chapters: 7,
+    //   time: "~25 min",
+    //   tags: ["romance"],
+    //   order: 5,
+    //   visible: false,
+    //   comingSoon: true,
+    //   featured: false
+    // },
     // -------- "How Men Heal After Goodbye"-------------
     {
       id: "party-ka-din",
@@ -162,42 +162,62 @@
       comingSoon: false,
       featured: false
     },
-    {
-      id: "More-Than-Just-A-Game ",
-      // This unusual slug preserves the existing direct route exactly.
-      slug: "More-Than-Just-A-Game ",
-      category: "for-him",
-      title: "When She Stops Chasing You",
-      subtitle: "For a long time, her attention may have made the relationship feel secure.",
-      summary: "Turn everyday moments into meaningful romantic experiences.",
-      chapters: 7,
-      time: "~25 min",
-      tags: ["romance"],
-      order: 4,
-      visible: false,
-      comingSoon: false,
-      featured: true
-    },
+  
 
     /* ===== FOR COUPLES ===== */
     // Add future For Couples course metadata here and set category: "for-couples".
     /* 2. Add matching course card in COURSE_CATALOG */
 
-{
-  id: "love-without-losing-yourself",
-  slug: "love-without-losing-yourself",
-  category: "for-couples",
-  title: "Family, Friends & Boundaries",
-  subtitle: "Build secure love while staying true to yourself",
-  summary: "A practical course for women who want to communicate needs, protect their identity and build healthier relationships.",
-  chapters: 7,
-  time: "~45 min",
-  tags: ["connection", "communication"],
-  order: 7,
-  visible: false,
-  comingSoon: true,
-  featured: true
-},
+// {
+//   id: "love-without-losing-yourself",
+//   slug: "love-without-losing-yourself",
+//   category: "for-couples",
+//   title: "Family, Friends & Boundaries",
+//   subtitle: "Build secure love while staying true to yourself",
+//   summary: "A practical course for women who want to communicate needs, protect their identity and build healthier relationships.",
+//   chapters: 7,
+//   time: "~45 min",
+//   tags: ["connection", "communication"],
+//   order: 7,
+//   visible: false,
+//   comingSoon: true,
+//   featured: true
+// },
+ {
+      id: "the-moment-the-chase-ends", 
+      slug: "the-moment-the-chase-ends",
+      category: "for-him",
+      title: "When She Stops Chasing You ",
+      subtitle: `For a long time, her attention may have made the relationship feel secure.After This Section, You Will Be Able To
+
+Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
+
+Communicate reassurance, boundaries, needs, and requests directly.
+
+Build relationship agreements based on reciprocity and fairness.
+
+Recognize pursuit-withdrawal patterns early enough to interrupt them`,
+
+      summary: ` Turn everyday moments into meaningful romantic experiences.After This Section, You Will Be Able To
+
+Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
+
+Communicate reassurance, boundaries, needs, and requests directly.
+
+Build relationship agreements based on reciprocity and fairness.
+
+Recognize pursuit-withdrawal patterns early enough to interrupt them.`,
+
+      chapters: 8,
+    //  time: "~25 min",
+      tags: ["romance"],
+      order: 4,
+      visible: true,
+      comingSoon: false,
+      featured: false
+    },
+
+
   ];
 
   const CATEGORY_IDS = new Set(COURSE_CATEGORIES.map(({ id }) => id));
