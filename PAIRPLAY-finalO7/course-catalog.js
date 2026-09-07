@@ -175,19 +175,21 @@
     // Add future For Couples course metadata here and set category: "for-couples".
     /* 2. Add matching course card in COURSE_CATALOG */
 
+    //========== ___The Relationship Worth Staying For____-----------===========
+
     {
       id: "love-without-losing-yourself",
       slug: "love-without-losing-yourself",
       category: "for-couples",
-      title: "Family, Friends & Boundaries",
-      subtitle: "Build secure love while staying true to yourself",
-      summary: "A practical course for women who want to communicate needs, protect their identity and build healthier relationships.",
+      title: "The Relationship Worth Staying For",
+      subtitle: "How to recognize healthy commitment, repair what can be repaired, and choose a relationship that is genuinely worth building.",
+      summary: `Love can make a relationship meaningful, but it cannot answer every question about whether two people should remain together. A couple may care deeply for each other while struggling with recurring conflict, unmet needs, broken trust, incompatible futures, or an imbalance in which one person carries most of the emotional work. Other couples may be facing ordinary difficulties that could become manageable with better communication, mutual responsibility, and a more deliberate approach to commitment.`,
       chapters: 7,
       time: "~45 min",
       tags: ["connection", "communication"],
       order: 7,
-      visible: false,
-      comingSoon: true,
+      visible: true,
+      comingSoon: false,
       featured: true
     },
 
