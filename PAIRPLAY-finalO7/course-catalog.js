@@ -117,13 +117,15 @@
       comingSoon: false,
       featured: true
     },
+
+    //========== ___Finding Love Without Losing Yourself____-----------===========
     {
       id: "confident-connection",
       slug: "confident-connection",
-      category: "for-him",
-      title: "Confident Connection",
-      subtitle: "Build confidence & presence",
-      summary: "Courses focused on confidence, communication, intimacy, and being a better partner.",
+      category: "for-her",
+      title: "Finding Love Without Losing Yourself",
+      subtitle: "Finding Love Without Losing Yourself teaches a different way to approach relationships:",
+      summary: "A healthy relationship should give you room to become more fully yourself—not require you to become smaller, quieter, less ambitious, or less honest to keep someone close. Yet the fear of losing love can make people compromise their needs before they have even recognized what those needs are..",
       chapters: 8,
       time: "~25 min",
       tags: ["connection"],
@@ -132,19 +134,22 @@
       comingSoon: false,
       featured: true
     },
+
+    //========== ___When Love Needs New Rules____-----------===========
+
     {
       id: "art-of-romance",
       slug: "art-of-romance",
-      category: "for-him",
-      title: "The Art of Romance",
-      subtitle: "Create small romantic moments",
-      summary: "Turn everyday moments into meaningful romantic experiences.",
+      category: "for-couples",
+      title: "When Love Needs New Rules",
+      subtitle: "Some relationships do not end because love disappears. They begin to struggle because the way two people have been loving each other no longer works.",
+      summary: "When Love Needs New Rules is a course about redesigning the way a relationship functions—not controlling your partner, creating a list of punishments, or using agreements to force someone to stay. It teaches couples how to recognize failing patterns, communicate their needs, establish fair agreements, repair conflict and damaged trust, restore connection, and decide whether the relationship can genuinely support the people they are becoming.",
       chapters: 8,
       time: "~25 min",
       tags: ["romance"],
       order: 5,
-      visible: false,
-      comingSoon: true,
+      visible: true,
+      comingSoon: false,
       featured: false
     },
     // -------- "How Men Heal After Goodbye"-------------
@@ -185,6 +190,9 @@
       comingSoon: true,
       featured: true
     },
+
+    //========== ___When She Stops Chasing You____-----------===========
+
    {
       id: "the-moment-the-chase-ends",
       slug: "the-moment-the-chase-ends",
