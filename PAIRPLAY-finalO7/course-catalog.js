@@ -79,7 +79,9 @@
       order: 4,
       visible: false,
       comingSoon: true,
-      featured: false
+      featured: false,
+      entitlement: "free",
+      accentColor: "#f48fb1"
     },
     {
       id: "The-Art-of-Receiving-Love",
@@ -97,7 +99,9 @@
       order: 1,
       visible: true,
       comingSoon: false,
-      featured: false
+      featured: false,
+      entitlement: "free",
+      accentColor: "#f48fb1"
     },
 
     /* ===== FOR HIM ===== */
@@ -115,7 +119,9 @@
       order: 2,
       visible: true,
       comingSoon: false,
-      featured: true
+      featured: true,
+      entitlement: "free",
+      accentColor: "#64b5f6"
     },
 
     //========== ___Finding Love Without Losing Yourself____-----------===========
@@ -132,7 +138,9 @@
       order: 1,
       visible: true,
       comingSoon: false,
-      featured: true
+      featured: true,
+      entitlement: "free",
+      accentColor: "#ff80ab"
     },
 
     //========== ___When Love Needs New Rules____-----------===========
@@ -150,7 +158,9 @@
       order: 5,
       visible: true,
       comingSoon: false,
-      featured: false
+      featured: false,
+      entitlement: "free",
+      accentColor: "#ba68c8"
     },
     // -------- "How Men Heal After Goodbye"-------------
     {
@@ -169,7 +179,9 @@
       order: 3,
       visible: true,
       comingSoon: false,
-      featured: false
+      featured: false,
+      entitlement: "free",
+      accentColor: "#4fc3f7"
     },
     /* ===== FOR COUPLES ===== */
     // Add future For Couples course metadata here and set category: "for-couples".
@@ -190,7 +202,9 @@
       order: 7,
       visible: true,
       comingSoon: false,
-      featured: true
+      featured: true,
+      entitlement: "free",
+      accentColor: "#ab47bc"
     },
 
     //========== ___When She Stops Chasing You____-----------===========
@@ -226,7 +240,9 @@ Recognize pursuit-withdrawal patterns early enough to interrupt them.`,
       order: 4,
       visible: true,
       comingSoon: false,
-      featured: false
+      featured: false,
+      entitlement: "free",
+      accentColor: "#29b6f6"
     },
 
 
@@ -303,7 +319,12 @@ Recognize pursuit-withdrawal patterns early enough to interrupt them.`,
       if (!isSafe) return;
       ids.add(course.id);
       slugs.add(course.slug);
-      safeCourses.push(Object.freeze({ ...course, tags: Object.freeze([...(course.tags || [])]) }));
+      safeCourses.push(Object.freeze({
+        ...course,
+        entitlement: course.entitlement || "free",
+        accentColor: course.accentColor || "#f48fb1",
+        tags: Object.freeze([...(course.tags || [])])
+      }));
     });
 
     return Object.freeze(safeCourses);
@@ -322,6 +343,10 @@ Recognize pursuit-withdrawal patterns early enough to interrupt them.`,
 
   function getCourseBySlug(slug) {
     return safeCatalog.find((course) => course.slug === slug) || null;
+  }
+
+  function getCourseById(id) {
+    return safeCatalog.find((course) => course.id === id) || null;
   }
 
   function matchesFilter(course, filterId) {
@@ -357,6 +382,7 @@ Recognize pursuit-withdrawal patterns early enough to interrupt them.`,
     validateCourseCatalog,
     getCategory,
     getCourseBySlug,
+    getCourseById,
     getVisibleCourses,
     getFeaturedCourses,
     selectVisibleCourses,

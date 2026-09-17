@@ -6840,7 +6840,11 @@ function bindHeroSampleCard() {
 
     card.classList.add("is-changing");
     window.setTimeout(() => {
-      sampleIndex = (sampleIndex + 1) % HERO_SAMPLE_PROMPTS.length;
+      const nextIndex = (sampleIndex + 1) % HERO_SAMPLE_PROMPTS.length;
+      if (nextIndex === HERO_SAMPLE_PROMPTS.length - 1) {
+        trackEvent('sample_card_complete', { total_samples: HERO_SAMPLE_PROMPTS.length });
+      }
+      sampleIndex = nextIndex;
       renderSample();
       card.classList.remove("is-changing");
       announcer.textContent = `Sample question ${sampleIndex + 1}: ${HERO_SAMPLE_PROMPTS[sampleIndex].question}`;
@@ -6948,10 +6952,48 @@ function normalizePathname(pathname) {
   return normalized || ROUTE_PATHS.home;
 }
 
+const MOOD_ROUTE_SLUGS = Object.freeze({
+  "sweet": "sweet",
+  "romantic": "romantic",
+  "truth-and-dare": "TruthandDare",
+  "truthanddare": "TruthandDare",
+  "flirty": "flirtyii",
+  "flirtyii": "flirtyii",
+  "spicy": "spicy",
+  "playful": "playful",
+  "fantasy": "cozy",
+  "cozy": "cozy",
+  "intimate": "intimate",
+  "dark-desire": "DarkDesire",
+  "darkdesire": "DarkDesire",
+  "dreams-future": "DreamsFuture",
+  "dreamsfuture": "DreamsFuture"
+});
+
+function getCanonicalMoodKey(rawSlug) {
+  if (!rawSlug) return null;
+  const clean = String(rawSlug).trim().toLowerCase();
+  return MOOD_ROUTE_SLUGS[clean] || (moods[rawSlug] ? rawSlug : null);
+}
+
 function resolveRoute(pathname) {
   const path = normalizePathname(pathname);
   if (path.startsWith(`${ROUTE_PATHS.course}/`)) {
     return { name: "course", slug: decodeURIComponent(path.slice(ROUTE_PATHS.course.length + 1)) };
+  }
+  if (path.startsWith(`${ROUTE_PATHS.play}/`) && path !== ROUTE_PATHS.setup) {
+    const rawMood = decodeURIComponent(path.slice(ROUTE_PATHS.play.length + 1));
+    const normalizedKey = getCanonicalMoodKey(rawMood);
+    if (normalizedKey && moods[normalizedKey]) {
+      return { name: "play-mood", moodKey: normalizedKey };
+    }
+  }
+  if (path.startsWith(`${ROUTE_PATHS.games}/`)) {
+    const gameId = decodeURIComponent(path.slice(ROUTE_PATHS.games.length + 1));
+    const miniGames = typeof window !== "undefined" ? window.FlirtyFlipCoupleGames : null;
+    if (miniGames?.hasGame(gameId) || (typeof window !== "undefined" && window.FlirtyFlipCoupleGameData?.games?.some((g) => g.id === gameId))) {
+      return { name: "game-detail", gameId };
+    }
   }
 
   const routeNames = {
@@ -7015,10 +7057,24 @@ function updateRouteMetadata(route, url) {
     support: "Help, privacy policy, terms of service, refund policy, and frequently asked questions for FlirtyFlip."
   };
 
-  document.title = titles[route.name] || titles.home;
+  if (route.name === "play-mood" && route.moodKey && moods[route.moodKey]) {
+    const moodMeta = moods[route.moodKey];
+    document.title = `${moodMeta.title} Deck — FLIRTYFLIP`;
+  } else if (route.name === "game-detail" && route.gameId) {
+    const miniGame = window.FlirtyFlipCoupleGameData?.games?.find((g) => g.id === route.gameId);
+    document.title = miniGame ? `${miniGame.title} — Couple Games | FLIRTYFLIP` : "Couple Games — FLIRTYFLIP";
+  } else {
+    document.title = titles[route.name] || titles.home;
+  }
 
   const currentTitle = document.title;
-  const currentDesc = descriptions[route.name] || defaultDescription;
+  let currentDesc = descriptions[route.name] || defaultDescription;
+  if (route.name === "play-mood" && route.moodKey && moods[route.moodKey]) {
+    currentDesc = `${moods[route.moodKey].title} relationship card deck: ${moods[route.moodKey].desc}`;
+  } else if (route.name === "game-detail" && route.gameId) {
+    const miniGame = window.FlirtyFlipCoupleGameData?.games?.find((g) => g.id === route.gameId);
+    if (miniGame) currentDesc = `${miniGame.title} (${miniGame.subtitle}): ${miniGame.description}`;
+  }
   const currentUrl = `${window.location.origin}${url.pathname}`;
 
   const canonical = document.querySelector('link[rel="canonical"]');
@@ -7034,8 +7090,9 @@ function updateRouteMetadata(route, url) {
 
   // Mark the owning primary navigation item for assistive technology and visual state.
   const activeGroup = route.name === 'course' ? 'courses'
-    : ['setup', 'game', 'results'].includes(route.name) ? 'play'
-      : route.name;
+    : ['setup', 'game', 'results', 'play-mood'].includes(route.name) ? 'play'
+      : route.name === 'game-detail' ? 'games'
+        : route.name;
   document.querySelectorAll('[data-nav-route]').forEach((item) => {
     if (item.dataset.navRoute === activeGroup) item.setAttribute('aria-current', 'page');
     else item.removeAttribute('aria-current');
@@ -7113,12 +7170,18 @@ function renderCurrentRoute(navigationType = "navigate") {
     }
   }
 
-  if (route.name !== "games") window.FlirtyFlipCoupleGames?.cleanup?.();
+  if (route.name !== "games" && route.name !== "game-detail") window.FlirtyFlipCoupleGames?.cleanup?.();
 
   if (route.name === "home") activatePage("home", navigationType);
   if (route.name === "play") {
     renderMoodCards("mood-list");
     activatePage("moods", navigationType);
+  }
+  if (route.name === "play-mood") {
+    selectedMood = route.moodKey;
+    renderSetupScreen();
+    activatePage("setup", navigationType);
+    trackEvent('deck_view', { mood: route.moodKey });
   }
   if (route.name === "setup") {
     renderSetupScreen();
@@ -7139,6 +7202,12 @@ function renderCurrentRoute(navigationType = "navigate") {
       renderFavoritesCatalog();
     } else renderCoupleGamesRoute(url);
     activatePage("catalog", navigationType);
+  }
+  if (route.name === "game-detail") {
+    const gameUrl = new URL(`${window.location.origin}/games?mode=together&game=${encodeURIComponent(route.gameId)}`);
+    renderCoupleGamesRoute(gameUrl);
+    activatePage("catalog", navigationType);
+    trackEvent('game_view', { game_id: route.gameId });
   }
   if (route.name === "courses") {
     renderCoursesCatalog(url.searchParams.get("filter") || "all");
@@ -7492,7 +7561,7 @@ const pool = getQuestionPool(selectedMood, selectedLength);
   $("game-mood-label").textContent = moods[selectedMood].title.toUpperCase();
   updateGame(true);
   persistGameSession("active");
-  trackEvent('game_start', { mood: selectedMood, card_count: selectedLength });
+  trackEvent('deck_start', { mood: selectedMood, card_count: selectedLength });
   navigateToRoute(ROUTE_PATHS.game);
 }
 
@@ -7737,6 +7806,13 @@ function renderResultsScreen() {
 }
 
 function finishGame() {
+  const playedCount = Math.max(0, currentCards.length - skipped);
+  trackEvent('deck_complete', {
+    mood: selectedMood,
+    card_count: currentCards.length,
+    cards_played: playedCount,
+    cards_skipped: skipped
+  });
   renderResultsScreen();
   persistGameSession("complete");
   navigateToRoute(ROUTE_PATHS.results);
@@ -8084,13 +8160,17 @@ function renderCourseCard(course) {
   const progress = getCourseProgress(course.slug);
   const route = `${ROUTE_PATHS.course}/${encodeURIComponent(course.slug)}`;
   const categoryLabel = courseCatalogApi?.getCategory?.(course.category)?.label || 'Course';
+  const entitlementBadge = '<span class="course-entitlement-badge">Free</span>';
   const courseAction = course.comingSoon
     ? '<span class="course-card__cta" aria-label="Coming soon">Coming soon <span aria-hidden="true">♡</span></span>'
     : `<a class="course-card__cta" href="${route}" data-route="${route}">${progress ? 'Continue course' : 'View course'} <span aria-hidden="true">→</span></a>`;
   return `
     <article class="course-card">
       <div class="course-card__top">
-        <span class="course-audience">${escapeHtml(categoryLabel)}</span>
+        <div class="course-card__badges">
+          <span class="course-audience">${escapeHtml(categoryLabel)}</span>
+          ${entitlementBadge}
+        </div>
         <span class="course-monogram" aria-hidden="true">${escapeHtml(course.title.charAt(0))}</span>
       </div>
       <div class="course-card__body">
@@ -8579,9 +8659,17 @@ function bindCatalogEvents() {
     }
 
     if (action.dataset.action === "finish-course") {
-      saveCourseProgress(action.dataset.course, Number(action.dataset.current), { complete: true });
+      const courseId = action.dataset.course;
+      saveCourseProgress(courseId, Number(action.dataset.current), { complete: true });
+      const completedSessionKey = `flirtyflip_completed_${courseId}`;
+      if (typeof sessionStorage !== "undefined" && !sessionStorage.getItem(completedSessionKey)) {
+        try {
+          sessionStorage.setItem(completedSessionKey, "1");
+        } catch (_) {}
+        trackEvent('course_complete', { course_id: courseId });
+      }
       toast("Course complete ♡");
-      navigateToRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(action.dataset.course)}`);
+      navigateToRoute(`${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}`);
     }
   });
 }
@@ -8644,17 +8732,33 @@ function renderCourseDetail(courseId) {
     </section>
   `).join('');
 
+  const progressPercent = getCourseProgressPercent(courseId);
+  const isCompleted = progressPercent === 100;
+  const completionBanner = isCompleted ? `
+    <div class="course-completion-banner" role="status">
+      <span class="course-completion-icon" aria-hidden="true">🏆</span>
+      <div>
+        <strong>Course Completed!</strong>
+        <p>You’ve finished all ${lessons.length} lessons in this guide. Revisit any lesson below at your own pace.</p>
+      </div>
+    </div>
+  ` : '';
+
   content.innerHTML = `
     <article class="premium-course">
       <header class="course-detail-hero">
         <div class="course-detail-hero__mark" aria-hidden="true"><span>${escapeHtml(c.title.charAt(0))}</span><small>FLIRTYFLIP COURSE</small></div>
         <div class="course-detail-hero__copy">
-          ${categoryLabel ? `<div class="course-audience">${escapeHtml(categoryLabel)}</div>` : ''}
+          <div class="course-detail-hero__badges">
+            ${categoryLabel ? `<span class="course-audience">${escapeHtml(categoryLabel)}</span>` : ''}
+            <span class="course-entitlement-badge">Free</span>
+          </div>
           <h1>${escapeHtml(c.title)}</h1>
           <p class="course-hook">${escapeHtml(c.subtitle || c.summary || '')}</p>
+          ${completionBanner}
           <div class="metadata-row" aria-label="Course details"><span>${lessons.length} lessons</span>${c.time ? `<span>${escapeHtml(c.time)}</span>` : ''}</div>
           ${renderCourseProgress(courseId)}
-          <button class="pill-btn course-primary" type="button" data-action="open-course-lesson" data-course="${escapeHtml(courseId)}" data-lesson="${continueLesson}">${progress ? 'Continue course' : 'Start course'} →</button>
+          <button class="pill-btn course-primary" type="button" data-action="open-course-lesson" data-course="${escapeHtml(courseId)}" data-lesson="${continueLesson}">${isCompleted ? 'Review course' : progress ? 'Continue course' : 'Start course'} →</button>
         </div>
       </header>
       <section class="learning-outcomes">
@@ -8707,6 +8811,13 @@ function renderCourseLesson(courseId, lessonIndex) {
       </header>
       <div class="reader-body">
         ${formatLessonParagraphs(lesson.body)}
+        <div class="reader-takeaway-card" role="region" aria-label="Key Takeaway">
+          <div class="reader-takeaway-header">
+            <span class="reader-takeaway-icon" aria-hidden="true">💡</span>
+            <strong>Key Reflection</strong>
+          </div>
+          <p>Pause here together. Take 60 seconds to discuss how this insight applies to your current dynamic, or reflect on one small habit you want to practice together this week.</p>
+        </div>
       </div>
       <nav class="reader-navigation" aria-label="Course lesson navigation">
         ${previousIndex >= 0 ? `<button class="ghost-btn" type="button" data-action="course-lesson-previous" data-course="${escapeHtml(courseId)}" data-lesson="${previousIndex}">← Previous lesson</button>` : '<span></span>'}

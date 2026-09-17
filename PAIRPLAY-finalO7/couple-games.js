@@ -388,13 +388,36 @@
     if (gameId === "reaction-test") return { phase: "idle", countdown: 6, signalAt: 0, timer: null, winner: -1, reaction: 0, tapLocked: false };
     if (gameId === "couple-dice") return { value: 1, outcome: null, isRolling: false, turn };
     if (gameId === "choose-a-door") return { doors: shuffle(data.doors).slice(0, 3), selected: -1, revealed: false, isOpening: false, turn };
+    if (gameId === "would-you-rather") {
+      const pool = data.wouldYouRather || [];
+      const prompt = pool.length ? pool[secureRandomIndex(pool.length)] : { a: "Romantic getaway", b: "Exciting adventure", topic: "Vibe" };
+      return {
+        prompt,
+        step: "p1_turn",
+        choiceA: null,
+        choiceB: null,
+        firstPlayer: turn,
+        secondPlayer: turn === 0 ? 1 : 0,
+        turn
+      };
+    }
     return {};
   }
 
   function renderActiveGame() {
     if (!runtime.root || !runtime.gameId) return;
     const game = getGame(runtime.gameId);
-    const renderers = { "tic-tac-toe": renderTicTacToe, "love-toss": renderLoveToss, "couple-wheel": renderWheel, "rapid-fire": renderRapidFire, "mystery-box": renderMysteryBox, "reaction-test": renderReactionTest, "couple-dice": renderDice, "choose-a-door": renderDoors };
+    const renderers = {
+      "tic-tac-toe": renderTicTacToe,
+      "love-toss": renderLoveToss,
+      "couple-wheel": renderWheel,
+      "rapid-fire": renderRapidFire,
+      "mystery-box": renderMysteryBox,
+      "reaction-test": renderReactionTest,
+      "couple-dice": renderDice,
+      "choose-a-door": renderDoors,
+      "would-you-rather": renderWouldYouRather
+    };
     if (game && renderers[runtime.gameId]) runtime.root.innerHTML = gameShell(game, renderers[runtime.gameId]());
   }
 
@@ -468,6 +491,204 @@
     const locked = state.selected >= 0 || isBusyStage() || isResultVisible();
     const selectedOutcome = state.selected >= 0 ? state.doors[state.selected] : null;
     return `<section class="cg-doors" aria-labelledby="cg-game-heading"><div class="cg-game-copy"><span class="cg-turn-pill">${escapeHtml(turnLabel(state.turn))}</span><h1 id="cg-game-heading">Choose a door.</h1><p>The outcome is fixed before you pick. No peeking—but you can always pass.</p></div><div class="cg-door-grid">${state.doors.map((outcome, index) => { const selected = state.selected === index; return `<button type="button" class="cg-door ${selected ? "is-selected" : ""} ${selected && state.isOpening ? "is-opening" : ""} ${selected && state.revealed ? "is-open" : ""} ${state.selected >= 0 && !selected ? "is-dimmed" : ""}" data-cg-action="choose-door" data-index="${index}" ${locked ? "disabled" : ""} aria-label="Choose door ${index + 1}"><span class="cg-door__number">0${index + 1}</span><span class="cg-door__glow"></span><span class="cg-door__panel"><i></i><strong>Open</strong></span></button>`; }).join("")}</div>${runtime.stage === "settling" && selectedOutcome ? `<div class="cg-door-category" role="status">${escapeHtml(selectedOutcome.type.toLocaleUpperCase())}</div>` : ""}${stageStatusMarkup("Opening…")}</section>`;
+  }
+
+  function triggerHaptic(duration = 20) {
+    if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function") {
+      try { navigator.vibrate(duration); } catch (_) {}
+    }
+  }
+
+  // Would You Rather presents two options in a private pass-and-play flow for couples.
+  // Partner A makes a secret pick -> screen hides choice -> pass to Partner B -> Partner B picks -> reveal match/different & discussion prompt.
+  function renderWouldYouRather() {
+    const state = runtime.state;
+    const p = state.prompt;
+    const p1Name = playerName(state.firstPlayer);
+    const p2Name = playerName(state.secondPlayer);
+
+    if (state.step === "pass_device") {
+      return `<section class="cg-wyr" aria-labelledby="cg-game-heading">
+        <div class="cg-game-copy">
+          <span class="cg-turn-pill">Secret Choice Locked 🔒</span>
+          <h1 id="cg-game-heading">Pass the phone to ${escapeHtml(p2Name)}</h1>
+          <p>${escapeHtml(p1Name)} has made their secret pick.<br>Hand over the device without peeking!</p>
+        </div>
+        <div class="cg-wyr-pass-card">
+          <div class="cg-wyr-pass-icon" aria-hidden="true">📱 ➔ 🤝</div>
+          <p class="cg-wyr-pass-instruction">Ready to see the dilemma and make your own choice?</p>
+          <button type="button" class="pill-btn cg-wyr-ready-btn" data-cg-action="wyr-ready-p2">
+            I’m ${escapeHtml(p2Name)}, I’m Ready →
+          </button>
+        </div>
+        <div class="cg-control-row" style="margin-top:20px">
+          <button class="cg-text-action" type="button" data-cg-route="/games?mode=together">All Games</button>
+        </div>
+      </section>`;
+    }
+
+    if (state.step === "p2_turn") {
+      return `<section class="cg-wyr" aria-labelledby="cg-game-heading">
+        <div class="cg-game-copy">
+          <span class="cg-turn-pill">${escapeHtml(p2Name)}'s Turn</span>
+          <span class="cg-eyebrow" style="margin-top:6px">${escapeHtml(p.topic || "DILEMMA")}</span>
+          <h1 id="cg-game-heading">What would you choose?</h1>
+          <p><strong>${escapeHtml(p2Name)}</strong>, pick your choice now. Let’s see if your answers match!</p>
+        </div>
+        <div class="cg-wyr-grid">
+          <button type="button" class="cg-wyr-card cg-wyr-card--a" data-cg-action="wyr-choice-p2" data-choice="a" aria-label="Choose Option A: ${escapeHtml(p.a)}">
+            <span class="cg-wyr-badge">OPTION A</span>
+            <p>${escapeHtml(p.a)}</p>
+            <strong class="cg-wyr-cta">Select This →</strong>
+          </button>
+          <div class="cg-wyr-vs" aria-hidden="true"><span>OR</span></div>
+          <button type="button" class="cg-wyr-card cg-wyr-card--b" data-cg-action="wyr-choice-p2" data-choice="b" aria-label="Choose Option B: ${escapeHtml(p.b)}">
+            <span class="cg-wyr-badge">OPTION B</span>
+            <p>${escapeHtml(p.b)}</p>
+            <strong class="cg-wyr-cta">Select This →</strong>
+          </button>
+        </div>
+        <div class="cg-control-row" style="margin-top:16px">
+          <button class="ghost-btn" type="button" data-cg-action="wyr-next">Skip Dilemma →</button>
+          <button class="cg-text-action" type="button" data-cg-route="/games?mode=together">All Games</button>
+        </div>
+      </section>`;
+    }
+
+    if (state.step === "revealed") {
+      const isMatch = state.choiceA === state.choiceB;
+      const aPickedByP1 = state.choiceA === "a";
+      const aPickedByP2 = state.choiceB === "a";
+      const bPickedByP1 = state.choiceA === "b";
+      const bPickedByP2 = state.choiceB === "b";
+
+      return `<section class="cg-wyr" aria-labelledby="cg-game-heading">
+        <div class="cg-game-copy">
+          <span class="cg-turn-pill">Both Answered</span>
+          <span class="cg-eyebrow" style="margin-top:6px">${escapeHtml(p.topic || "DILEMMA")}</span>
+          <h1 id="cg-game-heading">The Reveal!</h1>
+        </div>
+
+        <div class="cg-wyr-reveal-banner ${isMatch ? 'cg-wyr-reveal-banner--match' : 'cg-wyr-reveal-banner--different'}" role="status">
+          <div class="cg-wyr-reveal-status">
+            <span class="cg-wyr-reveal-icon">${isMatch ? '🎉' : '⚡'}</span>
+            <strong>${isMatch ? "IT'S A MATCH!" : "YOU DIVERGED!"}</strong>
+          </div>
+          <p>${isMatch
+            ? `Both ${escapeHtml(p1Name)} and ${escapeHtml(p2Name)} chose the same option!`
+            : `${escapeHtml(p1Name)} and ${escapeHtml(p2Name)} picked different sides on this one!`}</p>
+        </div>
+
+        <div class="cg-wyr-grid cg-wyr-grid--revealed">
+          <div class="cg-wyr-card cg-wyr-card--a ${aPickedByP1 || aPickedByP2 ? 'is-picked' : 'is-unpicked'}">
+            <span class="cg-wyr-badge">OPTION A</span>
+            <p>${escapeHtml(p.a)}</p>
+            <div class="cg-wyr-selections">
+              ${aPickedByP1 ? `<span class="cg-wyr-partner-tag">👤 ${escapeHtml(p1Name)}</span>` : ''}
+              ${aPickedByP2 ? `<span class="cg-wyr-partner-tag">👤 ${escapeHtml(p2Name)}</span>` : ''}
+              ${!aPickedByP1 && !aPickedByP2 ? `<span class="cg-wyr-unpicked-label">Neither chose this</span>` : ''}
+            </div>
+          </div>
+          <div class="cg-wyr-vs" aria-hidden="true"><span>VS</span></div>
+          <div class="cg-wyr-card cg-wyr-card--b ${bPickedByP1 || bPickedByP2 ? 'is-picked' : 'is-unpicked'}">
+            <span class="cg-wyr-badge">OPTION B</span>
+            <p>${escapeHtml(p.b)}</p>
+            <div class="cg-wyr-selections">
+              ${bPickedByP1 ? `<span class="cg-wyr-partner-tag">👤 ${escapeHtml(p1Name)}</span>` : ''}
+              ${bPickedByP2 ? `<span class="cg-wyr-partner-tag">👤 ${escapeHtml(p2Name)}</span>` : ''}
+              ${!bPickedByP1 && !bPickedByP2 ? `<span class="cg-wyr-unpicked-label">Neither chose this</span>` : ''}
+            </div>
+          </div>
+        </div>
+
+        <div class="cg-wyr-discussion-box">
+          <div class="cg-wyr-discussion-title"><span aria-hidden="true">💬</span> <strong>Couple Discussion</strong></div>
+          <p>Take a moment to explain your reasons to each other. What was your instant reaction, and did you guess what your partner would pick?</p>
+        </div>
+
+        <div class="cg-control-row" style="margin-top:20px">
+          <button class="pill-btn" type="button" data-cg-action="wyr-next">Next Dilemma →</button>
+          <button class="cg-text-action" type="button" data-cg-route="/games?mode=together">All Games</button>
+        </div>
+      </section>`;
+    }
+
+    // Default: state.step === "p1_turn"
+    return `<section class="cg-wyr" aria-labelledby="cg-game-heading">
+      <div class="cg-game-copy">
+        <span class="cg-turn-pill">${escapeHtml(p1Name)}'s Secret Turn</span>
+        <span class="cg-eyebrow" style="margin-top:6px">${escapeHtml(p.topic || "DILEMMA")}</span>
+        <h1 id="cg-game-heading">Would You Rather?</h1>
+        <p><strong>${escapeHtml(p1Name)}</strong>, pick your choice in secret without letting ${escapeHtml(p2Name)} see!</p>
+      </div>
+      <div class="cg-wyr-grid">
+        <button type="button" class="cg-wyr-card cg-wyr-card--a" data-cg-action="wyr-choice-p1" data-choice="a" aria-label="Choose Option A: ${escapeHtml(p.a)}">
+          <span class="cg-wyr-badge">OPTION A</span>
+          <p>${escapeHtml(p.a)}</p>
+          <strong class="cg-wyr-cta">Select This →</strong>
+        </button>
+        <div class="cg-wyr-vs" aria-hidden="true"><span>OR</span></div>
+        <button type="button" class="cg-wyr-card cg-wyr-card--b" data-cg-action="wyr-choice-p1" data-choice="b" aria-label="Choose Option B: ${escapeHtml(p.b)}">
+          <span class="cg-wyr-badge">OPTION B</span>
+          <p>${escapeHtml(p.b)}</p>
+          <strong class="cg-wyr-cta">Select This →</strong>
+        </button>
+      </div>
+      <div class="cg-control-row" style="margin-top:16px">
+        <button class="ghost-btn" type="button" data-cg-action="wyr-next">Skip Dilemma →</button>
+        <button class="cg-text-action" type="button" data-cg-route="/games?mode=together">All Games</button>
+      </div>
+    </section>`;
+  }
+
+  function chooseWyrP1(choice) {
+    const state = runtime.state;
+    if (!state || state.step !== "p1_turn" || !["a", "b"].includes(choice)) return;
+    triggerHaptic(20);
+    state.choiceA = choice;
+    state.step = "pass_device";
+    renderActiveGame();
+  }
+
+  function readyWyrP2() {
+    const state = runtime.state;
+    if (!state || state.step !== "pass_device") return;
+    state.step = "p2_turn";
+    renderActiveGame();
+  }
+
+  function chooseWyrP2(choice) {
+    const state = runtime.state;
+    if (!state || state.step !== "p2_turn" || !["a", "b"].includes(choice)) return;
+    triggerHaptic(20);
+    state.choiceB = choice;
+    state.step = "revealed";
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", "game_complete", { game_id: "would-you-rather", match: state.choiceA === state.choiceB });
+    }
+    renderActiveGame();
+  }
+
+  function nextWouldYouRather() {
+    const state = runtime.state;
+    if (!state) return;
+    const pool = data.wouldYouRather || [];
+    if (!pool.length) return;
+    let next = pool[secureRandomIndex(pool.length)];
+    if (pool.length > 1 && state.prompt) {
+      while (next.a === state.prompt.a) next = pool[secureRandomIndex(pool.length)];
+    }
+    state.prompt = next;
+    state.choiceA = null;
+    state.choiceB = null;
+    state.step = "p1_turn";
+    const nextFirst = state.firstPlayer === 0 ? 1 : 0;
+    state.firstPlayer = nextFirst;
+    state.secondPlayer = nextFirst === 0 ? 1 : 0;
+    state.turn = nextFirst;
+    runtime.turnIndex = nextFirst;
+    writeSession();
+    renderActiveGame();
   }
 
   function resetCurrentGame() {
@@ -737,6 +958,10 @@
     if (runtime.gameId === "couple-wheel") pool = data.wheel[runtime.state.selected].outcomes;
     if (runtime.gameId === "mystery-box") pool = runtime.state.boxes;
     if (runtime.gameId === "choose-a-door") pool = data.doors;
+    if (runtime.gameId === "would-you-rather") {
+      nextWouldYouRather();
+      return;
+    }
     if (runtime.gameId === "rapid-fire") {
       nextRapidPrompt();
       return;
@@ -785,6 +1010,10 @@
     if (action === "reaction-tap") return reactionTap(Number(control.dataset.player));
     if (action === "roll-dice") return rollDice();
     if (action === "choose-door") return chooseDoor(Number(control.dataset.index));
+    if (action === "wyr-choice-p1") return chooseWyrP1(control.dataset.choice);
+    if (action === "wyr-ready-p2") return readyWyrP2();
+    if (action === "wyr-choice-p2") return chooseWyrP2(control.dataset.choice);
+    if (action === "wyr-next") return nextWouldYouRather();
   }
 
   function handleInput(event) {

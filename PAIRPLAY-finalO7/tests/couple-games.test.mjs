@@ -39,10 +39,10 @@ vm.runInNewContext(engineSource, sandbox, { filename: "couple-games.js" });
 const catalog = window.FlirtyFlipCoupleGameData;
 const engine = window.FlirtyFlipCoupleGames;
 
-test("catalog exposes exactly the eight approved playable games", () => {
+test("catalog exposes the approved playable couple games", () => {
   assert.deepEqual(
     Array.from(catalog.games, (game) => game.id),
-    ["tic-tac-toe", "love-toss", "couple-wheel", "rapid-fire", "mystery-box", "reaction-test", "couple-dice", "choose-a-door"]
+    ["tic-tac-toe", "love-toss", "couple-wheel", "rapid-fire", "mystery-box", "reaction-test", "couple-dice", "choose-a-door", "would-you-rather"]
   );
   for (const game of catalog.games) {
     assert.ok(game.title && game.subtitle && game.description && game.duration);
