@@ -118,10 +118,7 @@
 </head>
 <body>
   <a href="#home" class="skip-link">Skip to main content</a>
-  <!-- ========================================
-       CINEMATIC BACKGROUND GLOW
-       Decorative only; change/remove these divs if the background should be simpler.
-       ======================================== -->
+  <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
   <div class="ambient ambient-1"></div>
   <div class="ambient ambient-2"></div>
 
@@ -188,6 +185,14 @@
 
     <!-- Right-side actions -->
     <div class="nav-actions">
+      <div class="theme-select-wrap">
+        <select id="theme-select" class="theme-pill-select" aria-label="Select romantic theme" onchange="setTheme(this.value)">
+          <option value="rose">🌹 Velvet Rose</option>
+          <option value="amber">🕯️ Candlelight Amber</option>
+          <option value="cosmic">🔮 Cosmic Amethyst</option>
+        </select>
+      </div>
+      <button class="sound-toggle-btn" id="sound-btn" type="button" onclick="toggleSound()" aria-label="Toggle sound effects" title="Sound Effects (Off by default)">🔇</button>
       <button class="text-btn" id="support-btn" type="button">Support</button>
       <button class="text-btn" id="nav-auth-label" type="button">Log in</button>
       <button class="pill-btn small" id="nav-auth-cta" type="button" data-mobile-label="Guest">Continue as guest</button>
@@ -210,6 +215,18 @@
           <li><a class="drawer-link" href="/courses" data-route="/courses">Courses</a></li>
           <li><a class="drawer-link" href="/how" data-route="/how">How it works</a></li>
           <li><a class="drawer-link" href="/support" data-route="/support">Support</a></li>
+          <li class="drawer-divider"></li>
+          <li class="drawer-theme-row">
+            <span class="drawer-theme-label">Theme</span>
+            <select class="theme-select theme-pill-select" aria-label="Select mobile theme" onchange="setTheme(this.value)">
+              <option value="rose">🌹 Velvet Rose</option>
+              <option value="amber">🕯️ Candlelight Amber</option>
+              <option value="cosmic">🔮 Cosmic Amethyst</option>
+            </select>
+          </li>
+          <li class="drawer-sound-row">
+            <button class="drawer-sound-btn" id="drawer-sound-btn" type="button" onclick="toggleSound()"><span>Sound Effects</span><span class="drawer-sound-state" id="drawer-sound-state">OFF 🔇</span></button>
+          </li>
           <li class="drawer-divider"></li>
           <li><button id="drawer-login" type="button">Log in</button></li>
           <li><button id="drawer-guest" type="button">Continue as guest</button></li>
@@ -424,7 +441,10 @@
           </div>
           <div id="game-progress" class="progress" role="progressbar" aria-label="Game progress" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1"><div id="progress-fill"></div></div>
         </div>
-        <button class="icon-btn" id="favorite-btn" type="button" onclick="toggleFavorite()" aria-label="Save this card to favorites">♡</button>
+        <div class="game-top-actions">
+          <button class="icon-btn" id="voice-btn" type="button" onclick="toggleReadAloud()" aria-label="Read prompt aloud" title="Read Aloud">🗣️</button>
+          <button class="icon-btn" id="favorite-btn" type="button" onclick="toggleFavorite()" aria-label="Save this card to favorites">♡</button>
+        </div>
       </div>
 
       <div class="game-area">

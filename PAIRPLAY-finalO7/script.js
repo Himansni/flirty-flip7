@@ -7714,6 +7714,9 @@ function transitionCard(direction) {
   if (direction > 0 && currentIndex >= currentCards.length - 1) return finishGame();
   if (direction < 0 && currentIndex <= 0) return;
 
+  stopSpeaking();
+  playSound("flip");
+
   const scene = $("card-scene");
   if (!scene) return;
   const exitClass = direction > 0 ? "sweeping" : "sweeping-back";
@@ -7771,6 +7774,7 @@ function nextCard() {
 
 function skipCard() {
   if (cardTransitioning) return;
+  stopSpeaking();
   skipped++;
   persistGameSession("active");
   toast("Card skipped — no pressure ♡");
@@ -7785,6 +7789,7 @@ function toggleFavorite() {
   const card = currentCards[currentIndex];
   const text = card ? card[1] : null;
   const added = toggleFavoriteForCard(text);
+  playSound("click");
   const favBtn = $("favorite-btn");
   if (favBtn) {
     favBtn.textContent = added ? "♥" : "♡";
@@ -7806,6 +7811,8 @@ function renderResultsScreen() {
 }
 
 function finishGame() {
+  stopSpeaking();
+  playSound("success");
   const playedCount = Math.max(0, currentCards.length - skipped);
   trackEvent('deck_complete', {
     mood: selectedMood,
@@ -7825,6 +7832,7 @@ function closeModal(){ $("modal").classList.add("hidden"); }
 
 // Confirmed exits remove the resumable round before returning to mood selection.
 function exitGameToMoods() {
+  stopSpeaking();
   closeModal();
   clearGameSession();
   showMoods();
@@ -7907,6 +7915,9 @@ function bindAuthEvents() {
 }
 
 if (typeof document !== 'undefined') {
+  initTheme();
+  updateSoundButtons();
+  initAmbientParticles();
   renderCourseNavigation();
   bindGlobalUI();
   bindAuthEvents();
@@ -8574,8 +8585,19 @@ function bindNavEvents() {
 function bindGlobalUI() {
   const supportBtn = $("support-btn");
   const cardScene = $("card-scene");
+  const soundBtn = $("sound-btn");
+  const drawerSoundBtn = $("drawer-sound-btn");
+  const voiceBtn = $("voice-btn");
+  const themeSelect = $("theme-select");
+  const drawerThemeSelect = document.querySelector(".drawer-theme-row .theme-select");
 
   if (supportBtn) supportBtn.addEventListener('click', (e) => { e.preventDefault(); showSupport('index'); });
+  if (soundBtn) soundBtn.addEventListener('click', () => toggleSound());
+  if (drawerSoundBtn) drawerSoundBtn.addEventListener('click', () => toggleSound());
+  if (voiceBtn) voiceBtn.addEventListener('click', () => toggleReadAloud());
+  if (themeSelect) themeSelect.addEventListener('change', (e) => setTheme(e.target.value));
+  if (drawerThemeSelect) drawerThemeSelect.addEventListener('change', (e) => setTheme(e.target.value));
+
   if (cardScene) {
     cardScene.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -8827,4 +8849,296 @@ function renderCourseLesson(courseId, lessonIndex) {
       </nav>
     </article>
   `;
+}
+
+// ========================================
+// EXPERIENCE & AMBIENT CONTROLLERS (Adapted from FlirtyFlip-MVP)
+// Theme switching, ambient particle dust, synthesized Web Audio sound FX, and optional Web Speech read-aloud.
+// ========================================
+
+// 1. THEME CONTROLLER
+function initTheme() {
+  let savedTheme = "rose";
+  try {
+    savedTheme = localStorage.getItem("flirtyflip_theme") || "rose";
+  } catch (_) {}
+  if (!["rose", "amber", "cosmic"].includes(savedTheme)) savedTheme = "rose";
+  setTheme(savedTheme, false);
+}
+
+function setTheme(theme, persist = true) {
+  if (!["rose", "amber", "cosmic"].includes(theme)) theme = "rose";
+  if (typeof document !== "undefined") {
+    if (document.body) document.body.setAttribute("data-theme", theme);
+    if (document.documentElement) document.documentElement.setAttribute("data-theme", theme);
+    document.querySelectorAll("#theme-select, .theme-select").forEach((sel) => {
+      sel.value = theme;
+    });
+  }
+  if (persist) {
+    try {
+      localStorage.setItem("flirtyflip_theme", theme);
+    } catch (_) {}
+  }
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("flirtyflip:themechange", { detail: { theme } }));
+  }
+}
+if (typeof window !== "undefined") {
+  window.initTheme = initTheme;
+  window.setTheme = setTheme;
+}
+
+// 2. AMBIENT PARTICLE SYSTEM
+function initAmbientParticles() {
+  if (typeof document === "undefined" || typeof window === "undefined") return;
+  const canvas = document.getElementById("ambient-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    canvas.style.display = "none";
+    return;
+  }
+
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  window.addEventListener(
+    "resize",
+    () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    },
+    { passive: true }
+  );
+
+  const count = window.innerWidth < 768 ? 16 : 28;
+  const themeColors = {
+    rose: ["rgba(255,107,139,0.35)", "rgba(255,36,73,0.22)", "rgba(255,182,193,0.3)"],
+    amber: ["rgba(247,195,121,0.35)", "rgba(230,152,56,0.22)", "rgba(255,214,138,0.3)"],
+    cosmic: ["rgba(199,125,255,0.35)", "rgba(157,78,221,0.22)", "rgba(224,170,255,0.3)"]
+  };
+
+  let particles = [];
+  function createParticles() {
+    particles = [];
+    const theme = (document.body && document.body.getAttribute("data-theme")) || "rose";
+    const palette = themeColors[theme] || themeColors.rose;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2.2 + 0.8,
+        dx: (Math.random() - 0.5) * 0.28,
+        dy: -Math.random() * 0.35 - 0.08,
+        color: palette[i % palette.length],
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.015 + Math.random() * 0.02
+      });
+    }
+  }
+
+  createParticles();
+  window.addEventListener("flirtyflip:themechange", createParticles);
+
+  function render() {
+    if (!document.hidden) {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.dx;
+        p.y += p.dy;
+        p.pulse += p.pulseSpeed;
+        if (p.y < -10) {
+          p.y = height + 10;
+          p.x = Math.random() * width;
+        }
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 0.3 + 0.5 * (0.5 + 0.5 * Math.sin(p.pulse));
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+}
+if (typeof window !== "undefined") {
+  window.initAmbientParticles = initAmbientParticles;
+}
+
+// 3. SOUND SYNTHESIS CONTROLLER (Off by default, zero external assets)
+let soundEnabled = false;
+try {
+  soundEnabled = localStorage.getItem("flirtyflip_sound_enabled") === "true";
+} catch (_) {
+  soundEnabled = false;
+}
+let audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx && typeof window !== "undefined") {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (AudioCtx) audioCtx = new AudioCtx();
+  }
+  if (audioCtx && audioCtx.state === "suspended") {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    if (type === "flip") {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(320, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.12);
+    } else if (type === "success" || type === "match") {
+      [349.23, 440.0, 523.25].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.08);
+        osc.stop(ctx.currentTime + i * 0.08 + 0.45);
+      });
+    } else if (type === "click") {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(580, ctx.currentTime);
+      gain.gain.setValueAtTime(0.03, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.06);
+    }
+  } catch (_) {}
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  try {
+    localStorage.setItem("flirtyflip_sound_enabled", String(soundEnabled));
+  } catch (_) {}
+  updateSoundButtons();
+  if (soundEnabled) {
+    playSound("click");
+    toast("Sound effects: ON 🔊");
+  } else {
+    toast("Sound effects: OFF 🔇");
+  }
+}
+
+function updateSoundButtons() {
+  if (typeof document === "undefined") return;
+  document.querySelectorAll("#sound-btn, .sound-toggle-btn").forEach((btn) => {
+    btn.textContent = soundEnabled ? "🔊" : "🔇";
+    btn.setAttribute("aria-label", soundEnabled ? "Disable sound effects" : "Enable sound effects");
+    if (soundEnabled) btn.classList.add("is-active");
+    else btn.classList.remove("is-active");
+  });
+  document.querySelectorAll("#drawer-sound-state, .drawer-sound-state").forEach((el) => {
+    el.textContent = soundEnabled ? "ON 🔊" : "OFF 🔇";
+  });
+  document.querySelectorAll("#drawer-sound-btn").forEach((btn) => {
+    if (soundEnabled) btn.classList.add("is-active");
+    else btn.classList.remove("is-active");
+  });
+}
+
+if (typeof window !== "undefined") {
+  window.playSound = playSound;
+  window.toggleSound = toggleSound;
+  window.updateSoundButtons = updateSoundButtons;
+}
+
+// 4. VOICE / READ-ALOUD CONTROLLER (Web Speech API)
+let isSpeaking = false;
+
+function stopSpeaking() {
+  if (typeof window !== "undefined" && "speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+  isSpeaking = false;
+  if (typeof document !== "undefined") {
+    const voiceBtn = document.getElementById("voice-btn");
+    if (voiceBtn) {
+      voiceBtn.classList.remove("is-active");
+      voiceBtn.setAttribute("aria-label", "Read prompt aloud");
+      voiceBtn.textContent = "🗣️";
+    }
+  }
+}
+
+function toggleReadAloud() {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+    toast("Voice read-aloud is not supported in this browser.");
+    return;
+  }
+  const voiceBtn = document.getElementById("voice-btn");
+  if (window.speechSynthesis.speaking || isSpeaking) {
+    stopSpeaking();
+    return;
+  }
+  const qEl = document.getElementById("question-text");
+  const turnEl = document.getElementById("turn-label");
+  const promptText = qEl ? qEl.textContent.trim() : "";
+  if (!promptText) return;
+  const text = turnEl && turnEl.textContent ? `${turnEl.textContent}. ${promptText}` : promptText;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 0.92;
+  utterance.pitch = 1.0;
+  try {
+    const voices = window.speechSynthesis.getVoices();
+    const naturalVoice = voices.find(
+      (v) =>
+        v.lang &&
+        v.lang.startsWith("en") &&
+        (v.name.includes("Natural") ||
+          v.name.includes("Samantha") ||
+          v.name.includes("Karen") ||
+          v.name.includes("Google") ||
+          v.name.includes("Victoria"))
+    );
+    if (naturalVoice) utterance.voice = naturalVoice;
+  } catch (_) {}
+  utterance.onstart = () => {
+    isSpeaking = true;
+    if (voiceBtn) {
+      voiceBtn.classList.add("is-active");
+      voiceBtn.setAttribute("aria-label", "Stop reading aloud");
+      voiceBtn.textContent = "⏹️";
+    }
+  };
+  utterance.onend = utterance.onerror = () => {
+    stopSpeaking();
+  };
+  window.speechSynthesis.speak(utterance);
+}
+
+if (typeof window !== "undefined") {
+  window.toggleReadAloud = toggleReadAloud;
+  window.stopSpeaking = stopSpeaking;
 }

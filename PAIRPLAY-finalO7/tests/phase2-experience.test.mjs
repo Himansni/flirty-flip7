@@ -127,3 +127,46 @@ test("Phase 2: Would You Rather preserves two-partner secret choice flow with hi
   assert.match(engineSource, /typeof navigator !== "undefined" && typeof navigator\.vibrate === "function"/);
 });
 
+test("Phase 2 Experience: Theme system supports rose, amber, and cosmic with persistence", () => {
+  assert.match(scriptSource, /function initTheme\(\)/);
+  assert.match(scriptSource, /function setTheme\(theme/);
+  assert.match(scriptSource, /"flirtyflip_theme"/);
+
+  // Check supported themes in script
+  assert.match(scriptSource, /\["rose", "amber", "cosmic"\]/);
+
+  // Check custom theme event dispatch
+  assert.match(scriptSource, /flirtyflip:themechange/);
+});
+
+test("Phase 2 Experience: Sound effects are off by default, use Web Audio API synthesis, and no autoplay", () => {
+  // Sound is off by default
+  assert.match(scriptSource, /let soundEnabled = false;/);
+  assert.match(scriptSource, /localStorage\.getItem\("flirtyflip_sound_enabled"\) === "true"/);
+
+  // Uses Web Audio synth without external mp3/wav files
+  assert.match(scriptSource, /AudioContext \|\| window\.webkitAudioContext/);
+  assert.match(scriptSource, /createOscillator/);
+  assert.match(scriptSource, /createGain/);
+
+  // Covers flip, click, and success/match sound synthesis
+  assert.match(scriptSource, /type === "flip"/);
+  assert.match(scriptSource, /type === "click"/);
+  assert.match(scriptSource, /type === "success" \|\| type === "match"/);
+});
+
+test("Phase 2 Experience: Voice read-aloud uses Web Speech API and cancels on card navigation", () => {
+  assert.match(scriptSource, /function toggleReadAloud\(\)/);
+  assert.match(scriptSource, /function stopSpeaking\(\)/);
+  assert.match(scriptSource, /SpeechSynthesisUtterance/);
+
+  // Card transitions stop speech
+  assert.match(scriptSource, /stopSpeaking\(\);\s*playSound\("flip"\);/);
+  assert.match(scriptSource, /stopSpeaking\(\);\s*skipped\+\+;/);
+});
+
+test("Phase 2 Experience: Ambient particle system respects prefers-reduced-motion", () => {
+  assert.match(scriptSource, /function initAmbientParticles\(\)/);
+  assert.match(scriptSource, /prefers-reduced-motion: reduce/);
+  assert.match(scriptSource, /ambient-canvas/);
+});

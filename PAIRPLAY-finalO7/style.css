@@ -3,20 +3,23 @@
    Shared spacing, type, surfaces and controls for every routed screen.
    Tune these values first to adjust the product without chasing one-off rules.
    ======================================== */
-:root {
-  --bg: #070708;
-  --surface: #111114;
-  --surface-raised: #17171b;
+:root, body[data-theme="rose"] {
+  --bg: #0d090d;
+  --bg-gradient: radial-gradient(circle at 50% -12%, #4a0d1e 0%, #0d090d 68%), radial-gradient(circle at 85% 80%, rgba(230,57,86,.07), transparent 35%);
+  --surface: #181119;
+  --surface-raised: #221624;
   --surface-soft: rgba(255,255,255,.045);
   --overlay: rgba(4,3,5,.78);
-  --ink: #f6f1f2;
-  --muted: #aaa1a5;
+  --ink: #fdf5f7;
+  --muted: #aa98a3;
   --muted-strong: #c8bec2;
   --red: #ff2449;
   --red-dark: #b80f2d;
   --pink: #ff2449;
   --pink-dark: #ff4d67;
   --purple: #8a5cff;
+  --accent: #ff758f;
+  --glow-color: rgba(255, 36, 73, 0.25);
   --cream: #171316;
   --line: rgba(255,255,255,.1);
   --line-strong: rgba(255,255,255,.17);
@@ -39,6 +42,42 @@
   --heading-section: clamp(1.9rem, 3.5vw, 3rem);
 }
 
+body[data-theme="amber"] {
+  --bg: #0e0c0a;
+  --bg-gradient: radial-gradient(circle at 50% -12%, #482f0c 0%, #0e0c0a 68%), radial-gradient(circle at 85% 80%, rgba(230,152,56,.07), transparent 35%);
+  --surface: #1a1612;
+  --surface-raised: #251f18;
+  --ink: #fefaf4;
+  --muted: #aba195;
+  --muted-strong: #d2c8bc;
+  --red: #e69838;
+  --red-dark: #b36b17;
+  --pink: #e69838;
+  --pink-dark: #fca947;
+  --purple: #f7c379;
+  --accent: #f7c379;
+  --glow-color: rgba(230, 152, 56, 0.25);
+  --border-focus: rgba(230,152,56,.5);
+}
+
+body[data-theme="cosmic"] {
+  --bg: #0b0914;
+  --bg-gradient: radial-gradient(circle at 50% -12%, #30164c 0%, #0b0914 68%), radial-gradient(circle at 85% 80%, rgba(157,78,221,.07), transparent 35%);
+  --surface: #161226;
+  --surface-raised: #211a3b;
+  --ink: #faf7fe;
+  --muted: #a49bb3;
+  --muted-strong: #cdc3de;
+  --red: #a855f7;
+  --red-dark: #7e22ce;
+  --pink: #c084fc;
+  --pink-dark: #d8b4fe;
+  --purple: #9333ea;
+  --accent: #c77dff;
+  --glow-color: rgba(168, 85, 247, 0.25);
+  --border-focus: rgba(157,78,221,.5);
+}
+
 /* ========================================
    GLOBAL BASE AND PAGE LAYOUT
    Edit shared sizing, focus behavior and media safety here; route-specific layouts live below.
@@ -49,14 +88,14 @@ body {
   margin: 0;
   font-family: "DM Sans", sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 15% 15%, rgba(255,36,73,.08), transparent 28%),
-    radial-gradient(circle at 85% 80%, rgba(138,92,255,.07), transparent 25%),
-    var(--bg);
+  background-color: var(--bg);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
   min-width: 0;
   min-height: 100vh;
   min-height: 100dvh;
   overflow-x: clip;
+  transition: background-color .35s ease, color .35s ease;
 }
 main, .page { min-width:0; }
 img, svg, video { display:block; max-width:100%; }
@@ -103,7 +142,55 @@ body::before {
 .logo { text-decoration: none; color: var(--ink); font-weight: 800; letter-spacing: -.04em; display:flex; align-items:center; gap:9px; }
 .logo > span:last-child span { color: var(--red); }
 .logo-mark { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:var(--red); color:#fff; font-size:19px; box-shadow:0 0 25px rgba(255,36,73,.35); }
-.nav-actions { display:flex; align-items:center; gap:20px; }
+.nav-actions { display:flex; align-items:center; gap:14px; }
+
+/* Theme Selector & Sound Toggle */
+.theme-select-wrap { display:inline-flex; align-items:center; }
+.theme-pill-select {
+  height: 36px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0 10px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  outline: none;
+  transition: border-color .2s ease, background .2s ease;
+}
+.theme-pill-select:hover { border-color: rgba(255,255,255,.3); }
+.theme-pill-select:focus-visible { outline: 2px solid var(--accent); }
+.theme-pill-select option { background: #181119; color: #fff; }
+
+.sound-toggle-btn {
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  font-size: 0.92rem;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color .2s, color .2s, transform .2s, box-shadow .2s;
+}
+.sound-toggle-btn:hover { border-color: rgba(255,255,255,.35); color: var(--ink); transform: scale(1.05); }
+.sound-toggle-btn.is-active { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px var(--glow-color, rgba(255,107,139,.25)); }
+
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+  transition: opacity .5s ease;
+}
 
 /* Favorites badge in header */
 #nav-favorites { color: var(--muted); background: transparent; border:0; font-weight:800; display:flex; align-items:center; gap:6px; }
@@ -149,6 +236,12 @@ body::before {
 .drawer-nav li { margin-bottom:12px; }
 .drawer-link { display:flex; align-items:center; min-height:48px; background:transparent; border:0; color:var(--ink); font-weight:800; font-size:16px; text-align:left; text-decoration:none; padding:10px 0; width:100%; }
 .drawer-divider { height:1px; background:var(--line); margin:18px 0; }
+.drawer-theme-row { display:flex; align-items:center; justify-content:space-between; padding:8px 0; }
+.drawer-theme-label { font-size:14px; font-weight:700; color:var(--muted); }
+.drawer-sound-row { padding:8px 0; }
+.drawer-sound-btn { width:100%; display:flex; align-items:center; justify-content:space-between; background:var(--surface-raised); border:1px solid var(--line); border-radius:var(--radius-sm); padding:12px 16px; color:var(--ink); font-size:14px; font-weight:700; cursor:pointer; }
+.drawer-sound-state { color:var(--muted); font-size:12px; }
+.drawer-sound-btn.is-active .drawer-sound-state { color:var(--accent); font-weight:800; }
 
 /* Header-specific responsive breakpoint; global route breakpoints are grouped later. */
 @media (max-width: 900px) {
@@ -352,9 +445,13 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 /* ========================================
    GAME SCREEN
    ======================================== */
-.game-page { min-height:calc(100vh - 82px); min-height:calc(100dvh - 82px); }
 .game-top { max-width:850px; margin:0 auto; padding:28px 25px 0; display:flex; align-items:center; gap:18px; }
-.icon-btn { border:0; width:44px; height:44px; border-radius:50%; background:#151518; color:#fff; font-size:24px; display:grid; place-items:center; color:var(--ink); box-shadow:0 7px 22px rgba(0,0,0,.06); }
+.game-top-actions { display:flex; align-items:center; gap:8px; }
+.icon-btn { border:1px solid var(--line); width:44px; height:44px; border-radius:50%; background:var(--surface-raised); color:var(--ink); font-size:22px; display:grid; place-items:center; box-shadow:0 7px 22px rgba(0,0,0,.06); transition:border-color .2s, transform .2s, box-shadow .2s; }
+.icon-btn:hover { border-color:rgba(255,255,255,.3); transform:scale(1.05); }
+#voice-btn { font-size:18px; }
+#voice-btn.is-active { border-color:var(--accent); color:var(--accent); box-shadow:0 0 16px var(--glow-color, rgba(255,107,139,.35)); animation:voicePulse 1.4s ease-in-out infinite; }
+@keyframes voicePulse { 0%, 100%{ transform:scale(1); } 50%{ transform:scale(1.08); } }
 .game-progress-wrap { flex:1; }
 .game-meta { display:flex; justify-content:space-between; font-size:10px; font-weight:800; letter-spacing:.13em; margin-bottom:8px; }
 .progress { height:5px; background:#eadfe3; border-radius:99px; overflow:hidden; }
