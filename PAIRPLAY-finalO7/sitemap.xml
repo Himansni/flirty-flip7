@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://flirtyflip.com/</loc>
-  </url>
+  <url><loc>https://flirtyflip.com/</loc></url>
+  <url><loc>https://flirtyflip.com/play</loc></url>
+  <url><loc>https://flirtyflip.com/games</loc></url>
+  <url><loc>https://flirtyflip.com/courses</loc></url>
+  <url><loc>https://flirtyflip.com/how</loc></url>
+  <url><loc>https://flirtyflip.com/support</loc></url>
+  <url><loc>https://flirtyflip.com/course/The-Art-of-Receiving-Love</loc></url>
+  <url><loc>https://flirtyflip.com/course/better-communication</loc></url>
+  <url><loc>https://flirtyflip.com/course/confident-connection</loc></url>
+  <url><loc>https://flirtyflip.com/course/art-of-romance</loc></url>
+  <url><loc>https://flirtyflip.com/course/party-ka-din</loc></url>
+  <url><loc>https://flirtyflip.com/course/love-without-losing-yourself</loc></url>
+  <url><loc>https://flirtyflip.com/course/the-moment-the-chase-ends</loc></url>
 </urlset>

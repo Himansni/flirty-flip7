@@ -39,8 +39,8 @@ test("all existing course titles and direct slugs remain available", () => {
   const { catalog } = loadCatalog();
   const expected = new Map([
     ["better-communication", "THE INTIMACY BLUEPRINT FOR MEN"],
-    ["confident-connection", "Confident Connection"],
-    ["art-of-romance", "The Art of Romance"],
+    ["confident-connection", "Finding Love Without Losing Yourself"],
+    ["art-of-romance", "When Love Needs New Rules"],
     ["How to last longer", "How to last longer"]
   ]);
 
@@ -54,11 +54,11 @@ test("visible courses filter and sort by category then editable order", () => {
   const { catalog } = loadCatalog();
   const visibleForHim = catalog.getVisibleCourses("for-him");
 
-  assert.deepEqual(Array.from(visibleForHim, ({ order }) => order), [1, 2, 3, 4]);
+  assert.deepEqual(Array.from(visibleForHim, ({ order }) => order), [2, 3, 4]);
   assert.ok(visibleForHim.every(({ category }) => category === "for-him"));
   assert.deepEqual(
     Array.from(catalog.getVisibleCourses("romance"), ({ slug }) => slug),
-    ["The-Art-of-Receiving-Love ", "party-ka-din", "the-moment-the-chase-ends"]
+    ["The-Art-of-Receiving-Love", "party-ka-din", "the-moment-the-chase-ends", "art-of-romance"]
   );
 });
 

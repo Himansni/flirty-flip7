@@ -298,7 +298,7 @@
   .cg-game-stage { align-items:start; padding:28px 16px 22px; }
   .cg-game-copy h1 { font-size:clamp(2.35rem,12vw,3.45rem); }
   .cg-result-actions { grid-template-columns:1fr; }
-  .cg-result-actions .cg-text-action { grid-column:auto; }
+
   .cg-ttt-board { border-radius:22px; gap:6px; }
   .cg-ttt-cell { border-radius:13px; }
   .cg-wheel { width:min(88vw,350px); }
@@ -370,6 +370,6 @@
 }
 @keyframes cg-category-rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
 @media (prefers-reduced-motion:reduce) {
-  .cg-mode-card,.cg-game-card,.cg-ttt-cell,.cg-door,.cg-door__panel,.cg-door__glow,.cg-wheel,.cg-coin,.cg-dice-cube,.cg-mystery-box { transition:none !important; }
-  .cg-result-card,.cg-stage-status,.cg-ttt-cell.is-winning,.cg-ttt.is-celebrating::after,.cg-winning-line,.cg-coin.is-flipping,.cg-dice-cube.is-rolling,.cg-mystery-box.is-animating,.cg-mystery-box.is-animating .cg-box-lid,.cg-mystery-box.is-animating .cg-box-glow,.cg-reaction.is-countdown .cg-reaction-status,.cg-door-category { animation:none !important; }
+  .cg-mode-card,.cg-game-card,.cg-ttt-cell,.cg-door,.cg-door__panel,.cg-door__glow,.cg-wheel,.cg-coin,.cg-dice-cube,.cg-mystery-box { transition-duration:0.01ms !important; }
+  .cg-result-card,.cg-stage-status,.cg-ttt-cell.is-winning,.cg-ttt.is-celebrating::after,.cg-winning-line,.cg-coin.is-flipping,.cg-dice-cube.is-rolling,.cg-mystery-box.is-animating,.cg-mystery-box.is-animating .cg-box-lid,.cg-mystery-box.is-animating .cg-box-glow,.cg-reaction.is-countdown .cg-reaction-status,.cg-door-category { animation-duration:0.01ms !important; animation-iteration-count:1 !important; }
 }

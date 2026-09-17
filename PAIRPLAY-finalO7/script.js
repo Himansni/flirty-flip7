@@ -6141,957 +6141,8 @@ Create closeness without requiring either partner to chase, control, or disappea
       ]
     }
   ]
-},
-
-'the-moment-the-chase-ends': {
-  outcomes: [
-    'Recognise your personal needs, values and non-negotiables.',
-    'Communicate boundaries with clarity and respect.',
-    'Build a relationship without abandoning your identity.'
-  ],
-  sections: [
-    {
-      title: 'Lessons',
-      lessons: [`Introduction After This Section - You Will Be Able To
-
-Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
-
-Communicate reassurance, boundaries, needs, and requests directly.
-
-Build relationship agreements based on reciprocity and fairness.
-
-Recognize pursuit-withdrawal patterns early enough to interrupt them.
-
-Apply secure-functioning principles and the Five A's to everyday relationship behavior.
-
-Create closeness without requiring either partner to chase, control, or disappear.
-
-
-
-Your Transformation
-
-By the end of When She Stops Chasing You, the central question should no longer be:
-
-"How do I make her chase me again?"
-
-You should be able to examine what actually happened between you, recognize attachment activation without obeying it, identify your role in a pursuit-distance cycle, communicate responsibility without manipulation, determine whether reconciliation has genuine foundations, tolerate separation without immediately replacing the relationship, and choose future partners more intelligently.`,
-
-`The Moment the Chase Ends - Her silence is information—but it is not an explanation.
-When someone repeatedly pursues connection, the pursued partner can gradually begin treating that pursuit as part of the relationship's background. She texts first. She brings up problems. She asks whether everything is okay. She tries to reconnect after arguments. Because she repeatedly restores contact, you may never have to discover what the relationship feels like when she stops doing that work.
-
-Then she stops.
-
-One mistake is immediately concluding, She doesn't care anymore. Another is assuming, She wants me to chase her now. Both interpretations may occasionally be true, but neither should be your starting assumption.
-
-Withdrawal can mean many things. Someone may be emotionally exhausted. She may have concluded that repeated conversations are producing no change. She may be protecting herself. Her feelings may genuinely have changed. She may be reconsidering the relationship. She may already have decided to leave.
-
-The important distinction is between observable behavior and the meaning you assign to it.
-
-Attachment dynamics make this harder. A person who previously felt comfortable because the other partner consistently sought closeness can suddenly experience intense attachment activation when that attention disappears. The same person who previously wanted more space may suddenly become preoccupied with getting closeness back. Attached describes secure, anxious, and avoidant relationship tendencies and shows how proximity and distance can activate very different responses.
-
-This means you must resist making permanent decisions from the first emotional shock.
-
-Her withdrawal is a moment to become curious about reality.
-
-Not:
-
-How do I make her want me again?
-
-But:
-
-What was actually happening between us before she stopped trying?
-
-That question begins the course.
-
-What You Are Learning
-
-You are learning to separate three things that often become psychologically fused after relationship withdrawal:
-
-what happened, what you fear it means, and what you actually know.
-
-You will also begin distinguishing ordinary temporary distance from a larger pattern of disengagement.
-
-Most importantly, you will stop treating another person's pursuit as automatic proof that the relationship is healthy.
-
-Practical Application
-
-Imagine she previously complained that you rarely initiated plans.
-
-Eventually she stops complaining.
-
-At first you feel relieved.
-
-Three weeks later she stops asking to meet as often. Her messages become functional rather than affectionate. Suddenly you become anxious and begin sending more messages than you ever did before.
-
-The insecure interpretation is:
-
-"She's playing games."
-
-A more disciplined interpretation is:
-
-"Something in our relationship has changed. Before reacting, I need to understand the sequence that led here."
-
-The same discipline applies after a breakup. Checking whether she viewed your story, analyzing her online status, sending indirect posts, or repeatedly asking mutual friends about her may provide momentary relief while keeping you psychologically trapped inside uncertainty.
-
-Practice — The Facts/Story Audit
-
-Take one situation involving her recent withdrawal and divide a page into two columns.
-
-Facts
-
-Write only observable information.
-
-For example:
-
-She has not initiated a conversation for six days.
-She declined two invitations.
-She said she needs space.
-She removed our shared photos.
-
-Then write:
-
-My interpretation
-
-She never loved me.
-She's testing me.
-There must be another man.
-If I don't act immediately, I will lose her forever.
-
-Now circle anything in the second column that you cannot actually verify.
-
-The purpose is not emotional suppression. It is learning not to confuse fear with evidence.
-
-After This Section, You Will Be Able To
-Separate observable relationship changes from fear-driven interpretations.
-Recognize when the loss of pursuit activates your own attachment system.
-Assess withdrawal without immediately chasing, blaming, or catastrophizing.
-Identify the relationship conditions that existed before her behavior changed.
-.`,
-
-        `The Relationship You Were Both Creating -Stop asking who started the cycle and learn how the cycle kept itself alive.
-
-Relationships often become organized around repeated roles.
-
-One person seeks closeness.
-
-The other becomes uncomfortable and creates distance.
-
-More distance produces more pursuit.
-
-More pursuit produces more distance.
-
-Eventually both people can sincerely believe the other is causing the problem.
-
-This is one of the most useful ideas for understanding why "she stopped chasing" is rarely the complete story.
-
-Attached describes the particularly difficult interaction that can emerge between anxious and avoidant attachment tendencies: one person's attempts to restore proximity can intensify the other's desire for distance.
-
-Tatkin approaches the same territory from another direction. Instead of asking only about individual attachment styles, his secure-functioning model asks what the two-person system is creating. His work emphasizes mutual safety, fairness, sensitivity, agreements, understanding one's partner, and repairing ruptures quickly.
-
-This changes the question from:
-
-Who was the needy one?
-
-or
-
-Who was emotionally unavailable?
-
-to:
-
-What happened between us whenever one person became frightened?
-
-Perhaps she pursued harder when she felt uncertain.
-
-Perhaps you withdrew because her requests felt like criticism.
-
-Your withdrawal increased her uncertainty.
-
-Her increased pursuit felt even more demanding.
-
-You withdrew further.
-
-Neither person necessarily designed the cycle consciously.
-
-But eventually the cycle becomes stronger than either individual's intentions.
-
-Norwood adds another useful perspective from the pursuer's side. Her work describes situations where attention becomes increasingly focused on monitoring, rescuing, fixing, or changing a partner while the pursuer's own life contracts. Her recovery model explicitly shifts attention away from controlling another person and back toward one's own life.
-
-So when a woman finally stops pursuing, one possibility is that she has begun withdrawing from a role she could no longer sustain.
-
-That does not automatically make her right.
-
-It does not automatically make you wrong.
-
-It means you need to understand the system before deciding what to do about the relationship.
-
-What You Are Learning
-
-You are developing the ability to analyze a relationship as a feedback loop.
-
-Instead of describing yourself as "the distant one" and her as "the emotional one," you learn to identify:
-
-trigger → reaction → partner reaction → escalation → temporary resolution → repetition.
-
-That gives you something far more useful than blame: a map.
-
-Practical Application
-
-Suppose she says:
-
-"You never tell me what you're feeling."
-
-You experience it as criticism and become quiet.
-
-She interprets silence as evidence that you do not care.
-
-She sends longer messages.
-
-You feel overwhelmed and delay responding.
-
-She becomes angrier.
-
-Eventually you apologize, things improve briefly, and neither of you changes the structure underneath the argument.
-
-Months later, she stops asking you to open up.
-
-You interpret that as peace.
-
-She experiences it as resignation.
-
-The absence of conflict can therefore sometimes mean the problem was solved.
-
-But sometimes it means one person stopped expecting repair.
-
-Those are very different situations.
-
-Practice — Map Your Relationship Loop
-
-Choose three recurring conflicts.
-
-For each one write:
-
-1. Trigger: What happened first?
-
-2. Her move: What did she do?
-
-3. My interpretation: What meaning did I give it?
-
-4. My move: What did I do next?
-
-5. Her interpretation: What might my behavior have communicated?
-
-6. Escalation: How did the situation become worse?
-
-7. Repair: Who usually restored connection?
-
-Then ask:
-
-What happened when she stopped performing Step 7?
-
-You may discover why her withdrawal feels so dramatic now.
-
-After This Section, You Will Be Able To
-Map the pursuit-distance cycle without reducing either partner to a stereotype.
-Identify how your behavior may unintentionally intensify your partner's behavior.
-Distinguish conflict resolution from emotional resignation.
-Recognize when one partner has been carrying disproportionate responsibility for reconnecting.
-Analyze relationship patterns without turning attachment labels into accusations.`,
-// -------------------------
-        `What Her Distance Wakes Up in You -Sometimes you do not realize how attached you are until access to the person disappears.
-
-A breakup—or even sudden emotional distance—can transform a person's psychology remarkably quickly.
-
-Someone you occasionally took for granted can become almost impossible to stop thinking about.
-
-You replay conversations.
-
-You remember her best qualities more vividly than her difficult ones.
-
-Your phone becomes emotionally charged.
-
-A notification creates hope.
-
-Silence feels personal.
-
-This does not necessarily mean you suddenly discovered she is your soulmate.
-
-It can mean your attachment system has become activated.
-
-Attached emphasizes that attachment needs are not signs of weakness. Human beings seek connection, reassurance, availability, and responsiveness from important partners. The problem is not needing connection. The problem is what you do when the need becomes activated.
-
-Tatkin adds the nervous-system dimension: partners become important sources of safety and threat regulation, and conflict can quickly move people toward defensive rather than cooperative states. His relationship work therefore emphasizes slowing distress, understanding arousal, and repairing quickly.
-
-This matters enormously after she withdraws.
-
-Your first impulse may be action:
-
-send another message,
-
-drive to see her,
-
-write a long apology,
-
-download dating apps,
-
-sleep with somebody,
-
-post something to make her jealous,
-
-delete everything,
-
-block her,
-
-unblock her,
-
-promise marriage,
-
-promise therapy,
-
-promise that everything will change.
-
-Action temporarily reduces uncertainty.
-
-But not all action creates wisdom.
-
-A more mature skill is learning to tolerate enough emotional activation that you can ask:
-
-What exactly am I afraid of right now?
-
-Losing her?
-
-Being alone?
-
-Being rejected?
-
-Knowing she may eventually love somebody else?
-
-Feeling that you failed?
-
-Having to face parts of yourself the relationship allowed you to avoid?
-
-These are different wounds.
-
-They require different responses.
-
-What You Are Learning
-
-You are learning emotional differentiation.
-
-Instead of compressing everything into:
-
-"I miss her,"
-
-you become able to distinguish grief, abandonment fear, wounded pride, loneliness, guilt, sexual longing, regret, jealousy, and genuine love.
-
-That distinction gives you considerably better control over what happens next.
-
-Practical Application
-
-She says she does not want contact for a month.
-
-At 11:30 p.m. you see that she is online.
-
-Your body reacts before your reasoning does.
-
-You imagine who she might be talking to.
-
-The impulse appears:
-
-"Just send one message."
-
-This is exactly where relationship maturity becomes behavioral rather than theoretical.
-
-Respecting her boundary does not mean you feel calm.
-
-It means your discomfort does not automatically overrule another person's stated boundary.
-
-Similarly, if she has not requested no contact, restraint can still be useful. Repeated communication motivated primarily by anxiety can turn a request for connection into pressure.
-
-Practice — The Attachment Activation Map
-
-For seven days, whenever you feel a strong urge to contact, monitor, check, retaliate, or escape, record:
-
-Cue: What happened?
-
-Body: What did you physically notice?
-
-Emotion: What am I actually feeling?
-
-Story: What am I telling myself?
-
-Impulse: What do I want to do immediately?
-
-Need: What am I actually seeking—connection, reassurance, certainty, dignity, closure?
-
-Secure response: What action would I respect tomorrow?
-
-Do not aim for emotional perfection.
-
-Aim for a gap between impulse and behavior.
-
-That gap is one of the foundations of secure relating.
-
-After This Section, You Will Be Able To
-Identify attachment activation before acting on it.
-Separate genuine relational needs from panic-driven impulses.
-Recognize jealousy, loneliness, grief, regret, and rejection as distinct emotional experiences.
-Regulate yourself enough to respect boundaries during separation.
-Choose behavior according to values rather than momentary anxiety.,`,
-
-// -------------------------------------
-        `'Stop Trying to Win Her Back - If reconciliation requires pressure, it is not reconciliation yet.
-
-After someone withdraws, the natural temptation is to focus entirely on the outcome:
-
-How do I get her back?
-
-That question can produce impressive-looking behavior.
-
-Long messages.
-
-Flowers.
-
-Promises.
-
-Sudden emotional openness.
-
-Declarations about your future.
-
-Sometimes these gestures are sincere.
-
-But sincerity alone does not make them evidence of change.
-
-The more useful question is:
-
-What would make me safer and more capable in a relationship even if she never returns?
-
-That distinction is critical because transformation performed exclusively to control somebody else's decision is still a form of control.
-
-Richo's model of mature love offers five practices: attention, acceptance, appreciation, affection, and allowing. The last one is particularly important here. Allowing means recognizing the reality of another person rather than trying to force reality into the outcome you prefer.
-
-If she says:
-
-"I don't want this relationship anymore,"
-
-mature love may include the painful capacity to hear what she is actually saying.
-
-If she says:
-
-"I don't know,"
-
-maturity may require allowing uncertainty instead of demanding a decision that calms your anxiety.
-
-If she says:
-
-"I'm willing to talk, but I need to see real change,"
-
-then the task becomes behavioral.
-
-Tatkin's secure-functioning approach points toward mutual fairness, safety, sensitivity, explicit agreements, learning one's partner, and effective repair.
-
-Change therefore cannot merely sound like:
-
-"I'll communicate better."
-
-It needs to become observable.
-
-For example:
-
-"When conflict happens, I will not disappear for two days. I will tell you that I need thirty minutes to regulate and confirm when I'll return to the conversation."
-
-That is behavior.
-
-What You Are Learning
-
-You are learning the difference between:
-
-persuasion and repair,
-
-regret and responsibility,
-
-promising and changing,
-
-wanting her and being capable of relating well to her.
-
-You are also learning that an apology should not contain a hidden invoice requiring forgiveness, contact, or reconciliation in return.
-
-Practical Application
-
-If contact is appropriate and welcomed, a mature repair conversation might involve four elements:
-
-Recognition: What happened?
-
-Ownership: What did I contribute?
-
-Impact: How might it have affected you?
-
-Change: What will be different behaviorally?
-
-Not:
-
-"I only acted that way because you kept..."
-
-Not:
-
-"I've changed, so you owe me another chance."
-
-And not:
-
-"Nobody will ever love you like I do."
-
-A clean repair leaves the other person free.
-
-That freedom is part of what makes the repair trustworthy.
-
-Practice — The No-Persuasion Repair
-
-Write the message you desperately want to send.
-
-Then remove:
-
-attempts to create guilt,
-dramatic promises,
-accusations,
-references designed to create jealousy,
-demands for immediate answers,
-explanations that erase responsibility,
-pressure disguised as romance.
-
-Now rewrite it around four sentences:
-
-I recognize...
-
-I take responsibility for...
-
-I understand that may have affected you by...
-
-Regardless of what you decide, I am working on...
-
-Do not send the exercise automatically.
-
-Its purpose is first to clarify your own thinking.
-
-After This Section, You Will Be Able To
-Distinguish genuine repair from attempts to regain control.
-Take responsibility without collapsing into shame or defensiveness.
-Translate vague promises into observable relationship behavior.
-Communicate without using guilt, jealousy, pressure, or emotional bargaining.
-Respect another person's freedom while still expressing your own feelings clearly..'`,
-//------------------------------
-        `Repair, Release, or Leave the Door Closed - Missing someone does not answer whether the relationship should continue.
-
-Once the first emotional storm settles, a harder question arrives:
-
-Should this relationship actually be rebuilt?
-
-People frequently substitute feeling for evaluation.
-
-"I still love her."
-
-That matters.
-
-But it is not enough.
-
-You can love someone with whom you cannot build a functional partnership.
-
-You can miss someone whose presence repeatedly destabilized your life.
-
-You can regret your mistakes and still conclude that returning would recreate the same system.
-
-You can also discover that two imperfect people have enough goodwill, accountability, compatibility, and willingness to build something substantially healthier.
-
-The distinction requires evidence.
-
-Attached encourages attention to compatibility and the ability of partners to meet attachment needs rather than relying purely on romantic chemistry.
-
-Tatkin's secure-functioning framework asks whether the relationship can become a mutually protective, fair, collaborative two-person system rather than a contest between individual interests.
-
-Richo adds another essential idea: mature loving includes accepting reality, maintaining boundaries, and sometimes surviving the ending of a relationship rather than forcing its continuation. His revised edition specifically addresses ending relationships as part of adult loving.
-
-So evaluate the relationship through capacity, not longing.
-
-Can both people acknowledge their contribution?
-
-Can both communicate honestly?
-
-Can boundaries be respected?
-
-Can conflict be repaired?
-
-Is there reciprocity?
-
-Are core values compatible?
-
-Does the relationship contain genuine emotional safety?
-
-Is affection still accompanied by respect?
-
-Most importantly:
-
-Are both people actually choosing the relationship?
-
-One person cannot perform mutuality alone.
-
-What You Are Learning
-
-You are learning relationship decision-making.
-
-You will stop framing your options as only:
-
-get her back versus lose her forever.
-
-A more mature set of possibilities exists:
-
-repair together,
-
-separate respectfully,
-
-create temporary distance,
-
-remain apart,
-
-or—in some circumstances—recognize that reopening the relationship would recreate harm.
-
-Practical Application
-
-Imagine she agrees to meet.
-
-There are two possible conversations.
-
-Conversation A spends ninety minutes discussing how much you miss each other.
-
-Conversation B asks:
-
-What repeatedly failed between us?
-What responsibility does each person accept?
-What would change behaviorally?
-What boundaries would be necessary?
-What would we do differently during the next conflict?
-Are we both genuinely willing to try?
-
-Conversation A may feel more romantic.
-
-Conversation B tells you whether reconciliation has a foundation.
-
-If the relationship includes coercion, intimidation, violence, serious untreated addiction, or other safety concerns, the appropriate priority is not a couples exercise but safety and suitable professional support. Tatkin's own couples-workshop materials make similar exclusions for relationships in active crisis or involving intimate-partner violence.
-
-Practice — The Relationship Viability Scorecard
-
-Score each category from 0–5:
-
-Mutual willingness
-
-Emotional safety
-
-Respect
-
-Trust
-
-Accountability
-
-Reciprocity
-
-Conflict repair
-
-Compatible future
-
-Boundary respect
-
-Observable change
-
-Then answer:
-
-If nothing changed except that we missed each other, would this relationship work six months from now?
-
-That question often reveals more than:
-
-"Do we still have feelings?"
-
-After This Section, You Will Be Able To
-Evaluate reconciliation using evidence rather than loneliness.
-Distinguish chemistry and attachment from relationship compatibility.
-Identify whether repair is genuinely mutual.
-Recognize when releasing a relationship may be healthier than restarting it.
-Define the concrete conditions required before considering reconciliation.',`,
-//===================================
-        `Learn to Be Alone Without Becoming Closed - The goal after heartbreak is not to stop needing love. It is to stop needing a relationship to escape yourself.
-
-After a breakup there is often an empty space that the relationship previously occupied.
-
-Morning messages disappear.
-
-Weekend plans disappear.
-
-Physical affection disappears.
-
-Shared rituals disappear.
-
-A person who was woven through your ordinary day suddenly exists mostly inside memory.
-
-That emptiness can create enormous pressure to fill the space quickly.
-
-You reinstall dating apps.
-
-You reconnect with an ex.
-
-You pursue casual intimacy.
-
-You search for someone who resembles her.
-
-Or you decide that relationships are no longer worth the risk and become emotionally unavailable yourself.
-
-Neither rebound dependence nor permanent withdrawal constitutes healing.
-
-Richo explicitly treats relationship endings and grief as part of adult loving. The 20th-anniversary material includes surviving breakups while maintaining self-esteem and learning from relationship patterns rather than simply erasing the experience.
-
-Norwood approaches recovery from another direction. A central part of her model is redirecting enormous amounts of attention previously spent monitoring or changing another person toward one's own life, development, interests, support system, and recovery.
-
-Although Norwood wrote specifically about women caught in compulsive relationship patterns, the underlying principle is useful here regardless of gender:
-
-A life that has become organized around another person's attention needs to become your life again.
-
-This is not the shallow advice to "focus on yourself."
-
-It means rebuilding structures that make identity larger than romantic status.
-
-Friendships.
-
-Family.
-
-Physical health.
-
-Work.
-
-Learning.
-
-Purpose.
-
-Money.
-
-Sleep.
-
-Solitude.
-
-Play.
-
-Competence.
-
-Community.
-
-The aim is not proving that you do not need anyone.
-
-Secure people can need others.
-
-The aim is becoming capable of choosing love because it enriches your life rather than because loneliness makes almost any attachment feel preferable.
-
-What You Are Learning
-
-You are learning to distinguish solitude from abandonment.
-
-You are also learning how unprocessed relationships can quietly determine future partner selection.
-
-If you rush into another relationship while still seeking reassurance that you are desirable, the new person can become treatment for the old rejection.
-
-That is unfair to both of you.
-
-Practical Application
-
-Imagine meeting somebody attractive two months after the breakup.
-
-Ask yourself:
-
-"Am I interested in discovering who this woman actually is?"
-
-or:
-
-"Am I mainly interested in what being wanted by her would make me feel about myself?"
-
-Both desires can coexist.
-
-But recognizing the second prevents you from disguising emotional anesthesia as new love.
-
-The same applies to living alone.
-
-A quiet Saturday evening can either become evidence that your life is empty or an opportunity to discover which parts of your identity disappeared inside the previous relationship.
-
-Practice — The Life Re-Expansion Plan
-
-Create five categories:
-
-Body
-
-Friendship
-
-Purpose
-
-Competence
-
-Enjoyment
-
-Choose one weekly action for each.
-
-Then add a sixth:
-
-Relationship Recovery
-
-Once each week, answer:
-
-What do I miss about her?
-What do I miss about having someone?
-What do I not miss?
-What have I learned about myself?
-What pattern do I refuse to reproduce?
-What quality do I want to bring into my next relationship?
-
-Run this exercise for four weeks before judging whether being alone is "working."
-
-After This Section, You Will Be Able To
-Grieve a relationship without making reunion your only path to relief.
-Rebuild routines and identity outside romantic attachment.
-Recognize rebound motivation before involving another person.
-Distinguish missing your former partner from fearing solitude.
-Approach future dating from curiosity rather than emotional emergency.'`,
-
-`Choose and Build Secure Love Next Time - The final lesson is not how to keep someone chasing. It is how to create a relationship where chasing is unnecessary.
-
-Suppose your former partner does not return.
-
-Or suppose you reconcile.
-
-Eventually the same question remains:
-
-What kind of relationship are you now capable of building?
-
-This is where everything in the course converges.
-
-Attached teaches you to pay attention to attachment compatibility, availability, responsiveness, and direct communication rather than mistaking instability for chemistry.
-
-Tatkin pushes beyond individual compatibility toward secure functioning: two people deliberately creating fairness, mutual protection, agreements, responsiveness, and rapid repair. His Wired for Love framework specifically emphasizes creating a "couple bubble," learning one's partner, seeing their perspective, maintaining connection rituals, and handling conflict in ways that preserve the relationship.
-
-Richo's Five A's offer another layer:
-
-Attention: I notice you.
-
-Acceptance: I do not require you to become somebody else before I can relate to reality.
-
-Appreciation: I actively recognize what is valuable in you.
-
-Affection: Warmth becomes behavior rather than assumption.
-
-Allowing: Our closeness does not cancel your autonomy.
-
-Norwood contributes the warning that love becomes unhealthy when one person's life increasingly revolves around changing, rescuing, monitoring, or controlling another.
-
-Put those together and a striking principle emerges:
-
-Secure love requires both dependence and differentiation.
-
-You should matter to each other.
-
-You should affect each other.
-
-You should rely on each other.
-
-But neither person should need to disappear for the relationship to survive.
-
-That principle changes how you choose a partner.
-
-Instead of asking only:
-
-"Do I feel chemistry?"
-
-you start asking:
-
-"Can we tell each other what we need?"
-
-"Does she respond consistently?"
-
-"Can I respond consistently?"
-
-"Can disagreement occur without threatening the relationship?"
-
-"Do we repair?"
-
-"Can we remain individuals while building a real 'we'?"
-
-"Is this relationship reciprocal?"
-
-This is a considerably higher standard than merely finding someone who keeps choosing you.
-
-What You Are Learning
-
-You are learning to build a relationship deliberately rather than reactively.
-
-You will know what to look for in a future partner, what to contribute yourself, how to communicate needs earlier, and how to prevent small disappointments from hardening into the pursuit-withdrawal structure that brought you into this course.
-
-Practical Application
-
-Imagine your future partner texts:
-
-"You seemed distant tonight. Is something wrong?"
-
-The old pattern might be:
-
-"Nothing."
-
-She asks again.
-
-You become irritated.
-
-She becomes anxious.
-
-The cycle begins.
-
-Secure communication sounds more like:
-
-"I'm overloaded from work and quieter than usual. It isn't about us. I need an hour to decompress, and then I'd like to spend some time with you."
-
-That response does four things.
-
-It provides information.
-
-It reduces unnecessary threat.
-
-It protects your need for space.
-
-It confirms reconnection.
-
-Small behaviors like this prevent many relationship problems from becoming identity-level conflicts.
-
-Practice — Your Secure Relationship Operating Agreement
-
-Before your next serious relationship—or together if reconciliation occurs—write your answers to these ten questions:
-
-How do I normally behave when I feel rejected?
-How do I behave when I feel controlled?
-What kind of reassurance genuinely helps me?
-How do I ask for space without creating abandonment?
-How should conflict pauses work?
-What behavior counts as disrespect?
-What boundaries do I need around phones, social media, ex-partners, friends, and privacy?
-How do I prefer affection and appreciation to be expressed?
-How will we repair after hurting each other?
-What will I do if I notice myself returning to old patterns?
-
-Do not treat the agreement as permanent law.
-
-Review it as the relationship develops.
-
-The goal is not eliminating conflict.
-
-The goal is preventing uncertainty from repeatedly turning love into a chase.
-
-After This Section, You Will Be Able To
-Evaluate future partners for emotional availability and compatibility rather than chemistry alone.
-Communicate reassurance, boundaries, needs, and requests directly.
-Build relationship agreements based on reciprocity and fairness.
-Recognize pursuit-withdrawal patterns early enough to interrupt them.
-Apply secure-functioning principles and the Five A's to everyday relationship behavior.
-Create closeness without requiring either partner to chase, control, or disappear.`
-      ]
-    }
-  ]
 }
+
   };
 
 const courseCatalogApi = typeof window !== 'undefined' ? window.FlirtyFlipCourseCatalog : null;
@@ -7782,6 +6833,7 @@ function bindHeroSampleCard() {
       card.classList.add("is-flipped");
       renderSample();
       announcer.textContent = `Sample question ${sampleIndex + 1}: ${HERO_SAMPLE_PROMPTS[sampleIndex].question}`;
+      trackEvent('sample_card_flip', { sample_index: sampleIndex + 1 });
       unlockAfter(revealDuration);
       return;
     }
@@ -7792,6 +6844,7 @@ function bindHeroSampleCard() {
       renderSample();
       card.classList.remove("is-changing");
       announcer.textContent = `Sample question ${sampleIndex + 1}: ${HERO_SAMPLE_PROMPTS[sampleIndex].question}`;
+      trackEvent('sample_card_flip', { sample_index: sampleIndex + 1 });
       unlockAfter(changeDuration);
     }, changeDuration);
   };
@@ -7933,25 +6986,51 @@ function activatePage(id, navigationType = "navigate") {
 }
 
 // Update browser metadata after a route succeeds so deep pages and analytics stay accurate.
+// Also keeps social-sharing and search meta tags in sync with the active SPA page.
 function updateRouteMetadata(route, url) {
+  const defaultDescription = "Play fun couple games online with FlirtyFlip. Explore romantic questions, deep conversations, funny prompts, flirty challenges and date night games for two.";
+
   const titles = {
     home: "FLIRTYFLIP — Couple Games Online | Questions & Date Night Games.",
     play: "Choose a Mood — FLIRTYFLIP",
     setup: "Choose Your Deck — FLIRTYFLIP",
     game: "Playing — FLIRTYFLIP",
     results: "Date Night Complete — FLIRTYFLIP",
-    games: "Games — FLIRTYFLIP",
-    courses: "Courses — FLIRTYFLIP",
+    games: "Couple Games — Play Together or Online | FLIRTYFLIP",
+    courses: "Relationship Courses — FLIRTYFLIP",
     course: "Course — FLIRTYFLIP",
-    online: "Play Online — FLIRTYFLIP",
+    online: "Play Online — Couple Games from Different Places | FLIRTYFLIP",
     "reset-password": "Reset Password — FLIRTYFLIP",
     how: "How It Works — FLIRTYFLIP",
-    support: "Support — FLIRTYFLIP"
+    support: "Support & Policies — FLIRTYFLIP"
   };
+
+  const descriptions = {
+    home: defaultDescription,
+    play: "Choose a mood — Sweet, Romantic, Deep, Flirty or Spicy — and start flipping cards with your partner.",
+    games: "Play couple mini-games together on one device or online from different places. Tic-Tac-Toe, Love Toss, Couple Wheel and more.",
+    courses: "Free relationship courses for her, for him, and for couples. Communication, romance, connection and personal growth.",
+    online: "Create a private room and play couple games online from different locations. No app download required.",
+    how: "Three simple steps to a better date night. Choose your vibe, flip cards together, and enjoy the conversation.",
+    support: "Help, privacy policy, terms of service, refund policy, and frequently asked questions for FlirtyFlip."
+  };
+
   document.title = titles[route.name] || titles.home;
 
+  const currentTitle = document.title;
+  const currentDesc = descriptions[route.name] || defaultDescription;
+  const currentUrl = `${window.location.origin}${url.pathname}`;
+
   const canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) canonical.href = `${window.location.origin}${url.pathname}`;
+  if (canonical) canonical.href = currentUrl;
+
+  // Update standard and social meta tags so shared links show accurate previews.
+  updateMetaTag('name', 'description', currentDesc);
+  updateMetaTag('property', 'og:title', currentTitle);
+  updateMetaTag('property', 'og:description', currentDesc);
+  updateMetaTag('property', 'og:url', currentUrl);
+  updateMetaTag('name', 'twitter:title', currentTitle);
+  updateMetaTag('name', 'twitter:description', currentDesc);
 
   // Mark the owning primary navigation item for assistive technology and visual state.
   const activeGroup = route.name === 'course' ? 'courses'
@@ -7961,6 +7040,27 @@ function updateRouteMetadata(route, url) {
     if (item.dataset.navRoute === activeGroup) item.setAttribute('aria-current', 'page');
     else item.removeAttribute('aria-current');
   });
+}
+
+// Safely set the content of a meta tag by attribute type (name or property).
+function updateMetaTag(attr, key, value) {
+  try {
+    let tag = document.querySelector(`meta[${attr}="${key}"]`);
+    if (tag) { tag.setAttribute('content', value); return; }
+    tag = document.createElement('meta');
+    tag.setAttribute(attr, key);
+    tag.setAttribute('content', value);
+    document.head.appendChild(tag);
+  } catch (_) { /* SEO helper must never break the app */ }
+}
+
+// Safe analytics event tracker. Must never break the app, never send PII.
+function trackEvent(eventName, params) {
+  try {
+    if (typeof window.gtag === "function") {
+      window.gtag("event", eventName, params || {});
+    }
+  } catch (_) { /* analytics must never break the app */ }
 }
 
 // Send one Google Analytics page view for each distinct rendered SPA location.
@@ -8105,7 +7205,7 @@ function initializeRouter() {
 // Existing inline controls call these helpers; each now keeps History API state in sync.
 // ========================================
 function showHome() { navigateToRoute(ROUTE_PATHS.home); }
-function showMoods() { navigateToRoute(ROUTE_PATHS.play); }
+function showMoods() { trackEvent('homepage_start_playing'); navigateToRoute(ROUTE_PATHS.play); }
 function showHow() { navigateToRoute(ROUTE_PATHS.how); }
 
 // ========================================
@@ -8120,6 +7220,7 @@ function renderOnlineRoute(url) {
 }
 
 function showOnline() {
+  trackEvent('homepage_play_online');
   const currentUrl = new URL(window.location.href);
   const room = currentUrl.pathname === ROUTE_PATHS.online ? currentUrl.searchParams.get("room") : "";
   navigateToRoute(room ? `${ROUTE_PATHS.online}?room=${encodeURIComponent(room)}` : ROUTE_PATHS.online);
@@ -8391,6 +7492,7 @@ const pool = getQuestionPool(selectedMood, selectedLength);
   $("game-mood-label").textContent = moods[selectedMood].title.toUpperCase();
   updateGame(true);
   persistGameSession("active");
+  trackEvent('game_start', { mood: selectedMood, card_count: selectedLength });
   navigateToRoute(ROUTE_PATHS.game);
 }
 
@@ -9513,6 +8615,7 @@ function renderCourseDetail(courseId) {
     hideHeader: true,
     view: 'course-detail'
   });
+  trackEvent('course_open', { course_id: courseId });
 
   const curriculum = c.sections.map((section, sectionIndex) => `
     <section class="curriculum-group">
@@ -9577,6 +8680,7 @@ function renderCourseLesson(courseId, lessonIndex) {
   const lessonRecord = lessons[lessonIndex];
   if (!course || !lessonRecord) return;
   saveCourseProgress(courseId, lessonIndex);
+  trackEvent('course_lesson_start', { course_id: courseId, lesson_index: lessonIndex + 1 });
 
   const lesson = parseCourseLesson(lessonRecord.content, `Lesson ${lessonIndex + 1}`);
   const positionPercent = Math.round(((lessonIndex + 1) / lessons.length) * 100);

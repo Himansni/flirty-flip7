@@ -84,9 +84,9 @@
     {
       id: "The-Art-of-Receiving-Love",
       // This unusual slug preserves the existing direct route exactly.
-      slug: "The-Art-of-Receiving-Love ",
+      slug: "The-Art-of-Receiving-Love",
       category: "for-her",
-      title: "When Loving Him Costs You ",
+      title: "When Loving Him Costs You",
       subtitle: "Create small romantic moments",
       summary: `Love can ask for patience, compromise, vulnerability, forgiveness, and effort.
        But there is a point where effort becomes self-erasure—where keeping the relationship begins costing you your peace, boundaries, friendships, confidence, identity, or ability to trust your own judgment.
@@ -199,7 +199,7 @@
       id: "the-moment-the-chase-ends",
       slug: "the-moment-the-chase-ends",
       category: "for-him",
-      title: "When She Stops Chasing You ",
+      title: "When She Stops Chasing You",
       subtitle: `For a long time, her attention may have made the relationship feel secure.After This Section, You Will Be Able To
 
 Evaluate future partners for emotional availability and compatibility rather than chemistry alone.

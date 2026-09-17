@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HV89QLZLF6"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,10 +13,19 @@
   
 </script>
 <link rel="canonical" href="https://flirtyflip.com/">
-  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content=" Play fun couple games online with FlirtyFlip. Explore romantic questions, 
-  deep conversations, funny prompts, flirty challenges and date night games for two." />
+  <meta name="description" content="Play fun couple games online with FlirtyFlip. Explore romantic questions, deep conversations, funny prompts, flirty challenges and date night games for two." />
+  <meta name="theme-color" content="#070708" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FlirtyFlip" />
+  <meta property="og:title" content="FlirtyFlip — Couple Games Online | Questions & Date Night Games" />
+  <meta property="og:description" content="Play fun couple games online with FlirtyFlip. Explore romantic questions, deep conversations, funny prompts, flirty challenges and date night games for two." />
+  <meta property="og:url" content="https://flirtyflip.com/" />
+  <meta property="og:image" content="https://flirtyflip.com/favicon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="FlirtyFlip — Couple Games Online | Questions & Date Night Games" />
+  <meta name="twitter:description" content="Play fun couple games online with FlirtyFlip. Romantic questions, conversations, and date night games for two." />
+  <meta name="twitter:image" content="https://flirtyflip.com/favicon-512.png" />
   <title>FLIRTYFLIP — Couple Games Online | Questions & Date Night Games.</title>
   <!-- FlirtyFlip favicon assets; update this complete set together when the logo changes. -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -26,11 +36,88 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="./style.css">
  <link rel="stylesheet" href="/couple-games.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://flirtyflip.com/#website",
+        "url": "https://flirtyflip.com/",
+        "name": "FlirtyFlip",
+        "description": "Couple Games Online, Questions & Date Night Games for Two",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://flirtyflip.com/#organization",
+        "name": "FlirtyFlip",
+        "url": "https://flirtyflip.com/",
+        "logo": "https://flirtyflip.com/favicon-512.png"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://flirtyflip.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is FlirtyFlip?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FlirtyFlip is a digital couples card-game and relationship platform designed to spark meaningful conversations, playful challenges, and intimacy. Simply pick a vibe and flip cards together."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is FlirtyFlip free to play?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! You can play all core game decks, local mini-games, and access relationship courses completely free without downloading any app."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can we play together on one phone?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! FlirtyFlip is designed specifically for pass-and-play on a single phone or tablet. Choose Play Together from the menu or start a question deck."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can we play online from different locations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Choose Play Online to create a private room and share the 6-character code with your partner. Both of you can play real-time synchronized games from anywhere."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do we need an account to play?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No account is required. You can jump straight in as a guest. Creating a free account allows you to save favorites and track course progress across devices."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can we skip questions we aren't comfortable answering?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Always. Every question and prompt has a Skip option. Consent and mutual comfort come first."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
+  <a href="#home" class="skip-link">Skip to main content</a>
   <!-- ========================================
        CINEMATIC BACKGROUND GLOW
        Decorative only; change/remove these divs if the background should be simpler.
@@ -101,11 +188,11 @@
 
     <!-- Right-side actions -->
     <div class="nav-actions">
-      <button class="text-btn" id="support-btn">Support</button>
+      <button class="text-btn" id="support-btn" type="button">Support</button>
       <button class="text-btn" id="nav-auth-label" type="button">Log in</button>
       <button class="pill-btn small" id="nav-auth-cta" type="button" data-mobile-label="Guest">Continue as guest</button>
       <!-- Favorites badge: shows count of saved favorites (updated by script.js). Added non-breaking to preserve layout. -->
-      <button class="text-btn" id="nav-favorites" type="button" aria-label="Favorites">♡ <span id="favorites-count" class="hidden">0</span></button>
+      <button class="text-btn" id="nav-favorites" type="button" aria-label="Favorites"><span aria-hidden="true">♡</span> <span id="favorites-count" class="hidden">0</span></button>
     </div>
 
     <!-- Mobile navigation trigger; its ARIA state is synchronized by bindNavEvents(). -->
@@ -116,6 +203,7 @@
       <button class="drawer-close" id="drawer-close" type="button" aria-label="Close menu">×</button>
       <nav class="drawer-nav">
         <ul>
+          <li><a class="drawer-link" href="/play" data-route="/play">Play Cards</a></li>
           <li><a class="drawer-link" href="/games" data-route="/games">Games</a></li>
           <li><a class="drawer-link" href="/games?mode=together" data-route="/games?mode=together">Play Together</a></li>
           <li><a class="drawer-link" href="/games?mode=online" data-route="/games?mode=online">Play Online</a></li>
@@ -123,8 +211,8 @@
           <li><a class="drawer-link" href="/how" data-route="/how">How it works</a></li>
           <li><a class="drawer-link" href="/support" data-route="/support">Support</a></li>
           <li class="drawer-divider"></li>
-          <li><button id="drawer-login">Log in</button></li>
-          <li><button id="drawer-guest">Continue as guest</button></li>
+          <li><button id="drawer-login" type="button">Log in</button></li>
+          <li><button id="drawer-guest" type="button">Continue as guest</button></li>
         </ul>
       </nav>
     </div>
@@ -144,11 +232,11 @@
           <h1>Put the phones down.<br><em>Pick a card.</em></h1>
           <p class="hero-sub">Questions, little challenges and unexpected conversations designed to make you laugh, open up and fall for each other again.</p>
           <div class="hero-buttons">
-            <button id="start-playing-btn" class="pill-btn hero-primary-cta" onclick="showMoods()">Start Playing <span>→</span></button>
-            <button id="play-online-btn" class="online-btn hero-secondary-cta" onclick="showOnline()">Play Online <span aria-hidden="true">↗</span></button>
+            <button id="start-playing-btn" class="pill-btn hero-primary-cta" type="button" onclick="showMoods()">Start Playing <span>→</span></button>
+            <button id="play-online-btn" class="online-btn hero-secondary-cta" type="button" onclick="showOnline()">Play Online <span aria-hidden="true">↗</span></button>
           </div>
           <p class="hero-value-line">Free to start <span aria-hidden="true">•</span> No download <span aria-hidden="true">•</span> Play together anywhere</p>
-          <button id="see-how-btn" class="hero-tertiary-link" onclick="showHow()">See how it works <span aria-hidden="true">↓</span></button>
+          <button id="see-how-btn" class="hero-tertiary-link" type="button" onclick="showHow()">See how it works <span aria-hidden="true">↓</span></button>
         </div>
 
         <!-- Interactive Sample Card: edit the three general-audience prompts in HERO_SAMPLE_PROMPTS in script.js. -->
@@ -219,6 +307,59 @@
         <div id="home-moods" class="mood-grid"></div>
       </section>
 
+      <!-- FAQ Section: crawlable answers with matching JSON-LD Schema on the page. -->
+      <section id="home-faq" class="home-faq section" aria-labelledby="home-faq-title">
+        <div class="home-faq-heading">
+          <div class="eyebrow">FREQUENTLY ASKED QUESTIONS</div>
+          <h2 id="home-faq-title">Everything You Need to Know</h2>
+          <p>Simple answers to help you start your date night with complete confidence.</p>
+        </div>
+        <div class="faq-accordion">
+          <details class="faq-item" open>
+            <summary class="faq-question">
+              <span>What is FlirtyFlip?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </summary>
+            <p class="faq-answer">FlirtyFlip is a digital couples card-game and relationship experience platform. It gives couples curated prompts, intimate questions, fun challenges, and mini-games to put their phones down and connect on date nights.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Is FlirtyFlip free to play?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </summary>
+            <p class="faq-answer">Yes. All core card decks, one-device mini-games, and relationship courses are free to enjoy with no download required.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Can we play together on one phone?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </summary>
+            <p class="faq-answer">Absolutely. FlirtyFlip is built mobile-first for pass-and-play. You can flip cards together or challenge each other in 8 interactive mini-games on a single screen.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Can couples play online from different locations?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </summary>
+            <p class="faq-answer">Yes. Through Play Online, you can create a private room and share a 6-character code with your partner for real-time synchronized gameplay from anywhere in the world.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Do we need to create an account?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </summary>
+            <p class="faq-answer">No account is needed to start playing right away as a guest. Creating a free account lets you bookmark favorite cards and track your relationship course progress.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">
+              <span>Can we skip questions or challenges?</span>
+              <span class="faq-chevron" aria-hidden="true">▼</span>
+            </summary>
+            <p class="faq-answer">Always. Mutual consent and comfort come first. Every prompt can be skipped freely with zero penalty.</p>
+          </details>
+        </div>
+      </section>
+
     </section>
 
     <!-- MOODS -->
@@ -228,7 +369,7 @@
          ======================================== -->
     <section id="moods" class="page">
       <div class="page-heading">
-        <button class="back-btn" onclick="showHome()">← Back</button>
+        <button class="back-btn" type="button" onclick="showHome()">← Back</button>
         <div class="eyebrow">STEP 01</div>
         <h2>Choose your mood</h2>
         <p>There is no wrong answer. Pick the vibe you want tonight.</p>
@@ -241,7 +382,7 @@
          This MVP provides the complete front-end flow; real cross-device presence still needs a realtime backend.
     -->
     <section id="online" class="page narrow online-page">
-      <button class="back-btn" onclick="showHome()">← Back</button>
+      <button class="back-btn" type="button" onclick="showHome()">← Back</button>
       <div class="online-header">
         <div class="eyebrow">PLAY ONLINE</div>
         <h2>Two players.<br><em>One shared deck.</em></h2>
@@ -264,7 +405,7 @@
          Card count buttons are generated for the selected mood.
          ======================================== -->
     <section id="setup" class="page narrow">
-      <button class="back-btn" onclick="showMoods()">← Change mood</button>
+      <button class="back-btn" type="button" onclick="showMoods()">← Change mood</button>
       <div id="setup-content"></div>
     </section>
 
@@ -292,7 +433,7 @@
           <div class="play-card card-back">
             <div class="card-pattern"></div>
             <div class="brand-small">FLIRTYFLIP</div>
-            <div class="big-heart">♡</div>
+            <div class="big-heart" aria-hidden="true">♡</div>
             <div class="flip-text">TAP TO REVEAL NEXT</div>
           </div>
           <div class="play-card card-front">
@@ -324,18 +465,18 @@
          COMPLETE SCREEN
          ======================================== -->
     <section id="complete" class="page narrow complete-page">
-      <div class="complete-heart">♡</div>
+      <div class="complete-heart" aria-hidden="true">♡</div>
       <div class="eyebrow">DATE NIGHT COMPLETE</div>
       <h2>You made time<br><em>for each other.</em></h2>
       <p id="complete-copy">You played 10 cards together.</p>
       <div class="stats">
         <div><strong id="stat-played">10</strong><span>cards played</span></div>
         <div><strong id="stat-skipped">0</strong><span>skipped</span></div>
-        <div><strong id="stat-mood">♡</strong><span>your vibe</span></div>
+        <div><strong id="stat-mood"><span aria-hidden="true">♡</span></strong><span>your vibe</span></div>
       </div>
       <div class="complete-actions">
-        <button class="pill-btn" onclick="restartGame()">Play again</button>
-        <button class="ghost-btn" onclick="showMoods()">Try another mood</button>
+        <button class="pill-btn" type="button" onclick="restartGame()">Play again</button>
+        <button class="ghost-btn" type="button" onclick="showMoods()">Try another mood</button>
       </div>
       <p class="tiny">Tonight's best memory might be the conversation after the card.</p>
     </section>
@@ -345,7 +486,7 @@
          HOW IT WORKS
          ======================================== -->
     <section id="how" class="page narrow">
-      <button class="back-btn" onclick="showHome()">← Back</button>
+      <button class="back-btn" type="button" onclick="showHome()">← Back</button>
       <div class="page-heading">
         <div class="eyebrow">HOW IT WORKS</div>
         <h2>Simple enough to start in 30 seconds.</h2>
@@ -356,7 +497,7 @@
         <div class="how-card"><span>03</span><h3>Flip together</h3><p>Read the prompt out loud, answer honestly, and enjoy the moment.</p></div>
         <div class="how-card"><span>04</span><h3>Skip freely</h3><p>Every card is optional. Consent and comfort come first.</p></div>
       </div>
-      <button class="pill-btn wide" onclick="showMoods()">Let's play →</button>
+      <button class="pill-btn wide" type="button" onclick="showMoods()">Let's play →</button>
     </section>
 
     <!-- ========================================
@@ -377,7 +518,7 @@
 
     <!-- SUPPORT -->
     <section id="support" class="page narrow">
-      <button class="back-btn" onclick="showHome()">← Back</button>
+      <button class="back-btn" type="button" onclick="showHome()">← Back</button>
       <div class="page-heading">
         <div class="eyebrow">SUPPORT</div>
         <h2>Help & Policies</h2>
@@ -415,43 +556,43 @@
 
   <div id="toast" class="toast"></div>
   <!-- Exit-game modal; edit its confirmation copy here and its actions in script.js. -->
-  <div id="modal" class="modal hidden">
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
     <div class="modal-box">
-      <h3>Leave the game?</h3>
+      <h3 id="exit-modal-title">Leave the game?</h3>
       <p>Your current round will be reset.</p>
       <div class="modal-actions">
-        <button class="ghost-btn" onclick="closeModal()">Keep playing</button>
-        <button class="pill-btn" onclick="exitGameToMoods()">Exit game</button>
+        <button class="ghost-btn" type="button" onclick="closeModal()">Keep playing</button>
+        <button class="pill-btn" type="button" onclick="exitGameToMoods()">Exit game</button>
       </div>
     </div>
   </div>
 
   <!-- Play confirmation modal: requires two checkboxes (18+ and mutual consent) before starting. -->
-  <div id="play-confirm-modal" class="modal hidden" aria-hidden="true">
+  <div id="play-confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="play-confirm-title" aria-hidden="true">
     <div class="modal-box">
-      <h3>CONFIRMATION</h3>
+      <h3 id="play-confirm-title">CONFIRMATION</h3>
       <p>Before you play</p>
-      <div style="margin:12px 0 18px; text-align:left;">
-        <label style="display:block; margin:8px 0;"><input id="confirm-age" type="checkbox"> I confirm that both players are 18+ years old.</label>
-        <label style="display:block; margin:8px 0;"><input id="confirm-consent" type="checkbox"> I confirm that my partner and I understand every activity requires mutual consent.</label>
+      <div class="play-confirm-fields">
+        <label class="play-confirm-label"><input id="confirm-age" type="checkbox"> I confirm that both players are 18+ years old.</label>
+        <label class="play-confirm-label"><input id="confirm-consent" type="checkbox"> I confirm that my partner and I understand every activity requires mutual consent.</label>
       </div>
       <div class="modal-actions">
-        <button class="ghost-btn" onclick="closePlayConfirm()">Cancel</button>
-        <button class="pill-btn" onclick="confirmAndStart()">Start →</button>
+        <button class="ghost-btn" type="button" onclick="closePlayConfirm()">Cancel</button>
+        <button class="pill-btn" type="button" onclick="confirmAndStart()">Start →</button>
       </div>
     </div>
   </div>
 
   <!-- Authentication modal; edit its fields here and Supabase/guest behavior in script.js. -->
-  <div id="auth-modal" class="auth-modal hidden" aria-hidden="true">
+  <div id="auth-modal" class="auth-modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title" aria-hidden="true">
     <div class="auth-card">
       <button class="icon-btn auth-close" id="auth-close" type="button" aria-label="Close authentication">×</button>
       <div class="eyebrow">ACCOUNT</div>
       <h3 id="auth-title">Welcome back</h3>
       <div class="auth-tabs" role="tablist" aria-label="Authentication options">
-        <button class="auth-tab active" type="button" data-mode="login">Log in</button>
-        <button class="auth-tab" type="button" data-mode="signup">Sign up</button>
-        <button class="auth-tab" type="button" data-mode="guest">Guest</button>
+        <button class="auth-tab active" role="tab" aria-selected="true" type="button" data-mode="login">Log in</button>
+        <button class="auth-tab" role="tab" aria-selected="false" type="button" data-mode="signup">Sign up</button>
+        <button class="auth-tab" role="tab" aria-selected="false" type="button" data-mode="guest">Guest</button>
       </div>
       <form id="auth-form" class="auth-form">
         <label class="auth-field">
@@ -471,9 +612,52 @@
     </div>
   </div>
 
-  <footer>
-    <span>FLIRTYFLIP © 2026</span>
-    <span>Made for better date nights.</span>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="logo" href="/" data-route="/" data-nav-route="home">
+          <span class="logo-mark" aria-hidden="true">♡</span>
+          <span>FLIRTY<span>FLIP</span></span>
+        </a>
+        <p class="footer-tagline">“Put the phones down. Pick a card.” Thoughtful games and questions designed to help couples laugh, talk, and connect.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Experience</h4>
+        <ul>
+          <li><a class="footer-link" href="/play" data-route="/play">Play Cards</a></li>
+          <li><a class="footer-link" href="/games?mode=together" data-route="/games?mode=together">Play Together</a></li>
+          <li><a class="footer-link" href="/games?mode=online" data-route="/games?mode=online">Play Online</a></li>
+          <li><a class="footer-link" href="/courses" data-route="/courses">Courses</a></li>
+          <li><a class="footer-link" href="/how" data-route="/how">How It Works</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Courses</h4>
+        <ul>
+          <li><a class="footer-link" href="/courses" data-route="/courses">For Couples</a></li>
+          <li><a class="footer-link" href="/courses" data-route="/courses">For Her</a></li>
+          <li><a class="footer-link" href="/courses" data-route="/courses">For Him</a></li>
+          <li><a class="footer-link" href="/courses" data-route="/courses">Communication</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Trust &amp; Legal</h4>
+        <ul>
+          <li><a class="footer-link" href="/support" data-route="/support">Help &amp; Support</a></li>
+          <li><a class="footer-link" href="/support" data-route="/support">Privacy Policy</a></li>
+          <li><a class="footer-link" href="/support" data-route="/support">Terms of Service</a></li>
+          <li><a class="footer-link" href="/support" data-route="/support">Refund Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-bottom-copy">FLIRTYFLIP &copy; 2026. Made for better date nights.</p>
+      <p class="footer-bottom-sub">Adults 18+ &middot; Mutual consent required &middot; Play safely</p>
+    </div>
   </footer>
 
   <!-- Runtime scripts: Supabase is optional; course-catalog.js loads before the shared renderer. -->

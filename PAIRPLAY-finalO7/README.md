@@ -4,14 +4,16 @@ FLIRTYFLIP is a responsive date-night card game with the original question-card 
 
 ## Run locally
 
-Routes use the browser History API, so serve this directory through a web server instead of opening `index.html` directly.
+Routes use the browser History API, so serve this directory through a web server that supports Single Page Application (SPA) routing fallbacks instead of opening `index.html` directly.
+
+The project includes a built-in development server that handles SPA rewrites:
 
 ```bash
 cd PAIRPLAY-finalO7
-python3 -m http.server 4173
+python3 dev-server.py
 ```
 
-Then open `http://localhost:4173`. A production-like local server should fall back unknown paths such as `/games` and `/course/confident-connection` to `index.html`.
+Then open `http://localhost:4180`. Direct deep links such as `/games`, `/play`, and `/course/confident-connection` will correctly resolve to `index.html`.
 
 No build command or package installation is required.
 
@@ -31,6 +33,7 @@ No build command or package installation is required.
 - `/online` — online-room setup
 - `/how` — how it works
 - `/support` — support pages
+- `/reset-password` — secure password recovery entry
 
 The central client-side router lives in `script.js`. It uses `history.pushState`, `history.replaceState`, and `popstate`, and safely redirects routes that require missing game or course state.
 
