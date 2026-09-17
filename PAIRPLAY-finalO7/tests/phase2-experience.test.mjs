@@ -104,3 +104,26 @@ test("Phase 2: analytics events track deck_start, deck_complete, and deduplicate
   assert.doesNotMatch(scriptSource, /trackEvent\('[^']+', \{[^}]*playerName/);
   assert.doesNotMatch(scriptSource, /trackEvent\('[^']+', \{[^}]*cardText/);
 });
+
+test("Phase 2: Would You Rather preserves two-partner secret choice flow with hide answer and match reveal", () => {
+  // Verify couple-games contains the secret pass-and-play flow
+  assert.match(engineSource, /step === "pass_device"/);
+  assert.match(engineSource, /step === "p2_turn"/);
+  assert.match(engineSource, /step === "revealed"/);
+
+  // Verify pass the phone screen
+  assert.match(engineSource, /Pass the phone to/);
+  assert.match(engineSource, /Hand over the device without peeking!/);
+
+  // Verify match / different reveal logic
+  assert.match(engineSource, /isMatch = state\.choiceA === state\.choiceB/);
+  assert.match(engineSource, /IT'S A MATCH!/);
+  assert.match(engineSource, /YOU DIVERGED!/);
+
+  // Verify discussion prompt
+  assert.match(engineSource, /Couple Discussion/);
+
+  // Verify haptic feedback feature detection
+  assert.match(engineSource, /typeof navigator !== "undefined" && typeof navigator\.vibrate === "function"/);
+});
+
