@@ -248,6 +248,7 @@ body::before {
 .sound-toggle-btn:active { transform: scale(0.95); }
 .sound-toggle-btn.is-active { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 14px var(--glow-color, rgba(255,107,139,.35)); }
 
+#ambient-canvas,
 .ambient-canvas {
   position: fixed;
   inset: 0;

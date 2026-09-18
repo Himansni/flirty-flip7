@@ -7917,21 +7917,6 @@ function bindAuthEvents() {
   }
 }
 
-if (typeof document !== 'undefined') {
-  initTheme();
-  updateSoundButtons();
-  initAmbientParticles();
-  renderCourseNavigation();
-  bindGlobalUI();
-  bindAuthEvents();
-  // Initialize favorites badge from storage
-  updateFavoritesBadge();
-  initializeAuth();
-  bindNavEvents();
-  bindCatalogEvents();
-  initializeRouter();
-}
-
 // ========================================
 // HEADER AND MOBILE NAVIGATION
 // Desktop dropdowns, the focus-trapped mobile drawer and shared route links are bound here once.
@@ -8998,7 +8983,7 @@ function initAmbientParticles() {
 
     for (let i = 0; i < count; i++) {
       const isHeart = Math.random() > 0.65;
-      const size = Math.random() * 4 + 2;
+      const size = isHeart ? (Math.random() * 5 + 6) : (Math.random() * 3 + 3);
 
       let color;
       if (currentTheme === "amber") {
@@ -9015,7 +9000,7 @@ function initAmbientParticles() {
         size: size,
         speedY: Math.random() * 0.45 + 0.15,
         speedX: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.45 + 0.1,
+        opacity: Math.random() * 0.35 + 0.25,
         isHeart: isHeart,
         color: color
       });
@@ -9259,3 +9244,19 @@ if (typeof window !== "undefined") {
   window.toggleReadAloud = toggleReadAloud;
   window.stopSpeaking = stopSpeaking;
 }
+
+// Global Application Bootstrap (Runs after all controllers and modules are defined)
+if (typeof document !== "undefined") {
+  initTheme();
+  updateSoundButtons();
+  initAmbientParticles();
+  renderCourseNavigation();
+  bindGlobalUI();
+  bindAuthEvents();
+  updateFavoritesBadge();
+  initializeAuth();
+  bindNavEvents();
+  bindCatalogEvents();
+  initializeRouter();
+}
+
