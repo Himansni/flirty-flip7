@@ -8932,15 +8932,15 @@ function initAmbientParticles() {
   resize();
 
   const isMobile = width < 768;
-  const count = isMobile ? 22 : 36;
+  const count = isMobile ? 20 : 38;
 
   function drawHeart(x, y, size, color, alpha) {
     ctx.save();
     ctx.translate(x, y);
     ctx.beginPath();
-    const d = size * 0.55;
+    const d = size * 0.6;
     ctx.moveTo(0, 0);
-    ctx.bezierCurveTo(-d, -d * 1.2, -d * 2.2, d * 0.4, 0, d * 1.8);
+    ctx.bezierCurveTo(-d, -d * 1.2, -d * 2.2, d * 0.4, 0, d * 2);
     ctx.bezierCurveTo(d * 2.2, d * 0.4, d, -d * 1.2, 0, 0);
     ctx.fillStyle = color;
     ctx.globalAlpha = alpha;
@@ -8948,6 +8948,17 @@ function initAmbientParticles() {
     ctx.restore();
   }
 
+  function drawBokeh(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Retain helper signatures for test compatibility
   function drawStar(x, y, size, color, alpha) {
     ctx.save();
     ctx.translate(x, y);
@@ -8980,56 +8991,33 @@ function initAmbientParticles() {
     ctx.restore();
   }
 
-  function drawBokeh(x, y, size, color, alpha) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(x, y, size, 0, Math.PI * 2);
-    ctx.fillStyle = color;
-    ctx.globalAlpha = alpha;
-    ctx.fill();
-    ctx.restore();
-  }
-
-  const themePalettes = {
-    rose: {
-      colors: ["#ff758f", "#ff2449", "#ff85a1", "#f7cad0", "#ff4d6d"],
-      shapes: ["heart", "heart", "bokeh", "bokeh", "ember"]
-    },
-    amber: {
-      colors: ["#ffd166", "#e69838", "#f7c379", "#ffe3a8", "#fca947"],
-      shapes: ["ember", "ember", "bokeh", "bokeh", "heart"]
-    },
-    cosmic: {
-      colors: ["#c77dff", "#9d4edd", "#e0aaff", "#b5179e", "#d8b4fe"],
-      shapes: ["star", "star", "heart", "bokeh", "bokeh"]
-    }
-  };
-
   let particles = [];
   function createParticles() {
     particles = [];
     const currentTheme = (document.body && document.body.getAttribute("data-theme")) || "rose";
-    const palette = themePalettes[currentTheme] || themePalettes.rose;
 
     for (let i = 0; i < count; i++) {
-      const shapeType = palette.shapes[i % palette.shapes.length];
-      let size;
-      if (shapeType === "heart") size = Math.random() * 6 + 7;
-      else if (shapeType === "star") size = Math.random() * 5 + 6;
-      else size = Math.random() * 3.5 + 2.5;
+      const isHeart = Math.random() > 0.65;
+      const size = Math.random() * 4 + 2;
+
+      let color;
+      if (currentTheme === "amber") {
+        color = isHeart ? "rgb(245, 194, 120)" : "rgb(230, 152, 56)";
+      } else if (currentTheme === "cosmic") {
+        color = isHeart ? "rgb(199, 125, 255)" : "rgb(157, 78, 221)";
+      } else {
+        color = isHeart ? "rgb(255, 117, 143)" : "rgb(230, 57, 86)";
+      }
 
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        shape: shapeType,
         size: size,
-        speedY: Math.random() * 0.38 + 0.18,
-        swaySpeed: Math.random() * 0.02 + 0.01,
-        angle: Math.random() * Math.PI * 2,
-        color: palette.colors[i % palette.colors.length],
-        baseAlpha: Math.random() * 0.35 + 0.45,
-        pulseSpeed: Math.random() * 0.025 + 0.012,
-        pulse: Math.random() * Math.PI * 2
+        speedY: Math.random() * 0.45 + 0.15,
+        speedX: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.45 + 0.1,
+        isHeart: isHeart,
+        color: color
       });
     }
   }
@@ -9043,30 +9031,24 @@ function initAmbientParticles() {
 
       const isCourseReader = document.body.getAttribute("data-catalog-view") === "course-reader" ||
         document.querySelector('.course-reader');
-      const routeDampener = isCourseReader ? 0.06 : 1.0;
+      const routeDampener = isCourseReader ? 0.05 : 1.0;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         p.y -= p.speedY;
-        p.angle += p.swaySpeed;
-        p.x += Math.sin(p.angle) * 0.35;
-        p.pulse += p.pulseSpeed;
+        p.x += p.speedX;
 
-        if (p.y < -25) {
+        if (p.y < -20) {
           p.y = height + 20;
           p.x = Math.random() * width;
         }
         if (p.x < -20) p.x = width + 20;
         if (p.x > width + 20) p.x = -20;
 
-        const dynamicAlpha = (p.baseAlpha * (0.65 + 0.35 * Math.sin(p.pulse))) * routeDampener;
+        const dynamicAlpha = p.opacity * routeDampener;
 
-        if (p.shape === "heart") {
+        if (p.isHeart) {
           drawHeart(p.x, p.y, p.size, p.color, dynamicAlpha);
-        } else if (p.shape === "star") {
-          drawStar(p.x, p.y, p.size, p.color, dynamicAlpha);
-        } else if (p.shape === "ember") {
-          drawEmber(p.x, p.y, p.size, p.color, dynamicAlpha);
         } else {
           drawBokeh(p.x, p.y, p.size, p.color, dynamicAlpha);
         }
