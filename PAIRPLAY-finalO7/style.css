@@ -202,7 +202,7 @@ body::before {
    ======================================== */
 .navbar {
   height: 82px; padding: 0 var(--page-pad-desktop); display: flex; align-items: center;
-  justify-content: space-between; position: relative; z-index: 5;
+  justify-content: space-between; position: relative; z-index: 70;
 }
 .logo { text-decoration: none; color: var(--ink); font-weight: 800; letter-spacing: -.04em; display:flex; align-items:center; gap:9px; }
 .logo > span:last-child span { color: var(--red); }
@@ -268,7 +268,7 @@ body[data-catalog-view="course-reader"] .ambient-canvas,
 }
 
 /* Layering guarantee: interactive content floats above ambient canvas without blocking clicks */
-.navbar, .page, .catalog-shell, .catalog-page, .game-page, .hero, .site-footer {
+.page, .catalog-shell, .catalog-page, .game-page, .hero, .site-footer {
   position: relative;
   z-index: 2;
 }
