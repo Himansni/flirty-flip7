@@ -35,7 +35,7 @@
     timers: new Set(),
     disposers: new Set(),
     audioContext: null,
-    muted: false,
+    muted: true,
     players: { first: "", second: "" }
   };
 
@@ -43,10 +43,21 @@
   function readSession() {
     try {
       const saved = JSON.parse(global.sessionStorage?.getItem(SESSION_KEY) || "null");
-      if (!saved || typeof saved !== "object") return;
+      if (!saved || typeof saved !== "object") {
+        if (typeof global.localStorage !== "undefined") {
+          runtime.muted = global.localStorage.getItem("flirtyflip_sound_enabled") !== "true";
+        }
+        return;
+      }
       runtime.players.first = saved.first === "Player One" ? "" : sanitizeName(saved.first);
       runtime.players.second = saved.second === "Player Two" ? "" : sanitizeName(saved.second);
-      runtime.muted = Boolean(saved.muted);
+      if (typeof saved.muted === "boolean") {
+        runtime.muted = saved.muted;
+      } else if (typeof global.localStorage !== "undefined") {
+        runtime.muted = global.localStorage.getItem("flirtyflip_sound_enabled") !== "true";
+      } else {
+        runtime.muted = true;
+      }
       runtime.turnIndex = saved.turnIndex === 1 ? 1 : 0;
     } catch (_) {
       // Storage is optional; private browsing restrictions must never block local play.
@@ -647,13 +658,20 @@
     triggerHaptic(20);
     state.choiceA = choice;
     state.step = "pass_device";
+    if (typeof window !== "undefined" && typeof window.playSound === "function") {
+      window.playSound("click");
+    }
     renderActiveGame();
   }
 
   function readyWyrP2() {
     const state = runtime.state;
     if (!state || state.step !== "pass_device") return;
+    triggerHaptic(20);
     state.step = "p2_turn";
+    if (typeof window !== "undefined" && typeof window.playSound === "function") {
+      window.playSound("click");
+    }
     renderActiveGame();
   }
 
@@ -666,12 +684,19 @@
     if (typeof window !== "undefined" && typeof window.gtag === "function") {
       window.gtag("event", "game_complete", { game_id: "would-you-rather", match: state.choiceA === state.choiceB });
     }
+    const isMatch = state.choiceA === state.choiceB;
+    if (typeof window !== "undefined" && typeof window.playSound === "function") {
+      window.playSound(isMatch ? "success" : "reveal");
+    }
     renderActiveGame();
   }
 
   function nextWouldYouRather() {
     const state = runtime.state;
     if (!state) return;
+    if (typeof window !== "undefined" && typeof window.playSound === "function") {
+      window.playSound("flip");
+    }
     const pool = data.wouldYouRather || [];
     if (!pool.length) return;
     let next = pool[secureRandomIndex(pool.length)];
@@ -987,7 +1012,14 @@
     const control = event.target.closest("[data-cg-action]");
     if (!control) return;
     const action = control.dataset.cgAction;
-    if (action === "toggle-sound") { runtime.muted = !runtime.muted; writeSession(); renderActiveGame(); return; }
+    if (action === "toggle-sound") {
+      runtime.muted = !runtime.muted;
+      try { global.localStorage?.setItem("flirtyflip_sound_enabled", String(!runtime.muted)); } catch (_) {}
+      if (typeof global.updateSoundButtons === "function") global.updateSoundButtons();
+      writeSession();
+      renderActiveGame();
+      return;
+    }
     if (action === "play-again") {
       const restartReaction = runtime.gameId === "reaction-test";
       resetCurrentGame();

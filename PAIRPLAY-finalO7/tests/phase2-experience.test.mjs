@@ -170,3 +170,19 @@ test("Phase 2 Experience: Ambient particle system respects prefers-reduced-motio
   assert.match(scriptSource, /prefers-reduced-motion: reduce/);
   assert.match(scriptSource, /ambient-canvas/);
 });
+
+test("Phase 2 Experience: Ambient particles render distinct shapes (hearts, stars, embers) with DPI scaling", () => {
+  assert.match(scriptSource, /drawHeart/);
+  assert.match(scriptSource, /drawStar/);
+  assert.match(scriptSource, /drawEmber/);
+  assert.match(scriptSource, /drawBokeh/);
+  assert.match(scriptSource, /devicePixelRatio/);
+  assert.match(scriptSource, /routeDampener/);
+});
+
+test("Phase 2 Experience: Sound synthesizer includes reveal and completion fanfare and couple-games is muted by default", () => {
+  assert.match(scriptSource, /type === "reveal"/);
+  assert.match(scriptSource, /type === "completion"/);
+  assert.match(engineSource, /muted: true/);
+  assert.match(engineSource, /window\.playSound\(isMatch \? "success" : "reveal"\)/);
+});

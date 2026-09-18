@@ -7152,6 +7152,9 @@ function redirectRoute(path) {
 function renderCurrentRoute(navigationType = "navigate") {
   const url = new URL(window.location.href);
   const route = resolveRoute(url.pathname);
+  if (typeof document !== "undefined" && document.body && route.name !== "course") {
+    document.body.dataset.catalogView = "";
+  }
 
   if (route.name === "not-found") return redirectRoute(ROUTE_PATHS.home);
   if (route.name === "setup" && gameSessionStatus === "idle") return redirectRoute(ROUTE_PATHS.play);
@@ -7812,7 +7815,7 @@ function renderResultsScreen() {
 
 function finishGame() {
   stopSpeaking();
-  playSound("success");
+  playSound("completion");
   const playedCount = Math.max(0, currentCards.length - skipped);
   trackEvent('deck_complete', {
     mood: selectedMood,
@@ -7946,6 +7949,9 @@ function configureCatalogShell({ eyebrow, title, subtitle, backRoute = ROUTE_PAT
   if (!page || !heading) return;
 
   page.dataset.catalogView = view;
+  if (typeof document !== "undefined" && document.body) {
+    document.body.dataset.catalogView = view;
+  }
   heading.hidden = hideHeader;
   $("catalog-eyebrow").textContent = eyebrow;
   $("catalog-heading").textContent = title;
@@ -8594,7 +8600,13 @@ function bindGlobalUI() {
   if (supportBtn) supportBtn.addEventListener('click', (e) => { e.preventDefault(); showSupport('index'); });
   if (soundBtn) soundBtn.addEventListener('click', () => toggleSound());
   if (drawerSoundBtn) drawerSoundBtn.addEventListener('click', () => toggleSound());
-  if (voiceBtn) voiceBtn.addEventListener('click', () => toggleReadAloud());
+  if (voiceBtn) {
+    if (!("speechSynthesis" in window)) {
+      voiceBtn.style.display = "none";
+    } else {
+      voiceBtn.addEventListener('click', () => toggleReadAloud());
+    }
+  }
   if (themeSelect) themeSelect.addEventListener('change', (e) => setTheme(e.target.value));
   if (drawerThemeSelect) drawerThemeSelect.addEventListener('change', (e) => setTheme(e.target.value));
 
@@ -8889,52 +8901,135 @@ if (typeof window !== "undefined") {
   window.setTheme = setTheme;
 }
 
-// 2. AMBIENT PARTICLE SYSTEM
+// 2. AMBIENT PARTICLE SYSTEM (Visible, Romantic, Lightweight)
 function initAmbientParticles() {
   if (typeof document === "undefined" || typeof window === "undefined") return;
   const canvas = document.getElementById("ambient-canvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (motionQuery && motionQuery.matches) {
     canvas.style.display = "none";
     return;
   }
 
-  let width = (canvas.width = window.innerWidth);
-  let height = (canvas.height = window.innerHeight);
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-  window.addEventListener(
-    "resize",
-    () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener("resize", resize, { passive: true });
+  resize();
+
+  const isMobile = width < 768;
+  const count = isMobile ? 22 : 36;
+
+  function drawHeart(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    const d = size * 0.55;
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(-d, -d * 1.2, -d * 2.2, d * 0.4, 0, d * 1.8);
+    ctx.bezierCurveTo(d * 2.2, d * 0.4, d, -d * 1.2, 0, 0);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawStar(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    const r = size * 0.65;
+    const inner = r * 0.28;
+    for (let i = 0; i < 8; i++) {
+      const radius = i % 2 === 0 ? r : inner;
+      const angle = (i * Math.PI) / 4;
+      const sx = Math.cos(angle) * radius;
+      const sy = Math.sin(angle) * radius;
+      if (i === 0) ctx.moveTo(sx, sy);
+      else ctx.lineTo(sx, sy);
+    }
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawEmber(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, size * 0.55, size * 0.9, 0, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawBokeh(x, y, size, color, alpha) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  const themePalettes = {
+    rose: {
+      colors: ["#ff758f", "#ff2449", "#ff85a1", "#f7cad0", "#ff4d6d"],
+      shapes: ["heart", "heart", "bokeh", "bokeh", "ember"]
     },
-    { passive: true }
-  );
-
-  const count = window.innerWidth < 768 ? 16 : 28;
-  const themeColors = {
-    rose: ["rgba(255,107,139,0.35)", "rgba(255,36,73,0.22)", "rgba(255,182,193,0.3)"],
-    amber: ["rgba(247,195,121,0.35)", "rgba(230,152,56,0.22)", "rgba(255,214,138,0.3)"],
-    cosmic: ["rgba(199,125,255,0.35)", "rgba(157,78,221,0.22)", "rgba(224,170,255,0.3)"]
+    amber: {
+      colors: ["#ffd166", "#e69838", "#f7c379", "#ffe3a8", "#fca947"],
+      shapes: ["ember", "ember", "bokeh", "bokeh", "heart"]
+    },
+    cosmic: {
+      colors: ["#c77dff", "#9d4edd", "#e0aaff", "#b5179e", "#d8b4fe"],
+      shapes: ["star", "star", "heart", "bokeh", "bokeh"]
+    }
   };
 
   let particles = [];
   function createParticles() {
     particles = [];
-    const theme = (document.body && document.body.getAttribute("data-theme")) || "rose";
-    const palette = themeColors[theme] || themeColors.rose;
+    const currentTheme = (document.body && document.body.getAttribute("data-theme")) || "rose";
+    const palette = themePalettes[currentTheme] || themePalettes.rose;
+
     for (let i = 0; i < count; i++) {
+      const shapeType = palette.shapes[i % palette.shapes.length];
+      let size;
+      if (shapeType === "heart") size = Math.random() * 6 + 7;
+      else if (shapeType === "star") size = Math.random() * 5 + 6;
+      else size = Math.random() * 3.5 + 2.5;
+
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: Math.random() * 2.2 + 0.8,
-        dx: (Math.random() - 0.5) * 0.28,
-        dy: -Math.random() * 0.35 - 0.08,
-        color: palette[i % palette.length],
-        pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.015 + Math.random() * 0.02
+        shape: shapeType,
+        size: size,
+        speedY: Math.random() * 0.38 + 0.18,
+        swaySpeed: Math.random() * 0.02 + 0.01,
+        angle: Math.random() * Math.PI * 2,
+        color: palette.colors[i % palette.colors.length],
+        baseAlpha: Math.random() * 0.35 + 0.45,
+        pulseSpeed: Math.random() * 0.025 + 0.012,
+        pulse: Math.random() * Math.PI * 2
       });
     }
   }
@@ -8943,24 +9038,38 @@ function initAmbientParticles() {
   window.addEventListener("flirtyflip:themechange", createParticles);
 
   function render() {
-    if (!document.hidden) {
+    if (!document.hidden && (!motionQuery || !motionQuery.matches)) {
       ctx.clearRect(0, 0, width, height);
+
+      const isCourseReader = document.body.getAttribute("data-catalog-view") === "course-reader" ||
+        document.querySelector('.course-reader');
+      const routeDampener = isCourseReader ? 0.06 : 1.0;
+
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        p.x += p.dx;
-        p.y += p.dy;
+        p.y -= p.speedY;
+        p.angle += p.swaySpeed;
+        p.x += Math.sin(p.angle) * 0.35;
         p.pulse += p.pulseSpeed;
-        if (p.y < -10) {
-          p.y = height + 10;
+
+        if (p.y < -25) {
+          p.y = height + 20;
           p.x = Math.random() * width;
         }
-        if (p.x < -10) p.x = width + 10;
-        if (p.x > width + 10) p.x = -10;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = 0.3 + 0.5 * (0.5 + 0.5 * Math.sin(p.pulse));
-        ctx.fill();
+        if (p.x < -20) p.x = width + 20;
+        if (p.x > width + 20) p.x = -20;
+
+        const dynamicAlpha = (p.baseAlpha * (0.65 + 0.35 * Math.sin(p.pulse))) * routeDampener;
+
+        if (p.shape === "heart") {
+          drawHeart(p.x, p.y, p.size, p.color, dynamicAlpha);
+        } else if (p.shape === "star") {
+          drawStar(p.x, p.y, p.size, p.color, dynamicAlpha);
+        } else if (p.shape === "ember") {
+          drawEmber(p.x, p.y, p.size, p.color, dynamicAlpha);
+        } else {
+          drawBokeh(p.x, p.y, p.size, p.color, dynamicAlpha);
+        }
       }
       ctx.globalAlpha = 1;
     }
@@ -9001,38 +9110,64 @@ function playSound(type) {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = "sine";
-      osc.frequency.setValueAtTime(320, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.12);
+      osc.frequency.setValueAtTime(340, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(160, ctx.currentTime + 0.12);
       gain.gain.setValueAtTime(0.08, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.12);
+    } else if (type === "click") {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(560, ctx.currentTime);
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    } else if (type === "reveal") {
+      [440.0, 554.37, 659.25].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.06);
+        gain.gain.setValueAtTime(0.05, ctx.currentTime + i * 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.06 + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.06);
+        osc.stop(ctx.currentTime + i * 0.06 + 0.38);
+      });
     } else if (type === "success" || type === "match") {
-      [349.23, 440.0, 523.25].forEach((freq, i) => {
+      [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.07);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime + i * 0.07);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.07 + 0.45);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.07);
+        osc.stop(ctx.currentTime + i * 0.07 + 0.5);
+      });
+    } else if (type === "completion") {
+      [349.23, 440.0, 523.25, 698.46].forEach((freq, i) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.type = "sine";
         osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
         gain.gain.setValueAtTime(0.06, ctx.currentTime + i * 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.4);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.55);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(ctx.currentTime + i * 0.08);
-        osc.stop(ctx.currentTime + i * 0.08 + 0.45);
+        osc.stop(ctx.currentTime + i * 0.08 + 0.6);
       });
-    } else if (type === "click") {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(580, ctx.currentTime);
-      gain.gain.setValueAtTime(0.03, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.06);
     }
   } catch (_) {}
 }
