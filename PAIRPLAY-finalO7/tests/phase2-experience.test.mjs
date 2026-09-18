@@ -3,11 +3,13 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import vm from "node:vm";
 
-const [catalogSource, dataSource, engineSource, scriptSource] = await Promise.all([
+const [catalogSource, dataSource, engineSource, scriptSource, htmlSource, styleSource] = await Promise.all([
   readFile(new URL("../course-catalog.js", import.meta.url), "utf8"),
   readFile(new URL("../couple-games-data.js", import.meta.url), "utf8"),
   readFile(new URL("../couple-games.js", import.meta.url), "utf8"),
-  readFile(new URL("../script.js", import.meta.url), "utf8")
+  readFile(new URL("../script.js", import.meta.url), "utf8"),
+  readFile(new URL("../index.html", import.meta.url), "utf8"),
+  readFile(new URL("../style.css", import.meta.url), "utf8")
 ]);
 
 const stored = new Map();
@@ -185,4 +187,51 @@ test("Phase 2 Experience: Sound synthesizer includes reveal and completion fanfa
   assert.match(scriptSource, /type === "completion"/);
   assert.match(engineSource, /muted: true/);
   assert.match(engineSource, /window\.playSound\(isMatch \? "success" : "reveal"\)/);
+});
+
+test("Phase 2 Experience: Dual-mode course rendering system supports structured blocks and conservative string fallback", () => {
+  // Core block engine helpers
+  assert.match(scriptSource, /function getCourseReadingTime\(course\)/);
+  assert.match(scriptSource, /function parseCourseLesson\(content, fallbackTitle/);
+  assert.match(scriptSource, /function renderCourseBlocks\(blocks\)/);
+  assert.match(scriptSource, /function formatLessonParagraphs\(body\)/);
+
+  // Prototype course 'confident-connection' uses structured blocks
+  assert.match(scriptSource, /'confident-connection':/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]heading['"]/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]quote['"]/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]takeaway['"]/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]checklist['"]/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]steps['"]/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]reflection['"]/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]worksheet['"]/);
+  assert.match(scriptSource, /['"]?type['"]?:\s*['"]scenario['"]/);
+
+  // Course detail masterclass layout
+  assert.match(scriptSource, /class="course-meta-chips"/);
+  assert.match(scriptSource, /class="learning-outcomes__grid"/);
+  assert.match(scriptSource, /class="learning-outcome-card"/);
+
+  // Reader layout supports dual mode
+  assert.match(scriptSource, /class="reader-top-bar"/);
+  assert.match(scriptSource, /class="reader-chapter-badge"/);
+  assert.match(scriptSource, /lesson\.blocks\s*\?\s*renderCourseBlocks\(lesson\.blocks\)\s*:/);
+
+  // Legacy string courses still preserved (e.g. art-of-romance)
+  assert.match(scriptSource, /'art-of-romance':/);
+  assert.match(scriptSource, /THE CENTRAL IDEA - The central idea of this course is simple/);
+});
+
+test("Phase 2 Experience: Mobile drawer auth buttons use high-contrast grouped styling with >= 44px touch targets", () => {
+  // Markup preserves element IDs inside drawer-auth-group
+  assert.match(htmlSource, /class="drawer-auth-item"/);
+  assert.match(htmlSource, /class="drawer-auth-group"/);
+  assert.match(htmlSource, /<button[^>]*id="drawer-login"[^>]*class="drawer-btn drawer-btn--primary"[^>]*>/);
+  assert.match(htmlSource, /<button[^>]*id="drawer-guest"[^>]*class="drawer-btn drawer-btn--secondary"[^>]*>/);
+
+  // CSS guarantees touch targets and theme harmony
+  assert.match(styleSource, /\.drawer-auth-group/);
+  assert.match(styleSource, /\.drawer-btn\s*\{[^}]*min-height:\s*48px;/);
+  assert.match(styleSource, /\.drawer-btn--primary/);
+  assert.match(styleSource, /\.drawer-btn--secondary/);
 });

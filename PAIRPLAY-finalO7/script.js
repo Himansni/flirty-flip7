@@ -1748,413 +1748,841 @@ You should be able to examine what actually happened between you, recognize atta
   //========== ___Finding Love Without Losing Yourself____-----------===========
    /* New course */
   'confident-connection': {
-    outcomes: [
-      'Practice grounded presence instead of performing confidence.',
-      'Notice emotional signals through words, tone and body language.',
-      'Ask clearer questions and respond with more attention.',
-      'Build comfort through steady, low-pressure connection.'
-    ],
-  
-    sections: [
-      {
-        title: 'Overview',
-        lessons: [
-          `Introduction - A healthy relationship should give you room to become more fully yourself—not require you to become smaller, quieter, less ambitious, or less honest to keep someone close. Yet the fear of losing love can make people compromise their needs before they have even recognized what those needs are. Others respond to the same fear by protecting their independence so fiercely that genuine intimacy never has a chance to develop.
-
-Finding Love Without Losing Yourself teaches a different way to approach relationships: how to know what you need, recognize attraction without surrendering judgment, choose an emotionally available partner, communicate honestly, build mutual security, maintain your own life, and make relationship decisions without abandoning either yourself or the person you love..`,
-        ]
-      },
-      {
-        title: 'Core Lessons',
-        lessons: [
-          `1. The Self You Bring Into Love - Before deciding who belongs in your life, understand what must remain yours.
-
-People often begin dating with a detailed picture of the partner they want but only a vague understanding of the life they want to protect. They know the appearance, personality, career, or romantic qualities they find attractive. They may be far less clear about their own values, emotional needs, boundaries, friendships, ambitions, and expectations of partnership.
-
-That lack of clarity becomes important when attraction arrives. A person who has not consciously identified what matters to them may begin adapting to someone else's preferences without noticing the cumulative effect. They stop pursuing an interest because their partner finds it unimportant. They become less available to friends. They change their plans repeatedly. They avoid expressing an opinion because disagreement might create distance. Each individual compromise seems small, but together they can produce a relationship in which one person is increasingly present and the other is increasingly absent.
-
-The alternative is not rigid independence. A relationship should change your life. You may move cities, adjust routines, share finances, care for a partner through illness, or make sacrifices for a future you both want. The distinction is whether those changes are chosen through mutual consideration or made primarily to prevent rejection.
-
-David Richo's work is useful here because he connects mature love with responsibility for one's feelings, choices, and behavior, while also emphasizing the importance of allowing both partners room for their own development. Robin Norwood's work examines the opposite danger: becoming so focused on another person's problems and responses that one's own interests and life begin to disappear.
-
-This section therefore begins with a question that sounds simple but requires careful thought:
-
-What would it mean for me to remain myself while building a life with someone else?
-
-Your answer should include more than hobbies or personality traits. It should include what you believe about honesty, money, family, fidelity, work, children, privacy, emotional expression, religion or spirituality where relevant, and the kind of daily life you want. It should also include the needs you are sometimes embarrassed to admit: reassurance, affection, time alone, sexual compatibility, encouragement, stability, or a partner who communicates directly.
-
-None of these needs automatically makes you demanding. The work is to distinguish a genuine requirement from a preference, and a preference from an expectation that another person must satisfy every time.
-
-What You Are Learning
-
-You are developing a practical understanding of your identity before it becomes entangled with another person's expectations. You will learn to distinguish core values from negotiable preferences, identify the conditions under which you feel emotionally secure, and recognize the situations in which you tend to abandon your own priorities to preserve connection.
-
-You will also learn to distinguish healthy flexibility from self-erasure. The goal is not to enter a relationship with an inflexible list of demands. It is to know yourself well enough that compromise becomes a conscious decision rather than an automatic response to fear.
-
-Practical Application
-
-Imagine you are dating someone who wants to spend every weekend together. You enjoy the closeness, but you also have an important friendship, a professional course, and time you normally spend with family.
-
-At first, you cancel these plans because you want the relationship to develop. After several months, your partner becomes accustomed to having all your free time. When you eventually ask for a weekend to yourself, the request feels like a sudden withdrawal to them and an overdue necessity to you.
-
-A clearer approach would have been to communicate your existing commitments early: you want a close relationship, but you also intend to maintain the people and activities that matter to you. This gives the other person an opportunity to know the actual you rather than a version of you created by the early intensity of dating.
-
-Practice — Your Personal Relationship Map
-
-Create a document with four categories: What I Need, What I Value, What I Prefer, and What I Can Negotiate.
-
-Under each category, consider emotional connection, communication, family, friendships, work, money, intimacy, privacy, and future plans. Then choose three past situations in which you agreed to something you did not genuinely want. For each, identify what you feared would happen if you said no, what the agreement cost you, and how you could communicate differently now.
-
-Finish with a personal statement of no more than one page: “A relationship that fits my life would allow me to…” Make it specific enough that you could use it to evaluate an actual relationship.
-
-After This Section, You Will Be Able To
-Identify your core relationship values, needs, preferences, and negotiable differences.
-Recognize when compromise is motivated primarily by fear of rejection.
-Describe the friendships, goals, routines, and personal commitments you want to preserve.
-Communicate your existing life and relationship expectations without apologizing for having them.
-Evaluate whether a relationship is expanding your life or gradually narrowing it.`,
-
-//------------2nd chapter-----------------------
-
-          `2. Read Attraction Without Losing Judgment - Chemistry tells you that you are drawn to someone. It does not tell you whether the relationship is good for you.
-
-Attraction can create a powerful sense of certainty before you have enough information to make a sound decision. Someone may be exceptionally charming, physically attractive, attentive, or emotionally intense. You may feel understood after only a few conversations. The temptation is to treat that feeling as evidence that the person is unusually compatible with you.
-
-Sometimes the attraction develops into a healthy relationship. Sometimes it does not. The important skill is learning to enjoy attraction without allowing it to replace observation.
-
-Attached describes how anxious, avoidant, and secure attachment tendencies can influence the way people experience closeness, uncertainty, and dependency. Anxious tendencies may involve heightened concern about a partner's availability; avoidant tendencies may involve discomfort with too much closeness; secure tendencies generally involve greater comfort with intimacy and responsiveness. These patterns can help explain relationship behavior, but they should not be used as fixed identities or diagnoses.
-
-A person who becomes highly preoccupied when someone is inconsistent may mistake the relief of receiving attention for evidence of exceptional compatibility. A person who becomes uncomfortable when intimacy deepens may mistake emotional distance for a need to find a different partner. Neither response proves that the relationship is right or wrong. It tells you that your own attachment responses deserve attention.
-
-Norwood's work adds a further warning: familiar emotional difficulty can become part of what makes a person compelling. Someone may repeatedly feel drawn toward partners who are unavailable, troubled, or in need of rescuing because that dynamic activates a familiar role. The lesson is not that every intense attraction is unhealthy. It is that familiarity and compatibility are different forms of information.
-
-This is particularly relevant to modern dating. Digital communication can create intimacy quickly while providing relatively little evidence about how someone behaves in ordinary life. A person may communicate beautifully through messages but avoid difficult conversations in person. They may express strong interest before demonstrating consistency. They may make future plans before the two of you have experienced disagreement, disappointment, or competing priorities.
-
-The solution is not suspicion. It is pacing. Let attraction develop while continuing to observe.
-
-What You Are Learning
-
-You are learning to distinguish the experience of attraction from evidence of relationship capacity. You will identify your own responses to closeness and distance, recognize when uncertainty is increasing preoccupation, and evaluate a potential partner through repeated behavior rather than isolated moments.
-
-You will also learn that emotional security is not the same as emotional flatness. A calm relationship may contain strong attraction, playfulness, and desire. Conversely, a relationship can feel exciting because it is unpredictable. Neither calm nor intensity should be judged without considering the broader pattern.
-
-Practical Application
-
-You meet someone through a dating app. The first two weeks are exciting. They send affectionate messages, discuss future plans, and seem unusually interested. Then their communication becomes inconsistent. You begin checking your phone more frequently and feel especially relieved when they become warm again.
-
-Instead of immediately deciding that the connection is extraordinary—or that the person is deliberately manipulating you—you observe the pattern. You communicate what kind of consistency you prefer and notice how they respond. A partner who is genuinely interested may have a different communication style and still be willing to discuss it. A person who repeatedly dismisses your needs or offers promises without follow-through is providing different information.
-
-The objective is to learn who they are, not to win a contest for their attention.
-
-Practice — The Attraction and Evidence Journal
-
-For the next three people you seriously consider dating, separate your observations into three columns: What I Feel, What I Know, and What I Still Need to Discover.
-
-Record attraction and emotional responses in the first column. In the second, record observable behavior such as consistency, respect, communication, reliability, and how the person responds to a reasonable request. In the third, identify important unknowns concerning values, conflict, commitment, and compatibility.
-
-After several interactions, answer: “Am I becoming more interested in this person as I learn who they are, or more preoccupied because I remain uncertain about where I stand?”
-
-After This Section, You Will Be Able To
-Distinguish attraction from evidence of compatibility and emotional availability.
-Recognize how your attachment responses influence dating decisions.
-Identify when uncertainty is increasing preoccupation rather than genuine closeness.
-Evaluate a potential partner through consistent behavior over time.
-Pace emotional investment without suppressing attraction or becoming unnecessarily guarded.` ,
-
-//------------3rd chapter-----------------------
-
-          `3. Choose Someone Who Can Meet You -  A relationship cannot become mutual through one person's effort alone.
-
-Knowing what you want and understanding attraction are important, but they are not enough. You must also learn how to evaluate whether another person has the willingness and capacity to participate in the kind of relationship you want.
-
-This is where many people become distracted by potential.
-
-They meet someone who is intelligent, attractive, ambitious, or emotionally compelling. The person has qualities they genuinely admire. But important relationship capacities may be missing: consistency, accountability, emotional availability, respect for boundaries, or willingness to discuss the future.
-
-The temptation is to assume those capacities will appear once the relationship becomes more serious.
-
-Sometimes people do grow together. But a relationship should not be built primarily on the assumption that one person will eventually become capable of offering what the other already needs.
-
-Attached encourages readers to consider a potential partner's attachment-related behavior and compatibility rather than relying solely on attraction. Tatkin's secure-functioning approach adds a complementary question: can these two people create a relationship organized around mutual care, fairness, and cooperation? In his framework, individual attachment history matters, but it does not completely determine whether a couple can develop secure functioning together.
-
-That distinction prevents two common mistakes. The first is dismissing someone because of an attachment label without examining their actual behavior. The second is assuming that love or patience will compensate indefinitely for a lack of mutual effort.
-
-A useful partner-selection process therefore looks at three dimensions: character, compatibility, and relationship capacity.
-
-Character concerns how someone behaves when doing the right thing is inconvenient. Compatibility concerns whether your values, lifestyles, and future expectations can reasonably coexist. Relationship capacity concerns whether the person can communicate, respond, negotiate, repair conflict, and participate in mutual commitment.
-
-A person may be wonderful in one dimension and unsuitable in another. Someone can be kind but want a fundamentally different future. Someone can share your interests but be unwilling to communicate honestly. Someone can be intensely attracted to you but not want the level of commitment you seek.
-
-The goal is not to find a flawless person. It is to find someone whose actual qualities and choices make a healthy relationship possible.
-
-What You Are Learning
-
-You are learning to evaluate potential partners without turning dating into an interrogation or a search for perfection. You will distinguish compatibility from similarity, recognize the difference between a temporary difficulty and a repeated pattern, and assess whether important relationship needs can be met through mutual effort.
-
-You will also learn to stop treating another person's lack of availability as a problem you must solve.
-
-Practical Application
-
-Suppose you want a committed relationship, but the person you are dating says they are unsure whether they want anything serious. You enjoy spending time together and believe they may eventually change their mind.
-
-A mature response does not require you to pressure them into commitment or immediately accuse them of dishonesty. It requires taking their stated position seriously. You can explain what you are looking for, ask whether your expectations are compatible, and decide whether continuing makes sense for you.
-
-If you choose to remain, that choice should be based on the relationship that actually exists—not on an unspoken expectation that enough affection will eventually change their position.
-
-Practice — The Partner Evidence Matrix
-
-Choose five qualities that are essential for your preferred relationship. For each quality, define what it would look like in observable behavior.
-
-For example, “emotionally available” might mean that the person can discuss feelings, respond to reasonable requests for connection, and return to difficult conversations after taking space. “Reliable” might mean that their actions generally match their commitments and that they communicate when plans change.
-
-For someone you are currently dating, record evidence for each quality, evidence against it, and what remains unknown. Then identify one important conversation or ordinary-life situation that could provide more information. Do not manufacture tests or create jealousy to obtain evidence; observe naturally and communicate directly.
-
-After This Section, You Will Be Able To
-Evaluate potential partners through character, compatibility, and relationship capacity.
-Translate vague preferences into observable relationship qualities.
-Distinguish temporary difficulties from repeated patterns of unavailability or disrespect.
-Recognize when you are investing in someone's potential rather than their demonstrated behavior.
-Make dating decisions without trying to persuade another person to want the relationship you want. ` ,
-
-//------------4th chapter-----------------------
-
-          `4. Speak Before You Disappear - The ability to express a need early can prevent months of resentment, guessing, and unnecessary conflict.
-
-Many people lose themselves in relationships not because they lack boundaries, but because they struggle to communicate those boundaries while the relationship still feels uncertain. They worry that asking for reassurance will make them appear needy, that expressing disappointment will create conflict, or that discussing commitment will make the other person withdraw.
-
-So they remain agreeable.
-
-They say something is fine when it is not.
-
-They wait for their partner to notice.
-
-They hope the other person will eventually offer what they need without being asked.
-
-When the need remains unmet, resentment develops. Eventually the conversation becomes much more emotionally charged than it needed to be.
-
-The opposite pattern is also possible. Someone may express a need through accusation, repeated questioning, threats, or attempts to control the partner's behavior. The need itself may be legitimate, but the communication makes cooperation more difficult.
-
-Attached includes effective communication and secure approaches to conflict as important relationship skills. Richo similarly emphasizes taking responsibility for feelings and choices, keeping agreements, and addressing conflicts rather than allowing them to remain unresolved.
-
-The practical lesson is that having a need, expressing a need, and demanding a particular response are three different things.
-
-You may need more consistent contact. You can communicate that clearly. Your partner may have a different preference. The two of you can then discuss whether an arrangement works for both of you. What you cannot do is guarantee compatibility by becoming silent, nor can you create genuine willingness by applying enough pressure.
-
-A useful communication structure is:
-
-Observation → Feeling → Need → Request → Invitation to respond.
-
-For example, instead of saying, “You never make time for me,” you might say, “We've had to cancel our last three plans, and I'm feeling disconnected. Regular time together matters to me. Could we choose an evening this week that we can both protect? I'd also like to understand what has been making scheduling difficult.”
-
-This communicates the problem without requiring the partner to accept a negative characterization of themselves before the conversation can begin.
-
-What You Are Learning
-
-You are learning to communicate needs, preferences, and concerns while preserving both self-respect and the other person's autonomy. You will practice distinguishing facts from interpretations, making specific requests, and listening to responses without immediately treating disagreement as rejection.
-
-You will also learn when a communication problem is actually a compatibility problem. If you have expressed an important need clearly and repeatedly, the next step may not be finding a more persuasive way to explain it.
-
-Practical Application
-
-Your partner enjoys frequent social events, while you need some quiet time after work. You begin attending everything because you do not want them to think you are uninterested. Eventually you become irritable and start declining invitations abruptly.
-
-A better conversation happens before resentment accumulates. You can explain that you enjoy spending time together and also need some evenings to recharge. You can discuss which events matter most to your partner and which you can attend separately.
-
-The result may be a compromise, but the important change is that the compromise includes both people's actual needs.
-
-Practice — The Conversation Lab
-
-Choose three conversations you have been avoiding. Write each one using the five-part structure above.
-
-Then rehearse three possible responses from your partner: agreement, a reasonable difference in preference, and an unwillingness to meet the need. Practice responding to each without abandoning your original concern or escalating into accusation.
-
-For the third response, ask yourself: “If this person genuinely cannot offer what I need, what decision is available to me besides repeating the request indefinitely?”
-
-After This Section, You Will Be Able To
-Express relationship needs without accusation, mind-reading, or excessive apology.
-Make specific requests that allow the other person to respond honestly.
-Distinguish a communication difficulty from a genuine incompatibility.
-Discuss differences without treating every disagreement as rejection.
-Recognize when repeated explanations are replacing a necessary relationship decision..`,
-
-//------------5th chapter-----------------------
-
-          `5. Make Space Without Making Distance - Secure intimacy allows two people to belong to each other without becoming responsible for every part of each other's lives.
-
-One of the central challenges of a serious relationship is balancing closeness and autonomy. Too little connection can leave partners feeling unimportant or uncertain. Too little autonomy can create resentment, dependence, or the feeling that maintaining the relationship requires surrendering personal freedom.
-
-The answer is not to divide life into two completely separate territories. Nor is it to expect partners to share every activity, friendship, opinion, and emotional experience. A healthy relationship requires a deliberate understanding of what belongs to the individual, what belongs to the couple, and how those two areas support one another.
-
-Tatkin's concept of the couple bubble is useful here. It describes a relationship in which partners deliberately protect their shared bond through mutuality, fairness, and sensitivity. Importantly, secure functioning is not the same as one person controlling the other or demanding that every individual preference be sacrificed for the relationship. Tatkin's own explanation emphasizes a two-person system in which both partners have interests and neither is simply dragged along for the other's benefit.
-
-Richo makes the autonomy question particularly explicit. His Five A's include allowing, and his discussion of adult relationships recognizes the need for a workable balance between time together and time alone. The aim is not to make partners independent strangers, but to create enough trust that individual development does not automatically feel like a threat to the bond.
-
-This distinction matters in everyday decisions. A partner may want to pursue a demanding qualification, maintain close friendships, spend time with family, travel independently, or have private time to think. These choices can be compatible with commitment. They can also create genuine practical conflicts that need negotiation.
-
-The question is not simply, “Am I allowed to do this?” It is, “How can we honor this individual need while also taking the relationship's needs seriously?”
-
-That requires clarity about boundaries. A boundary identifies what you are willing to participate in or accept. A relationship agreement identifies what both partners have voluntarily committed to. Neither should be used as a disguised method of controlling the other's ordinary independence.
-
-What You Are Learning
-
-You are learning to distinguish autonomy from emotional withdrawal and commitment from possession. You will develop the ability to negotiate time, privacy, friendships, family responsibilities, and personal goals without assuming that one person's needs must automatically defeat the other's.
-
-You will also learn to recognize when an agreement is genuinely mutual and when one person is complying mainly because they fear the consequences of disagreement.
-
-Practical Application
-
-Imagine your partner wants to prepare for an important examination and needs several evenings each week for uninterrupted study. You value quality time and begin feeling that the relationship is receiving less attention.
-
-An insecure response might be to demand that they prove their love by studying less, or to remain silent while resentment grows. A secure response is to discuss the actual constraint: how much time is needed, what kind of connection matters to you, and how the two of you can maintain the relationship during this period.
-
-You might agree on a regular shared evening, shorter check-ins on study days, and a review of the arrangement after the examination. The point is not the specific schedule. It is that the relationship becomes a place where both people's lives can be supported.
-
-Practice — The Shared Space Agreement
-
-If you are in a relationship, complete this exercise together. If you are single, draft your own answers for future discussion.
-
-Identify three individual commitments you want to preserve and three shared commitments you want a relationship to protect. Then discuss how you would handle competing demands involving work, friends, family, money, privacy, and time alone.
-
-For each area, establish what requires a shared agreement, what can remain an individual decision, and how either person can raise a concern without automatically accusing the other of disloyalty. Include a process for revisiting agreements when circumstances change.
-
-After This Section, You Will Be Able To
-Distinguish healthy autonomy from avoidance and healthy commitment from control.
-Negotiate individual and shared priorities without assuming one must always win.
-Create mutual agreements concerning time, privacy, friendships, and personal goals.
-Recognize when a boundary protects wellbeing and when a demand restricts ordinary autonomy.
-Support a partner's development while maintaining meaningful connection.` ,
-
-//------------6th chapter-----------------------
-
-          `6. Repair Without Becoming the Rescuer - ealthy couples take responsibility for their own behavior and cooperate on the problems between them.
-
-Every meaningful relationship eventually encounters disappointment. Someone forgets something important, speaks defensively, becomes unavailable during a stressful period, or makes a decision that affects the other person. The presence of conflict does not automatically indicate an unhealthy relationship. What matters is whether the couple can respond in ways that preserve dignity, accountability, and the possibility of repair.
-
-The challenge is that conflict often activates older protective habits. One person pursues an immediate resolution because uncertainty feels intolerable. The other withdraws because the conversation feels overwhelming. One apologizes too quickly to restore peace. The other becomes defensive because acknowledging a mistake feels like admitting they are a bad partner.
-
-These reactions can create a cycle in which the original problem becomes secondary to the way the couple handles it.
-
-Tatkin's secure-functioning approach emphasizes cooperation and mutual protection rather than treating disagreements as contests between adversaries. Richo similarly describes adult relationship work as involving responsibility, truthful engagement, and the addressing, processing, and resolution of conflict.
-
-A useful repair process therefore has several distinct tasks. First, both people need enough emotional steadiness to participate. Second, the actual event must be described without immediately turning it into a judgment about the other person's character. Third, each person needs an opportunity to explain their experience and hear the other's. Fourth, responsibility must be identified accurately. Finally, the couple needs an agreement about what will happen differently.
-
-This is also where the distinction between supporting and rescuing becomes essential.
-
-You can support a partner who is struggling with stress, grief, insecurity, or personal difficulties. You can offer patience and practical help. But you cannot take responsibility for their willingness to communicate, their honesty, their treatment of you, or their decision to seek help when needed.
-
-Norwood's work is particularly relevant to this distinction because it examines relationships in which one person's attention becomes increasingly consumed by managing or changing the other. The healthier alternative is not indifference; it is recognizing the limits of what one partner can do for another.
-
-A relationship becomes more secure when both people can say, in effect: “Your wellbeing matters to me, and I remain responsible for my own behavior.”
-
-There is an important limit to ordinary repair exercises. If a relationship involves violence, coercive control, threats, intimidation, or fear of retaliation, the priority is safety and appropriate professional support—not negotiating more effectively with the person causing harm. Mutuality should never be used to imply equal responsibility for abuse.
-
-What You Are Learning
-
-You are learning to participate in conflict without automatically attacking, withdrawing, appeasing, or taking responsibility for everything. You will distinguish your contribution from your partner's, practice repair that leads to behavioral change, and recognize when a problem requires cooperation rather than one person's repeated effort.
-
-You will also learn that forgiveness, reconciliation, and continued commitment are separate decisions. An apology may be sincere without making a relationship safe or workable.
-
-Practical Application
-
-Your partner repeatedly makes jokes about something you are sensitive about. You eventually become angry and say something hurtful in return.
-
-A productive repair does not require deciding that only one person has behaved badly. You can take responsibility for your own hurtful response while still addressing the original pattern. Your partner can acknowledge the impact of the jokes without being required to accept an inaccurate account of their intentions.
-
-The goal is to reach a clear agreement about how both of you will handle similar situations in the future. If the pattern continues despite repeated conversations, that becomes information about the relationship's capacity for change.
-
-Practice — The Repair Rehearsal
-
-Choose a real, manageable disagreement. Write a brief account of what happened, what you felt, what you assumed, and what you did. Then identify the part for which you can take responsibility without adding “but you…” to the apology.
-
-Next, write a specific request for future behavior and identify what you are willing to do differently yourself. Rehearse the conversation with a trusted person or privately before having it with your partner.
-
-Afterward, evaluate the conversation according to three questions: Did we understand the problem more accurately? Did both people have room to speak? Did we agree on behavior that can actually be observed?
-
-After This Section, You Will Be Able To
-Identify and interrupt unproductive conflict responses.
-Take responsibility for your behavior without accepting responsibility for everything.
-Distinguish support from rescuing or managing a partner.
-Conduct repair conversations that produce specific behavioral agreements.
-Recognize when continued conflict reflects a lack of mutual willingness or a safety concern rather than insufficient effort on your part.`,
-
-//------------7th chapter----------------------- 
-          `7. Build a Life That Can Hold Love - The strongest relationship is not the one that consumes the most of your life, but the one that helps both people live it more fully.
-
-Finding love without losing yourself is not a single decision made at the beginning of a relationship. It is an ongoing practice.
-
-The person you are at twenty-five may have different needs, responsibilities, and ambitions at thirty-five. Careers change. Families grow. Health changes. Financial pressures appear. Partners discover new interests and encounter difficulties neither could have predicted when they first met.
-
-A relationship that depends on both people remaining exactly as they were at the beginning will struggle with ordinary development. A stronger relationship creates ways to adapt while protecting the bond.
-
-This is where the four books become especially complementary. Attached helps you recognize the importance of availability and secure connection. Tatkin's work emphasizes deliberate mutuality and the agreements that make a relationship function as a cooperative system. Richo's Five A's provide a framework for continuing to notice, accept, appreciate, show affection toward, and allow the development of another person. Norwood's work reminds us that a relationship should not become the entire organizing principle of one's identity.
-
-The resulting principle is interdependence without self-erasure.
-
-You can rely on your partner without making them responsible for every emotional need. You can prioritize the relationship without abandoning all other commitments. You can make sacrifices without creating a permanent imbalance in which one person's life consistently matters less. You can support your partner's growth without treating their growth as a threat to your own place in the relationship.
-
-This requires periodic attention to the relationship itself. Couples often discuss logistics—bills, appointments, travel, household tasks—while rarely discussing how the relationship is functioning. Small disappointments then accumulate until one person begins to feel that their needs have disappeared from the shared agenda.
-
-A regular relationship review can prevent this. It does not need to be formal or clinical. The purpose is to ask whether both people still feel heard, respected, connected, and able to pursue meaningful lives.
-
-The final skill is also knowing when to remain and when to reconsider. A healthy relationship is not one in which leaving is impossible. It is one in which both people continue choosing the relationship because it remains a place of mutual care and growth. If important needs repeatedly remain unmet, agreements are consistently broken, or one person must continually diminish themselves to preserve the bond, maturity may require acknowledging that reality rather than treating endurance as proof of love.
-
-What You Are Learning
-
-You are integrating partner selection, attachment awareness, communication, boundaries, mutuality, and repair into a long-term relationship practice. You will learn how to monitor the health of a relationship without becoming hypervigilant, adapt agreements as life changes, and make decisions based on both emotional connection and observable reality.
-
-You will also develop a clearer understanding of what it means to be a good partner: not someone who gives up everything, but someone who can participate in a relationship with honesty, generosity, accountability, and a stable sense of self.
-
-Practical Application
-
-Imagine you and your partner have been together for several years. One of you receives an opportunity that could significantly change your career but would require relocation or a demanding schedule. The other has important commitments in the current city.
-
-A relationship based on self-sacrifice may assume that one person must immediately give up their plans to prove their love. A relationship based on rigid independence may treat the decision as entirely individual.
-
-A more secure approach asks what the opportunity means, what each person would gain or lose, what alternatives exist, and whether a solution can protect both people's important interests. The eventual decision may still involve sacrifice. The difference is that the sacrifice is discussed, understood, and chosen rather than silently imposed.
-
-Practice — Your 90-Day Relationship Operating Plan
-
-Create a practical plan for your current relationship or for the relationship you intend to build.
-
-Include a weekly personal commitment that protects your own development, a regular opportunity for meaningful connection, and a monthly conversation about how the relationship is functioning. Decide how you will raise unmet needs, how conflict pauses and repair will work, and how you will revisit agreements when circumstances change.
-
-At the end of each month, answer these questions in writing:
-
-Am I able to express my real needs?
-
-Are both of us contributing to the relationship's wellbeing?
-
-What part of my individual life has grown?
-
-What part of our shared life has grown?
-
-What has become difficult to discuss?
-
-Which agreement needs to change?
-
-What am I choosing freely, and what am I doing mainly because I fear losing the relationship?
-
-Use the answers to make one concrete adjustment for the following month. The purpose is not to score your partner or create a perfect relationship. It is to prevent important truths from remaining unspoken until they become crises.
-
-After This Section, You Will Be Able To
-Maintain a meaningful individual life while participating in a committed relationship.
-Create regular practices for connection, communication, and relationship review.
-Negotiate major life decisions through mutual consideration rather than automatic self-sacrifice.
-Recognize when a relationship needs adjustment, additional support, or a more serious decision about its future.
-Build a personal relationship philosophy that combines closeness, autonomy, accountability, and reciprocity..`,
-
-//------------8th chapter-----------------------
-`Wrap-Up and Next Steps - Your Transformation
-
-After completing Finding Love Without Losing Yourself, you should be able to approach dating and relationships with a clearer understanding of both what you need and what you can genuinely offer. You can recognize attraction without allowing it to replace judgment, evaluate a potential partner through consistent behavior, communicate your needs before resentment develops, and negotiate closeness without treating independence as a threat.
-
-You should also be able to distinguish healthy sacrifice from self-abandonment, support a partner without becoming responsible for their development, and participate in conflict without surrendering your voice or denying your own contribution. If a relationship becomes difficult, you have a framework for assessing whether both people can repair it. If it becomes fundamentally incompatible with your wellbeing, you can make that decision without assuming that leaving means you failed to love enough.
-
-The ultimate goal is not to become so independent that you never need anyone. It is to become capable of choosing and sustaining a relationship in which both people can depend on each other, grow as individuals, and remain fully present in the life they are building together.`
-        ]
-      }
-    ]
-  },
+  "outcomes": [
+    "Practice grounded presence instead of performing confidence.",
+    "Notice emotional signals through words, tone and body language.",
+    "Ask clearer questions and respond with more attention.",
+    "Build comfort through steady, low-pressure connection."
+  ],
+  "sections": [
+    {
+      "title": "Overview",
+      "lessons": [
+        {
+          "title": "Introduction",
+          "subtitle": "A healthy relationship should give you room to become more fully yourself—not require you to become smaller, quieter, less ambitious, or less honest to keep someone close. Yet the fear of losing love can make people compromise their needs before they have even recognized what those needs are. Others respond to the same fear by protecting their independence so fiercely that genuine intimacy never has a chance to develop.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Finding Love Without Losing Yourself teaches a different way to approach relationships: how to know what you need, recognize attraction without surrendering judgment, choose an emotionally available partner, communicate honestly, build mutual security, maintain your own life, and make relationship decisions without abandoning either yourself or the person you love.."
+            },
+            {
+              "type": "takeaway",
+              "title": "The Core Premise",
+              "text": "A healthy relationship should give you room to become more fully yourself—not require you to become smaller, quieter, or less honest to keep someone close."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does introduction show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Core Lessons",
+      "lessons": [
+        {
+          "title": "The Self You Bring Into Love",
+          "subtitle": "Before deciding who belongs in your life, understand what must remain yours.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "People often begin dating with a detailed picture of the partner they want but only a vague understanding of the life they want to protect. They know the appearance, personality, career, or romantic qualities they find attractive. They may be far less clear about their own values, emotional needs, boundaries, friendships, ambitions, and expectations of partnership."
+            },
+            {
+              "type": "paragraph",
+              "text": "That lack of clarity becomes important when attraction arrives. A person who has not consciously identified what matters to them may begin adapting to someone else's preferences without noticing the cumulative effect. They stop pursuing an interest because their partner finds it unimportant. They become less available to friends. They change their plans repeatedly. They avoid expressing an opinion because disagreement might create distance. Each individual compromise seems small, but together they can produce a relationship in which one person is increasingly present and the other is increasingly absent."
+            },
+            {
+              "type": "paragraph",
+              "text": "The alternative is not rigid independence. A relationship should change your life. You may move cities, adjust routines, share finances, care for a partner through illness, or make sacrifices for a future you both want. The distinction is whether those changes are chosen through mutual consideration or made primarily to prevent rejection."
+            },
+            {
+              "type": "quote",
+              "text": "David Richo's work is useful here because he connects mature love with responsibility for one's feelings, choices, and behavior, while also emphasizing the importance of allowing both partners room for their own development. Robin Norwood's work examines the opposite danger: becoming so focused on another person's problems and responses that one's own interests and life begin to disappear.",
+              "author": "David Richo"
+            },
+            {
+              "type": "paragraph",
+              "text": "This section therefore begins with a question that sounds simple but requires careful thought:"
+            },
+            {
+              "type": "paragraph",
+              "text": "What would it mean for me to remain myself while building a life with someone else?"
+            },
+            {
+              "type": "paragraph",
+              "text": "Your answer should include more than hobbies or personality traits. It should include what you believe about honesty, money, family, fidelity, work, children, privacy, emotional expression, religion or spirituality where relevant, and the kind of daily life you want. It should also include the needs you are sometimes embarrassed to admit: reassurance, affection, time alone, sexual compatibility, encouragement, stability, or a partner who communicates directly."
+            },
+            {
+              "type": "paragraph",
+              "text": "None of these needs automatically makes you demanding. The work is to distinguish a genuine requirement from a preference, and a preference from an expectation that another person must satisfy every time."
+            },
+            {
+              "type": "heading",
+              "text": "What You Are Learning",
+              "level": 2
+            },
+            {
+              "type": "paragraph",
+              "text": "You are developing a practical understanding of your identity before it becomes entangled with another person's expectations. You will learn to distinguish core values from negotiable preferences, identify the conditions under which you feel emotionally secure, and recognize the situations in which you tend to abandon your own priorities to preserve connection."
+            },
+            {
+              "type": "paragraph",
+              "text": "You will also learn to distinguish healthy flexibility from self-erasure. The goal is not to enter a relationship with an inflexible list of demands. It is to know yourself well enough that compromise becomes a conscious decision rather than an automatic response to fear."
+            },
+            {
+              "type": "scenario",
+              "title": "Everyday Relationship Scenario",
+              "context": "Imagine you are dating someone who wants to spend every weekend together. You enjoy the closeness, but you also have an important friendship, a professional course, and time you normally spend with family.",
+              "action": "At first, you cancel these plans because you want the relationship to develop. After several months, your partner becomes accustomed to having all your free time. When you eventually ask for a weekend to yourself, the request feels like a sudden withdrawal to them and an overdue necessity to you."
+            },
+            {
+              "type": "paragraph",
+              "text": "A clearer approach would have been to communicate your existing commitments early: you want a close relationship, but you also intend to maintain the people and activities that matter to you. This gives the other person an opportunity to know the actual you rather than a version of you created by the early intensity of dating."
+            },
+            {
+              "type": "checklist",
+              "title": "What You Will Be Able to Practice",
+              "items": [
+                "Identify your core relationship values, needs, preferences, and negotiable differences.",
+                "Recognize when compromise is motivated primarily by fear of rejection.",
+                "Describe the friendships, goals, routines, and personal commitments you want to preserve.",
+                "Communicate your existing life and relationship expectations without apologizing for having them.",
+                "Evaluate whether a relationship is expanding your life or gradually narrowing it."
+              ]
+            },
+            {
+              "type": "worksheet",
+              "title": "Your Personal Relationship Map",
+              "instructions": "Under each category, consider emotional connection, communication, family, friendships, work, money, intimacy, privacy, and future plans. Then choose three past situations in which you agreed to something you did not genuinely want. For each, identify what you feared would happen if you said no, what the agreement cost you, and how you could communicate differently now.",
+              "steps": [
+                "Create a document with four categories: What I Need, What I Value, What I Prefer, and What I Can Negotiate.",
+                "Finish with a personal statement of no more than one page: “A relationship that fits my life would allow me to…” Make it specific enough that you could use it to evaluate an actual relationship."
+              ],
+              "fields": [
+                {
+                  "label": "My Current Observation",
+                  "placeholder": "Notice what feels true right now..."
+                },
+                {
+                  "label": "One Healthy Action",
+                  "placeholder": "What I will communicate or practice..."
+                }
+              ]
+            },
+            {
+              "type": "steps",
+              "title": "4 Steps to Ground Your Identity in Love",
+              "items": [
+                "Clarify what you genuinely need versus what you prefer.",
+                "Distinguish loving compromise from fear-based self-erasure.",
+                "Communicate your existing life commitments early in dating.",
+                "Notice whether the connection expands or narrows your world."
+              ]
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In the self you bring into love, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does the self you bring into love show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        },
+        {
+          "title": "Read Attraction Without Losing Judgment",
+          "subtitle": "Chemistry tells you that you are drawn to someone. It does not tell you whether the relationship is good for you.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Attraction can create a powerful sense of certainty before you have enough information to make a sound decision. Someone may be exceptionally charming, physically attractive, attentive, or emotionally intense. You may feel understood after only a few conversations. The temptation is to treat that feeling as evidence that the person is unusually compatible with you."
+            },
+            {
+              "type": "paragraph",
+              "text": "Sometimes the attraction develops into a healthy relationship. Sometimes it does not. The important skill is learning to enjoy attraction without allowing it to replace observation."
+            },
+            {
+              "type": "paragraph",
+              "text": "Attached describes how anxious, avoidant, and secure attachment tendencies can influence the way people experience closeness, uncertainty, and dependency. Anxious tendencies may involve heightened concern about a partner's availability; avoidant tendencies may involve discomfort with too much closeness; secure tendencies generally involve greater comfort with intimacy and responsiveness. These patterns can help explain relationship behavior, but they should not be used as fixed identities or diagnoses."
+            },
+            {
+              "type": "paragraph",
+              "text": "A person who becomes highly preoccupied when someone is inconsistent may mistake the relief of receiving attention for evidence of exceptional compatibility. A person who becomes uncomfortable when intimacy deepens may mistake emotional distance for a need to find a different partner. Neither response proves that the relationship is right or wrong. It tells you that your own attachment responses deserve attention."
+            },
+            {
+              "type": "paragraph",
+              "text": "Norwood's work adds a further warning: familiar emotional difficulty can become part of what makes a person compelling. Someone may repeatedly feel drawn toward partners who are unavailable, troubled, or in need of rescuing because that dynamic activates a familiar role. The lesson is not that every intense attraction is unhealthy. It is that familiarity and compatibility are different forms of information."
+            },
+            {
+              "type": "paragraph",
+              "text": "This is particularly relevant to modern dating. Digital communication can create intimacy quickly while providing relatively little evidence about how someone behaves in ordinary life. A person may communicate beautifully through messages but avoid difficult conversations in person. They may express strong interest before demonstrating consistency. They may make future plans before the two of you have experienced disagreement, disappointment, or competing priorities."
+            },
+            {
+              "type": "paragraph",
+              "text": "The solution is not suspicion. It is pacing. Let attraction develop while continuing to observe."
+            },
+            {
+              "type": "heading",
+              "text": "What You Are Learning",
+              "level": 2
+            },
+            {
+              "type": "paragraph",
+              "text": "You are learning to distinguish the experience of attraction from evidence of relationship capacity. You will identify your own responses to closeness and distance, recognize when uncertainty is increasing preoccupation, and evaluate a potential partner through repeated behavior rather than isolated moments."
+            },
+            {
+              "type": "paragraph",
+              "text": "You will also learn that emotional security is not the same as emotional flatness. A calm relationship may contain strong attraction, playfulness, and desire. Conversely, a relationship can feel exciting because it is unpredictable. Neither calm nor intensity should be judged without considering the broader pattern."
+            },
+            {
+              "type": "scenario",
+              "title": "Everyday Relationship Scenario",
+              "context": "You meet someone through a dating app. The first two weeks are exciting. They send affectionate messages, discuss future plans, and seem unusually interested. Then their communication becomes inconsistent. You begin checking your phone more frequently and feel especially relieved when they become warm again.",
+              "action": "Instead of immediately deciding that the connection is extraordinary—or that the person is deliberately manipulating you—you observe the pattern. You communicate what kind of consistency you prefer and notice how they respond. A partner who is genuinely interested may have a different communication style and still be willing to discuss it. A person who repeatedly dismisses your needs or offers promises without follow-through is providing different information."
+            },
+            {
+              "type": "paragraph",
+              "text": "The objective is to learn who they are, not to win a contest for their attention."
+            },
+            {
+              "type": "checklist",
+              "title": "What You Will Be Able to Practice",
+              "items": [
+                "Distinguish attraction from evidence of compatibility and emotional availability.",
+                "Recognize how your attachment responses influence dating decisions.",
+                "Identify when uncertainty is increasing preoccupation rather than genuine closeness.",
+                "Evaluate a potential partner through consistent behavior over time.",
+                "Pace emotional investment without suppressing attraction or becoming unnecessarily guarded."
+              ]
+            },
+            {
+              "type": "worksheet",
+              "title": "The Attraction and Evidence Journal",
+              "instructions": "Record attraction and emotional responses in the first column. In the second, record observable behavior such as consistency, respect, communication, reliability, and how the person responds to a reasonable request. In the third, identify important unknowns concerning values, conflict, commitment, and compatibility.",
+              "steps": [
+                "For the next three people you seriously consider dating, separate your observations into three columns: What I Feel, What I Know, and What I Still Need to Discover.",
+                "After several interactions, answer: “Am I becoming more interested in this person as I learn who they are, or more preoccupied because I remain uncertain about where I stand?”"
+              ],
+              "fields": [
+                {
+                  "label": "My Current Observation",
+                  "placeholder": "Notice what feels true right now..."
+                },
+                {
+                  "label": "One Healthy Action",
+                  "placeholder": "What I will communicate or practice..."
+                }
+              ]
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In read attraction without losing judgment, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does read attraction without losing judgment show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        },
+        {
+          "title": "Choose Someone Who Can Meet You",
+          "subtitle": "A relationship cannot become mutual through one person's effort alone.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Knowing what you want and understanding attraction are important, but they are not enough. You must also learn how to evaluate whether another person has the willingness and capacity to participate in the kind of relationship you want."
+            },
+            {
+              "type": "paragraph",
+              "text": "This is where many people become distracted by potential."
+            },
+            {
+              "type": "paragraph",
+              "text": "They meet someone who is intelligent, attractive, ambitious, or emotionally compelling. The person has qualities they genuinely admire. But important relationship capacities may be missing: consistency, accountability, emotional availability, respect for boundaries, or willingness to discuss the future."
+            },
+            {
+              "type": "paragraph",
+              "text": "The temptation is to assume those capacities will appear once the relationship becomes more serious."
+            },
+            {
+              "type": "paragraph",
+              "text": "Sometimes people do grow together. But a relationship should not be built primarily on the assumption that one person will eventually become capable of offering what the other already needs."
+            },
+            {
+              "type": "paragraph",
+              "text": "Attached encourages readers to consider a potential partner's attachment-related behavior and compatibility rather than relying solely on attraction. Tatkin's secure-functioning approach adds a complementary question: can these two people create a relationship organized around mutual care, fairness, and cooperation? In his framework, individual attachment history matters, but it does not completely determine whether a couple can develop secure functioning together."
+            },
+            {
+              "type": "paragraph",
+              "text": "That distinction prevents two common mistakes. The first is dismissing someone because of an attachment label without examining their actual behavior. The second is assuming that love or patience will compensate indefinitely for a lack of mutual effort."
+            },
+            {
+              "type": "paragraph",
+              "text": "A useful partner-selection process therefore looks at three dimensions: character, compatibility, and relationship capacity."
+            },
+            {
+              "type": "paragraph",
+              "text": "Character concerns how someone behaves when doing the right thing is inconvenient. Compatibility concerns whether your values, lifestyles, and future expectations can reasonably coexist. Relationship capacity concerns whether the person can communicate, respond, negotiate, repair conflict, and participate in mutual commitment."
+            },
+            {
+              "type": "paragraph",
+              "text": "A person may be wonderful in one dimension and unsuitable in another. Someone can be kind but want a fundamentally different future. Someone can share your interests but be unwilling to communicate honestly. Someone can be intensely attracted to you but not want the level of commitment you seek."
+            },
+            {
+              "type": "paragraph",
+              "text": "The goal is not to find a flawless person. It is to find someone whose actual qualities and choices make a healthy relationship possible."
+            },
+            {
+              "type": "heading",
+              "text": "What You Are Learning",
+              "level": 2
+            },
+            {
+              "type": "paragraph",
+              "text": "You are learning to evaluate potential partners without turning dating into an interrogation or a search for perfection. You will distinguish compatibility from similarity, recognize the difference between a temporary difficulty and a repeated pattern, and assess whether important relationship needs can be met through mutual effort."
+            },
+            {
+              "type": "paragraph",
+              "text": "You will also learn to stop treating another person's lack of availability as a problem you must solve."
+            },
+            {
+              "type": "scenario",
+              "title": "Everyday Relationship Scenario",
+              "context": "Suppose you want a committed relationship, but the person you are dating says they are unsure whether they want anything serious. You enjoy spending time together and believe they may eventually change their mind.",
+              "action": "A mature response does not require you to pressure them into commitment or immediately accuse them of dishonesty. It requires taking their stated position seriously. You can explain what you are looking for, ask whether your expectations are compatible, and decide whether continuing makes sense for you."
+            },
+            {
+              "type": "paragraph",
+              "text": "If you choose to remain, that choice should be based on the relationship that actually exists—not on an unspoken expectation that enough affection will eventually change their position."
+            },
+            {
+              "type": "checklist",
+              "title": "What You Will Be Able to Practice",
+              "items": [
+                "Evaluate potential partners through character, compatibility, and relationship capacity.",
+                "Translate vague preferences into observable relationship qualities.",
+                "Distinguish temporary difficulties from repeated patterns of unavailability or disrespect.",
+                "Recognize when you are investing in someone's potential rather than their demonstrated behavior.",
+                "Make dating decisions without trying to persuade another person to want the relationship you want."
+              ]
+            },
+            {
+              "type": "worksheet",
+              "title": "The Partner Evidence Matrix",
+              "instructions": "For example, “emotionally available” might mean that the person can discuss feelings, respond to reasonable requests for connection, and return to difficult conversations after taking space. “Reliable” might mean that their actions generally match their commitments and that they communicate when plans change. For someone you are currently dating, record evidence for each quality, evidence against it, and what remains unknown. Then identify one important conversation or ordinary-life situation that could provide more information. Do not manufacture tests or create jealousy to obtain evidence; observe naturally and communicate directly.",
+              "steps": [
+                "Choose five qualities that are essential for your preferred relationship. For each quality, define what it would look like in observable behavior."
+              ],
+              "fields": [
+                {
+                  "label": "My Current Observation",
+                  "placeholder": "Notice what feels true right now..."
+                },
+                {
+                  "label": "One Healthy Action",
+                  "placeholder": "What I will communicate or practice..."
+                }
+              ]
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In choose someone who can meet you, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does choose someone who can meet you show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        },
+        {
+          "title": "Speak Before You Disappear",
+          "subtitle": "The ability to express a need early can prevent months of resentment, guessing, and unnecessary conflict.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Many people lose themselves in relationships not because they lack boundaries, but because they struggle to communicate those boundaries while the relationship still feels uncertain. They worry that asking for reassurance will make them appear needy, that expressing disappointment will create conflict, or that discussing commitment will make the other person withdraw."
+            },
+            {
+              "type": "paragraph",
+              "text": "So they remain agreeable."
+            },
+            {
+              "type": "paragraph",
+              "text": "They say something is fine when it is not."
+            },
+            {
+              "type": "paragraph",
+              "text": "They wait for their partner to notice."
+            },
+            {
+              "type": "paragraph",
+              "text": "They hope the other person will eventually offer what they need without being asked."
+            },
+            {
+              "type": "paragraph",
+              "text": "When the need remains unmet, resentment develops. Eventually the conversation becomes much more emotionally charged than it needed to be."
+            },
+            {
+              "type": "paragraph",
+              "text": "The opposite pattern is also possible. Someone may express a need through accusation, repeated questioning, threats, or attempts to control the partner's behavior. The need itself may be legitimate, but the communication makes cooperation more difficult."
+            },
+            {
+              "type": "quote",
+              "text": "Attached includes effective communication and secure approaches to conflict as important relationship skills. Richo similarly emphasizes taking responsibility for feelings and choices, keeping agreements, and addressing conflicts rather than allowing them to remain unresolved.",
+              "author": "Relationship Psychology"
+            },
+            {
+              "type": "paragraph",
+              "text": "The practical lesson is that having a need, expressing a need, and demanding a particular response are three different things."
+            },
+            {
+              "type": "paragraph",
+              "text": "You may need more consistent contact. You can communicate that clearly. Your partner may have a different preference. The two of you can then discuss whether an arrangement works for both of you. What you cannot do is guarantee compatibility by becoming silent, nor can you create genuine willingness by applying enough pressure."
+            },
+            {
+              "type": "paragraph",
+              "text": "A useful communication structure is:"
+            },
+            {
+              "type": "paragraph",
+              "text": "Observation → Feeling → Need → Request → Invitation to respond."
+            },
+            {
+              "type": "paragraph",
+              "text": "For example, instead of saying, “You never make time for me,” you might say, “We've had to cancel our last three plans, and I'm feeling disconnected. Regular time together matters to me. Could we choose an evening this week that we can both protect? I'd also like to understand what has been making scheduling difficult.”"
+            },
+            {
+              "type": "paragraph",
+              "text": "This communicates the problem without requiring the partner to accept a negative characterization of themselves before the conversation can begin."
+            },
+            {
+              "type": "heading",
+              "text": "What You Are Learning",
+              "level": 2
+            },
+            {
+              "type": "paragraph",
+              "text": "You are learning to communicate needs, preferences, and concerns while preserving both self-respect and the other person's autonomy. You will practice distinguishing facts from interpretations, making specific requests, and listening to responses without immediately treating disagreement as rejection."
+            },
+            {
+              "type": "paragraph",
+              "text": "You will also learn when a communication problem is actually a compatibility problem. If you have expressed an important need clearly and repeatedly, the next step may not be finding a more persuasive way to explain it."
+            },
+            {
+              "type": "scenario",
+              "title": "Everyday Relationship Scenario",
+              "context": "Your partner enjoys frequent social events, while you need some quiet time after work. You begin attending everything because you do not want them to think you are uninterested. Eventually you become irritable and start declining invitations abruptly.",
+              "action": "A better conversation happens before resentment accumulates. You can explain that you enjoy spending time together and also need some evenings to recharge. You can discuss which events matter most to your partner and which you can attend separately."
+            },
+            {
+              "type": "paragraph",
+              "text": "The result may be a compromise, but the important change is that the compromise includes both people's actual needs."
+            },
+            {
+              "type": "checklist",
+              "title": "What You Will Be Able to Practice",
+              "items": [
+                "Express relationship needs without accusation, mind-reading, or excessive apology.",
+                "Make specific requests that allow the other person to respond honestly.",
+                "Distinguish a communication difficulty from a genuine incompatibility.",
+                "Discuss differences without treating every disagreement as rejection.",
+                "Recognize when repeated explanations are replacing a necessary relationship decision.."
+              ]
+            },
+            {
+              "type": "worksheet",
+              "title": "The Conversation Lab",
+              "instructions": "Choose three conversations you have been avoiding. Write each one using the five-part structure above.",
+              "steps": [
+                "Choose three conversations you have been avoiding. Write each one using the five-part structure above.",
+                "Then rehearse three possible responses from your partner: agreement, a reasonable difference in preference, and an unwillingness to meet the need. Practice responding to each without abandoning your original concern or escalating into accusation.",
+                "For the third response, ask yourself: “If this person genuinely cannot offer what I need, what decision is available to me besides repeating the request indefinitely?”"
+              ],
+              "fields": [
+                {
+                  "label": "My Current Observation",
+                  "placeholder": "Notice what feels true right now..."
+                },
+                {
+                  "label": "One Healthy Action",
+                  "placeholder": "What I will communicate or practice..."
+                }
+              ]
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In speak before you disappear, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does speak before you disappear show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        },
+        {
+          "title": "Make Space Without Making Distance",
+          "subtitle": "Secure intimacy allows two people to belong to each other without becoming responsible for every part of each other's lives.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "One of the central challenges of a serious relationship is balancing closeness and autonomy. Too little connection can leave partners feeling unimportant or uncertain. Too little autonomy can create resentment, dependence, or the feeling that maintaining the relationship requires surrendering personal freedom."
+            },
+            {
+              "type": "paragraph",
+              "text": "The answer is not to divide life into two completely separate territories. Nor is it to expect partners to share every activity, friendship, opinion, and emotional experience. A healthy relationship requires a deliberate understanding of what belongs to the individual, what belongs to the couple, and how those two areas support one another."
+            },
+            {
+              "type": "paragraph",
+              "text": "Tatkin's concept of the couple bubble is useful here. It describes a relationship in which partners deliberately protect their shared bond through mutuality, fairness, and sensitivity. Importantly, secure functioning is not the same as one person controlling the other or demanding that every individual preference be sacrificed for the relationship. Tatkin's own explanation emphasizes a two-person system in which both partners have interests and neither is simply dragged along for the other's benefit."
+            },
+            {
+              "type": "paragraph",
+              "text": "Richo makes the autonomy question particularly explicit. His Five A's include allowing, and his discussion of adult relationships recognizes the need for a workable balance between time together and time alone. The aim is not to make partners independent strangers, but to create enough trust that individual development does not automatically feel like a threat to the bond."
+            },
+            {
+              "type": "paragraph",
+              "text": "This distinction matters in everyday decisions. A partner may want to pursue a demanding qualification, maintain close friendships, spend time with family, travel independently, or have private time to think. These choices can be compatible with commitment. They can also create genuine practical conflicts that need negotiation."
+            },
+            {
+              "type": "paragraph",
+              "text": "The question is not simply, “Am I allowed to do this?” It is, “How can we honor this individual need while also taking the relationship's needs seriously?”"
+            },
+            {
+              "type": "paragraph",
+              "text": "That requires clarity about boundaries. A boundary identifies what you are willing to participate in or accept. A relationship agreement identifies what both partners have voluntarily committed to. Neither should be used as a disguised method of controlling the other's ordinary independence."
+            },
+            {
+              "type": "heading",
+              "text": "What You Are Learning",
+              "level": 2
+            },
+            {
+              "type": "paragraph",
+              "text": "You are learning to distinguish autonomy from emotional withdrawal and commitment from possession. You will develop the ability to negotiate time, privacy, friendships, family responsibilities, and personal goals without assuming that one person's needs must automatically defeat the other's."
+            },
+            {
+              "type": "paragraph",
+              "text": "You will also learn to recognize when an agreement is genuinely mutual and when one person is complying mainly because they fear the consequences of disagreement."
+            },
+            {
+              "type": "scenario",
+              "title": "Everyday Relationship Scenario",
+              "context": "Imagine your partner wants to prepare for an important examination and needs several evenings each week for uninterrupted study. You value quality time and begin feeling that the relationship is receiving less attention.",
+              "action": "An insecure response might be to demand that they prove their love by studying less, or to remain silent while resentment grows. A secure response is to discuss the actual constraint: how much time is needed, what kind of connection matters to you, and how the two of you can maintain the relationship during this period."
+            },
+            {
+              "type": "paragraph",
+              "text": "You might agree on a regular shared evening, shorter check-ins on study days, and a review of the arrangement after the examination. The point is not the specific schedule. It is that the relationship becomes a place where both people's lives can be supported."
+            },
+            {
+              "type": "checklist",
+              "title": "What You Will Be Able to Practice",
+              "items": [
+                "Distinguish healthy autonomy from avoidance and healthy commitment from control.",
+                "Negotiate individual and shared priorities without assuming one must always win.",
+                "Create mutual agreements concerning time, privacy, friendships, and personal goals.",
+                "Recognize when a boundary protects wellbeing and when a demand restricts ordinary autonomy.",
+                "Support a partner's development while maintaining meaningful connection."
+              ]
+            },
+            {
+              "type": "worksheet",
+              "title": "The Shared Space Agreement",
+              "instructions": "For each area, establish what requires a shared agreement, what can remain an individual decision, and how either person can raise a concern without automatically accusing the other of disloyalty. Include a process for revisiting agreements when circumstances change.",
+              "steps": [
+                "If you are in a relationship, complete this exercise together. If you are single, draft your own answers for future discussion.",
+                "Identify three individual commitments you want to preserve and three shared commitments you want a relationship to protect. Then discuss how you would handle competing demands involving work, friends, family, money, privacy, and time alone."
+              ],
+              "fields": [
+                {
+                  "label": "My Current Observation",
+                  "placeholder": "Notice what feels true right now..."
+                },
+                {
+                  "label": "One Healthy Action",
+                  "placeholder": "What I will communicate or practice..."
+                }
+              ]
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In make space without making distance, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does make space without making distance show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        },
+        {
+          "title": "Repair Without Becoming the Rescuer",
+          "subtitle": "ealthy couples take responsibility for their own behavior and cooperate on the problems between them.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Every meaningful relationship eventually encounters disappointment. Someone forgets something important, speaks defensively, becomes unavailable during a stressful period, or makes a decision that affects the other person. The presence of conflict does not automatically indicate an unhealthy relationship. What matters is whether the couple can respond in ways that preserve dignity, accountability, and the possibility of repair."
+            },
+            {
+              "type": "paragraph",
+              "text": "The challenge is that conflict often activates older protective habits. One person pursues an immediate resolution because uncertainty feels intolerable. The other withdraws because the conversation feels overwhelming. One apologizes too quickly to restore peace. The other becomes defensive because acknowledging a mistake feels like admitting they are a bad partner."
+            },
+            {
+              "type": "paragraph",
+              "text": "These reactions can create a cycle in which the original problem becomes secondary to the way the couple handles it."
+            },
+            {
+              "type": "paragraph",
+              "text": "Tatkin's secure-functioning approach emphasizes cooperation and mutual protection rather than treating disagreements as contests between adversaries. Richo similarly describes adult relationship work as involving responsibility, truthful engagement, and the addressing, processing, and resolution of conflict."
+            },
+            {
+              "type": "paragraph",
+              "text": "A useful repair process therefore has several distinct tasks. First, both people need enough emotional steadiness to participate. Second, the actual event must be described without immediately turning it into a judgment about the other person's character. Third, each person needs an opportunity to explain their experience and hear the other's. Fourth, responsibility must be identified accurately. Finally, the couple needs an agreement about what will happen differently."
+            },
+            {
+              "type": "paragraph",
+              "text": "This is also where the distinction between supporting and rescuing becomes essential."
+            },
+            {
+              "type": "paragraph",
+              "text": "You can support a partner who is struggling with stress, grief, insecurity, or personal difficulties. You can offer patience and practical help. But you cannot take responsibility for their willingness to communicate, their honesty, their treatment of you, or their decision to seek help when needed."
+            },
+            {
+              "type": "paragraph",
+              "text": "Norwood's work is particularly relevant to this distinction because it examines relationships in which one person's attention becomes increasingly consumed by managing or changing the other. The healthier alternative is not indifference; it is recognizing the limits of what one partner can do for another."
+            },
+            {
+              "type": "paragraph",
+              "text": "A relationship becomes more secure when both people can say, in effect: “Your wellbeing matters to me, and I remain responsible for my own behavior.”"
+            },
+            {
+              "type": "paragraph",
+              "text": "There is an important limit to ordinary repair exercises. If a relationship involves violence, coercive control, threats, intimidation, or fear of retaliation, the priority is safety and appropriate professional support—not negotiating more effectively with the person causing harm. Mutuality should never be used to imply equal responsibility for abuse."
+            },
+            {
+              "type": "heading",
+              "text": "What You Are Learning",
+              "level": 2
+            },
+            {
+              "type": "paragraph",
+              "text": "You are learning to participate in conflict without automatically attacking, withdrawing, appeasing, or taking responsibility for everything. You will distinguish your contribution from your partner's, practice repair that leads to behavioral change, and recognize when a problem requires cooperation rather than one person's repeated effort."
+            },
+            {
+              "type": "paragraph",
+              "text": "You will also learn that forgiveness, reconciliation, and continued commitment are separate decisions. An apology may be sincere without making a relationship safe or workable."
+            },
+            {
+              "type": "scenario",
+              "title": "Everyday Relationship Scenario",
+              "context": "Your partner repeatedly makes jokes about something you are sensitive about. You eventually become angry and say something hurtful in return.",
+              "action": "A productive repair does not require deciding that only one person has behaved badly. You can take responsibility for your own hurtful response while still addressing the original pattern. Your partner can acknowledge the impact of the jokes without being required to accept an inaccurate account of their intentions."
+            },
+            {
+              "type": "paragraph",
+              "text": "The goal is to reach a clear agreement about how both of you will handle similar situations in the future. If the pattern continues despite repeated conversations, that becomes information about the relationship's capacity for change."
+            },
+            {
+              "type": "checklist",
+              "title": "What You Will Be Able to Practice",
+              "items": [
+                "Identify and interrupt unproductive conflict responses.",
+                "Take responsibility for your behavior without accepting responsibility for everything.",
+                "Distinguish support from rescuing or managing a partner.",
+                "Conduct repair conversations that produce specific behavioral agreements.",
+                "Recognize when continued conflict reflects a lack of mutual willingness or a safety concern rather than insufficient effort on your part."
+              ]
+            },
+            {
+              "type": "worksheet",
+              "title": "The Repair Rehearsal",
+              "instructions": "Choose a real, manageable disagreement. Write a brief account of what happened, what you felt, what you assumed, and what you did. Then identify the part for which you can take responsibility without adding “but you…” to the apology.",
+              "steps": [
+                "Choose a real, manageable disagreement. Write a brief account of what happened, what you felt, what you assumed, and what you did. Then identify the part for which you can take responsibility without adding “but you…” to the apology.",
+                "Next, write a specific request for future behavior and identify what you are willing to do differently yourself. Rehearse the conversation with a trusted person or privately before having it with your partner.",
+                "Afterward, evaluate the conversation according to three questions: Did we understand the problem more accurately? Did both people have room to speak? Did we agree on behavior that can actually be observed?"
+              ],
+              "fields": [
+                {
+                  "label": "My Current Observation",
+                  "placeholder": "Notice what feels true right now..."
+                },
+                {
+                  "label": "One Healthy Action",
+                  "placeholder": "What I will communicate or practice..."
+                }
+              ]
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In repair without becoming the rescuer, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does repair without becoming the rescuer show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        },
+        {
+          "title": "Build a Life That Can Hold Love",
+          "subtitle": "The strongest relationship is not the one that consumes the most of your life, but the one that helps both people live it more fully.",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "Finding love without losing yourself is not a single decision made at the beginning of a relationship. It is an ongoing practice."
+            },
+            {
+              "type": "paragraph",
+              "text": "The person you are at twenty-five may have different needs, responsibilities, and ambitions at thirty-five. Careers change. Families grow. Health changes. Financial pressures appear. Partners discover new interests and encounter difficulties neither could have predicted when they first met."
+            },
+            {
+              "type": "paragraph",
+              "text": "A relationship that depends on both people remaining exactly as they were at the beginning will struggle with ordinary development. A stronger relationship creates ways to adapt while protecting the bond."
+            },
+            {
+              "type": "paragraph",
+              "text": "This is where the four books become especially complementary. Attached helps you recognize the importance of availability and secure connection. Tatkin's work emphasizes deliberate mutuality and the agreements that make a relationship function as a cooperative system. Richo's Five A's provide a framework for continuing to notice, accept, appreciate, show affection toward, and allow the development of another person. Norwood's work reminds us that a relationship should not become the entire organizing principle of one's identity."
+            },
+            {
+              "type": "paragraph",
+              "text": "The resulting principle is interdependence without self-erasure."
+            },
+            {
+              "type": "paragraph",
+              "text": "You can rely on your partner without making them responsible for every emotional need. You can prioritize the relationship without abandoning all other commitments. You can make sacrifices without creating a permanent imbalance in which one person's life consistently matters less. You can support your partner's growth without treating their growth as a threat to your own place in the relationship."
+            },
+            {
+              "type": "paragraph",
+              "text": "This requires periodic attention to the relationship itself. Couples often discuss logistics—bills, appointments, travel, household tasks—while rarely discussing how the relationship is functioning. Small disappointments then accumulate until one person begins to feel that their needs have disappeared from the shared agenda."
+            },
+            {
+              "type": "paragraph",
+              "text": "A regular relationship review can prevent this. It does not need to be formal or clinical. The purpose is to ask whether both people still feel heard, respected, connected, and able to pursue meaningful lives."
+            },
+            {
+              "type": "paragraph",
+              "text": "The final skill is also knowing when to remain and when to reconsider. A healthy relationship is not one in which leaving is impossible. It is one in which both people continue choosing the relationship because it remains a place of mutual care and growth. If important needs repeatedly remain unmet, agreements are consistently broken, or one person must continually diminish themselves to preserve the bond, maturity may require acknowledging that reality rather than treating endurance as proof of love."
+            },
+            {
+              "type": "heading",
+              "text": "What You Are Learning",
+              "level": 2
+            },
+            {
+              "type": "paragraph",
+              "text": "You are integrating partner selection, attachment awareness, communication, boundaries, mutuality, and repair into a long-term relationship practice. You will learn how to monitor the health of a relationship without becoming hypervigilant, adapt agreements as life changes, and make decisions based on both emotional connection and observable reality."
+            },
+            {
+              "type": "paragraph",
+              "text": "You will also develop a clearer understanding of what it means to be a good partner: not someone who gives up everything, but someone who can participate in a relationship with honesty, generosity, accountability, and a stable sense of self."
+            },
+            {
+              "type": "scenario",
+              "title": "Everyday Relationship Scenario",
+              "context": "Imagine you and your partner have been together for several years. One of you receives an opportunity that could significantly change your career but would require relocation or a demanding schedule. The other has important commitments in the current city.",
+              "action": "A relationship based on self-sacrifice may assume that one person must immediately give up their plans to prove their love. A relationship based on rigid independence may treat the decision as entirely individual."
+            },
+            {
+              "type": "paragraph",
+              "text": "A more secure approach asks what the opportunity means, what each person would gain or lose, what alternatives exist, and whether a solution can protect both people's important interests. The eventual decision may still involve sacrifice. The difference is that the sacrifice is discussed, understood, and chosen rather than silently imposed."
+            },
+            {
+              "type": "checklist",
+              "title": "What You Will Be Able to Practice",
+              "items": [
+                "Maintain a meaningful individual life while participating in a committed relationship.",
+                "Create regular practices for connection, communication, and relationship review.",
+                "Negotiate major life decisions through mutual consideration rather than automatic self-sacrifice.",
+                "Recognize when a relationship needs adjustment, additional support, or a more serious decision about its future.",
+                "Build a personal relationship philosophy that combines closeness, autonomy, accountability, and reciprocity.."
+              ]
+            },
+            {
+              "type": "worksheet",
+              "title": "Your 90-Day Relationship Operating Plan",
+              "instructions": "Include a weekly personal commitment that protects your own development, a regular opportunity for meaningful connection, and a monthly conversation about how the relationship is functioning. Decide how you will raise unmet needs, how conflict pauses and repair will work, and how you will revisit agreements when circumstances change.",
+              "steps": [
+                "Create a practical plan for your current relationship or for the relationship you intend to build.",
+                "At the end of each month, answer these questions in writing:",
+                "Am I able to express my real needs?",
+                "Are both of us contributing to the relationship's wellbeing?",
+                "What part of my individual life has grown?",
+                "What part of our shared life has grown?",
+                "What has become difficult to discuss?",
+                "Which agreement needs to change?",
+                "What am I choosing freely, and what am I doing mainly because I fear losing the relationship?",
+                "Use the answers to make one concrete adjustment for the following month. The purpose is not to score your partner or create a perfect relationship. It is to prevent important truths from remaining unspoken until they become crises."
+              ],
+              "fields": [
+                {
+                  "label": "My Current Observation",
+                  "placeholder": "Notice what feels true right now..."
+                },
+                {
+                  "label": "One Healthy Action",
+                  "placeholder": "What I will communicate or practice..."
+                }
+              ]
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In build a life that can hold love, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does build a life that can hold love show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        },
+        {
+          "title": "Wrap",
+          "subtitle": "Up and Next Steps - Your Transformation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": "After completing Finding Love Without Losing Yourself, you should be able to approach dating and relationships with a clearer understanding of both what you need and what you can genuinely offer. You can recognize attraction without allowing it to replace judgment, evaluate a potential partner through consistent behavior, communicate your needs before resentment develops, and negotiate closeness without treating independence as a threat."
+            },
+            {
+              "type": "paragraph",
+              "text": "You should also be able to distinguish healthy sacrifice from self-abandonment, support a partner without becoming responsible for their development, and participate in conflict without surrendering your voice or denying your own contribution. If a relationship becomes difficult, you have a framework for assessing whether both people can repair it. If it becomes fundamentally incompatible with your wellbeing, you can make that decision without assuming that leaving means you failed to love enough."
+            },
+            {
+              "type": "paragraph",
+              "text": "The ultimate goal is not to become so independent that you never need anyone. It is to become capable of choosing and sustaining a relationship in which both people can depend on each other, grow as individuals, and remain fully present in the life they are building together."
+            },
+            {
+              "type": "takeaway",
+              "title": "Key Takeaway",
+              "text": "Grounded love begins with self-respect. In wrap, clarity beats anxiety every time."
+            },
+            {
+              "type": "reflection",
+              "prompt": "How does wrap show up in your relationship patterns? Pause, breathe, and reflect.",
+              "hint": "Notice whether this insight brings up relief, curiosity, or an urge to protect yourself."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
 
   /* New course */
 
@@ -8226,36 +8654,220 @@ function renderCoursesCatalog(filterId = 'all') {
 }
 
 // ========================================
-// COURSE LESSON PARSING
-// Extracts a readable title and paragraphs from existing lesson strings without rewriting content.
-// Future structured lesson fields can replace this helper while keeping the reader component intact.
+// COURSE LESSON PARSING & REUSABLE BLOCK ENGINE
+// Dual system:
+// 1. Explicit structured blocks for new/future courses & prototypes
+// 2. Conservative fallback parser for legacy string courses (preserves 100% of raw text)
 // ========================================
+function getCourseReadingTime(course) {
+  if (course.time) return course.time;
+  const lessons = getFlatCourseLessons(course);
+  let wordCount = 0;
+  for (const l of lessons) {
+    if (typeof l.content === 'string') {
+      wordCount += l.content.split(/\s+/).filter(Boolean).length;
+    } else if (l.content && typeof l.content === 'object') {
+      if (Array.isArray(l.content.blocks)) {
+        for (const b of l.content.blocks) {
+          if (b.text) wordCount += b.text.split(/\s+/).filter(Boolean).length;
+          if (Array.isArray(b.items)) wordCount += b.items.join(' ').split(/\s+/).filter(Boolean).length;
+          if (b.prompt) wordCount += b.prompt.split(/\s+/).filter(Boolean).length;
+          if (b.instructions) wordCount += b.instructions.split(/\s+/).filter(Boolean).length;
+          if (Array.isArray(b.steps)) wordCount += b.steps.join(' ').split(/\s+/).filter(Boolean).length;
+          if (b.context) wordCount += b.context.split(/\s+/).filter(Boolean).length;
+          if (b.action) wordCount += b.action.split(/\s+/).filter(Boolean).length;
+        }
+      } else if (typeof l.content.body === 'string') {
+        wordCount += l.content.body.split(/\s+/).filter(Boolean).length;
+      }
+    }
+  }
+  if (wordCount > 0) {
+    const minutes = Math.max(1, Math.round(wordCount / 200));
+    return `~${minutes} min`;
+  }
+  return null;
+}
+
 function parseCourseLesson(content, fallbackTitle = 'Lesson') {
+  if (content && typeof content === 'object') {
+    return {
+      title: content.title || fallbackTitle,
+      subtitle: content.subtitle || '',
+      body: content.body || '',
+      blocks: Array.isArray(content.blocks) ? content.blocks : null
+    };
+  }
   const value = String(content || '').trim();
   const match = value.match(/^\s*(?:\d+\.\s*)?([^–—-]+?)\s*-\s*(.*)$/s);
   return {
     title: (match?.[1] || value || fallbackTitle).trim(),
-    body: (match?.[2] || '').trim()
+    subtitle: '',
+    body: (match?.[2] || '').trim(),
+    blocks: null
   };
 }
 
 function getLessonSummary(content) {
   const lesson = parseCourseLesson(content);
+  if (lesson.blocks) {
+    const firstP = lesson.blocks.find((b) => b.type === 'paragraph')?.text || lesson.subtitle;
+    if (firstP) return firstP.length > 170 ? `${firstP.slice(0, 167).trim()}…` : firstP.trim();
+  }
   if (!lesson.body) return 'Open this lesson to read the available material.';
   const firstSentence = lesson.body.match(/^.*?[.!?](?:\s|$)/)?.[0] || lesson.body;
   return firstSentence.length > 170 ? `${firstSentence.slice(0, 167).trim()}…` : firstSentence.trim();
 }
 
+function renderCourseBlocks(blocks) {
+  if (!Array.isArray(blocks)) return '';
+  return blocks.map((block) => {
+    if (!block || typeof block !== 'object') return '';
+    switch (block.type) {
+      case 'paragraph':
+        return `<p class="course-editorial-p">${escapeHtml(block.text || '')}</p>`;
+
+      case 'heading': {
+        const level = block.level === 3 ? 'h3' : 'h2';
+        return `<${level} class="course-editorial-${level}">${escapeHtml(block.text || '')}</${level}>`;
+      }
+
+      case 'quote':
+        return `
+          <figure class="course-pull-quote">
+            <span class="course-pull-quote__mark" aria-hidden="true">“</span>
+            <blockquote>${escapeHtml(block.text || '')}</blockquote>
+            ${block.author ? `<figcaption>— ${escapeHtml(block.author)}</figcaption>` : ''}
+          </figure>
+        `;
+
+      case 'takeaway':
+        return `
+          <aside class="course-takeaway-card" role="region" aria-label="Key Takeaway">
+            <div class="course-takeaway-card__header">
+              <span class="course-takeaway-card__icon" aria-hidden="true">✦</span>
+              <strong>${escapeHtml(block.title || 'Key Takeaway')}</strong>
+            </div>
+            <p>${escapeHtml(block.text || '')}</p>
+          </aside>
+        `;
+
+      case 'checklist':
+        return `
+          <div class="course-checklist-card">
+            ${block.title ? `<div class="course-checklist-card__title"><span>✓</span><strong>${escapeHtml(block.title)}</strong></div>` : ''}
+            <ul class="course-checklist">
+              ${(block.items || []).map((item) => `
+                <li>
+                  <span class="course-checklist__check" aria-hidden="true">✓</span>
+                  <span>${escapeHtml(item)}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+
+      case 'steps':
+        return `
+          <div class="course-steps-card">
+            ${block.title ? `<h3 class="course-steps-card__title">${escapeHtml(block.title)}</h3>` : ''}
+            <ol class="course-steps-list">
+              ${(block.items || []).map((item, idx) => `
+                <li>
+                  <span class="course-steps__num">${String(idx + 1).padStart(2, '0')}</span>
+                  <div class="course-steps__body">${escapeHtml(item)}</div>
+                </li>
+              `).join('')}
+            </ol>
+          </div>
+        `;
+
+      case 'reflection':
+        return `
+          <div class="course-reflection-card" role="region" aria-label="Reflection Prompt">
+            <div class="course-reflection-card__tag">
+              <span class="course-reflection-card__icon" aria-hidden="true">💭</span>
+              <span>PAUSE & REFLECT</span>
+            </div>
+            <p class="course-reflection-card__prompt">${escapeHtml(block.prompt || block.text || '')}</p>
+            ${block.hint ? `<small class="course-reflection-card__hint">${escapeHtml(block.hint)}</small>` : ''}
+          </div>
+        `;
+
+      case 'worksheet':
+        return `
+          <section class="course-worksheet-card" role="region" aria-label="${escapeHtml(block.title || 'Worksheet')}">
+            <div class="course-worksheet-card__header">
+              <span class="course-worksheet-card__badge">PRACTICE & WORKSHEET</span>
+              <h3>${escapeHtml(block.title || 'Self-Guided Exercise')}</h3>
+              ${block.instructions ? `<p class="course-worksheet-card__intro">${escapeHtml(block.instructions)}</p>` : ''}
+            </div>
+            ${Array.isArray(block.steps) && block.steps.length ? `
+              <ol class="course-worksheet-card__steps">
+                ${block.steps.map((st, sIdx) => `
+                  <li>
+                    <span class="step-badge">${sIdx + 1}</span>
+                    <div class="step-text">${escapeHtml(st)}</div>
+                  </li>
+                `).join('')}
+              </ol>
+            ` : ''}
+            ${Array.isArray(block.fields) && block.fields.length ? `
+              <div class="course-worksheet-card__fields">
+                ${block.fields.map((f) => `
+                  <div class="worksheet-field">
+                    <label>${escapeHtml(f.label || '')}</label>
+                    <div class="worksheet-field__placeholder">${escapeHtml(f.placeholder || '')}</div>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </section>
+        `;
+
+      case 'scenario':
+        return `
+          <div class="course-scenario-card" role="region" aria-label="Practical Application Scenario">
+            <div class="course-scenario-card__header">
+              <span class="course-scenario-card__badge">PRACTICAL APPLICATION</span>
+              <h3>${escapeHtml(block.title || 'Everyday Scenario')}</h3>
+            </div>
+            <div class="course-scenario-card__body">
+              ${block.context ? `<div class="scenario-segment"><div class="segment-label">The Situation:</div><p>${escapeHtml(block.context)}</p></div>` : ''}
+              ${block.action ? `<div class="scenario-segment scenario-segment--action"><div class="segment-label">The Healthy Response:</div><p>${escapeHtml(block.action)}</p></div>` : ''}
+              ${!block.context && !block.action && block.text ? `<p>${escapeHtml(block.text)}</p>` : ''}
+            </div>
+          </div>
+        `;
+
+      default:
+        return block.text ? `<p class="course-editorial-p">${escapeHtml(block.text)}</p>` : '';
+    }
+  }).join('');
+}
+
 function formatLessonParagraphs(body) {
   if (!body) return '<p class="lesson-unavailable">Detailed lesson content is not available yet.</p>';
-  const sentences = body.split(/(?<=[.!?])\s+/).filter(Boolean);
-  const paragraphs = [];
+  const rawParagraphs = body.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 
-  for (let index = 0; index < sentences.length; index += 2) {
-    paragraphs.push(sentences.slice(index, index + 2).join(' '));
-  }
-
-  return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('');
+  return rawParagraphs.map((paragraph) => {
+    const singleLine = !paragraph.includes('\n');
+    if (singleLine && /^(What You Are Learning|Practical Application|After This Section,? You Will Be Able To|Key Takeaways?)$/i.test(paragraph)) {
+      return `<h2 class="course-editorial-h2">${escapeHtml(paragraph)}</h2>`;
+    }
+    if (singleLine && /^Practice\s*[—–-]/i.test(paragraph)) {
+      return `<h3 class="course-editorial-h3">${escapeHtml(paragraph)}</h3>`;
+    }
+    const lines = paragraph.split('\n').map((l) => l.trim()).filter(Boolean);
+    if (lines.length > 1 && lines.every((l) => /^[-•*]\s+/.test(l))) {
+      return `
+        <ul class="course-checklist">
+          ${lines.map((l) => `<li><span class="course-checklist__check" aria-hidden="true">✓</span><span>${escapeHtml(l.replace(/^[-•*]\s+/, ''))}</span></li>`).join('')}
+        </ul>
+      `;
+    }
+    return `<p class="course-editorial-p">${escapeHtml(paragraph)}</p>`;
+  }).join('');
 }
 
 // ========================================
@@ -8712,6 +9324,7 @@ function renderCourseDetail(courseId) {
   const lessons = getFlatCourseLessons(c);
   const progress = getCourseProgress(courseId);
   const continueLesson = Math.min(progress?.lastLesson || 0, Math.max(0, lessons.length - 1));
+  const readingTime = getCourseReadingTime(c);
   let lessonNumber = 0;
 
   configureCatalogShell({
@@ -8766,26 +9379,40 @@ function renderCourseDetail(courseId) {
   content.innerHTML = `
     <article class="premium-course">
       <header class="course-detail-hero">
-        <div class="course-detail-hero__mark" aria-hidden="true"><span>${escapeHtml(c.title.charAt(0))}</span><small>FLIRTYFLIP COURSE</small></div>
+        <div class="course-detail-hero__mark" aria-hidden="true"><span>${escapeHtml(c.title.charAt(0))}</span><small>FLIRTYFLIP MASTERCLASS</small></div>
         <div class="course-detail-hero__copy">
-          <div class="course-detail-hero__badges">
-            ${categoryLabel ? `<span class="course-audience">${escapeHtml(categoryLabel)}</span>` : ''}
-            <span class="course-entitlement-badge">Free</span>
+          <div class="course-meta-chips" aria-label="Course metadata">
+            ${categoryLabel ? `<span class="course-chip course-chip--audience">${escapeHtml(categoryLabel)}</span>` : ''}
+            <span class="course-chip course-chip--free">Free</span>
+            <span class="course-chip">${lessons.length} Lessons</span>
+            ${readingTime ? `<span class="course-chip">${escapeHtml(readingTime)}</span>` : ''}
           </div>
           <h1>${escapeHtml(c.title)}</h1>
           <p class="course-hook">${escapeHtml(c.subtitle || c.summary || '')}</p>
           ${completionBanner}
-          <div class="metadata-row" aria-label="Course details"><span>${lessons.length} lessons</span>${c.time ? `<span>${escapeHtml(c.time)}</span>` : ''}</div>
           ${renderCourseProgress(courseId)}
           <button class="pill-btn course-primary" type="button" data-action="open-course-lesson" data-course="${escapeHtml(courseId)}" data-lesson="${continueLesson}">${isCompleted ? 'Review course' : progress ? 'Continue course' : 'Start course'} →</button>
         </div>
       </header>
       <section class="learning-outcomes">
-        <div><div class="eyebrow">WHAT YOU'LL LEARN</div><h2>Practical ideas to take into your relationship.</h2></div>
-        <ul>${(c.outcomes || []).map((outcome) => `<li><span aria-hidden="true">✓</span>${escapeHtml(outcome)}</li>`).join('')}</ul>
+        <div class="learning-outcomes__header">
+          <div class="eyebrow">WHAT YOU'LL LEARN</div>
+          <h2>Practical ideas to take into your relationship.</h2>
+        </div>
+        <div class="learning-outcomes__grid">
+          ${(c.outcomes || []).map((outcome) => `
+            <div class="learning-outcome-card">
+              <span class="outcome-check" aria-hidden="true">✓</span>
+              <p>${escapeHtml(outcome)}</p>
+            </div>
+          `).join('')}
+        </div>
       </section>
       <section class="curriculum">
-        <div class="catalog-section-heading"><div><div class="eyebrow">CURRICULUM</div><h2>Course lessons.</h2></div><p>${lessons.length} total</p></div>
+        <div class="catalog-section-heading">
+          <div><div class="eyebrow">CURRICULUM</div><h2>Course lessons.</h2></div>
+          <p>${lessons.length} lessons total</p>
+        </div>
         <div class="curriculum-list">${curriculum}</div>
       </section>
     </article>
@@ -8819,24 +9446,34 @@ function renderCourseLesson(courseId, lessonIndex) {
     view: 'course-reader'
   });
 
-  $('catalog-content').innerHTML = `
-    <article class="course-reader">
-      <header class="reader-header">
-        <a href="${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}" data-route="${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}" class="reader-course-link">${escapeHtml(course.title)}</a>
-        <div class="reader-progress-label"><span>Lesson ${lessonIndex + 1} of ${lessons.length}</span><strong>${positionPercent}%</strong></div>
-        <div class="reader-progress-track"><span style="width:${positionPercent}%"></span></div>
-        <div class="eyebrow">${escapeHtml(lessonRecord.sectionTitle)}</div>
-        <h1>${escapeHtml(lesson.title)}</h1>
-      </header>
-      <div class="reader-body">
+  const bodyContent = lesson.blocks
+    ? renderCourseBlocks(lesson.blocks)
+    : `
         ${formatLessonParagraphs(lesson.body)}
-        <div class="reader-takeaway-card" role="region" aria-label="Key Takeaway">
-          <div class="reader-takeaway-header">
-            <span class="reader-takeaway-icon" aria-hidden="true">💡</span>
+        <aside class="course-takeaway-card" role="region" aria-label="Key Reflection">
+          <div class="course-takeaway-card__header">
+            <span class="course-takeaway-card__icon" aria-hidden="true">✦</span>
             <strong>Key Reflection</strong>
           </div>
           <p>Pause here together. Take 60 seconds to discuss how this insight applies to your current dynamic, or reflect on one small habit you want to practice together this week.</p>
+        </aside>
+      `;
+
+  $('catalog-content').innerHTML = `
+    <article class="course-reader">
+      <header class="reader-header">
+        <div class="reader-top-bar">
+          <a href="${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}" data-route="${ROUTE_PATHS.course}/${encodeURIComponent(courseId)}" class="reader-course-link">← ${escapeHtml(course.title)}</a>
+          <span class="reader-chapter-badge">Chapter ${lessonIndex + 1} of ${lessons.length}</span>
         </div>
+        <div class="reader-progress-label"><span>Progress</span><strong>${positionPercent}%</strong></div>
+        <div class="reader-progress-track"><span style="width:${positionPercent}%"></span></div>
+        <div class="reader-eyebrow">${escapeHtml(lessonRecord.sectionTitle)}</div>
+        <h1>${escapeHtml(lesson.title)}</h1>
+        ${lesson.subtitle ? `<div class="reader-lead-thesis">${escapeHtml(lesson.subtitle)}</div>` : ''}
+      </header>
+      <div class="reader-body">
+        ${bodyContent}
       </div>
       <nav class="reader-navigation" aria-label="Course lesson navigation">
         ${previousIndex >= 0 ? `<button class="ghost-btn" type="button" data-action="course-lesson-previous" data-course="${escapeHtml(courseId)}" data-lesson="${previousIndex}">← Previous lesson</button>` : '<span></span>'}

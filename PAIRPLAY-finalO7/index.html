@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="./style.css">
+ <link rel="stylesheet" href="/style.css">
  <link rel="stylesheet" href="/couple-games.css">
   <script type="application/ld+json">
   {
@@ -227,9 +227,12 @@
           <li class="drawer-sound-row">
             <button class="drawer-sound-btn" id="drawer-sound-btn" type="button" onclick="toggleSound()"><span>Sound Effects</span><span class="drawer-sound-state" id="drawer-sound-state">OFF 🔇</span></button>
           </li>
-          <li class="drawer-divider"></li>
-          <li><button id="drawer-login" type="button">Log in</button></li>
-          <li><button id="drawer-guest" type="button">Continue as guest</button></li>
+          <li class="drawer-auth-item">
+            <div class="drawer-auth-group">
+              <button id="drawer-login" class="drawer-btn drawer-btn--primary" type="button">Log in</button>
+              <button id="drawer-guest" class="drawer-btn drawer-btn--secondary" type="button">Continue as guest</button>
+            </div>
+          </li>
         </ul>
       </nav>
     </div>
