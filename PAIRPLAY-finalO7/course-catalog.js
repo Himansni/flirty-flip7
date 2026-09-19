@@ -81,7 +81,8 @@
       comingSoon: true,
       featured: false,
       entitlement: "free",
-      accentColor: "#f48fb1"
+      accentColor: "#f48fb1",
+      coverStyle: "rose-cards"
     },
     {
       id: "The-Art-of-Receiving-Love",
@@ -101,7 +102,8 @@
       comingSoon: false,
       featured: false,
       entitlement: "free",
-      accentColor: "#f48fb1"
+      accentColor: "#f48fb1",
+      coverStyle: "petals"
     },
 
     /* ===== FOR HIM ===== */
@@ -121,7 +123,8 @@
       comingSoon: false,
       featured: true,
       entitlement: "free",
-      accentColor: "#64b5f6"
+      accentColor: "#64b5f6",
+      coverStyle: "blueprint"
     },
 
     //========== ___Finding Love Without Losing Yourself____-----------===========
@@ -140,7 +143,8 @@
       comingSoon: false,
       featured: true,
       entitlement: "free",
-      accentColor: "#ff80ab"
+      accentColor: "#ff80ab",
+      coverStyle: "rose-cards"
     },
 
     //========== ___When Love Needs New Rules____-----------===========
@@ -160,7 +164,8 @@
       comingSoon: false,
       featured: false,
       entitlement: "free",
-      accentColor: "#ba68c8"
+      accentColor: "#ba68c8",
+      coverStyle: "rings"
     },
     // -------- "How Men Heal After Goodbye"-------------
     {
@@ -181,7 +186,8 @@
       comingSoon: false,
       featured: false,
       entitlement: "free",
-      accentColor: "#4fc3f7"
+      accentColor: "#4fc3f7",
+      coverStyle: "horizon"
     },
     /* ===== FOR COUPLES ===== */
     // Add future For Couples course metadata here and set category: "for-couples".
@@ -204,7 +210,8 @@
       comingSoon: false,
       featured: true,
       entitlement: "free",
-      accentColor: "#ab47bc"
+      accentColor: "#ab47bc",
+      coverStyle: "infinity"
     },
 
     //========== ___When She Stops Chasing You____-----------===========
@@ -242,7 +249,8 @@ Recognize pursuit-withdrawal patterns early enough to interrupt them.`,
       comingSoon: false,
       featured: false,
       entitlement: "free",
-      accentColor: "#29b6f6"
+      accentColor: "#29b6f6",
+      coverStyle: "orbit"
     },
 
 
@@ -323,6 +331,7 @@ Recognize pursuit-withdrawal patterns early enough to interrupt them.`,
         ...course,
         entitlement: course.entitlement || "free",
         accentColor: course.accentColor || "#f48fb1",
+        coverStyle: course.coverStyle || "rose-cards",
         tags: Object.freeze([...(course.tags || [])])
       }));
     });

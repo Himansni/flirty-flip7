@@ -51,8 +51,8 @@
       }
       runtime.players.first = saved.first === "Player One" ? "" : sanitizeName(saved.first);
       runtime.players.second = saved.second === "Player Two" ? "" : sanitizeName(saved.second);
-      if (typeof saved.muted === "boolean") {
-        runtime.muted = saved.muted;
+      if (global.FlirtyFlipSound?.isEnabled) {
+        runtime.muted = !global.FlirtyFlipSound.isEnabled();
       } else if (typeof global.localStorage !== "undefined") {
         runtime.muted = global.localStorage.getItem("flirtyflip_sound_enabled") !== "true";
       } else {
@@ -1013,9 +1013,14 @@
     if (!control) return;
     const action = control.dataset.cgAction;
     if (action === "toggle-sound") {
-      runtime.muted = !runtime.muted;
-      try { global.localStorage?.setItem("flirtyflip_sound_enabled", String(!runtime.muted)); } catch (_) {}
-      if (typeof global.updateSoundButtons === "function") global.updateSoundButtons();
+      if (global.FlirtyFlipSound?.toggle) {
+        global.FlirtyFlipSound.toggle();
+        runtime.muted = !global.FlirtyFlipSound.isEnabled();
+      } else {
+        runtime.muted = !runtime.muted;
+        try { global.localStorage?.setItem("flirtyflip_sound_enabled", String(!runtime.muted)); } catch (_) {}
+        if (typeof global.updateSoundButtons === "function") global.updateSoundButtons();
+      }
       writeSession();
       renderActiveGame();
       return;
@@ -1064,6 +1069,14 @@
     root.dataset.coupleGamesBound = "true";
     root.addEventListener("click", handleClick);
     root.addEventListener("input", handleInput);
+    if (typeof global.FlirtyFlipSound?.subscribe === "function") {
+      global.FlirtyFlipSound.subscribe((enabled) => {
+        runtime.muted = !enabled;
+        if (runtime.gameId && runtime.root) {
+          renderActiveGame();
+        }
+      });
+    }
   }
 
   // Router integration resets all animation listeners/timers when the selected mini-game changes.

@@ -192,7 +192,7 @@
           <option value="cosmic">🔮 Cosmic Amethyst</option>
         </select>
       </div>
-      <button class="sound-toggle-btn" id="sound-btn" type="button" onclick="toggleSound()" aria-label="Toggle sound effects" title="Sound Effects (Off by default)">🔇</button>
+      <button class="sound-toggle-btn" id="sound-btn" type="button" aria-label="Toggle sound effects" aria-pressed="false" title="Sound Effects (Off by default)">🔇</button>
       <button class="text-btn" id="support-btn" type="button">Support</button>
       <button class="text-btn" id="nav-auth-label" type="button">Log in</button>
       <button class="pill-btn small" id="nav-auth-cta" type="button" data-mobile-label="Guest">Continue as guest</button>
@@ -225,7 +225,7 @@
             </select>
           </li>
           <li class="drawer-sound-row">
-            <button class="drawer-sound-btn" id="drawer-sound-btn" type="button" onclick="toggleSound()"><span>Sound Effects</span><span class="drawer-sound-state" id="drawer-sound-state">OFF 🔇</span></button>
+            <button class="drawer-sound-btn" id="drawer-sound-btn" type="button" aria-pressed="false"><span>Sound Effects</span><span class="drawer-sound-state" id="drawer-sound-state">OFF 🔇</span></button>
           </li>
           <li class="drawer-auth-item">
             <div class="drawer-auth-group">

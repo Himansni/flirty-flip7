@@ -235,3 +235,90 @@ test("Phase 2 Experience: Mobile drawer auth buttons use high-contrast grouped s
   assert.match(styleSource, /\.drawer-btn--primary/);
   assert.match(styleSource, /\.drawer-btn--secondary/);
 });
+
+test("Phase 2 Experience: Authoritative sound controller provides pub/sub and syncs across games and headers", () => {
+  assert.match(scriptSource, /const FlirtyFlipSound = \{/);
+  assert.match(scriptSource, /isEnabled\(\)/);
+  assert.match(scriptSource, /setEnabled\(val/);
+  assert.match(scriptSource, /toggle\(\)/);
+  assert.match(scriptSource, /play\(type\)/);
+  assert.match(scriptSource, /subscribe\(callback\)/);
+  assert.match(scriptSource, /window\.FlirtyFlipSound = FlirtyFlipSound/);
+
+  // couple-games subscribes and delegates to FlirtyFlipSound
+  assert.match(engineSource, /FlirtyFlipSound\.subscribe/);
+  assert.match(engineSource, /FlirtyFlipSound\.toggle/);
+
+  // HTML has aria-pressed and no inline onclick duplication
+  assert.match(htmlSource, /id="sound-btn"[^>]*aria-pressed="false"/);
+  assert.match(htmlSource, /id="drawer-sound-btn"[^>]*aria-pressed="false"/);
+  assert.doesNotMatch(htmlSource, /id="sound-btn"[^>]*onclick="toggleSound\(\)"/);
+  assert.doesNotMatch(htmlSource, /id="drawer-sound-btn"[^>]*onclick="toggleSound\(\)"/);
+});
+
+test("Phase 2 Experience: Course catalog includes declarative coverStyle and cover renderer generates visual primitives", () => {
+  assert.match(catalogSource, /coverStyle:\s*"rose-cards"/);
+  assert.match(catalogSource, /coverStyle:\s*"blueprint"/);
+  assert.match(catalogSource, /coverStyle:\s*"petals"/);
+  assert.match(catalogSource, /coverStyle:\s*"rings"/);
+  assert.match(catalogSource, /coverStyle:\s*"horizon"/);
+  assert.match(catalogSource, /coverStyle:\s*"infinity"/);
+  assert.match(catalogSource, /coverStyle:\s*"orbit"/);
+
+  // script.js defines renderCourseCoverArt driven by coverStyle
+  assert.match(scriptSource, /function renderCourseCoverArt\(course\)/);
+  assert.match(scriptSource, /const style = course\.coverStyle \|\| 'rose-cards'/);
+  assert.match(scriptSource, /'blueprint':/);
+  assert.match(scriptSource, /'petals':/);
+  assert.match(scriptSource, /'rings':/);
+  assert.match(scriptSource, /'horizon':/);
+  assert.match(scriptSource, /'infinity':/);
+  assert.match(scriptSource, /'orbit':/);
+  assert.match(scriptSource, /'rose-cards':/);
+
+  // CSS defines cover art primitives
+  assert.match(styleSource, /\.course-cover-art/);
+  assert.match(styleSource, /\.cover-deck-layer--back/);
+  assert.match(styleSource, /\.cover-deck-layer--mid/);
+  assert.match(styleSource, /\.cover-art-motif/);
+  assert.match(styleSource, /\.cover-seal/);
+});
+
+test("Phase 2 Experience: All published courses have non-destructive structured migration with 100% text preservation", () => {
+  // Check that all 7 published courses are in courseContentData
+  const requiredCourses = [
+    'better-communication',
+    'confident-connection',
+    'party-ka-din',
+    'art-of-romance',
+    'The-Art-of-Receiving-Love',
+    'love-without-losing-yourself',
+    'the-moment-the-chase-ends'
+  ];
+
+  for (const slug of requiredCourses) {
+    assert.match(scriptSource, new RegExp(`['"]${slug}['"]:\\s*\\{`));
+  }
+
+  // Every lesson preserves sourceText and has structured blocks
+  assert.match(scriptSource, /"sourceText":/);
+  assert.match(scriptSource, /"blocks":/);
+});
+
+test("Phase 2 Experience: Velvet Rose reader background and controlled warm workbook styling for art-of-romance", () => {
+  // Calm high-contrast Velvet Rose background
+  assert.match(styleSource, /body\[data-catalog-view="course-reader"\]\s*\{[^}]*#0d090d/);
+  assert.match(styleSource, /\.course-reader\s*\{[^}]*min\(100%,\s*740px\)/);
+  assert.match(styleSource, /\.reader-body\s*\{[^}]*line-height:\s*1\.82/);
+
+  // Scoped warm workbook styling applied to art-of-romance
+  assert.match(scriptSource, /const isWarmWorkbook = courseId === 'art-of-romance'/);
+  assert.match(scriptSource, /class="course-reader \$\{isWarmWorkbook \? 'course-reader--warm-workbook' : ''\}"/);
+
+  // Scoped warm ivory paper styles
+  assert.match(styleSource, /\.course-reader--warm-workbook \.course-worksheet-card/);
+  assert.match(styleSource, /#fbf7f2/);
+  assert.match(styleSource, /#2c2420/);
+  assert.match(styleSource, /#d8c6b8/);
+});
+

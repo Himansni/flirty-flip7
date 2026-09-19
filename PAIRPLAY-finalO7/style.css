@@ -261,6 +261,9 @@ body::before {
 }
 
 /* Course Reader calm mode: dim ambient motion so long-form reading is clear and distraction-free */
+body[data-catalog-view="course-reader"] {
+  background: radial-gradient(circle at 50% 12%, rgba(74, 13, 30, 0.22) 0%, transparent 65%), #0d090d !important;
+}
 body[data-catalog-view="course-reader"] .ambient-canvas,
 .reader-calm .ambient-canvas,
 #catalog[data-catalog-view="course-reader"] ~ .ambient-canvas {
@@ -1153,10 +1156,131 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
    The course mark provides a visual anchor while copy remains concise and scannable.
    ======================================== */
 .course-detail-hero { display:grid; grid-template-columns:minmax(250px,.75fr) 1.25fr; gap:clamp(32px,6vw,78px); align-items:center; }
-.course-detail-hero__mark { aspect-ratio:.82; position:relative; display:grid; place-items:center; overflow:hidden; border:1px solid rgba(255,255,255,.14); border-radius:var(--radius-lg); background:radial-gradient(circle at 50% 38%,rgba(255,36,73,.24),transparent 55%),linear-gradient(145deg,#1d1419,#0b0b0d); box-shadow:0 24px 60px -12px rgba(0,0,0,.75), 0 0 32px var(--glow-color, rgba(255,107,139,.18)); }
-.course-detail-hero__mark::before { content:""; position:absolute; inset:18px; border:1px solid rgba(255,255,255,.12); border-radius:20px; background-image:radial-gradient(circle,rgba(255,255,255,.14) 1px,transparent 1px); background-size:22px 22px; }
-.course-detail-hero__mark span { position:relative; font-family:"Playfair Display",serif; font-size:clamp(5rem,13vw,9rem); color:#fff; text-shadow:0 8px 32px rgba(0,0,0,.6); }
-.course-detail-hero__mark small { position:absolute; bottom:28px; font-size:.65rem; font-weight:800; letter-spacing:.22em; color:var(--accent); text-transform:uppercase; }
+.course-detail-hero__mark,
+.course-cover-art {
+  aspect-ratio: .82;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  background: radial-gradient(circle at 50% 35%, rgba(255, 36, 73, .22), transparent 60%), linear-gradient(145deg, #1c1318 0%, #0c090c 100%);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 36px var(--glow-color, rgba(255, 107, 139, .2));
+}
+.course-cover-art--for-him {
+  background: radial-gradient(circle at 50% 35%, rgba(100, 181, 246, .2), transparent 60%), linear-gradient(145deg, #101924 0%, #080c10 100%);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 36px rgba(100, 181, 246, .18);
+}
+.course-cover-art--for-couples {
+  background: radial-gradient(circle at 50% 35%, rgba(206, 147, 216, .22), transparent 60%), linear-gradient(145deg, #1a101d 0%, #0a070c 100%);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 36px rgba(206, 147, 216, .2);
+}
+.cover-deck-layer {
+  position: absolute;
+  inset: 12px;
+  border-radius: 20px;
+  pointer-events: none;
+  transition: transform .3s ease;
+}
+.cover-deck-layer--back {
+  border: 1px solid rgba(255, 255, 255, .05);
+  background: rgba(255, 255, 255, .015);
+  transform: rotate(-3.5deg) scale(0.97);
+}
+.cover-deck-layer--mid {
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .02);
+  transform: rotate(3deg) scale(0.985);
+}
+.course-cover-art:hover .cover-deck-layer--back { transform: rotate(-5deg) scale(0.97); }
+.course-cover-art:hover .cover-deck-layer--mid { transform: rotate(4.5deg) scale(0.985); }
+.cover-art-plate {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cover-art-grid-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, .1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.cover-art-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.cover-art-badge {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, .1);
+  padding: 4px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+.cover-art-deck-tag {
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .22em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.cover-art-center {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 10px 0;
+  flex: 1;
+}
+.cover-art-motif {
+  width: min(100%, 180px);
+  height: auto;
+  max-height: 180px;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, .5));
+}
+.cover-art-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+.cover-seal {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(255, 255, 255, .05);
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .4);
+}
+.cover-seal__initial {
+  font-family: "Playfair Display", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+.cover-art-brand { display: flex; flex-direction: column; }
+.cover-art-brand strong { font-size: .76rem; letter-spacing: .16em; color: #fff; font-weight: 800; }
+.cover-art-brand small { font-size: .58rem; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
 .course-detail-hero__copy h1 { margin:14px 0 15px; font-family:"Playfair Display",serif; font-size:clamp(2.4rem,5.5vw,4.2rem); line-height:1.06; letter-spacing:-.03em; color:#fff; overflow-wrap:anywhere; }
 .course-meta-chips { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px; }
 .course-chip { display:inline-flex; align-items:center; padding:5px 12px; border-radius:999px; font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--muted-strong); }
@@ -1206,7 +1330,7 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 /* ========================================
    COURSE READING EXPERIENCE (EDITORIAL & WORKBOOK SYSTEM)
    ======================================== */
-.course-reader { width:min(100%, 720px); margin:0 auto; padding-bottom:60px; }
+.course-reader { width:min(100%, 740px); margin:0 auto; padding-bottom:60px; }
 .reader-header { padding:16px 0 32px; border-bottom:1px solid var(--line); }
 .reader-top-bar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:20px; }
 .reader-course-link { display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:.8rem; font-weight:800; text-decoration:none; transition:color .18s ease; }
@@ -1219,9 +1343,9 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .reader-lead-thesis { font-family:"Playfair Display",serif; font-size:clamp(1.1rem, 2.2vw, 1.28rem); font-style:italic; line-height:1.6; color:#ded4d7; border-left:3px solid var(--accent); padding-left:18px; margin:20px 0 0; }
 
 /* Reader body & reusable content blocks */
-.reader-body { padding:36px 0 24px; color:#dcd4d7; font-size:1.06rem; line-height:1.82; }
-.course-editorial-p { margin:0 0 1.55em; color:#dcd4d7; font-size:1.06rem; line-height:1.82; }
-.course-editorial-h2 { font-family:"Playfair Display",serif; font-size:1.65rem; line-height:1.25; color:#fff; margin:42px 0 18px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.08); }
+.reader-body { padding:36px 0 24px; color:#ded4d7; font-size:1.06rem; line-height:1.82; }
+.course-editorial-p { margin:0 0 1.55em; color:#ded4d7; font-size:1.06rem; line-height:1.82; }
+.course-editorial-h2 { font-family:"Playfair Display",serif; font-size:1.65rem; line-height:1.25; color:#ffffff; margin:42px 0 18px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.08); }
 .course-editorial-h3 { font-family:var(--font-sans); font-size:1.2rem; font-weight:700; color:#ff80ab; margin:32px 0 14px; }
 
 /* Reusable: Pull Quote */
@@ -1284,6 +1408,62 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
 .course-reflection-card__icon { font-size:1.2rem; }
 .course-reflection-card__prompt { font-family:"Playfair Display",serif; font-size:1.15rem; font-style:italic; color:#fff; line-height:1.6; margin:0; }
 .course-reflection-card__hint { display:block; margin-top:10px; font-size:.82rem; color:var(--muted); }
+
+/* ========================================
+   CONTROLLED WARM WORKBOOK EXPERIMENT (For Couples: art-of-romance)
+   Scopes warm ivory paper styling exclusively to interactive exercise/worksheet cards.
+   Reader canvas and shell remain dark Velvet Rose.
+   ======================================== */
+.course-reader--warm-workbook .course-worksheet-card {
+  background: linear-gradient(145deg, #fbf7f2 0%, #f5eee6 100%);
+  border: 1px solid #d8c6b8;
+  color: #2c2420;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(216, 198, 184, 0.35);
+}
+.course-reader--warm-workbook .course-worksheet-card__badge {
+  background: #8b3a4a;
+  color: #ffffff;
+}
+.course-reader--warm-workbook .course-worksheet-card__header h3 {
+  color: #201a17;
+}
+.course-reader--warm-workbook .course-worksheet-card__intro {
+  color: #4a3e36;
+}
+.course-reader--warm-workbook .course-worksheet-card__steps li {
+  background: rgba(0, 0, 0, 0.035);
+  color: #332a24;
+  border: 1px solid rgba(216, 198, 184, 0.5);
+}
+.course-reader--warm-workbook .step-badge {
+  background: #3e2723;
+  color: #ffffff;
+}
+.course-reader--warm-workbook .step-text {
+  color: #2c2420;
+}
+.course-reader--warm-workbook .worksheet-field label {
+  color: #7a3242;
+}
+.course-reader--warm-workbook .worksheet-field__placeholder {
+  background: #ffffff;
+  border: 1px dashed #c4b5a8;
+  color: #63574f;
+}
+.course-reader--warm-workbook .course-reflection-card {
+  background: linear-gradient(145deg, #faf5ef 0%, #f0e6dc 100%);
+  border: 1px solid #d4c2b2;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.course-reader--warm-workbook .course-reflection-card__tag {
+  color: #8b3a4a;
+}
+.course-reader--warm-workbook .course-reflection-card__prompt {
+  color: #241c18;
+}
+.course-reader--warm-workbook .course-reflection-card__hint {
+  color: #5c4f46;
+}
 
 /* Navigation */
 .reader-navigation { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:40px; padding-top:28px; border-top:1px solid var(--line); flex-wrap:wrap; }
