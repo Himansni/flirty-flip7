@@ -11543,6 +11543,32 @@ function getCourseReadingTime(course) {
   return null;
 }
 
+function getLessonReadingTime(lessonRecord) {
+  if (!lessonRecord) return '3 min read';
+  let wordCount = 0;
+  if (typeof lessonRecord.content === 'string') {
+    wordCount = lessonRecord.content.split(/\s+/).filter(Boolean).length;
+  } else if (lessonRecord.content && typeof lessonRecord.content === 'object') {
+    if (typeof lessonRecord.content.sourceText === 'string') {
+      wordCount = lessonRecord.content.sourceText.split(/\s+/).filter(Boolean).length;
+    } else if (Array.isArray(lessonRecord.content.blocks)) {
+      for (const b of lessonRecord.content.blocks) {
+        if (b.text) wordCount += b.text.split(/\s+/).filter(Boolean).length;
+        if (Array.isArray(b.items)) wordCount += b.items.join(' ').split(/\s+/).filter(Boolean).length;
+        if (b.prompt) wordCount += b.prompt.split(/\s+/).filter(Boolean).length;
+        if (b.instructions) wordCount += b.instructions.split(/\s+/).filter(Boolean).length;
+        if (Array.isArray(b.steps)) wordCount += b.steps.join(' ').split(/\s+/).filter(Boolean).length;
+        if (b.context) wordCount += b.context.split(/\s+/).filter(Boolean).length;
+        if (b.action) wordCount += b.action.split(/\s+/).filter(Boolean).length;
+      }
+    } else if (typeof lessonRecord.content.body === 'string') {
+      wordCount = lessonRecord.content.body.split(/\s+/).filter(Boolean).length;
+    }
+  }
+  const minutes = Math.max(1, Math.round((wordCount || 400) / 200));
+  return `${minutes} min read`;
+}
+
 function parseCourseLesson(content, fallbackTitle = 'Lesson') {
   if (content && typeof content === 'object') {
     return {
@@ -12335,8 +12361,8 @@ function renderCourseDetail(courseId) {
   const completionBanner = isCompleted ? `
     <div class="course-completion-banner" role="status">
       <span class="course-completion-icon" aria-hidden="true">🏆</span>
-      <div>
-        <strong>Course Completed!</strong>
+      <div class="course-completion-body">
+        <strong>Course Complete ♡</strong>
         <p>You’ve finished all ${lessons.length} lessons in this guide. Revisit any lesson below at your own pace.</p>
       </div>
     </div>
@@ -12402,6 +12428,7 @@ function renderCourseLesson(courseId, lessonIndex) {
   const positionPercent = Math.round(((lessonIndex + 1) / lessons.length) * 100);
   const previousIndex = lessonIndex - 1;
   const nextIndex = lessonIndex + 1;
+  const lessonReadingTime = getLessonReadingTime(lessonRecord);
 
   configureCatalogShell({
     eyebrow: 'LESSON',
@@ -12436,12 +12463,17 @@ function renderCourseLesson(courseId, lessonIndex) {
         </div>
         <div class="reader-progress-label"><span>Progress</span><strong>${positionPercent}%</strong></div>
         <div class="reader-progress-track"><span style="width:${positionPercent}%"></span></div>
-        <div class="reader-eyebrow">${escapeHtml(lessonRecord.sectionTitle)}</div>
+        <div class="reader-meta-row">
+          <div class="reader-eyebrow">CORE LESSON ${String(lessonIndex + 1).padStart(2, '0')}${lessonRecord.sectionTitle ? ` · ${escapeHtml(lessonRecord.sectionTitle)}` : ''}</div>
+          ${lessonReadingTime ? `<div class="reader-time-badge">⏱ ${escapeHtml(lessonReadingTime)}</div>` : ''}
+        </div>
         <h1>${escapeHtml(lesson.title)}</h1>
         ${lesson.subtitle ? `<div class="reader-lead-thesis">${escapeHtml(lesson.subtitle)}</div>` : ''}
       </header>
-      <div class="reader-body">
-        ${bodyContent}
+      <div class="reader-sheet">
+        <div class="reader-body">
+          ${bodyContent}
+        </div>
       </div>
       <nav class="reader-navigation" aria-label="Course lesson navigation">
         ${previousIndex >= 0 ? `<button class="ghost-btn" type="button" data-action="course-lesson-previous" data-course="${escapeHtml(courseId)}" data-lesson="${previousIndex}">← Previous lesson</button>` : '<span></span>'}

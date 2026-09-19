@@ -322,3 +322,29 @@ test("Phase 2 Experience: Velvet Rose reader background and controlled warm work
   assert.match(styleSource, /#d8c6b8/);
 });
 
+test("Phase 2 Experience: Hybrid Velvet Rose shell and warm ivory editorial reader panel", () => {
+  // Dark header with meta row, eyebrow and reading time
+  assert.match(scriptSource, /class="reader-meta-row"/);
+  assert.match(scriptSource, /class="reader-time-badge"/);
+  assert.match(scriptSource, /getLessonReadingTime\(lessonRecord\)/);
+  assert.match(styleSource, /\.reader-meta-row/);
+  assert.match(styleSource, /\.reader-time-badge/);
+
+  // Warm ivory reader sheet wrapper
+  assert.match(scriptSource, /<div class="reader-sheet">\s*<div class="reader-body">/);
+  assert.match(styleSource, /\.reader-sheet\s*\{[^}]*background:\s*linear-gradient\(180deg,\s*#fbf7f2 0%,\s*#f8f3ed 100%\)/);
+  assert.match(styleSource, /\.reader-sheet\s*\{[^}]*border-top:\s*3px solid #c94c65/);
+
+  // Structured blocks on ivory editorial surface
+  assert.match(styleSource, /\.course-pull-quote\s*\{[^}]*background:\s*linear-gradient/);
+  assert.match(styleSource, /\.course-takeaway-card\s*\{[^}]*border:\s*1px solid rgba\(201,\s*76,\s*101/);
+  assert.match(styleSource, /\.course-checklist-card\s*\{[^}]*background:\s*#f3e9e1/);
+  assert.match(styleSource, /\.course-steps-card\s*\{[^}]*background:\s*#f3e9e1/);
+  assert.match(styleSource, /\.course-scenario-card\s*\{[^}]*background:\s*#f6f0ea/);
+  assert.match(styleSource, /\.course-worksheet-card\s*\{[^}]*background:\s*#ffffff/);
+  assert.match(styleSource, /\.course-reflection-card\s*\{[^}]*background:\s*linear-gradient/);
+
+  // Course completion warm ivory paper summary card
+  assert.match(styleSource, /\.course-completion-banner\s*\{[^}]*background:\s*linear-gradient\(145deg,\s*#fbf7f2 0%,\s*#f6efe8 100%\)/);
+  assert.match(scriptSource, /class="course-completion-body"/);
+});
