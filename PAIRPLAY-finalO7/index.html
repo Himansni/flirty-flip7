@@ -590,18 +590,20 @@
     </div>
   </div>
 
-  <!-- Play confirmation modal: requires two checkboxes (18+ and mutual consent) before starting. -->
-  <div id="play-confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="play-confirm-title" aria-hidden="true">
-    <div class="modal-box">
-      <h3 id="play-confirm-title">CONFIRMATION</h3>
-      <p>Before you play</p>
-      <div class="play-confirm-fields">
-        <label class="play-confirm-label"><input id="confirm-age" type="checkbox"> I confirm that both players are 18+ years old.</label>
-        <label class="play-confirm-label"><input id="confirm-consent" type="checkbox"> I confirm that my partner and I understand every activity requires mutual consent.</label>
+  <!-- Adult Comfort & Consent modal: single 18+ consent gate shown once per device for mature decks. -->
+  <div id="adult-consent-modal" class="modal hidden adult-consent-modal" role="dialog" aria-modal="true" aria-labelledby="adult-consent-heading" aria-describedby="adult-consent-desc" aria-hidden="true">
+    <div class="modal-box adult-consent-card">
+      <button class="icon-btn adult-consent-close" id="adult-consent-close" type="button" aria-label="Close consent dialog" onclick="closeAdultConsentModal()">×</button>
+      <div class="eyebrow adult-consent-eyebrow">ADULT COMFORT &amp; CONSENT</div>
+      <h2 id="adult-consent-heading" class="adult-consent-title">Are you both <span class="adult-consent-accent">18 or older?</span></h2>
+      <div id="adult-consent-desc" class="adult-consent-body">
+        <p>This deck contains mature romantic and sensual prompts.</p>
+        <p>Both partners must be comfortable and over 18.</p>
+        <p>Consent is essential—either person can skip any card at any time without question.</p>
       </div>
-      <div class="modal-actions">
-        <button class="ghost-btn" type="button" onclick="closePlayConfirm()">Cancel</button>
-        <button class="pill-btn" type="button" onclick="confirmAndStart()">Start →</button>
+      <div class="adult-consent-actions">
+        <button id="adult-consent-confirm" class="pill-btn adult-consent-confirm" type="button" onclick="confirmAdultConsent()">YES, WE’RE BOTH 18+ &amp; CONSENT</button>
+        <button id="adult-consent-gentler" class="ghost-btn adult-consent-gentler" type="button" onclick="chooseGentlerDeck()">CHOOSE A GENTLER DECK</button>
       </div>
     </div>
   </div>

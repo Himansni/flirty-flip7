@@ -50,6 +50,7 @@ const moods = {
     desc: "For consenting adults who want a bolder, more intimate date night.",
     intensity: "★★★★★",
     color: "#e7b9bf",
+    mature: true,
     questions: [
       
     ]
@@ -80,6 +81,7 @@ const moods = {
     desc: "Gentle, private prompts to deepen emotional closeness (18+ optional).",
     intensity: "★★★☆☆",
     color: "#f5d7e0",
+    mature: true,
     questions: [
       
     ]
@@ -90,6 +92,7 @@ const moods = {
     desc: "Turn up the intensity with private prompts for deeper emotional closeness (18+ optional).",
     intensity: "★★★☆☆",
     color: "#f5d7e0",
+    mature: true,
     questions: [
       
     ]
@@ -1605,11 +1608,11 @@ const gameCatalogData = [
   { id: "sweet", categories: ["quick", "conversation"], duration: "10–15 min", deckSize: 10 },
   { id: "TruthandDare", categories: ["truth-dare", "challenges"], duration: "15–20 min", deckSize: 10 },
   { id: "flirtyii", categories: ["flirty", "challenges"], duration: "15–20 min", deckSize: 10 },
-  { id: "spicy", categories: ["flirty", "18-plus"], duration: "15–25 min", deckSize: 10 },
+  { id: "spicy", categories: ["flirty", "18-plus"], duration: "15–25 min", deckSize: 10, mature: true },
   { id: "playful", categories: ["quick", "conversation"], duration: "15–20 min", deckSize: 10 },
   { id: "cozy", categories: ["romantic", "conversation"], duration: "15–20 min", deckSize: 10 },
-  { id: "intimate", categories: ["deep", "conversation"], duration: "20–30 min", deckSize: 10 },
-  { id: "DarkDesire", categories: ["deep", "18-plus"], duration: "20–30 min", deckSize: 10 },
+  { id: "intimate", categories: ["deep", "conversation", "18-plus"], duration: "20–30 min", deckSize: 10, mature: true },
+  { id: "DarkDesire", categories: ["deep", "18-plus"], duration: "20–30 min", deckSize: 10, mature: true },
   { id: "DreamsFuture", categories: ["deep", "conversation"], duration: "20–30 min", deckSize: 10 },
   { id: "online", title: "Play Online", icon: "↗", description: "Create a room link and invite your partner into a shared lobby.", categories: ["online"], duration: "You decide", deckSize: "10 / 25 / 50", online: true }
 ];
@@ -10766,6 +10769,138 @@ function skipPlayerNames(context = "setup") {
   else startGame();
 }
 
+// ========================================
+// ADULT COMFORT & CONSENT SYSTEM (18+)
+// Gated once per device for mature romantic/sensual decks.
+// Normal / gentle decks are completely unaffected.
+// ========================================
+const ADULT_CONSENT_STORAGE_KEY = "flirtyflip_adult_consent_v1";
+const MATURE_DECK_KEYS = Object.freeze(["spicy", "intimate", "DarkDesire"]);
+
+function isMatureMood(moodKey) {
+  if (!moodKey) return false;
+  if (MATURE_DECK_KEYS.includes(moodKey)) return true;
+  const mood = moods[moodKey];
+  if (mood?.mature) return true;
+  if (typeof mood?.title === "string" && /18\+/i.test(mood.title)) return true;
+  if (typeof mood?.desc === "string" && /18\+/i.test(mood.desc)) return true;
+  const catalogItem = typeof gameCatalogData !== "undefined" ? gameCatalogData.find(g => g.id === moodKey) : null;
+  if (catalogItem?.categories?.includes("18-plus") || catalogItem?.mature) return true;
+  return false;
+}
+
+function hasAdultConsent() {
+  try {
+    if (typeof localStorage === "undefined") return false;
+    return localStorage.getItem(ADULT_CONSENT_STORAGE_KEY) === "true";
+  } catch (error) {
+    return false;
+  }
+}
+
+function setAdultConsent(granted = true) {
+  try {
+    if (typeof localStorage !== "undefined") {
+      if (granted) {
+        localStorage.setItem(ADULT_CONSENT_STORAGE_KEY, "true");
+      } else {
+        localStorage.removeItem(ADULT_CONSENT_STORAGE_KEY);
+      }
+    }
+  } catch (error) {
+    console.warn("Unable to persist adult consent preference.", error);
+  }
+}
+
+let lastConsentTriggerElement = null;
+
+function showAdultConsentModal() {
+  const modal = document.getElementById("adult-consent-modal") || document.getElementById("play-confirm-modal");
+  if (!modal) return;
+  lastConsentTriggerElement = document.activeElement;
+  modal.classList.remove("hidden");
+  modal.setAttribute("aria-hidden", "false");
+
+  const confirmBtn = modal.querySelector("#adult-consent-confirm") || modal.querySelector(".adult-consent-confirm");
+  setTimeout(() => {
+    if (confirmBtn && typeof confirmBtn.focus === "function") {
+      confirmBtn.focus();
+    }
+  }, 40);
+}
+
+function closeAdultConsentModal() {
+  const modal = document.getElementById("adult-consent-modal") || document.getElementById("play-confirm-modal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.setAttribute("aria-hidden", "true");
+  if (lastConsentTriggerElement && typeof lastConsentTriggerElement.focus === "function") {
+    lastConsentTriggerElement.focus();
+    lastConsentTriggerElement = null;
+  }
+}
+
+function confirmAdultConsent() {
+  setAdultConsent(true);
+  playConfirmed = true;
+  closeAdultConsentModal();
+  startGame();
+}
+
+function chooseGentlerDeck() {
+  closeAdultConsentModal();
+  navigateToRoute(ROUTE_PATHS.play);
+}
+
+function handleAdultConsentKeydown(e) {
+  const modal = document.getElementById("adult-consent-modal") || document.getElementById("play-confirm-modal");
+  if (!modal || modal.classList.contains("hidden")) return;
+
+  if (e.key === "Escape") {
+    e.preventDefault();
+    closeAdultConsentModal();
+    return;
+  }
+
+  if (e.key === "Tab") {
+    const focusableElements = modal.querySelectorAll('button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    if (focusableElements.length === 0) return;
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      }
+    } else {
+      if (document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    }
+  }
+}
+
+function initAdultConsentModal() {
+  const modal = document.getElementById("adult-consent-modal") || document.getElementById("play-confirm-modal");
+  if (!modal || modal.dataset.consentBound === "true") return;
+  modal.dataset.consentBound = "true";
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeAdultConsentModal();
+    }
+  });
+
+  document.addEventListener("keydown", handleAdultConsentKeydown);
+}
+
+// Backward-compatible delegates
+function showPlayConfirmation() { showAdultConsentModal(); }
+function closePlayConfirm() { closeAdultConsentModal(); }
+function confirmAndStart() { confirmAdultConsent(); }
+
 function renderSetupScreen() {
   const m = moods[selectedMood];
   if (!m) return;
@@ -10780,7 +10915,7 @@ function renderSetupScreen() {
     <div class="eyebrow">${m.title.toUpperCase()} MODE</div>
     <h2 class="setup-title">${m.title}</h2>
     <p class="setup-desc">${m.desc}</p>
-    ${selectedMood === "spicy" ? `<p class="setup-desc"><strong>18+ only.</strong> Every card is optional. Consent first, always.</p>` : ""}
+    ${isMatureMood(selectedMood) ? `<p class="setup-desc"><strong>18+ only.</strong> Every card is optional. Consent first, always.</p>` : ""}
     <div class="length-options">
       ${lengthButtons}
     </div>
@@ -10807,9 +10942,9 @@ function chooseLength(btn, length) {
 // ========================================
 function startGame() {
   if (gameSessionStatus === "setup") updatePlayerNamesFromActiveForm();
-  // Require explicit confirmation before starting a play session
-  if (!playConfirmed) {
-    showPlayConfirmation();
+  // Require adult comfort & consent once per device only for mature decks
+  if (isMatureMood(selectedMood) && !hasAdultConsent()) {
+    showAdultConsentModal();
     return;
   }
 
@@ -10848,43 +10983,6 @@ const pool = getQuestionPool(selectedMood, selectedLength);
   persistGameSession("active");
   trackEvent('deck_start', { mood: selectedMood, card_count: selectedLength });
   navigateToRoute(ROUTE_PATHS.game);
-}
-
-// Show the play confirmation modal (age + consent checks)
-function showPlayConfirmation() {
-  const modal = document.getElementById('play-confirm-modal');
-  if (!modal) return;
-  modal.classList.remove('hidden');
-  modal.setAttribute('aria-hidden', 'false');
-  // reset inputs
-  const age = modal.querySelector('#confirm-age');
-  const consent = modal.querySelector('#confirm-consent');
-  if (age) age.checked = false;
-  if (consent) consent.checked = false;
-  setTimeout(() => { if (age) age.focus(); }, 40);
-}
-
-function closePlayConfirm() {
-  const modal = document.getElementById('play-confirm-modal');
-  if (!modal) return;
-  modal.classList.add('hidden');
-  modal.setAttribute('aria-hidden', 'true');
-}
-
-function confirmAndStart() {
-  const modal = document.getElementById('play-confirm-modal');
-  if (!modal) return;
-  const age = modal.querySelector('#confirm-age');
-  const consent = modal.querySelector('#confirm-consent');
-  if (!age || !consent) return;
-  if (!age.checked || !consent.checked) {
-    toast('Please confirm both statements to continue.');
-    return;
-  }
-  playConfirmed = true;
-  closePlayConfirm();
-  // start the game now that the user confirmed
-  startGame();
 }
 
 // ========================================
@@ -12920,6 +13018,14 @@ function toggleReadAloud() {
 if (typeof window !== "undefined") {
   window.toggleReadAloud = toggleReadAloud;
   window.stopSpeaking = stopSpeaking;
+  window.showAdultConsentModal = showAdultConsentModal;
+  window.closeAdultConsentModal = closeAdultConsentModal;
+  window.confirmAdultConsent = confirmAdultConsent;
+  window.chooseGentlerDeck = chooseGentlerDeck;
+  window.hasAdultConsent = hasAdultConsent;
+  window.setAdultConsent = setAdultConsent;
+  window.isMatureMood = isMatureMood;
+  window.ADULT_CONSENT_STORAGE_KEY = ADULT_CONSENT_STORAGE_KEY;
 }
 
 // Global Application Bootstrap (Runs after all controllers and modules are defined)
@@ -12927,6 +13033,7 @@ if (typeof document !== "undefined") {
   initTheme();
   updateSoundButtons();
   initAmbientParticles();
+  initAdultConsentModal();
   renderCourseNavigation();
   bindGlobalUI();
   bindAuthEvents();

@@ -348,3 +348,53 @@ test("Phase 2 Experience: Hybrid Velvet Rose shell and warm ivory editorial read
   assert.match(styleSource, /\.course-completion-banner\s*\{[^}]*background:\s*linear-gradient\(145deg,\s*#fbf7f2 0%,\s*#f6efe8 100%\)/);
   assert.match(scriptSource, /class="course-completion-body"/);
 });
+
+test("Phase 2 Experience: Single 18+ adult consent modal replaces old checkbox modal", () => {
+  // Old modal with checkboxes completely removed from index.html
+  assert.doesNotMatch(htmlSource, /id="confirm-age"/);
+  assert.doesNotMatch(htmlSource, /id="confirm-consent"/);
+  assert.doesNotMatch(htmlSource, /CONFIRMATION/);
+  assert.doesNotMatch(htmlSource, /type="checkbox"/);
+
+  // Old checkbox CSS removed from style.css
+  assert.doesNotMatch(styleSource, /\.play-confirm-fields/);
+  assert.doesNotMatch(styleSource, /\.play-confirm-label/);
+
+  // New modal exists in HTML with proper dialog semantics
+  assert.match(htmlSource, /id="adult-consent-modal"/);
+  assert.match(htmlSource, /role="dialog"/);
+  assert.match(htmlSource, /aria-modal="true"/);
+  assert.match(htmlSource, /aria-labelledby="adult-consent-heading"/);
+  assert.match(htmlSource, /aria-describedby="adult-consent-desc"/);
+
+  // Approved copy and structure
+  assert.match(htmlSource, /ADULT COMFORT &amp; CONSENT/);
+  assert.match(htmlSource, /Are you both <span class="adult-consent-accent">18 or older\?<\/span>/);
+  assert.match(htmlSource, /This deck contains mature romantic and sensual prompts\./);
+  assert.match(htmlSource, /Both partners must be comfortable and over 18\./);
+  assert.match(htmlSource, /Consent is essential—either person can skip any card at any time without question\./);
+  assert.match(htmlSource, /id="adult-consent-confirm"[^>]*>YES, WE’RE BOTH 18\+ &amp; CONSENT<\/button>/);
+  assert.match(htmlSource, /id="adult-consent-gentler"[^>]*>CHOOSE A GENTLER DECK<\/button>/);
+  assert.match(htmlSource, /id="adult-consent-close"[^>]*aria-label="Close consent dialog"/);
+
+  // Script definitions: storage key, mature mood classifier, persistence helpers
+  assert.match(scriptSource, /const ADULT_CONSENT_STORAGE_KEY = "flirtyflip_adult_consent_v1";/);
+  assert.match(scriptSource, /function isMatureMood\(/);
+  assert.match(scriptSource, /function hasAdultConsent\(/);
+  assert.match(scriptSource, /function setAdultConsent\(/);
+  assert.match(scriptSource, /function showAdultConsentModal\(/);
+  assert.match(scriptSource, /function closeAdultConsentModal\(/);
+  assert.match(scriptSource, /function confirmAdultConsent\(/);
+  assert.match(scriptSource, /function chooseGentlerDeck\(/);
+  assert.match(scriptSource, /function handleAdultConsentKeydown\(/);
+
+  // startGame gates only on mature decks without consent
+  assert.match(scriptSource, /if \(isMatureMood\(selectedMood\) && !hasAdultConsent\(\)\) \{\s*showAdultConsentModal\(\);\s*return;\s*\}/);
+
+  // Stylesheet: Velvet Rose dark card, rose accents, touch targets >= 44px
+  assert.match(styleSource, /\.adult-consent-modal/);
+  assert.match(styleSource, /\.adult-consent-card/);
+  assert.match(styleSource, /\.adult-consent-confirm/);
+  assert.match(styleSource, /\.adult-consent-gentler/);
+  assert.match(styleSource, /\.adult-consent-close/);
+});
