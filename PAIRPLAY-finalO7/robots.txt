@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://flirtyflip.com/sitemap.xml
+Sitemap: https://www.flirtyflip.com/sitemap.xml

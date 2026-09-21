@@ -29,6 +29,10 @@ class PreviewHandler(SimpleHTTPRequestHandler):
             if target.is_file():
                 return super().send_head()
 
+            if target.is_dir() and (target / "index.html").is_file():
+                self.path = f"{path.rstrip('/')}/index.html"
+                return super().send_head()
+
             if not Path(path).suffix:
                 self.path = "/index.html"
                 return super().send_head()
