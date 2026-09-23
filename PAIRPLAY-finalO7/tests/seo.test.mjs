@@ -91,3 +91,27 @@ test('SEO facts match repository data', () => {
      }
   });
 });
+
+test('SEO Phase 1 Final Regression Checks', () => {
+  const ldcgHtml = fs.readFileSync(path.join(root, 'long-distance-couple-games/index.html'), 'utf-8');
+  assert.ok(!ldcgHtml.includes('6-Digit Code'), 'Must use 6-Character Room Code');
+  assert.ok(ldcgHtml.includes('6-Character Room Code'), 'Must use 6-Character Room Code');
+  
+  // Verify WYR is not listed as a synchronized online game in the online recommendations section
+  const onlineSectionMatch = ldcgHtml.match(/<h2>Best Online Games for Long Distance Couples<\/h2>[\s\S]*?<\/section>/);
+  if (onlineSectionMatch) {
+    assert.ok(!onlineSectionMatch[0].includes('Would You Rather'), 'WYR must not be recommended as an online game');
+    assert.ok(onlineSectionMatch[0].includes('Tic‑Tac‑Toe'), 'Tic-Tac-Toe should be recommended instead');
+  } else {
+    assert.fail('Could not find Best Online Games section');
+  }
+
+  // Verify up-to-50-card
+  const dngHtml = fs.readFileSync(path.join(root, 'date-night-games/index.html'), 'utf-8');
+  assert.ok(dngHtml.includes('up-to-50-card'), 'Must use up-to-50-card phrasing');
+  assert.ok(!dngHtml.includes('complete 50-card'), 'Must not claim exactly 50 cards always');
+
+  const qfcHtml = fs.readFileSync(path.join(root, 'questions-for-couples/index.html'), 'utf-8');
+  assert.ok(qfcHtml.includes('up-to-50-card'), 'Must use up-to-50-card phrasing');
+  assert.ok(!qfcHtml.includes('full 50-card'), 'Must not claim exactly 50 cards always');
+});
