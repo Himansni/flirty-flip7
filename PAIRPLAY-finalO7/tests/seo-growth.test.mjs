@@ -158,7 +158,7 @@ test("SEO Phase 1: Product claims are accurate and do not make blanket 'no accou
     }
 
     if (page.slug === "couple-games-online" || page.slug === "questions-for-couples") {
-      assert.ok(content.includes("499"), "Question deck pages must mention 499 cards");
+      assert.ok(content.includes("711"), "Question deck pages must mention 711 cards");
       assert.ok(content.includes("10"), "Question deck pages must mention 10 decks");
     }
   }
