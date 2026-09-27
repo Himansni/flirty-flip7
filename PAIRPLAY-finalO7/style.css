@@ -282,6 +282,16 @@ body[data-catalog-view="course-reader"] .ambient-canvas,
 #favorites-count { background:var(--red); color:#fff; font-weight:900; font-size:11px; padding:2px 6px; border-radius:999px; margin-left:6px; }
 #favorites-count.hidden { display:none; }
 
+/* ========================================
+   LANDING PAGE HEADER CLEANUP (HOME ROUTE)
+   Hides audio toggle and favorites control
+   on the home landing page only.
+   ======================================== */
+body[data-route="home"] #sound-btn,
+body[data-route="home"] #nav-favorites {
+  display: none !important;
+}
+
 /* Desktop navigation and dropdowns; edit menu geometry and open-state styling here. */
 .primary-nav { display:block; }
 .nav-list { display:flex; gap:18px; list-style:none; margin:0; padding:0; align-items:center; }

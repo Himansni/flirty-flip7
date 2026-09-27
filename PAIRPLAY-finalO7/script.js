@@ -10437,8 +10437,11 @@ function redirectRoute(path) {
 function renderCurrentRoute(navigationType = "navigate") {
   const url = new URL(window.location.href);
   const route = resolveRoute(url.pathname);
-  if (typeof document !== "undefined" && document.body && route.name !== "course") {
-    document.body.dataset.catalogView = "";
+  if (typeof document !== "undefined" && document.body) {
+    document.body.dataset.route = route.name;
+    if (route.name !== "course") {
+      document.body.dataset.catalogView = "";
+    }
   }
 
   if (route.name === "not-found") return redirectRoute(ROUTE_PATHS.home);
