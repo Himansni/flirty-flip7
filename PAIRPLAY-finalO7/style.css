@@ -282,15 +282,6 @@ body[data-catalog-view="course-reader"] .ambient-canvas,
 #favorites-count { background:var(--red); color:#fff; font-weight:900; font-size:11px; padding:2px 6px; border-radius:999px; margin-left:6px; }
 #favorites-count.hidden { display:none; }
 
-/* ========================================
-   LANDING PAGE HEADER CLEANUP (HOME ROUTE)
-   Hides audio toggle and favorites control
-   on the home landing page only.
-   ======================================== */
-body[data-route="home"] #sound-btn,
-body[data-route="home"] #nav-favorites {
-  display: none !important;
-}
 
 /* Desktop navigation and dropdowns; edit menu geometry and open-state styling here. */
 .primary-nav { display:block; }
@@ -1951,6 +1942,11 @@ em { color:var(--red); font-style:normal; text-shadow:0 0 28px rgba(255,36,73,.2
   #nav-favorites { display:flex; min-width:34px; min-height:44px; justify-content:center; gap:3px; padding:4px; }
   #favorites-count { margin-left:0; padding:2px 5px; }
   .sound-toggle-btn { width:34px; height:34px; min-height:34px; flex:0 0 auto; }
+  /* Landing page header cleanup: hide audio toggle and favorites control on phone viewport only */
+  body[data-route="home"] #sound-btn,
+  body[data-route="home"] #nav-favorites {
+    display: none !important;
+  }
   .hamburger { flex:0 0 34px; width:34px; min-height:44px; padding:0; }
   .online-btn { width:100%; }
   .hero { padding:35px var(--page-pad-mobile) 60px; min-height:auto; overflow:hidden; }
